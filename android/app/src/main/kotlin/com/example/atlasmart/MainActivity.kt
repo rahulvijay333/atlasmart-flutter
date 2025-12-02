@@ -1,4 +1,4 @@
-package com.example.atlasmart
+package com.atlasmart.app
 
 import io.flutter.embedding.android.FlutterActivity
 
