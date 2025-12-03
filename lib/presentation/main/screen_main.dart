@@ -18,6 +18,7 @@ class ScreenMain extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: ValueListenableBuilder(
         valueListenable: BottomNavWidget.navBarNotifier,
         builder: (context, index, child) => screens[index],

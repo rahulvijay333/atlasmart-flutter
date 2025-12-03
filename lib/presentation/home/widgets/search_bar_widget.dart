@@ -9,7 +9,7 @@ class SearchBarWidget extends StatelessWidget {
       height: 50,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
-        color: Colors.white.withValues(alpha: 0.4),
+        color: Colors.white.withValues(alpha: 0.5),
         border: BoxBorder.all(color: Colors.amber, width: 0.5),
       ),
       child: TextFormField(
