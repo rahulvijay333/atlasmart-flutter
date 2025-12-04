@@ -1,4 +1,6 @@
 import 'package:atlasmart/domain/constants/constants.dart';
+import 'package:atlasmart/presentation/common/button_widget.dart';
+import 'package:atlasmart/presentation/login/screen_login.dart';
 import 'package:flutter/material.dart';
 import '../../domain/constants/font.dart';
 import '../../domain/constants/strings.dart';
@@ -27,7 +29,7 @@ class ScreenProfile extends StatelessWidget {
               children: [
                 CircleAvatar(radius: 80, child: Text('Image')),
                 SizedBox(height: 15),
-                Text('Person Name', style: AppFont.subHeading16Style),
+                Text('Person Name', style: AppFont.subHeading16BoldStyle),
                 Text('test@gmail.com', style: AppFont.title12Style),
               ],
             ),
@@ -47,15 +49,13 @@ class ScreenProfile extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(AppStrings.myAccount, style: AppFont.subHeading16Style),
+                  Text(AppStrings.myAccount, style: AppFont.subHeading16BoldStyle),
                   ListTileWidget(title: AppStrings.editProfile, ontap: () {}),
 
                   ListTileWidget(
                     title: AppStrings.shippingAddress,
                     ontap: () {},
                   ),
-
-                  ListTileWidget(title: AppStrings.paymentMethod, ontap: () {}),
                 ],
               ),
 
@@ -63,7 +63,7 @@ class ScreenProfile extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(AppStrings.myOrders, style: AppFont.subHeading16Style),
+                  Text(AppStrings.myOrders, style: AppFont.subHeading16BoldStyle),
                   ListTileWidget(title: AppStrings.orderHistory, ontap: () {}),
                 ],
               ),
@@ -71,7 +71,7 @@ class ScreenProfile extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(AppStrings.settings, style: AppFont.subHeading16Style),
+                  Text(AppStrings.settings, style: AppFont.subHeading16BoldStyle),
                   ListTileWidget(title: AppStrings.appSettings, ontap: () {}),
                   ListTileWidget(
                     title: AppStrings.helpAndSupport,
@@ -90,21 +90,17 @@ class ScreenProfile extends StatelessWidget {
             ),
           ),
         ),
-        SliverToBoxAdapter(
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.green,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            margin: EdgeInsetsGeometry.all(16),
-            height: 50,
-
-            child: Center(
-              child: Text(
-                AppStrings.logout,
-                style: AppFont.title14StyleWhiteColor,
-              ),
-            ),
+        SliverPadding(
+          padding: EdgeInsetsGeometry.only(left: 16,right: 16,top: 5,bottom: 16),
+          sliver: SliverToBoxAdapter(
+            child:
+             ButtonWidget(title: AppStrings.logout, height: 50, ontap: () {
+               Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) {
+                 return ScreenLogin();
+               },), (route) => false,);
+             },)
+            
+          
           ),
         ),
       ],
