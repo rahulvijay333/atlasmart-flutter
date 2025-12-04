@@ -1,4 +1,5 @@
 import 'package:atlasmart/domain/constants/image.dart';
+import 'package:atlasmart/presentation/login/screen_login.dart';
 import 'package:flutter/material.dart';
 
 import '../main/screen_main.dart';
@@ -18,7 +19,7 @@ class _ScreenSplashState extends State<ScreenSplash> {
     Future.delayed(Duration(seconds: 3), () {
       if ( context.mounted) {
         Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => ScreenMain()),
+          MaterialPageRoute(builder: (context) => ScreenLogin()),
         );
       }
     });
