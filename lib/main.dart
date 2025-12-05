@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'presentation/main/screen_main.dart';
+import 'presentation/customer/main/screen_main.dart';
 import 'presentation/splash/screen_splash.dart';
 
 void main() {

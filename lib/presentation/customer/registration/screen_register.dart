@@ -2,9 +2,9 @@ import 'package:atlasmart/domain/constants/font.dart';
 import 'package:atlasmart/domain/constants/strings.dart';
 import 'package:flutter/material.dart';
 
-import '../../domain/constants/colors.dart';
-import '../../domain/constants/image.dart';
-import '../common/button_widget.dart';
+import '../../../domain/constants/colors.dart';
+import '../../../domain/constants/image.dart';
+import '../../common/button_widget.dart';
 
 class ScreenRegister extends StatelessWidget {
   const ScreenRegister({super.key});

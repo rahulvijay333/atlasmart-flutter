@@ -1,8 +1,8 @@
 import 'package:atlasmart/domain/constants/colors.dart';
 import 'package:atlasmart/domain/constants/font.dart';
 import 'package:atlasmart/domain/constants/image.dart';
-import 'package:atlasmart/presentation/main/screen_main.dart';
-import 'package:atlasmart/presentation/registration/screen_register.dart';
+import 'package:atlasmart/presentation/customer/main/screen_main.dart';
+import 'package:atlasmart/presentation/customer/registration/screen_register.dart';
 import 'package:flutter/material.dart';
 
 import '../../domain/constants/strings.dart';
