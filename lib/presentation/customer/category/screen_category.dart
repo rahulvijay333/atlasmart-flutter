@@ -1,5 +1,3 @@
-import 'package:atlasmart/domain/constants/colors.dart';
-import 'package:atlasmart/domain/constants/font.dart';
 import 'package:atlasmart/domain/constants/strings.dart';
 import 'package:flutter/material.dart';
 
@@ -13,27 +11,68 @@ class ScreenCategory extends StatelessWidget {
         SliverAppBar(
           pinned: true,
           centerTitle: true,
-          backgroundColor: AppColors.appbarColor,
-          title: Text(AppStrings.category, style: AppFont.appBar18Style),
+          backgroundColor: Colors.white,
+          surfaceTintColor: Colors.transparent,
+          title: Text(
+            AppStrings.category,
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+          ),
         ),
         SliverPadding(
-          padding: EdgeInsetsGeometry.all(16),
+          padding: const EdgeInsets.all(16),
           sliver: SliverGrid(
-            delegate: SliverChildBuilderDelegate((context, index) {
-              return Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(9),
-                  border: Border.all(color: AppColors.borderColor, width: 0.8),
-                ),
-                child: Center(
-                  child: Text(AppStrings.category, style: AppFont.title12Style),
-                ),
-              );
-            }),
-            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: 220,
-              mainAxisSpacing: 10,
-              crossAxisSpacing: 10,
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                return Card(
+                  elevation: 2,
+                  surfaceTintColor: Colors.white,
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: InkWell(
+                    onTap: () {},
+                    borderRadius: BorderRadius.circular(16),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color:
+                                Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(
+                            Icons.category_outlined,
+                            size: 32,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        Text(
+                          'Category ${index + 1}',
+                          style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                                fontWeight: FontWeight.w600,
+                              ),
+                          textAlign: TextAlign.center,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+              childCount: 12,
+            ),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              mainAxisSpacing: 16,
+              crossAxisSpacing: 16,
+              childAspectRatio: 1.0,
             ),
           ),
         ),

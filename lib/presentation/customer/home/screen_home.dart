@@ -1,4 +1,4 @@
-import 'package:atlasmart/domain/constants/font.dart';
+
 import 'package:atlasmart/domain/constants/image.dart';
 import 'package:flutter/material.dart';
 
@@ -22,10 +22,11 @@ class ScreenHome extends StatelessWidget {
           backgroundColor: Colors.white,
           actions: [Icon(Icons.notifications, size: 28), SizedBox(width: 10)],
           title: Row(
-            spacing: 5,
+            mainAxisSize: MainAxisSize.min,
             children: [
               Image.asset(AppImage.appLogoIcon, height: 28, width: 30),
-              Text(AppStrings.appTitle, style: AppFont.appBar18Style),
+              const SizedBox(width: 8),
+              Text(AppStrings.appTitle, style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
             ],
           ),
           bottom: PreferredSize(
@@ -41,7 +42,7 @@ class ScreenHome extends StatelessWidget {
             padding: const EdgeInsets.only(left: 16, right: 16, top: 5),
             child: Text(
               AppStrings.category,
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
             ),
           ),
         ),
@@ -58,6 +59,7 @@ class ScreenHome extends StatelessWidget {
                   child: Center(child: CatgoryMiniTileWidget()),
                 ),
                 itemCount: 10,
+                padding: const EdgeInsets.symmetric(horizontal: 4),
               ),
             ),
           ),
@@ -67,7 +69,7 @@ class ScreenHome extends StatelessWidget {
             padding: const EdgeInsets.only(left: 16, right: 16, top: 5),
             child: Text(
               AppStrings.products,
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
             ),
           ),
         ),
@@ -87,11 +89,8 @@ class ScreenHome extends StatelessWidget {
               childAspectRatio: 0.9,
             ),
             delegate: SliverChildBuilderDelegate(
-              (context, index) => Container(
-                color: Colors.red.shade100,
-
-                child: ProductTileWidget(),
-              ),
+              (context, index) => const ProductTileWidget(),
+              childCount: 10,
             ),
           ),
         ),

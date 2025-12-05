@@ -2,7 +2,7 @@ import 'package:atlasmart/domain/constants/constants.dart';
 import 'package:atlasmart/presentation/common/button_widget.dart';
 import 'package:atlasmart/presentation/login/screen_login.dart';
 import 'package:flutter/material.dart';
-import '../../../domain/constants/font.dart';
+
 import '../../../domain/constants/strings.dart';
 import 'widgets/list_tile_widget.dart';
 
@@ -18,89 +18,141 @@ class ScreenProfile extends StatelessWidget {
           centerTitle: true,
           surfaceTintColor: Colors.transparent,
           backgroundColor: Colors.white,
-          title: Text(AppStrings.profile, style: AppFont.appBar18Style),
+          title: Text(AppStrings.profile,
+              style: Theme.of(context)
+                  .textTheme
+                  .titleLarge
+                  ?.copyWith(fontWeight: FontWeight.bold)),
         ),
         SliverToBoxAdapter(
           child: SizedBox(
-            height: 270,
-
+            height: 250,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                CircleAvatar(radius: 80, child: Text('Image')),
+                Container(
+                  padding: const EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: Theme.of(context).colorScheme.primary,
+                      width: 2,
+                    ),
+                  ),
+                  child: CircleAvatar(
+                    radius: 60,
+                    backgroundColor: Colors.grey.shade200,
+                    child: Icon(Icons.person, size: 60, color: Colors.grey),
+                  ),
+                ),
                 SizedBox(height: 15),
-                Text('Person Name', style: AppFont.subHeading16BoldStyle),
-                Text('test@gmail.com', style: AppFont.title12Style),
+                Text(
+                  'Person Name',
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
+                Text(
+                  'test@gmail.com',
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: Colors.grey.shade600,
+                      ),
+                ),
               ],
             ),
           ),
         ),
-
         SliverPadding(
-          padding: EdgeInsetsGeometry.only(
-            left: 16,
-            top: 5,
-            right: 16,
-            bottom: 5,
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           sliver: SliverList(
             delegate: SliverChildListDelegate([
-              //my account
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              _buildSectionCard(
+                context,
+                title: AppStrings.myAccount,
                 children: [
-                  Text(AppStrings.myAccount, style: AppFont.subHeading16BoldStyle),
                   ListTileWidget(title: AppStrings.editProfile, ontap: () {}),
-
-                  ListTileWidget(
-                    title: AppStrings.shippingAddress,
-                    ontap: () {},
-                  ),
+                  ListTileWidget(title: AppStrings.shippingAddress, ontap: () {}),
                 ],
               ),
-
-              //------orders
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              const SizedBox(height: 16),
+              _buildSectionCard(
+                context,
+                title: AppStrings.myOrders,
                 children: [
-                  Text(AppStrings.myOrders, style: AppFont.subHeading16BoldStyle),
                   ListTileWidget(title: AppStrings.orderHistory, ontap: () {}),
                 ],
               ),
-              //-----settings
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              const SizedBox(height: 16),
+              _buildSectionCard(
+                context,
+                title: AppStrings.settings,
                 children: [
-                  Text(AppStrings.settings, style: AppFont.subHeading16BoldStyle),
                   ListTileWidget(title: AppStrings.appSettings, ontap: () {}),
-                  ListTileWidget(
-                    title: AppStrings.helpAndSupport,
-                    ontap: () {},
-                  ),
+                  ListTileWidget(title: AppStrings.helpAndSupport, ontap: () {}),
                 ],
               ),
             ]),
           ),
         ),
         SliverToBoxAdapter(
-          child: Center(
-            child: Text(
-              '${AppStrings.appVersion} ${AppConstants.appVersion}',
-              style: AppFont.title12Style,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 24),
+            child: Center(
+              child: Text(
+                '${AppStrings.appVersion} ${AppConstants.appVersion}',
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: Colors.grey,
+                    ),
+              ),
             ),
           ),
         ),
         SliverPadding(
-          padding: EdgeInsetsGeometry.only(left: 16,right: 16,top: 5,bottom: 16),
+          padding: EdgeInsets.only(left: 16, right: 16, bottom: 30),
           sliver: SliverToBoxAdapter(
-            child:
-             ButtonWidget(title: AppStrings.logout, height: 50, ontap: () {
-               Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) {
-                 return ScreenLogin();
-               },), (route) => false,);
-             },)
-            
-          
+            child: ButtonWidget(
+              title: AppStrings.logout,
+              height: 50,
+              ontap: () {
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return ScreenLogin();
+                    },
+                  ),
+                  (route) => false,
+                );
+              },
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSectionCard(BuildContext context,
+      {required String title, required List<Widget> children}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 4, bottom: 8),
+          child: Text(
+            title,
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+          ),
+        ),
+        Card(
+          elevation: 0,
+          color: Colors.white,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+              side: BorderSide(color: Colors.grey.shade200)),
+          child: Column(
+            children: children,
           ),
         ),
       ],

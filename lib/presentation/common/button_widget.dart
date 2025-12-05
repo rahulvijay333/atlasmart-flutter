@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../domain/constants/font.dart';
+
 
 class ButtonWidget extends StatelessWidget {
   const ButtonWidget({
@@ -15,18 +15,12 @@ class ButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: ontap,
-      child: Container(
-        height: height,
-        width: double.maxFinite,
-        decoration: BoxDecoration(
-          color: Colors.green,
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: Center(
-          child: Text(title, style: AppFont.title14BoldStyleWhiteColor),
-        ),
+    return SizedBox(
+      width: double.infinity,
+      height: height,
+      child: ElevatedButton(
+        onPressed: ontap,
+        child: Text(title),
       ),
     );
   }

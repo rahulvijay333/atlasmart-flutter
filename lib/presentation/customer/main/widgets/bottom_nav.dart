@@ -18,7 +18,7 @@ class BottomNavWidget extends StatelessWidget {
           onTap: (value) {
             navBarNotifier.value = value;
           },
-          selectedItemColor: Colors.amber.shade800,
+          selectedItemColor: Theme.of(context).colorScheme.primary,
           unselectedItemColor: Colors.grey,
           currentIndex: navBarNotifier.value,
           items: [

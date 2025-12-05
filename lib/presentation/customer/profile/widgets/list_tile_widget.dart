@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../domain/constants/font.dart';
+
 
 class ListTileWidget extends StatelessWidget {
   const ListTileWidget({
@@ -22,14 +22,15 @@ class ListTileWidget extends StatelessWidget {
       leading: Container(
         height: 38,
         width: 38,
-
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          color: Colors.amber,
+          color: Theme.of(context).colorScheme.primaryContainer,
           shape: BoxShape.rectangle,
         ),
+        child: Icon(Icons.api,
+            size: 20, color: Theme.of(context).colorScheme.onPrimaryContainer),
       ),
-      title: Text(title, style: AppFont.title14Style),
+      title: Text(title, style: Theme.of(context).textTheme.bodyLarge),
       subtitle: subTitle != null ? Text(subTitle ?? '') : null,
       trailing: Icon(Icons.arrow_forward_ios),
     );
