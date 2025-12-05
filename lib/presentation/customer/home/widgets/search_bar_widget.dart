@@ -6,22 +6,21 @@ class SearchBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 50,
+      height: 45,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        color: Colors.white.withValues(alpha: 0.5),
-        border: BoxBorder.all(color: Colors.amber, width: 0.5),
+        color: Colors.grey.shade100,
+        borderRadius: BorderRadius.circular(12),
       ),
-      child: TextFormField(
-        onTapOutside: (event) {
-          FocusScope.of(context).unfocus();
-        },
+      child: TextField(
+        onTapOutside: (event) => FocusScope.of(context).unfocus(),
         decoration: InputDecoration(
-          prefixIcon: Icon(Icons.search),
-          contentPadding: EdgeInsets.all(10),
-          hint: Text('Search Products....'),
-          enabledBorder: InputBorder.none,
+          prefixIcon: const Icon(Icons.search, color: Colors.grey),
+          hintText: 'Search Products...',
+          hintStyle: TextStyle(color: Colors.grey.shade500),
           border: InputBorder.none,
+          enabledBorder: InputBorder.none,
+          focusedBorder: InputBorder.none,
+          contentPadding: const EdgeInsets.symmetric(vertical: 10),
         ),
       ),
     );

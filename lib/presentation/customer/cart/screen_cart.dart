@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../domain/constants/font.dart';
+
 import '../../../domain/constants/strings.dart';
 
 class ScreenCart extends StatelessWidget {
@@ -13,7 +13,9 @@ class ScreenCart extends StatelessWidget {
           pinned: true,
           centerTitle: true,
           backgroundColor: Colors.white,
-          title: Text(AppStrings.cart, style: AppFont.appBar18Style),
+          title: Text(AppStrings.cart,
+              style:
+                  Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
         ),
         SliverFillRemaining(child: Center(child: Text(AppStrings.noItems))),
       ],
