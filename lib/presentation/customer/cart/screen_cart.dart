@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../domain/constants/font.dart';
-import '../../domain/constants/strings.dart';
+import '../../../domain/constants/font.dart';
+import '../../../domain/constants/strings.dart';
 
 class ScreenCart extends StatelessWidget {
   const ScreenCart({super.key});

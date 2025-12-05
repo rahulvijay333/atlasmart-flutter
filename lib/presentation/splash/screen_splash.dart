@@ -2,7 +2,7 @@ import 'package:atlasmart/domain/constants/image.dart';
 import 'package:atlasmart/presentation/login/screen_login.dart';
 import 'package:flutter/material.dart';
 
-import '../main/screen_main.dart';
+import '../customer/main/screen_main.dart';
 
 class ScreenSplash extends StatefulWidget {
   const ScreenSplash({super.key});

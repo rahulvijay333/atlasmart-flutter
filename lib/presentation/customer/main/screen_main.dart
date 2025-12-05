@@ -1,8 +1,8 @@
-import 'package:atlasmart/presentation/cart/screen_cart.dart';
-import 'package:atlasmart/presentation/category/screen_category.dart';
-import 'package:atlasmart/presentation/home/screen_home.dart';
-import 'package:atlasmart/presentation/main/widgets/bottom_nav.dart';
-import 'package:atlasmart/presentation/profile/screen_profile.dart';
+import 'package:atlasmart/presentation/customer/cart/screen_cart.dart';
+import 'package:atlasmart/presentation/customer/category/screen_category.dart';
+import 'package:atlasmart/presentation/customer/home/screen_home.dart';
+import 'package:atlasmart/presentation/customer/main/widgets/bottom_nav.dart';
+import 'package:atlasmart/presentation/customer/profile/screen_profile.dart';
 import 'package:flutter/material.dart';
 
 class ScreenMain extends StatelessWidget {

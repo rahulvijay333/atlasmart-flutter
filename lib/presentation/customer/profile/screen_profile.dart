@@ -2,8 +2,8 @@ import 'package:atlasmart/domain/constants/constants.dart';
 import 'package:atlasmart/presentation/common/button_widget.dart';
 import 'package:atlasmart/presentation/login/screen_login.dart';
 import 'package:flutter/material.dart';
-import '../../domain/constants/font.dart';
-import '../../domain/constants/strings.dart';
+import '../../../domain/constants/font.dart';
+import '../../../domain/constants/strings.dart';
 import 'widgets/list_tile_widget.dart';
 
 class ScreenProfile extends StatelessWidget {
