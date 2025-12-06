@@ -47,13 +47,13 @@ class ScreenProfile extends StatelessWidget {
                 ),
                 SizedBox(height: 15),
                 Text(
-                  'Person Name',
+                  AppStrings.userNamePlaceholder,
                   style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
                 ),
                 Text(
-                  'test@gmail.com',
+                  AppStrings.userEmailPlaceholder,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         color: Colors.grey.shade600,
                       ),

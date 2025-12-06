@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../domain/constants/strings.dart';
 
 class CatgoryMiniTileWidget extends StatelessWidget {
   const CatgoryMiniTileWidget({
@@ -20,7 +21,7 @@ class CatgoryMiniTileWidget extends StatelessWidget {
         ),
         const SizedBox(height: 4),
         Text(
-          'Category',
+          AppStrings.categoryPlaceholder,
           style: Theme.of(context).textTheme.labelSmall,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,

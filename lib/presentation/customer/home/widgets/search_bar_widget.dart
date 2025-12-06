@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../domain/constants/strings.dart';
 
 class SearchBarWidget extends StatelessWidget {
   const SearchBarWidget({super.key});
@@ -15,7 +16,7 @@ class SearchBarWidget extends StatelessWidget {
         onTapOutside: (event) => FocusScope.of(context).unfocus(),
         decoration: InputDecoration(
           prefixIcon: const Icon(Icons.search, color: Colors.grey),
-          hintText: 'Search Products...',
+          hintText: AppStrings.searchProductsHint,
           hintStyle: TextStyle(color: Colors.grey.shade500),
           border: InputBorder.none,
           enabledBorder: InputBorder.none,
