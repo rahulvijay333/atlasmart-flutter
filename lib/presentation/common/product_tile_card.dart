@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../domain/constants/strings.dart';
 
 class ProductTileWidget extends StatelessWidget {
   const ProductTileWidget({super.key});
@@ -28,7 +29,7 @@ class ProductTileWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Product Title',
+                  AppStrings.productTitlePlaceholder,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -37,7 +38,7 @@ class ProductTileWidget extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'Seller Name',
+                  AppStrings.sellerNamePlaceholder,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: Colors.grey.shade600,
                       ),

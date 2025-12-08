@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../../../domain/constants/strings.dart';
+
 
 class BottomNavWidget extends StatelessWidget {
   const BottomNavWidget({super.key});
@@ -23,15 +25,15 @@ class BottomNavWidget extends StatelessWidget {
           currentIndex: navBarNotifier.value,
           items: [
             //home
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home',),
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: AppStrings.home,),
         
             //categories
-            BottomNavigationBarItem(icon: Icon(Icons.grid_4x4), label: 'Category'),
+            BottomNavigationBarItem(icon: Icon(Icons.grid_4x4), label: AppStrings.category),
             //cart
-            BottomNavigationBarItem(icon: Icon(Icons.shopping_bag), label: 'Cart'),
+            BottomNavigationBarItem(icon: Icon(Icons.shopping_bag), label: AppStrings.cart),
         
             //profile
-            BottomNavigationBarItem(icon: Icon(Icons.person_2), label: 'Profile'),
+            BottomNavigationBarItem(icon: Icon(Icons.person_2), label: AppStrings.profile),
           ],
         );
       }
