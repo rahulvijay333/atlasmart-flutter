@@ -1,14 +1,15 @@
 import 'package:dio/dio.dart';
-import '../../domain/token/token_storage.dart';
-import 'auth_service_impl.dart';
 
-class AuthInterceptor extends Interceptor {
+import '../../domain/token/token_service.dart';
+import '../../domain/token/token_storage.dart';
+
+class DioInterceptor extends Interceptor {
   final TokenStorage storage;
-  final AuthRepositoryImpl repository;
+  final TokenService tokenService;
 
   bool refreshing = false;
 
-  AuthInterceptor(this.storage, this.repository);
+  DioInterceptor(this.storage,this.tokenService);
 
   @override
   void onRequest(
@@ -23,7 +24,7 @@ class AuthInterceptor extends Interceptor {
       }
 
       final newToken = await storage.getAccessToken();
-      options.headers["Authorization"] = "Bearer $newToken";
+      options.headers['Authorization'] = 'Bearer $newToken';
     }
 
     handler.next(options);
@@ -36,8 +37,8 @@ class AuthInterceptor extends Interceptor {
     try {
       final refresh = await storage.getRefreshToken();
       if (refresh != null) {
-        final tokens = await repository.refresh(refresh);
-        await storage.saveTokens(tokens.accessToken, tokens.refreshToken);
+        final tokens = await tokenService.refresh(refresh);
+        await storage.saveTokens(tokens.accessToken, tokens.refreshToken,tokens.role);
       }
     } catch (_) {
       await storage.clear();

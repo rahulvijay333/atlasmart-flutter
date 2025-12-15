@@ -1,44 +1,49 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../domain/auth/auth_service.dart';
 import '../../domain/token/token_storage.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  final AuthRepository repository;
   final TokenStorage storage;
 
-  AuthBloc(this.repository, this.storage) : super(AuthInitial()) {
+  AuthBloc(this.storage) : super(AuthInitial()) {
     on<AppStarted>(_onAppStarted);
-    on<LoginSubmitted>(_onLogin);
-    on<LogoutPressed>(_onLogout);
+    on<AuthStatusChanged>(_onAuthStatusChanged);
+    on<LogoutRequested>(_onLogoutRequested);
   }
 
-  Future<void> _onAppStarted(AppStarted event, Emitter emit) async {
-    final access = await storage.getAccessToken();
-    if (access != null && !storage.isExpired(access)) {
-      emit(AuthLoggedIn());
+  Future<void> _onAppStarted(AppStarted event, Emitter<AuthState> emit) async {
+    final accessToken = await storage.getAccessToken();
+    final role = await storage.getRole();
+
+    if (accessToken != null && !storage.isExpired(accessToken)) {
+      emit(AuthAuthenticated(role: role));
     } else {
-      emit(AuthLoggedOut());
+      emit(AuthUnauthenticated());
     }
   }
 
-  Future<void> _onLogin(LoginSubmitted event, Emitter emit) async {
+  void _onAuthStatusChanged(
+    AuthStatusChanged event,
+    Emitter<AuthState> emit,
+  ) async {
+    final role = await storage.getRole();
+    if (event.isAuthenticated) {
+      emit(AuthAuthenticated(role: role));
+    } else {
+      emit(AuthUnauthenticated());
+    }
+  }
+
+  Future<void> _onLogoutRequested(
+    LogoutRequested event,
+    Emitter<AuthState> emit,
+  ) async {
     emit(AuthLoading());
-    try {
-      final tokens = await repository.login(event.email, event.password);
-      await storage.saveTokens(tokens.accessToken, tokens.refreshToken);
-      emit(AuthLoggedIn());
-    } catch (e) {
-      emit(AuthError("Login failed"));
-    }
-  }
 
-  Future<void> _onLogout(LogoutPressed event, Emitter emit) async {
-    await repository.logout();
     await storage.clear();
-    emit(AuthLoggedOut());
+    emit(AuthUnauthenticated());
   }
 }

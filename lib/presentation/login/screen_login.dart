@@ -1,9 +1,12 @@
+import 'package:atlasmart/application/login/login_bloc.dart';
 import 'package:atlasmart/domain/constants/image.dart';
 import 'package:atlasmart/presentation/customer/main/screen_main.dart';
 import 'package:atlasmart/presentation/customer/registration/screen_register.dart';
 import 'package:atlasmart/presentation/admin/main/screen_admin_main.dart'; // Admin Link
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../domain/constants/constants.dart';
 import '../../domain/constants/strings.dart';
 import '../common/button_widget.dart';
 
@@ -28,23 +31,26 @@ class _ScreenLoginState extends State<ScreenLogin> {
   void handleLogin() {
     final email = _emailController.text.trim();
     final password = _passwordController.text.trim();
+    BlocProvider.of<LoginBloc>(
+      context,
+    ).add(LoginEvent.loginButtonClickEvent(email: email, password: password));
 
-    if (email == 'admin@test.com' && password == '1234') {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const ScreenAdminMain()),
-      );
-    } else if (email == 'user@test.com' && password == '1234') {
-      Navigator.of(
-        context,
-      ).pushReplacement(MaterialPageRoute(builder: (context) => ScreenMain()));
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(AppStrings.invalidCredentialsError),
-          backgroundColor: Colors.red,
-        ),
-      );
-    }
+    // if (email == 'admin@test.com' && password == '1234') {
+    //   Navigator.of(context).pushReplacement(
+    //     MaterialPageRoute(builder: (context) => const ScreenAdminMain()),
+    //   );
+    // } else if (email == 'user@test.com' && password == '1234') {
+    //   Navigator.of(
+    //     context,
+    //   ).pushReplacement(MaterialPageRoute(builder: (context) => ScreenMain()));
+    // } else {
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     const SnackBar(
+    //       content: Text(AppStrings.invalidCredentialsError),
+    //       backgroundColor: Colors.red,
+    //     ),
+    //   );
+    // }
   }
 
   @override
@@ -110,10 +116,52 @@ class _ScreenLoginState extends State<ScreenLogin> {
                       ),
                     ),
                     SizedBox(height: 15),
-                    ButtonWidget(
-                      height: 50,
-                      title: AppStrings.login,
-                      ontap: handleLogin,
+                    BlocConsumer<LoginBloc, LoginState>(
+                      listener: (context, state) {
+                        state.map(
+                          initial: (_) {},
+                          loading: (_) {},
+                          failure: (state) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text(state.message)),
+                            );
+                          },
+                          success: (state) {
+                            switch (state.tokens.role) {
+                              case AppConstants.admin:
+                                Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const ScreenAdminMain(),
+                                  ),
+                                );
+                                break;
+                              case AppConstants.customer:
+                                Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                    builder: (context) => ScreenMain(),
+                                  ),
+                                );
+
+                                break;
+                              default:
+                            }
+                          },
+                        );
+                      },
+                      builder: (context, state) {
+                        return ButtonWidget(
+                          isloading: state == LoginState.loading()
+                              ? true
+                              : false,
+                          height: 50,
+
+                          title: AppStrings.login,
+                          ontap: state != LoginState.loading()
+                              ? handleLogin
+                              : () {},
+                        );
+                      },
                     ),
                   ],
                 ),

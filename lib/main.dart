@@ -1,3 +1,4 @@
+import 'package:atlasmart/application/login/login_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,7 +7,9 @@ import 'application/auth/auth_bloc.dart';
 import 'domain/di/di.dart';
 import 'presentation/splash/screen_splash.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  setupDI();
   runApp(const MainApp());
 }
 
@@ -27,7 +30,11 @@ class _MainAppState extends State<MainApp> {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [BlocProvider(create: (context) => sl<AuthBloc>())],
+      providers: [
+        BlocProvider(create: (context) => sl<AuthBloc>()),
+
+        BlocProvider(create: (context) => sl<LoginBloc>()),
+      ],
 
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

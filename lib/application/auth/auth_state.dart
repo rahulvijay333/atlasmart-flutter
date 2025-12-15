@@ -4,13 +4,12 @@ abstract class AuthState {}
 
 class AuthInitial extends AuthState {}
 
-class AuthLoading extends AuthState {}
+class AuthAuthenticated extends AuthState {
+  final String? role;
 
-class AuthLoggedIn extends AuthState {}
-
-class AuthLoggedOut extends AuthState {}
-
-class AuthError extends AuthState {
-  final String message;
-  AuthError(this.message);
+  AuthAuthenticated({ this.role});
 }
+
+class AuthUnauthenticated extends AuthState {}
+
+class AuthLoading extends AuthState {}

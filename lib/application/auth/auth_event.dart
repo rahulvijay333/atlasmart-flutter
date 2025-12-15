@@ -4,11 +4,9 @@ abstract class AuthEvent {}
 
 class AppStarted extends AuthEvent {}
 
-class LoginSubmitted extends AuthEvent {
-  final String email;
-  final String password;
-
-  LoginSubmitted(this.email, this.password);
+class AuthStatusChanged extends AuthEvent {
+  final bool isAuthenticated;
+  AuthStatusChanged(this.isAuthenticated);
 }
 
-class LogoutPressed extends AuthEvent {}
+class LogoutRequested extends AuthEvent {}
