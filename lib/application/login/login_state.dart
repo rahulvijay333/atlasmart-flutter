@@ -1,6 +1,9 @@
 part of 'login_bloc.dart';
 
-@immutable
-sealed class LoginState {}
-
-final class LoginInitial extends LoginState {}
+@freezed
+class LoginState with _$LoginState {
+  const factory LoginState.initial() = _Initial;
+  const factory LoginState.loading() = _Loading;
+  const factory LoginState.success(AuthTokens tokens) = _Success;
+  const factory LoginState.failure(String message) = _Failure;
+}

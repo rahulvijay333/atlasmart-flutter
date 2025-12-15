@@ -2,7 +2,9 @@ import 'package:atlasmart/domain/constants/constants.dart';
 import 'package:atlasmart/presentation/common/button_widget.dart';
 import 'package:atlasmart/presentation/login/screen_login.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../application/login/login_bloc.dart';
 import '../../../domain/constants/strings.dart';
 import 'widgets/list_tile_widget.dart';
 
@@ -18,11 +20,12 @@ class ScreenProfile extends StatelessWidget {
           centerTitle: true,
           surfaceTintColor: Colors.transparent,
           backgroundColor: Colors.white,
-          title: Text(AppStrings.profile,
-              style: Theme.of(context)
-                  .textTheme
-                  .titleLarge
-                  ?.copyWith(fontWeight: FontWeight.bold)),
+          title: Text(
+            AppStrings.profile,
+            style: Theme.of(
+              context,
+            ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+          ),
         ),
         SliverToBoxAdapter(
           child: SizedBox(
@@ -49,14 +52,14 @@ class ScreenProfile extends StatelessWidget {
                 Text(
                   AppStrings.userNamePlaceholder,
                   style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 Text(
                   AppStrings.userEmailPlaceholder,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Colors.grey.shade600,
-                      ),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodyMedium?.copyWith(color: Colors.grey.shade600),
                 ),
               ],
             ),
@@ -71,7 +74,10 @@ class ScreenProfile extends StatelessWidget {
                 title: AppStrings.myAccount,
                 children: [
                   ListTileWidget(title: AppStrings.editProfile, ontap: () {}),
-                  ListTileWidget(title: AppStrings.shippingAddress, ontap: () {}),
+                  ListTileWidget(
+                    title: AppStrings.shippingAddress,
+                    ontap: () {},
+                  ),
                 ],
               ),
               const SizedBox(height: 16),
@@ -88,7 +94,10 @@ class ScreenProfile extends StatelessWidget {
                 title: AppStrings.settings,
                 children: [
                   ListTileWidget(title: AppStrings.appSettings, ontap: () {}),
-                  ListTileWidget(title: AppStrings.helpAndSupport, ontap: () {}),
+                  ListTileWidget(
+                    title: AppStrings.helpAndSupport,
+                    ontap: () {},
+                  ),
                 ],
               ),
             ]),
@@ -100,9 +109,9 @@ class ScreenProfile extends StatelessWidget {
             child: Center(
               child: Text(
                 '${AppStrings.appVersion} ${AppConstants.appVersion}',
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: Colors.grey,
-                    ),
+                style: Theme.of(
+                  context,
+                ).textTheme.bodySmall?.copyWith(color: Colors.grey),
               ),
             ),
           ),
@@ -114,6 +123,9 @@ class ScreenProfile extends StatelessWidget {
               title: AppStrings.logout,
               height: 50,
               ontap: () {
+                BlocProvider.of<LoginBloc>(
+                  context,
+                ).add(LoginEvent.logOutButtonClick());
                 Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(
                     builder: (context) {
@@ -130,8 +142,11 @@ class ScreenProfile extends StatelessWidget {
     );
   }
 
-  Widget _buildSectionCard(BuildContext context,
-      {required String title, required List<Widget> children}) {
+  Widget _buildSectionCard(
+    BuildContext context, {
+    required String title,
+    required List<Widget> children,
+  }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -140,20 +155,19 @@ class ScreenProfile extends StatelessWidget {
           child: Text(
             title,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).colorScheme.primary,
+            ),
           ),
         ),
         Card(
           elevation: 0,
           color: Colors.white,
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-              side: BorderSide(color: Colors.grey.shade200)),
-          child: Column(
-            children: children,
+            borderRadius: BorderRadius.circular(12),
+            side: BorderSide(color: Colors.grey.shade200),
           ),
+          child: Column(children: children),
         ),
       ],
     );
