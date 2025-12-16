@@ -4,7 +4,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'application/auth/auth_bloc.dart';
-import 'domain/di/di.dart';
+import 'application/registration/customer/custom_registr_bloc/customer_register_bloc.dart';
+import 'domain/core/di/di.dart';
+import 'presentation/customer/registration/screen_set_password.dart';
 import 'presentation/splash/screen_splash.dart';
 
 void main() async {
@@ -34,6 +36,9 @@ class _MainAppState extends State<MainApp> {
         BlocProvider(create: (context) => sl<AuthBloc>()),
 
         BlocProvider(create: (context) => sl<LoginBloc>()),
+
+        BlocProvider(create: (context) => sl<CustomerRegisterBloc>()),
+        BlocProvider(create: (context) => sl<CustomerRegisterBloc>()),
       ],
 
       child: MaterialApp(

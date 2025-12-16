@@ -1,8 +1,8 @@
 
-import 'package:atlasmart/domain/constants/image.dart';
+import 'package:atlasmart/domain/core/constants/image.dart';
 import 'package:flutter/material.dart';
 
-import '../../../domain/constants/strings.dart';
+import '../../../domain/core/constants/strings.dart';
 import '../../common/product_tile_card.dart';
 import 'widgets/category_mini_tile.dart';
 import 'widgets/search_bar_widget.dart';

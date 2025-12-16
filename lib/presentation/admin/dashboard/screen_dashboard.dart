@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../domain/constants/strings.dart';
+import '../../../domain/core/constants/strings.dart';
 import 'widgets/dashboard_stats_card.dart';
 
 class ScreenAdminDashboard extends StatelessWidget {

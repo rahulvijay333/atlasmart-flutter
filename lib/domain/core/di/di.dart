@@ -1,16 +1,19 @@
 import 'package:atlasmart/application/login/login_bloc.dart';
+import 'package:atlasmart/application/registration/customer/custom_registr_bloc/customer_register_bloc.dart';
 import 'package:atlasmart/domain/login/login_service.dart';
 import 'package:atlasmart/domain/token/token_service.dart';
 import 'package:atlasmart/infrastructure/login/login_service_impl.dart';
+import 'package:atlasmart/infrastructure/registration/registration_service_impl.dart';
 import 'package:atlasmart/infrastructure/token/token_service_impl.dart';
 import 'package:get_it/get_it.dart';
 import 'package:dio/dio.dart';
 
-import '../../application/auth/auth_bloc.dart';
+import '../../../application/auth/auth_bloc.dart';
 
-import '../../infrastructure/interceptor/interceptor.dart';
+import '../../../infrastructure/interceptor/interceptor.dart';
 
-import '../token/token_storage.dart';
+import '../../registration/registration_service.dart';
+import '../../token/token_storage.dart';
 
 final sl = GetIt.instance;
 
@@ -37,12 +40,14 @@ void setupDI() {
   });
 
   // -------------------------
-  // 3. LoginRepository
+  // 3. Services
   // -------------------------
   sl.registerLazySingleton<LoginService>(
     () => LoginServiceImpl(dio: sl<Dio>(), storage: sl<TokenStorage>()),
   );
-
+  sl.registerLazySingleton<RegistrationService>(
+    () => RegistrationServiceImpl(dio: sl<Dio>()),
+  );
   // -------------------------
   // 4. Blocs
   // -------------------------
@@ -51,31 +56,8 @@ void setupDI() {
   sl.registerFactory<LoginBloc>(
     () => LoginBloc(loginService: sl<LoginService>()),
   );
+  sl.registerFactory<CustomerRegisterBloc>(
+    () => CustomerRegisterBloc(sl<RegistrationService>()),
+  );
 }
 
-// Future<void> setupDI()async {
-//   // 1. TokenStorage
-//   sl.registerLazySingleton(() => TokenStorage());
-
-//   // 2. AuthRepository
-//   sl.registerLazySingleton<AuthRepository>(
-//     () => AuthRepositoryImpl(sl<Dio>(), sl<TokenStorage>()),
-//   );
-
-//   // 3. Dio + AuthInterceptor
-//   sl.registerLazySingleton(() {
-//     final dio = Dio(BaseOptions(baseUrl: "https://api.com"));
-//     dio.interceptors.add(
-//       AuthInterceptor(
-//         sl<TokenStorage>(),
-//         sl<AuthRepository>()
-//             as AuthRepositoryImpl, // or better, make interceptor use abstract
-//       ),
-//     );
-//     return dio;
-//   });
-
-//   // 4. AuthBloc
-//   sl.registerFactory(() => AuthBloc(sl<AuthRepository>(), sl<TokenStorage>()));
-//   sl.registerFactory(() => LoginBloc(authRepository: sl<AuthRepository>()));
-// }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../domain/constants/strings.dart';
+import '../../../../domain/core/constants/strings.dart';
 
 
 class BottomNavWidget extends StatelessWidget {

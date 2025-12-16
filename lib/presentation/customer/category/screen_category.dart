@@ -1,4 +1,4 @@
-import 'package:atlasmart/domain/constants/strings.dart';
+import 'package:atlasmart/domain/core/constants/strings.dart';
 import 'package:flutter/material.dart';
 
 class ScreenCategory extends StatelessWidget {

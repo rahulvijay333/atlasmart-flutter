@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../domain/constants/strings.dart';
+import '../../../domain/core/constants/strings.dart';
 
 class ScreenPushNotifications extends StatefulWidget {
   const ScreenPushNotifications({super.key});
