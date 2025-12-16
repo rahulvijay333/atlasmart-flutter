@@ -1,11 +1,11 @@
-import 'package:atlasmart/domain/constants/constants.dart';
+import 'package:atlasmart/domain/core/constants/constants.dart';
 import 'package:atlasmart/presentation/common/button_widget.dart';
 import 'package:atlasmart/presentation/login/screen_login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../application/login/login_bloc.dart';
-import '../../../domain/constants/strings.dart';
+import '../../../domain/core/constants/strings.dart';
 import 'widgets/list_tile_widget.dart';
 
 class ScreenProfile extends StatelessWidget {

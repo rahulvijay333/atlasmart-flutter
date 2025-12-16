@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../login/screen_login.dart';
-import '../../../../domain/constants/strings.dart';
+import '../../../../domain/core/constants/strings.dart';
 
 class AdminDrawerWidget extends StatelessWidget {
   final int selectedIndex;

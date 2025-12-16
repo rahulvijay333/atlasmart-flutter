@@ -9,6 +9,7 @@ class AppFont {
     fontSize: 16,
     fontWeight: FontWeight.bold,
   );
+  static const TextStyle title18Style = TextStyle(fontSize: 18);
   static const TextStyle title16Style = TextStyle(fontSize: 16);
   static const TextStyle title14Style = TextStyle(fontSize: 14);
   static const TextStyle title14BoldStyleWhiteColor = TextStyle(

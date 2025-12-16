@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'widgets/stock_update_sheet.dart';
 import '../common/admin_search_bar.dart';
-import '../../../../domain/constants/strings.dart';
+import '../../../domain/core/constants/strings.dart';
 
 class ScreenInventory extends StatelessWidget {
   const ScreenInventory({super.key});

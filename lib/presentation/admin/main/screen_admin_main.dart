@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../domain/constants/strings.dart';
+import '../../../domain/core/constants/strings.dart';
 import '../dashboard/screen_dashboard.dart';
 import '../users/screen_users.dart';
 import '../products/screen_products.dart';

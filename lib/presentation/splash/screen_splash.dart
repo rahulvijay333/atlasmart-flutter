@@ -1,5 +1,5 @@
-import 'package:atlasmart/domain/constants/constants.dart';
-import 'package:atlasmart/domain/constants/image.dart';
+import 'package:atlasmart/domain/core/constants/constants.dart';
+import 'package:atlasmart/domain/core/constants/image.dart';
 import 'package:atlasmart/presentation/customer/main/screen_main.dart';
 import 'package:atlasmart/presentation/login/screen_login.dart';
 import 'package:flutter/material.dart';

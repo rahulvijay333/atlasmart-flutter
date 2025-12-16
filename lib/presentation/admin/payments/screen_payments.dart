@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../common/admin_search_bar.dart';
-import '../../../../domain/constants/strings.dart';
+import '../../../domain/core/constants/strings.dart';
 
 class ScreenAdminPayments extends StatelessWidget {
   const ScreenAdminPayments({super.key});
