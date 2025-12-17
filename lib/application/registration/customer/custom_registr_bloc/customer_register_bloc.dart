@@ -21,6 +21,22 @@ class CustomerRegisterBloc
           event.customer,
         );
 
+        if (res.$1 == true) {
+          emit(_verifyOtp(customer: res.$2));
+        } else {
+          emit(_failure(message: ''));
+        }
+      } catch (e) {
+        emit(_failure(message: e.toString()));
+      }
+    });
+
+    on<_VerifyOtpButtonClick>((event, emit) async {
+      emit(CustomerRegisterState.verifyOtpLoading());
+
+      try {
+        final res = await customerRegService.customerOtpVerify(event.customer);
+
         if (res == true) {
           emit(_success());
         } else {

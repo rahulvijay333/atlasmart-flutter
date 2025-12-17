@@ -10,7 +10,9 @@ class RegistrationServiceImpl implements RegistrationService {
   RegistrationServiceImpl({required this.dio});
 
   @override
-  Future<bool> customerRegistration(CustomerRegisterModel customer) async {
+  Future<(bool, CustomerRegisterModel)> customerRegistration(
+    CustomerRegisterModel customer,
+  ) async {
     try {
       final res = await dio.post(
         "/api/auth/register",
@@ -21,6 +23,23 @@ class RegistrationServiceImpl implements RegistrationService {
         },
       );
       if (res.statusCode == 201) {
+        return (true, customer);
+      } else {
+        return (false, customer);
+      }
+    } on DioException catch (e) {
+      throw DioErrorHandler.handle(e);
+    }
+  }
+
+  @override
+  Future<bool> customerOtpVerify(CustomerRegisterModel customer) async {
+    try {
+      final res = await dio.post(
+        "/api/auth/verify-otp",
+        data: {"email": customer.email, "otp": customer.otp},
+      );
+      if (res.statusCode == 200) {
         return true;
       } else {
         return false;

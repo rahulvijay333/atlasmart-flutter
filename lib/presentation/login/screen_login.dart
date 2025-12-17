@@ -199,17 +199,6 @@ class _ScreenLoginState extends State<ScreenLogin> {
                     ),
                   ],
                 ),
-
-                Column(
-                  children: [
-                    Text(
-                      'Credentials for Testing',
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    Text('admin@test.com and password "1234"'),
-                    Text('user@test.com and password "1234"'),
-                  ],
-                ),
               ],
             ),
           ),
