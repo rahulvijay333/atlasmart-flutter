@@ -7,7 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../application/auth/auth_bloc.dart';
 import '../admin/main/screen_admin_main.dart';
-import '../customer/home/screen_home.dart';
 
 class ScreenSplash extends StatefulWidget {
   const ScreenSplash({super.key});

@@ -55,12 +55,13 @@ extension CustomerRegisterEventPatterns on CustomerRegisterEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _initial value)?  initial,TResult Function( _CreateAccount value)?  createAccount,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _initial value)?  initial,TResult Function( _CreateAccount value)?  createAccount,TResult Function( _VerifyOtpButtonClick value)?  verifyOtpButtonClick,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _initial() when initial != null:
 return initial(_that);case _CreateAccount() when createAccount != null:
-return createAccount(_that);case _:
+return createAccount(_that);case _VerifyOtpButtonClick() when verifyOtpButtonClick != null:
+return verifyOtpButtonClick(_that);case _:
   return orElse();
 
 }
@@ -78,12 +79,13 @@ return createAccount(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _initial value)  initial,required TResult Function( _CreateAccount value)  createAccount,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _initial value)  initial,required TResult Function( _CreateAccount value)  createAccount,required TResult Function( _VerifyOtpButtonClick value)  verifyOtpButtonClick,}){
 final _that = this;
 switch (_that) {
 case _initial():
 return initial(_that);case _CreateAccount():
-return createAccount(_that);case _:
+return createAccount(_that);case _VerifyOtpButtonClick():
+return verifyOtpButtonClick(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -100,12 +102,13 @@ return createAccount(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _initial value)?  initial,TResult? Function( _CreateAccount value)?  createAccount,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _initial value)?  initial,TResult? Function( _CreateAccount value)?  createAccount,TResult? Function( _VerifyOtpButtonClick value)?  verifyOtpButtonClick,}){
 final _that = this;
 switch (_that) {
 case _initial() when initial != null:
 return initial(_that);case _CreateAccount() when createAccount != null:
-return createAccount(_that);case _:
+return createAccount(_that);case _VerifyOtpButtonClick() when verifyOtpButtonClick != null:
+return verifyOtpButtonClick(_that);case _:
   return null;
 
 }
@@ -122,11 +125,12 @@ return createAccount(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function( CustomerRegisterModel customer)?  createAccount,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function( CustomerRegisterModel customer)?  createAccount,TResult Function( CustomerRegisterModel customer)?  verifyOtpButtonClick,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _initial() when initial != null:
 return initial();case _CreateAccount() when createAccount != null:
-return createAccount(_that.customer);case _:
+return createAccount(_that.customer);case _VerifyOtpButtonClick() when verifyOtpButtonClick != null:
+return verifyOtpButtonClick(_that.customer);case _:
   return orElse();
 
 }
@@ -144,11 +148,12 @@ return createAccount(_that.customer);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function( CustomerRegisterModel customer)  createAccount,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function( CustomerRegisterModel customer)  createAccount,required TResult Function( CustomerRegisterModel customer)  verifyOtpButtonClick,}) {final _that = this;
 switch (_that) {
 case _initial():
 return initial();case _CreateAccount():
-return createAccount(_that.customer);case _:
+return createAccount(_that.customer);case _VerifyOtpButtonClick():
+return verifyOtpButtonClick(_that.customer);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -165,11 +170,12 @@ return createAccount(_that.customer);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function( CustomerRegisterModel customer)?  createAccount,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function( CustomerRegisterModel customer)?  createAccount,TResult? Function( CustomerRegisterModel customer)?  verifyOtpButtonClick,}) {final _that = this;
 switch (_that) {
 case _initial() when initial != null:
 return initial();case _CreateAccount() when createAccount != null:
-return createAccount(_that.customer);case _:
+return createAccount(_that.customer);case _VerifyOtpButtonClick() when verifyOtpButtonClick != null:
+return verifyOtpButtonClick(_that.customer);case _:
   return null;
 
 }
@@ -267,6 +273,72 @@ class __$CreateAccountCopyWithImpl<$Res>
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? customer = null,}) {
   return _then(_CreateAccount(
+customer: null == customer ? _self.customer : customer // ignore: cast_nullable_to_non_nullable
+as CustomerRegisterModel,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class _VerifyOtpButtonClick implements CustomerRegisterEvent {
+  const _VerifyOtpButtonClick({required this.customer});
+  
+
+ final  CustomerRegisterModel customer;
+
+/// Create a copy of CustomerRegisterEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$VerifyOtpButtonClickCopyWith<_VerifyOtpButtonClick> get copyWith => __$VerifyOtpButtonClickCopyWithImpl<_VerifyOtpButtonClick>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _VerifyOtpButtonClick&&(identical(other.customer, customer) || other.customer == customer));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,customer);
+
+@override
+String toString() {
+  return 'CustomerRegisterEvent.verifyOtpButtonClick(customer: $customer)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$VerifyOtpButtonClickCopyWith<$Res> implements $CustomerRegisterEventCopyWith<$Res> {
+  factory _$VerifyOtpButtonClickCopyWith(_VerifyOtpButtonClick value, $Res Function(_VerifyOtpButtonClick) _then) = __$VerifyOtpButtonClickCopyWithImpl;
+@useResult
+$Res call({
+ CustomerRegisterModel customer
+});
+
+
+
+
+}
+/// @nodoc
+class __$VerifyOtpButtonClickCopyWithImpl<$Res>
+    implements _$VerifyOtpButtonClickCopyWith<$Res> {
+  __$VerifyOtpButtonClickCopyWithImpl(this._self, this._then);
+
+  final _VerifyOtpButtonClick _self;
+  final $Res Function(_VerifyOtpButtonClick) _then;
+
+/// Create a copy of CustomerRegisterEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? customer = null,}) {
+  return _then(_VerifyOtpButtonClick(
 customer: null == customer ? _self.customer : customer // ignore: cast_nullable_to_non_nullable
 as CustomerRegisterModel,
   ));
@@ -398,12 +470,12 @@ return failure(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function()?  verifyOtp,TResult Function()?  verifyOtpLoading,TResult Function()?  success,TResult Function( String message)?  failure,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( CustomerRegisterModel customer)?  verifyOtp,TResult Function()?  verifyOtpLoading,TResult Function()?  success,TResult Function( String message)?  failure,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _loading() when loading != null:
 return loading();case _verifyOtp() when verifyOtp != null:
-return verifyOtp();case _verifyOtpLoading() when verifyOtpLoading != null:
+return verifyOtp(_that.customer);case _verifyOtpLoading() when verifyOtpLoading != null:
 return verifyOtpLoading();case _success() when success != null:
 return success();case _failure() when failure != null:
 return failure(_that.message);case _:
@@ -424,12 +496,12 @@ return failure(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function()  verifyOtp,required TResult Function()  verifyOtpLoading,required TResult Function()  success,required TResult Function( String message)  failure,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( CustomerRegisterModel customer)  verifyOtp,required TResult Function()  verifyOtpLoading,required TResult Function()  success,required TResult Function( String message)  failure,}) {final _that = this;
 switch (_that) {
 case _Initial():
 return initial();case _loading():
 return loading();case _verifyOtp():
-return verifyOtp();case _verifyOtpLoading():
+return verifyOtp(_that.customer);case _verifyOtpLoading():
 return verifyOtpLoading();case _success():
 return success();case _failure():
 return failure(_that.message);case _:
@@ -449,12 +521,12 @@ return failure(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function()?  verifyOtp,TResult? Function()?  verifyOtpLoading,TResult? Function()?  success,TResult? Function( String message)?  failure,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( CustomerRegisterModel customer)?  verifyOtp,TResult? Function()?  verifyOtpLoading,TResult? Function()?  success,TResult? Function( String message)?  failure,}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _loading() when loading != null:
 return loading();case _verifyOtp() when verifyOtp != null:
-return verifyOtp();case _verifyOtpLoading() when verifyOtpLoading != null:
+return verifyOtp(_that.customer);case _verifyOtpLoading() when verifyOtpLoading != null:
 return verifyOtpLoading();case _success() when success != null:
 return success();case _failure() when failure != null:
 return failure(_that.message);case _:
@@ -533,33 +605,67 @@ String toString() {
 
 
 class _verifyOtp implements CustomerRegisterState {
-  const _verifyOtp();
+  const _verifyOtp({required this.customer});
   
 
+ final  CustomerRegisterModel customer;
 
-
+/// Create a copy of CustomerRegisterState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$verifyOtpCopyWith<_verifyOtp> get copyWith => __$verifyOtpCopyWithImpl<_verifyOtp>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _verifyOtp);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _verifyOtp&&(identical(other.customer, customer) || other.customer == customer));
 }
 
 
 @override
-int get hashCode => runtimeType.hashCode;
+int get hashCode => Object.hash(runtimeType,customer);
 
 @override
 String toString() {
-  return 'CustomerRegisterState.verifyOtp()';
+  return 'CustomerRegisterState.verifyOtp(customer: $customer)';
 }
 
 
 }
 
+/// @nodoc
+abstract mixin class _$verifyOtpCopyWith<$Res> implements $CustomerRegisterStateCopyWith<$Res> {
+  factory _$verifyOtpCopyWith(_verifyOtp value, $Res Function(_verifyOtp) _then) = __$verifyOtpCopyWithImpl;
+@useResult
+$Res call({
+ CustomerRegisterModel customer
+});
 
 
+
+
+}
+/// @nodoc
+class __$verifyOtpCopyWithImpl<$Res>
+    implements _$verifyOtpCopyWith<$Res> {
+  __$verifyOtpCopyWithImpl(this._self, this._then);
+
+  final _verifyOtp _self;
+  final $Res Function(_verifyOtp) _then;
+
+/// Create a copy of CustomerRegisterState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? customer = null,}) {
+  return _then(_verifyOtp(
+customer: null == customer ? _self.customer : customer // ignore: cast_nullable_to_non_nullable
+as CustomerRegisterModel,
+  ));
+}
+
+
+}
 
 /// @nodoc
 

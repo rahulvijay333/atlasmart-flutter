@@ -1,6 +1,7 @@
 import 'package:atlasmart/domain/core/constants/font.dart';
 import 'package:atlasmart/domain/core/constants/strings.dart';
 import 'package:atlasmart/domain/registration/model/customer_register_model.dart';
+import 'package:atlasmart/presentation/customer/registration/screen_otp_verify.dart';
 import 'package:atlasmart/presentation/customer/registration/screen_register_success.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -109,11 +110,15 @@ class _ScreenRegisterState extends State<ScreenRegister> {
                   SizedBox(height: 15),
                   BlocConsumer<CustomerRegisterBloc, CustomerRegisterState>(
                     listener: (context, state) {
-                      state.when(
-                        initial: () {},
-                        loading: () {},
-                        verifyOtp: () {},
-                        verifyOtpLoading: () {},
+                      state.whenOrNull(
+                        verifyOtp: (customer) {
+                          Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  ScreenOtpVerify(customer: customer),
+                            ),
+                          );
+                        },
 
                         success: () {
                           Navigator.of(context).pushReplacement(
