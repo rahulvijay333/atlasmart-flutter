@@ -1,3 +1,4 @@
+import 'package:atlasmart/application/forgot_password/forgot_password_bloc.dart';
 import 'package:atlasmart/application/login/login_bloc.dart';
 import 'package:atlasmart/domain/core/constants/image.dart';
 import 'package:atlasmart/presentation/customer/main/screen_main.dart';
@@ -10,6 +11,7 @@ import '../../domain/core/constants/constants.dart';
 import '../../domain/core/constants/strings.dart';
 import '../common/button_widget.dart';
 import '../common/snack_bar.dart';
+import 'screen_forgot_password.dart';
 
 class ScreenLogin extends StatefulWidget {
   const ScreenLogin({super.key});
@@ -109,13 +111,14 @@ class _ScreenLoginState extends State<ScreenLogin> {
                       children: [
                         TextButton(
                           onPressed: () {
-                            // Navigator.of(context).push(
-                            //   MaterialPageRoute(
-                            //     builder: (context) {
-                            //       return ScreenRegister();
-                            //     },
-                            //   ),
-                            // );
+                            BlocProvider.of<ForgotPasswordBloc>(context).add(ForgotPasswordEvent.reset());
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return ScreenForgotPassword();
+                                },
+                              ),
+                            );
                           },
                           child: Text(
                             'Forgot Password ?',

@@ -1,3 +1,4 @@
+import 'package:atlasmart/domain/endpoints/api_endpoints.dart';
 import 'package:atlasmart/domain/registration/model/customer_register_model.dart';
 import 'package:atlasmart/domain/registration/registration_service.dart';
 import 'package:dio/dio.dart';
@@ -15,7 +16,7 @@ class RegistrationServiceImpl implements RegistrationService {
   ) async {
     try {
       final res = await dio.post(
-        "/api/auth/register",
+        ApiEndpoints.customerRegister,
         data: {
           "email": customer.email,
           "password": customer.password,
@@ -36,7 +37,7 @@ class RegistrationServiceImpl implements RegistrationService {
   Future<bool> customerOtpVerify(CustomerRegisterModel customer) async {
     try {
       final res = await dio.post(
-        "/api/auth/verify-otp",
+        ApiEndpoints.verifyOtp,
         data: {"email": customer.email, "otp": customer.otp},
       );
       if (res.statusCode == 200) {

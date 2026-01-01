@@ -1,5 +1,7 @@
+import 'package:atlasmart/application/forgot_password/forgot_password_bloc.dart';
 import 'package:atlasmart/application/login/login_bloc.dart';
 import 'package:atlasmart/application/registration/customer/custom_registr_bloc/customer_register_bloc.dart';
+import 'package:atlasmart/domain/endpoints/api_endpoints.dart';
 import 'package:atlasmart/domain/login/login_service.dart';
 import 'package:atlasmart/domain/token/token_service.dart';
 import 'package:atlasmart/infrastructure/login/login_service_impl.dart';
@@ -30,7 +32,7 @@ void setupDI() {
   // 2. Dio
   // -------------------------
   sl.registerLazySingleton<Dio>(() {
-    final dio = Dio(BaseOptions(baseUrl: 'http://10.0.2.2:3000'));
+    final dio = Dio(BaseOptions(baseUrl: ApiEndpoints.baseUrl));
 
     dio.interceptors.add(
       DioInterceptor(sl<TokenStorage>(), sl<TokenService>()),
@@ -56,8 +58,10 @@ void setupDI() {
   sl.registerFactory<LoginBloc>(
     () => LoginBloc(loginService: sl<LoginService>()),
   );
+  sl.registerFactory<ForgotPasswordBloc>(
+    () => ForgotPasswordBloc(sl<LoginService>()),
+  );
   sl.registerFactory<CustomerRegisterBloc>(
     () => CustomerRegisterBloc(sl<RegistrationService>()),
   );
 }
-
