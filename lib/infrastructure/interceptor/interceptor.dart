@@ -9,7 +9,7 @@ class DioInterceptor extends Interceptor {
 
   bool refreshing = false;
 
-  DioInterceptor(this.storage,this.tokenService);
+  DioInterceptor(this.storage, this.tokenService);
 
   @override
   void onRequest(
@@ -38,7 +38,11 @@ class DioInterceptor extends Interceptor {
       final refresh = await storage.getRefreshToken();
       if (refresh != null) {
         final tokens = await tokenService.refresh(refresh);
-        await storage.saveTokens(tokens.accessToken, tokens.refreshToken,tokens.role);
+        await storage.saveTokens(
+          tokens.accessToken,
+          tokens.refreshToken,
+          tokens.role,
+        );
       }
     } catch (_) {
       await storage.clear();

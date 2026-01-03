@@ -1,3 +1,4 @@
+import 'package:atlasmart/application/forgot_password/forgot_password_bloc.dart';
 import 'package:atlasmart/application/login/login_bloc.dart';
 import 'package:atlasmart/domain/core/constants/image.dart';
 import 'package:atlasmart/presentation/customer/main/screen_main.dart';
@@ -10,6 +11,8 @@ import '../../domain/core/constants/constants.dart';
 import '../../domain/core/constants/strings.dart';
 import '../common/button_widget.dart';
 import '../common/snack_bar.dart';
+import 'screen_forgot_password.dart';
+import 'screen_otp_verify.dart';
 
 class ScreenLogin extends StatefulWidget {
   const ScreenLogin({super.key});
@@ -21,6 +24,7 @@ class ScreenLogin extends StatefulWidget {
 class _ScreenLoginState extends State<ScreenLogin> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  bool showpassword = false;
 
   @override
   void dispose() {
@@ -98,8 +102,21 @@ class _ScreenLoginState extends State<ScreenLogin> {
 
                     TextFormField(
                       controller: _passwordController,
-                      obscureText: true,
+                      obscureText: !showpassword,
                       decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              showpassword = !showpassword;
+                            });
+                          },
+                          icon: Icon(
+                            showpassword
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                            color: Colors.grey,
+                          ),
+                        ),
                         hintText: AppStrings.passwordHint,
                       ),
                     ),
@@ -109,13 +126,16 @@ class _ScreenLoginState extends State<ScreenLogin> {
                       children: [
                         TextButton(
                           onPressed: () {
-                            // Navigator.of(context).push(
-                            //   MaterialPageRoute(
-                            //     builder: (context) {
-                            //       return ScreenRegister();
-                            //     },
-                            //   ),
-                            // );
+                            BlocProvider.of<ForgotPasswordBloc>(
+                              context,
+                            ).add(ForgotPasswordEvent.reset());
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return ScreenForgotPassword();
+                                },
+                              ),
+                            );
                           },
                           child: Text(
                             'Forgot Password ?',
@@ -129,9 +149,18 @@ class _ScreenLoginState extends State<ScreenLogin> {
                     ),
                     BlocConsumer<LoginBloc, LoginState>(
                       listener: (context, state) {
-                        state.map(
+                        state.mapOrNull(
                           initial: (_) {},
                           loading: (_) {},
+                          notverified: (value) {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    ScreenOtpVerify(value.user),
+                              ),
+                            );
+                          },
+
                           failure: (state) {
                             AppSnackBar.show(context, state.message);
                           },

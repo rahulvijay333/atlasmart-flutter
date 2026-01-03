@@ -1,3 +1,4 @@
+import 'package:atlasmart/application/forgot_password/forgot_password_bloc.dart';
 import 'package:atlasmart/application/login/login_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,7 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'application/auth/auth_bloc.dart';
 import 'application/registration/customer/custom_registr_bloc/customer_register_bloc.dart';
 import 'domain/core/di/di.dart';
-import 'presentation/customer/registration/screen_set_password.dart';
 import 'presentation/splash/screen_splash.dart';
 
 void main() async {
@@ -39,6 +39,8 @@ class _MainAppState extends State<MainApp> {
 
         BlocProvider(create: (context) => sl<CustomerRegisterBloc>()),
         BlocProvider(create: (context) => sl<CustomerRegisterBloc>()),
+
+        BlocProvider(create: (context) => sl<ForgotPasswordBloc>()),
       ],
 
       child: MaterialApp(

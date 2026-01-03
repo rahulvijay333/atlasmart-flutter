@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../../domain/core/constants/strings.dart';
 
 class CatgoryMiniTileWidget extends StatelessWidget {
-  const CatgoryMiniTileWidget({
-    super.key,
-  });
+  const CatgoryMiniTileWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +15,10 @@ class CatgoryMiniTileWidget extends StatelessWidget {
             color: Theme.of(context).colorScheme.surfaceContainerHighest,
             shape: BoxShape.circle,
           ),
-          child: Icon(Icons.category, color: Theme.of(context).colorScheme.primary),
+          child: Icon(
+            Icons.category,
+            color: Theme.of(context).colorScheme.primary,
+          ),
         ),
         const SizedBox(height: 4),
         Text(
@@ -30,4 +31,3 @@ class CatgoryMiniTileWidget extends StatelessWidget {
     );
   }
 }
-

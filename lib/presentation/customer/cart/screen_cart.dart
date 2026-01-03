@@ -13,9 +13,12 @@ class ScreenCart extends StatelessWidget {
           pinned: true,
           centerTitle: true,
           backgroundColor: Colors.white,
-          title: Text(AppStrings.cart,
-              style:
-                  Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
+          title: Text(
+            AppStrings.cart,
+            style: Theme.of(
+              context,
+            ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+          ),
         ),
         SliverFillRemaining(child: Center(child: Text(AppStrings.noItems))),
       ],

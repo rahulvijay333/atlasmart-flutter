@@ -7,5 +7,13 @@ class LoginEvent with _$LoginEvent {
     required String password,
   }) = _LoginButtonClickEvent;
 
+  const factory LoginEvent.sendOtpButtonClick({required String email}) =
+      _sendOtpButtonClick;
+
+  const factory LoginEvent.verifyAccountButtonClick({
+    required String email,
+    required String otp,
+  }) = _verifyAccountButtonClick;
+
   const factory LoginEvent.logOutButtonClick() = _LogOutButtonClick;
 }

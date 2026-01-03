@@ -50,7 +50,10 @@ class ScreenAdminProducts extends StatelessWidget {
                           color: Colors.grey[100],
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        child: const Icon(Icons.image_outlined, color: Colors.grey),
+                        child: const Icon(
+                          Icons.image_outlined,
+                          color: Colors.grey,
+                        ),
                       ),
                       const SizedBox(width: 16),
                       // Details
@@ -74,7 +77,11 @@ class ScreenAdminProducts extends StatelessWidget {
                                   ),
                                 ),
                                 PopupMenuButton(
-                                  icon: const Icon(Icons.more_vert, size: 20, color: Colors.grey),
+                                  icon: const Icon(
+                                    Icons.more_vert,
+                                    size: 20,
+                                    color: Colors.grey,
+                                  ),
                                   onSelected: (value) {
                                     if (value == 'edit') {
                                       Navigator.push(
@@ -83,7 +90,8 @@ class ScreenAdminProducts extends StatelessWidget {
                                           builder: (context) => ScreenAddProduct(
                                             isEdit: true,
                                             productData: {
-                                              'name': 'Premium Product Name $index',
+                                              'name':
+                                                  'Premium Product Name $index',
                                               'price': sellingPrice,
                                               'mrp': mrp,
                                               'stock': stock,
@@ -95,8 +103,17 @@ class ScreenAdminProducts extends StatelessWidget {
                                     }
                                   },
                                   itemBuilder: (context) => [
-                                    const PopupMenuItem(value: 'edit', child: Text(AppStrings.edit)),
-                                    const PopupMenuItem(value: 'delete', child: Text(AppStrings.delete, style: TextStyle(color: Colors.red))),
+                                    const PopupMenuItem(
+                                      value: 'edit',
+                                      child: Text(AppStrings.edit),
+                                    ),
+                                    const PopupMenuItem(
+                                      value: 'delete',
+                                      child: Text(
+                                        AppStrings.delete,
+                                        style: TextStyle(color: Colors.red),
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ],
@@ -105,15 +122,24 @@ class ScreenAdminProducts extends StatelessWidget {
                             Row(
                               children: [
                                 Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 6,
+                                    vertical: 2,
+                                  ),
                                   decoration: BoxDecoration(
-                                    color: isActive ? Colors.green.withValues(alpha: 0.1) : Colors.red.withValues(alpha: 0.1),
+                                    color: isActive
+                                        ? Colors.green.withValues(alpha: 0.1)
+                                        : Colors.red.withValues(alpha: 0.1),
                                     borderRadius: BorderRadius.circular(4),
                                   ),
                                   child: Text(
-                                    isActive ? AppStrings.active : AppStrings.inactive,
+                                    isActive
+                                        ? AppStrings.active
+                                        : AppStrings.inactive,
                                     style: TextStyle(
-                                      color: isActive ? Colors.green : Colors.red,
+                                      color: isActive
+                                          ? Colors.green
+                                          : Colors.red,
                                       fontSize: 10,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -152,7 +178,10 @@ class ScreenAdminProducts extends StatelessWidget {
                                 ),
                                 const SizedBox(width: 8),
                                 Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 6,
+                                    vertical: 2,
+                                  ),
                                   decoration: BoxDecoration(
                                     color: Colors.green.shade50,
                                     borderRadius: BorderRadius.circular(4),
@@ -173,17 +202,23 @@ class ScreenAdminProducts extends StatelessWidget {
                             Row(
                               children: [
                                 Icon(
-                                  stock > 0 ? Icons.check_circle_outline : Icons.error_outline,
+                                  stock > 0
+                                      ? Icons.check_circle_outline
+                                      : Icons.error_outline,
                                   size: 14,
                                   color: stock > 0 ? Colors.green : Colors.red,
                                 ),
                                 const SizedBox(width: 4),
                                 Text(
-                                  stock > 0 ? '$stock ${AppStrings.inStock}' : AppStrings.outOfStock,
+                                  stock > 0
+                                      ? '$stock ${AppStrings.inStock}'
+                                      : AppStrings.outOfStock,
                                   style: TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.w600,
-                                    color: stock > 0 ? Colors.green : Colors.red,
+                                    color: stock > 0
+                                        ? Colors.green
+                                        : Colors.red,
                                   ),
                                 ),
                               ],

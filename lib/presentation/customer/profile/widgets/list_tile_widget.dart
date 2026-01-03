@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-
-
 class ListTileWidget extends StatelessWidget {
   const ListTileWidget({
     super.key,
@@ -27,8 +25,11 @@ class ListTileWidget extends StatelessWidget {
           color: Theme.of(context).colorScheme.primaryContainer,
           shape: BoxShape.rectangle,
         ),
-        child: Icon(Icons.api,
-            size: 20, color: Theme.of(context).colorScheme.onPrimaryContainer),
+        child: Icon(
+          Icons.api,
+          size: 20,
+          color: Theme.of(context).colorScheme.onPrimaryContainer,
+        ),
       ),
       title: Text(title, style: Theme.of(context).textTheme.bodyLarge),
       subtitle: subTitle != null ? Text(subTitle ?? '') : null,

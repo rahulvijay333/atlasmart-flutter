@@ -54,16 +54,16 @@ class _StockUpdateSheetState extends State<StockUpdateSheet> {
           const SizedBox(height: 24),
           Text(
             'Update Stock',
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+            style: Theme.of(
+              context,
+            ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 8),
           Text(
             widget.productName,
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: Colors.grey[600],
-                ),
+            style: Theme.of(
+              context,
+            ).textTheme.bodyLarge?.copyWith(color: Colors.grey[600]),
           ),
           const SizedBox(height: 32),
           Row(
@@ -87,14 +87,14 @@ class _StockUpdateSheetState extends State<StockUpdateSheet> {
                       _stockChange > 0
                           ? '+$_stockChange'
                           : _stockChange < 0
-                              ? '$_stockChange'
-                              : 'No Change',
+                          ? '$_stockChange'
+                          : 'No Change',
                       style: TextStyle(
                         color: _stockChange > 0
                             ? Colors.green
                             : _stockChange < 0
-                                ? Colors.red
-                                : Colors.grey,
+                            ? Colors.red
+                            : Colors.grey,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -105,12 +105,12 @@ class _StockUpdateSheetState extends State<StockUpdateSheet> {
             ],
           ),
           const SizedBox(height: 16),
-           Row(
-             mainAxisAlignment: MainAxisAlignment.center,
-             children: [
-               TextButton(onPressed: (){}, child: Text("Set Exact Amount")),
-             ],
-           ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextButton(onPressed: () {}, child: Text("Set Exact Amount")),
+            ],
+          ),
           const SizedBox(height: 32),
           SizedBox(
             width: double.infinity,

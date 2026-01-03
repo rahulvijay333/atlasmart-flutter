@@ -48,7 +48,10 @@ class ScreenInventory extends StatelessWidget {
                           color: Colors.grey[100],
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        child: const Icon(Icons.image_outlined, color: Colors.grey),
+                        child: const Icon(
+                          Icons.image_outlined,
+                          color: Colors.grey,
+                        ),
                       ),
                       const SizedBox(width: 16),
                       // Details
@@ -78,7 +81,11 @@ class ScreenInventory extends StatelessWidget {
                             const SizedBox(height: 12),
                             Row(
                               children: [
-                                _buildStockBadge(stock, isLowStock, isOutOfStock),
+                                _buildStockBadge(
+                                  stock,
+                                  isLowStock,
+                                  isOutOfStock,
+                                ),
                                 const Spacer(),
                                 InkWell(
                                   onTap: () {
@@ -87,16 +94,22 @@ class ScreenInventory extends StatelessWidget {
                                       isScrollControlled: true,
                                       backgroundColor: Colors.transparent,
                                       builder: (_) => StockUpdateSheet(
-                                        productName: 'Premium Product Item #$index',
+                                        productName:
+                                            'Premium Product Item #$index',
                                         currentStock: stock,
                                       ),
                                     );
                                   },
                                   borderRadius: BorderRadius.circular(8),
                                   child: Container(
-                                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 12,
+                                      vertical: 6,
+                                    ),
                                     decoration: BoxDecoration(
-                                      color: Theme.of(context).primaryColor.withValues(alpha: 0.1),
+                                      color: Theme.of(
+                                        context,
+                                      ).primaryColor.withValues(alpha: 0.1),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     child: Text(

@@ -4,9 +4,13 @@ part of 'customer_register_bloc.dart';
 class CustomerRegisterState with _$CustomerRegisterState {
   const factory CustomerRegisterState.initial() = _Initial;
   const factory CustomerRegisterState.loading() = _loading;
+  const factory CustomerRegisterState.sendOtp({    required CustomerRegisterModel customer}) = _sendOtp;
+  
+  const factory CustomerRegisterState.sendOtpLoading() = _sendOtpLoading;
+  const factory CustomerRegisterState.sendOtpFailed({required String message,required CustomerRegisterModel customer}) = _sendOtpFailed;
 
   const factory CustomerRegisterState.verifyOtp({
-   required CustomerRegisterModel customer
+    required CustomerRegisterModel customer,
   }) = _verifyOtp;
   const factory CustomerRegisterState.verifyOtpLoading() = _verifyOtpLoading;
 

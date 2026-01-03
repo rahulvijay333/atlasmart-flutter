@@ -13,7 +13,8 @@ class AppDialog {
     bool barrierDismissible = false,
   }) {
     return showDialog<bool>(
-      context: context,  useRootNavigator: true,
+      context: context,
+      useRootNavigator: true,
       barrierDismissible: barrierDismissible,
       builder: (context) {
         return AlertDialog(
@@ -22,7 +23,8 @@ class AppDialog {
           ),
           title: Text(
             title,
-            style: AppFont.title16Style,textAlign: TextAlign.center,
+            style: AppFont.title16Style,
+            textAlign: TextAlign.center,
           ),
           content: Text(
             description,
@@ -36,7 +38,7 @@ class AppDialog {
             TextButton(
               onPressed: () {
                 onNegativePressed?.call();
-                Navigator.of(context,rootNavigator: true).pop(false);
+                Navigator.of(context, rootNavigator: true).pop(false);
               },
               child: Text(negativeText),
             ),
@@ -48,7 +50,7 @@ class AppDialog {
               ),
               onPressed: () {
                 onPositivePressed?.call();
-                Navigator.of(context,rootNavigator: true).pop(true);
+                Navigator.of(context, rootNavigator: true).pop(true);
               },
               child: Text(positiveText),
             ),

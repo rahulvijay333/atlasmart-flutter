@@ -4,11 +4,7 @@ class ScreenAddProduct extends StatefulWidget {
   final bool isEdit;
   final Map<String, dynamic>? productData;
 
-  const ScreenAddProduct({
-    super.key,
-    this.isEdit = false,
-    this.productData,
-  });
+  const ScreenAddProduct({super.key, this.isEdit = false, this.productData});
 
   @override
   State<ScreenAddProduct> createState() => _ScreenAddProductState();
@@ -30,14 +26,30 @@ class _ScreenAddProductState extends State<ScreenAddProduct> {
   void initState() {
     super.initState();
     _isActive = widget.productData?['isActive'] ?? true;
-    _nameController = TextEditingController(text: widget.productData?['name'] ?? '');
-    _brandController = TextEditingController(text: widget.productData?['brand'] ?? '');
-    _descController = TextEditingController(text: widget.productData?['description'] ?? '');
-    _mrpController = TextEditingController(text: widget.productData?['mrp']?.toString() ?? '');
-    _priceController = TextEditingController(text: widget.productData?['price']?.toString() ?? '');
-    _gstController = TextEditingController(text: widget.productData?['gst']?.toString() ?? '');
-    _stockController = TextEditingController(text: widget.productData?['stock']?.toString() ?? '');
-    _skuController = TextEditingController(text: widget.productData?['sku'] ?? '');
+    _nameController = TextEditingController(
+      text: widget.productData?['name'] ?? '',
+    );
+    _brandController = TextEditingController(
+      text: widget.productData?['brand'] ?? '',
+    );
+    _descController = TextEditingController(
+      text: widget.productData?['description'] ?? '',
+    );
+    _mrpController = TextEditingController(
+      text: widget.productData?['mrp']?.toString() ?? '',
+    );
+    _priceController = TextEditingController(
+      text: widget.productData?['price']?.toString() ?? '',
+    );
+    _gstController = TextEditingController(
+      text: widget.productData?['gst']?.toString() ?? '',
+    );
+    _stockController = TextEditingController(
+      text: widget.productData?['stock']?.toString() ?? '',
+    );
+    _skuController = TextEditingController(
+      text: widget.productData?['sku'] ?? '',
+    );
     _category = widget.productData?['category'] ?? 'Electronics';
   }
 
@@ -80,10 +92,14 @@ class _ScreenAddProductState extends State<ScreenAddProduct> {
           },
           style: ElevatedButton.styleFrom(
             padding: const EdgeInsets.symmetric(vertical: 16),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
           ),
-          child: Text(widget.isEdit ? 'Update Product' : 'Save Product', 
-            style: const TextStyle(fontSize: 16)),
+          child: Text(
+            widget.isEdit ? 'Update Product' : 'Save Product',
+            style: const TextStyle(fontSize: 16),
+          ),
         ),
       ),
       body: SingleChildScrollView(
@@ -94,9 +110,15 @@ class _ScreenAddProductState extends State<ScreenAddProduct> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               decoration: BoxDecoration(
-                color: _isActive ? Colors.green.withValues(alpha: 0.1) : Colors.red.withValues(alpha: 0.1),
+                color: _isActive
+                    ? Colors.green.withValues(alpha: 0.1)
+                    : Colors.red.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: _isActive ? Colors.green.withValues(alpha: 0.3) : Colors.red.withValues(alpha: 0.3)),
+                border: Border.all(
+                  color: _isActive
+                      ? Colors.green.withValues(alpha: 0.3)
+                      : Colors.red.withValues(alpha: 0.3),
+                ),
               ),
               child: SwitchListTile(
                 contentPadding: EdgeInsets.zero,
@@ -107,7 +129,9 @@ class _ScreenAddProductState extends State<ScreenAddProduct> {
                     color: _isActive ? Colors.green : Colors.red,
                   ),
                 ),
-                subtitle: const Text('Inactive products will be hidden from users'),
+                subtitle: const Text(
+                  'Inactive products will be hidden from users',
+                ),
                 value: _isActive,
                 activeTrackColor: Colors.green,
                 activeThumbColor: Colors.white,
@@ -118,7 +142,7 @@ class _ScreenAddProductState extends State<ScreenAddProduct> {
             ),
             const SizedBox(height: 24),
 
-             Column(
+            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
@@ -135,14 +159,22 @@ class _ScreenAddProductState extends State<ScreenAddProduct> {
                         width: 100,
                         margin: const EdgeInsets.only(right: 12),
                         decoration: BoxDecoration(
-                          border: Border.all(color: Theme.of(context).primaryColor, style: BorderStyle.none),
-                          color: Theme.of(context).primaryColor.withValues(alpha: 0.1),
+                          border: Border.all(
+                            color: Theme.of(context).primaryColor,
+                            style: BorderStyle.none,
+                          ),
+                          color: Theme.of(
+                            context,
+                          ).primaryColor.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.add_a_photo, color: Theme.of(context).primaryColor),
+                            Icon(
+                              Icons.add_a_photo,
+                              color: Theme.of(context).primaryColor,
+                            ),
                             const SizedBox(height: 4),
                             Text(
                               'Upload',
@@ -162,22 +194,35 @@ class _ScreenAddProductState extends State<ScreenAddProduct> {
                 ),
                 const SizedBox(height: 24),
 
-                const Text('Basic Details',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                const SizedBox(height: 16),
-                _buildTextField(controller: _nameController, label: 'Product Name', hint: 'Ex. Wireless Headphones'),
-                const SizedBox(height: 16),
-                 _buildTextField(controller: _brandController, label: 'Brand', hint: 'Ex. Boat, Samsung'),
+                const Text(
+                  'Basic Details',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                ),
                 const SizedBox(height: 16),
                 _buildTextField(
-                    controller: _descController,
-                    label: 'Description',
-                    hint: 'Enter product details...',
-                    maxLines: 4),
+                  controller: _nameController,
+                  label: 'Product Name',
+                  hint: 'Ex. Wireless Headphones',
+                ),
+                const SizedBox(height: 16),
+                _buildTextField(
+                  controller: _brandController,
+                  label: 'Brand',
+                  hint: 'Ex. Boat, Samsung',
+                ),
+                const SizedBox(height: 16),
+                _buildTextField(
+                  controller: _descController,
+                  label: 'Description',
+                  hint: 'Enter product details...',
+                  maxLines: 4,
+                ),
                 const SizedBox(height: 24),
 
-                const Text('Pricing & Tax (Indian Market)',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                const Text(
+                  'Pricing & Tax (Indian Market)',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                ),
                 const SizedBox(height: 16),
                 Row(
                   children: [
@@ -212,18 +257,32 @@ class _ScreenAddProductState extends State<ScreenAddProduct> {
                       ),
                     ),
                     const SizedBox(width: 16),
-                     Expanded(
+                    Expanded(
                       child: DropdownButtonFormField<String>(
                         initialValue: _category,
                         decoration: InputDecoration(
-                            labelText: 'Category',
-                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                          labelText: 'Category',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 14,
+                          ),
                         ),
                         items: const [
-                           DropdownMenuItem(value: 'Electronics', child: Text('Electronics')),
-                           DropdownMenuItem(value: 'Fashion', child: Text('Fashion')),
-                           DropdownMenuItem(value: 'Grocery', child: Text('Grocery')),
+                          DropdownMenuItem(
+                            value: 'Electronics',
+                            child: Text('Electronics'),
+                          ),
+                          DropdownMenuItem(
+                            value: 'Fashion',
+                            child: Text('Fashion'),
+                          ),
+                          DropdownMenuItem(
+                            value: 'Grocery',
+                            child: Text('Grocery'),
+                          ),
                         ],
                         onChanged: (val) {
                           if (val != null) setState(() => _category = val);
@@ -232,11 +291,13 @@ class _ScreenAddProductState extends State<ScreenAddProduct> {
                     ),
                   ],
                 ),
-                
-                 const SizedBox(height: 24),
 
-                const Text('Inventory',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                const SizedBox(height: 24),
+
+                const Text(
+                  'Inventory',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                ),
                 const SizedBox(height: 16),
                 Row(
                   children: [
