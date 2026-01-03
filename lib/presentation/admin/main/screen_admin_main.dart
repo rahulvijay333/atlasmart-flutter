@@ -34,25 +34,32 @@ class _ScreenAdminMainState extends State<ScreenAdminMain> {
 
   String _getAppBarTitle() {
     switch (_selectedIndex) {
-      case 0: return AppStrings.dashboard;
-      case 1: return AppStrings.products; // Not exactly 'Product Management' in AppStrings? I added 'Products'.
-      case 2: return AppStrings.inventory;
-      case 3: return AppStrings.orders;
-      case 4: return AppStrings.payments;
-      case 5: return AppStrings.users; // Not 'User Management'
-      case 6: return AppStrings.pushNotifications;
-      case 7: return AppStrings.manageAdmins;
-      default: return AppStrings.adminPortal;
+      case 0:
+        return AppStrings.dashboard;
+      case 1:
+        return AppStrings
+            .products; // Not exactly 'Product Management' in AppStrings? I added 'Products'.
+      case 2:
+        return AppStrings.inventory;
+      case 3:
+        return AppStrings.orders;
+      case 4:
+        return AppStrings.payments;
+      case 5:
+        return AppStrings.users; // Not 'User Management'
+      case 6:
+        return AppStrings.pushNotifications;
+      case 7:
+        return AppStrings.manageAdmins;
+      default:
+        return AppStrings.adminPortal;
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(_getAppBarTitle()),
-        scrolledUnderElevation: 0,
-      ),
+      appBar: AppBar(title: Text(_getAppBarTitle()), scrolledUnderElevation: 0),
       drawer: AdminDrawerWidget(
         selectedIndex: _selectedIndex,
         onDestinationSelected: (index) {
@@ -63,10 +70,17 @@ class _ScreenAdminMainState extends State<ScreenAdminMain> {
         },
       ),
       body: _screens[_selectedIndex],
-      floatingActionButton: _selectedIndex == 1 // Only show FAB on Products screen
+      floatingActionButton:
+          _selectedIndex ==
+              1 // Only show FAB on Products screen
           ? FloatingActionButton.extended(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const ScreenAddProduct()));
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ScreenAddProduct(),
+                  ),
+                );
               },
               label: const Text('Add Product'),
               icon: const Icon(Icons.add),

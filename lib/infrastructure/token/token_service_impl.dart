@@ -16,13 +16,17 @@ class TokenServiceImpl implements TokenService {
     );
 
     final tokens = AuthTokens(
-      res.data["accessToken"],
-      res.data["refresh_token"],
-      res.data["user"]["role"],
+      res.data['Data']["accessToken"],
+      res.data["refreshToken"],
+      res.data["Data"]["user"]["role"],
     );
 
     // ✅ UPDATE TOKENS HERE
-    await storage.saveTokens(tokens.accessToken, tokens.refreshToken,tokens.role);
+    await storage.saveTokens(
+      tokens.accessToken,
+      tokens.refreshToken,
+      tokens.role,
+    );
 
     return tokens;
   }

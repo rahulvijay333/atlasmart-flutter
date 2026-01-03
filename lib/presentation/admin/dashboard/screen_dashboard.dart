@@ -22,7 +22,8 @@ class ScreenAdminDashboard extends StatelessWidget {
                   children: [
                     Text(
                       AppStrings.welcomeBackAdmin,
-                      style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                      style: Theme.of(context).textTheme.headlineSmall
+                          ?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: Colors.black87,
                           ),
@@ -39,8 +40,13 @@ class ScreenAdminDashboard extends StatelessWidget {
               ),
               CircleAvatar(
                 radius: 20,
-                backgroundColor: Theme.of(context).primaryColor.withValues(alpha: 0.1),
-                child: Icon(Icons.notifications_outlined, color: Theme.of(context).primaryColor),
+                backgroundColor: Theme.of(
+                  context,
+                ).primaryColor.withValues(alpha: 0.1),
+                child: Icon(
+                  Icons.notifications_outlined,
+                  color: Theme.of(context).primaryColor,
+                ),
               ),
             ],
           ),
@@ -125,7 +131,10 @@ class ScreenAdminDashboard extends StatelessWidget {
                   border: Border.all(color: Colors.grey.withValues(alpha: 0.1)),
                 ),
                 child: ListTile(
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 12,
+                  ),
                   leading: Container(
                     width: 48,
                     height: 48,
@@ -133,11 +142,17 @@ class ScreenAdminDashboard extends StatelessWidget {
                       color: Colors.blue.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: Icon(Icons.shopping_bag_outlined, color: Colors.blue[700]),
+                    child: Icon(
+                      Icons.shopping_bag_outlined,
+                      color: Colors.blue[700],
+                    ),
                   ),
                   title: Text(
                     'Order #OD-${9450 + index}',
-                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                    ),
                   ),
                   subtitle: Padding(
                     padding: const EdgeInsets.only(top: 4.0),
@@ -147,7 +162,10 @@ class ScreenAdminDashboard extends StatelessWidget {
                     ),
                   ),
                   trailing: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 6,
+                    ),
                     decoration: BoxDecoration(
                       color: Colors.green.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(20),

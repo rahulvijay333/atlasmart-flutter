@@ -37,9 +37,13 @@ class ScreenForgotPasswordSuccess extends StatelessWidget {
 
               const SizedBox(height: 40),
 
-              ButtonWidget(height: 50, title: 'Back to Login', ontap: () {
-                Navigator.of(context).pop();
-              }),
+              ButtonWidget(
+                height: 50,
+                title: 'Back to Login',
+                ontap: () {
+                  Navigator.of(context).pop();
+                },
+              ),
             ],
           ),
         ),

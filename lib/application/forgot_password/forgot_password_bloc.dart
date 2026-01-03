@@ -1,3 +1,4 @@
+import 'package:atlasmart/domain/core/constants/strings.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -38,10 +39,10 @@ class ForgotPasswordBloc
           otp: event.otp,
           email: event.email,
         );
-        if (status == true) {
+        if (status.$1 == true) {
           emit(_setPassword());
         } else {
-          emit(_verifyOtpFailed(''));
+          emit(_verifyOtpFailed(AppStrings.someIssueHappenedBloc));
         }
       } catch (e) {
         emit(_verifyOtpFailed(e.toString()));

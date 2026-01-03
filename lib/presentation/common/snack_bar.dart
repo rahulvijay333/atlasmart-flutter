@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'dart:async';
 
-
 class AppSnackBar {
   static Timer? _timer;
   static bool _isShowing = false;
@@ -13,6 +12,7 @@ class AppSnackBar {
     Color backgroundColor = Colors.black,
     Duration duration = const Duration(seconds: 2),
     Duration debounceDuration = const Duration(milliseconds: 500),
+    SnackBarAction? action,
   }) {
     if (_isShowing) return;
 
@@ -27,6 +27,7 @@ class AppSnackBar {
             content: Text(message),
             backgroundColor: backgroundColor,
             duration: duration,
+            action: action,
           ),
         ).closed.then((_) {
           _isShowing = false;
@@ -38,7 +39,18 @@ class AppSnackBar {
     show(context, message, backgroundColor: Colors.green);
   }
 
-  static void error(BuildContext context, String message) {
-    show(context, message, backgroundColor: Colors.red);
+  static void error(
+    BuildContext context,
+    String message,
+    Duration duration,
+    SnackBarAction? action,
+  ) {
+    show(
+      context,
+      message,
+      backgroundColor: Colors.red,
+      duration: duration,
+      action: action,
+    );
   }
 }

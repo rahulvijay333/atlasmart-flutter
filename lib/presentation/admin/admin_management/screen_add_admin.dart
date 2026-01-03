@@ -18,7 +18,11 @@ class _ScreenAddAdminState extends State<ScreenAddAdmin> {
   final _passwordController = TextEditingController();
   String _selectedRole = AppStrings.roleEditor;
 
-  final List<String> _roles = [AppStrings.roleSuperAdmin, AppStrings.roleEditor, AppStrings.roleModerator];
+  final List<String> _roles = [
+    AppStrings.roleSuperAdmin,
+    AppStrings.roleEditor,
+    AppStrings.roleModerator,
+  ];
 
   Future<void> _submitForm() async {
     if (_formKey.currentState!.validate()) {
@@ -52,9 +56,7 @@ class _ScreenAddAdminState extends State<ScreenAddAdmin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(AppStrings.addNewAdmin),
-      ),
+      appBar: AppBar(title: const Text(AppStrings.addNewAdmin)),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24.0),
         child: Form(
@@ -65,8 +67,8 @@ class _ScreenAddAdminState extends State<ScreenAddAdmin> {
               Text(
                 AppStrings.createAdminAccount,
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               const SizedBox(height: 8),
               Text(
@@ -142,10 +144,7 @@ class _ScreenAddAdminState extends State<ScreenAddAdmin> {
                   prefixIcon: Icon(Icons.admin_panel_settings_outlined),
                 ),
                 items: _roles.map((role) {
-                  return DropdownMenuItem(
-                    value: role,
-                    child: Text(role),
-                  );
+                  return DropdownMenuItem(value: role, child: Text(role));
                 }).toList(),
                 onChanged: (value) {
                   setState(() {

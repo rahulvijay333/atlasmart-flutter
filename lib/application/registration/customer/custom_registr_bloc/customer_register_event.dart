@@ -11,4 +11,7 @@ class CustomerRegisterEvent with _$CustomerRegisterEvent {
   const factory CustomerRegisterEvent.verifyOtpButtonClick({
     required CustomerRegisterModel customer,
   }) = _VerifyOtpButtonClick;
+
+  const factory CustomerRegisterEvent.sendOtp({ required CustomerRegisterModel customer,required bool resendOtp}) =
+      _SendOtp;
 }

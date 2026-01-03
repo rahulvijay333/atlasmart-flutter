@@ -142,4 +142,8 @@ class AppStrings {
   static const String sellerNamePlaceholder = 'Seller Name';
   static const String userEmailPlaceholder = 'test@gmail.com';
   static const String userNamePlaceholder = 'Person Name';
+
+  //
+  static const String someIssueHappenedBloc =
+      'Some issue happened,Try later (Error_BL)';
 }

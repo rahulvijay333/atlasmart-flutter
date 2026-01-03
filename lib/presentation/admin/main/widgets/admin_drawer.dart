@@ -19,7 +19,9 @@ class AdminDrawerWidget extends StatelessWidget {
       backgroundColor: Colors.white,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
-            topRight: Radius.circular(0), bottomRight: Radius.circular(0)),
+          topRight: Radius.circular(0),
+          bottomRight: Radius.circular(0),
+        ),
       ),
       child: Column(
         children: [
@@ -28,7 +30,10 @@ class AdminDrawerWidget extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(24, 60, 24, 24),
             decoration: BoxDecoration(
               gradient: LinearGradient(
-                colors: [Theme.of(context).primaryColor, Colors.orange.shade800],
+                colors: [
+                  Theme.of(context).primaryColor,
+                  Colors.orange.shade800,
+                ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
@@ -63,10 +68,7 @@ class AdminDrawerWidget extends StatelessWidget {
                       SizedBox(height: 4),
                       Text(
                         'admin@atlasmart.com',
-                        style: TextStyle(
-                          color: Colors.white70,
-                          fontSize: 12,
-                        ),
+                        style: TextStyle(color: Colors.white70, fontSize: 12),
                       ),
                     ],
                   ),
@@ -74,7 +76,7 @@ class AdminDrawerWidget extends StatelessWidget {
               ],
             ),
           ),
-          
+
           Expanded(
             child: ListView(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 24),
@@ -92,7 +94,9 @@ class AdminDrawerWidget extends StatelessWidget {
                   icon: Icons.shopping_bag_outlined,
                   selectedIcon: Icons.shopping_bag,
                   title: AppStrings.products,
-                  isSelected: selectedIndex == 1, // Products is Index 1 in main screen list
+                  isSelected:
+                      selectedIndex ==
+                      1, // Products is Index 1 in main screen list
                   onTap: () => onDestinationSelected(1),
                 ),
                 _buildDrawerItem(
@@ -103,7 +107,7 @@ class AdminDrawerWidget extends StatelessWidget {
                   isSelected: selectedIndex == 2,
                   onTap: () => onDestinationSelected(2),
                 ),
-                 _buildDrawerItem(
+                _buildDrawerItem(
                   context: context,
                   icon: Icons.list_alt,
                   selectedIcon: Icons.list_alt,
@@ -150,7 +154,7 @@ class AdminDrawerWidget extends StatelessWidget {
               ],
             ),
           ),
-          
+
           // Footer
           Padding(
             padding: const EdgeInsets.all(16.0),
@@ -161,7 +165,7 @@ class AdminDrawerWidget extends StatelessWidget {
               title: AppStrings.logout,
               isSelected: false,
               onTap: () {
-                 Navigator.of(context).pushAndRemoveUntil(
+                Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(
                     builder: (context) {
                       return ScreenLogin();
@@ -188,10 +192,14 @@ class AdminDrawerWidget extends StatelessWidget {
     bool isLogout = false,
   }) {
     final primaryColor = Theme.of(context).primaryColor;
-    final color = isLogout ? Colors.red : (isSelected ? primaryColor : Colors.grey.shade700);
-    final bgColor = isLogout 
+    final color = isLogout
+        ? Colors.red
+        : (isSelected ? primaryColor : Colors.grey.shade700);
+    final bgColor = isLogout
         ? Colors.red.withValues(alpha: 0.05)
-        : (isSelected ? primaryColor.withValues(alpha: 0.1) : Colors.transparent);
+        : (isSelected
+              ? primaryColor.withValues(alpha: 0.1)
+              : Colors.transparent);
 
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
@@ -201,11 +209,7 @@ class AdminDrawerWidget extends StatelessWidget {
       ),
       child: ListTile(
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-        leading: Icon(
-          isSelected ? selectedIcon : icon,
-          color: color,
-          size: 24,
-        ),
+        leading: Icon(isSelected ? selectedIcon : icon, color: color, size: 24),
         title: Text(
           title,
           style: TextStyle(

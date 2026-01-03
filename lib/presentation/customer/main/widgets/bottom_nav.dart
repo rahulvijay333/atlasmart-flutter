@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../domain/core/constants/strings.dart';
 
-
 class BottomNavWidget extends StatelessWidget {
   const BottomNavWidget({super.key});
 
@@ -14,7 +13,7 @@ class BottomNavWidget extends StatelessWidget {
       builder: (context, value, child) {
         return BottomNavigationBar(
           elevation: 0,
-        
+
           // landscapeLayout: BottomNavigationBarLandscapeLayout.centered,
           type: BottomNavigationBarType.fixed,
           onTap: (value) {
@@ -25,18 +24,30 @@ class BottomNavWidget extends StatelessWidget {
           currentIndex: navBarNotifier.value,
           items: [
             //home
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: AppStrings.home,),
-        
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: AppStrings.home,
+            ),
+
             //categories
-            BottomNavigationBarItem(icon: Icon(Icons.grid_4x4), label: AppStrings.category),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.grid_4x4),
+              label: AppStrings.category,
+            ),
             //cart
-            BottomNavigationBarItem(icon: Icon(Icons.shopping_bag), label: AppStrings.cart),
-        
+            BottomNavigationBarItem(
+              icon: Icon(Icons.shopping_bag),
+              label: AppStrings.cart,
+            ),
+
             //profile
-            BottomNavigationBarItem(icon: Icon(Icons.person_2), label: AppStrings.profile),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person_2),
+              label: AppStrings.profile,
+            ),
           ],
         );
-      }
+      },
     );
   }
 }

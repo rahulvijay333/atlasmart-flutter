@@ -43,7 +43,10 @@ class ScreenAdminPayments extends StatelessWidget {
                           color: Colors.purple.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        child: Icon(Icons.credit_card, color: Colors.purple[700]),
+                        child: Icon(
+                          Icons.credit_card,
+                          color: Colors.purple[700],
+                        ),
                       ),
                       const SizedBox(width: 16),
                       Expanded(
@@ -82,13 +85,20 @@ class ScreenAdminPayments extends StatelessWidget {
                           ),
                           const SizedBox(height: 6),
                           Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 4,
+                            ),
                             decoration: BoxDecoration(
-                              color: isSuccess ? Colors.green.withValues(alpha: 0.1) : Colors.red.withValues(alpha: 0.1),
+                              color: isSuccess
+                                  ? Colors.green.withValues(alpha: 0.1)
+                                  : Colors.red.withValues(alpha: 0.1),
                               borderRadius: BorderRadius.circular(6),
                             ),
                             child: Text(
-                              isSuccess ? AppStrings.success : AppStrings.failed,
+                              isSuccess
+                                  ? AppStrings.success
+                                  : AppStrings.failed,
                               style: TextStyle(
                                 color: isSuccess ? Colors.green : Colors.red,
                                 fontSize: 10,

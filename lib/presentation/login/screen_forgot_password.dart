@@ -1,4 +1,5 @@
 import 'package:atlasmart/application/forgot_password/forgot_password_bloc.dart';
+import 'package:atlasmart/domain/core/constants/colors.dart';
 import 'package:atlasmart/presentation/common/snack_bar.dart';
 import 'package:atlasmart/presentation/login/screen_password_reset_success.dart';
 import 'package:flutter/material.dart';
@@ -35,6 +36,7 @@ class _ScreenForgotPasswordState extends State<ScreenForgotPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.whiteColor,
       appBar: AppBar(
         title: Text('Forgot Password', style: AppFont.appBar18Style),
       ),
@@ -80,7 +82,6 @@ class _ScreenForgotPasswordState extends State<ScreenForgotPassword> {
                     setPassword: () => _buildSetPassword(state),
                     setPasswordLoading: () => _buildSetPassword(state),
                     setPasswordfailed: (message) => _buildSetPassword(state),
-
                   ),
                 ],
               ),
@@ -141,7 +142,8 @@ class _ScreenForgotPasswordState extends State<ScreenForgotPassword> {
         const SizedBox(height: 30),
 
         PinCodeTextField(
-          appContext: context, autoDisposeControllers: false, 
+          appContext: context,
+          autoDisposeControllers: false,
           length: 6,
           pinTheme: AppPinTheme.otp(context),
           controller: _otpController,

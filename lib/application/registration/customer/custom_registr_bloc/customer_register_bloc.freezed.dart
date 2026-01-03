@@ -55,13 +55,14 @@ extension CustomerRegisterEventPatterns on CustomerRegisterEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _initial value)?  initial,TResult Function( _CreateAccount value)?  createAccount,TResult Function( _VerifyOtpButtonClick value)?  verifyOtpButtonClick,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _initial value)?  initial,TResult Function( _CreateAccount value)?  createAccount,TResult Function( _VerifyOtpButtonClick value)?  verifyOtpButtonClick,TResult Function( _SendOtp value)?  sendOtp,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _initial() when initial != null:
 return initial(_that);case _CreateAccount() when createAccount != null:
 return createAccount(_that);case _VerifyOtpButtonClick() when verifyOtpButtonClick != null:
-return verifyOtpButtonClick(_that);case _:
+return verifyOtpButtonClick(_that);case _SendOtp() when sendOtp != null:
+return sendOtp(_that);case _:
   return orElse();
 
 }
@@ -79,13 +80,14 @@ return verifyOtpButtonClick(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _initial value)  initial,required TResult Function( _CreateAccount value)  createAccount,required TResult Function( _VerifyOtpButtonClick value)  verifyOtpButtonClick,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _initial value)  initial,required TResult Function( _CreateAccount value)  createAccount,required TResult Function( _VerifyOtpButtonClick value)  verifyOtpButtonClick,required TResult Function( _SendOtp value)  sendOtp,}){
 final _that = this;
 switch (_that) {
 case _initial():
 return initial(_that);case _CreateAccount():
 return createAccount(_that);case _VerifyOtpButtonClick():
-return verifyOtpButtonClick(_that);case _:
+return verifyOtpButtonClick(_that);case _SendOtp():
+return sendOtp(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -102,13 +104,14 @@ return verifyOtpButtonClick(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _initial value)?  initial,TResult? Function( _CreateAccount value)?  createAccount,TResult? Function( _VerifyOtpButtonClick value)?  verifyOtpButtonClick,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _initial value)?  initial,TResult? Function( _CreateAccount value)?  createAccount,TResult? Function( _VerifyOtpButtonClick value)?  verifyOtpButtonClick,TResult? Function( _SendOtp value)?  sendOtp,}){
 final _that = this;
 switch (_that) {
 case _initial() when initial != null:
 return initial(_that);case _CreateAccount() when createAccount != null:
 return createAccount(_that);case _VerifyOtpButtonClick() when verifyOtpButtonClick != null:
-return verifyOtpButtonClick(_that);case _:
+return verifyOtpButtonClick(_that);case _SendOtp() when sendOtp != null:
+return sendOtp(_that);case _:
   return null;
 
 }
@@ -125,12 +128,13 @@ return verifyOtpButtonClick(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function( CustomerRegisterModel customer)?  createAccount,TResult Function( CustomerRegisterModel customer)?  verifyOtpButtonClick,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function( CustomerRegisterModel customer)?  createAccount,TResult Function( CustomerRegisterModel customer)?  verifyOtpButtonClick,TResult Function( CustomerRegisterModel customer,  bool resendOtp)?  sendOtp,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _initial() when initial != null:
 return initial();case _CreateAccount() when createAccount != null:
 return createAccount(_that.customer);case _VerifyOtpButtonClick() when verifyOtpButtonClick != null:
-return verifyOtpButtonClick(_that.customer);case _:
+return verifyOtpButtonClick(_that.customer);case _SendOtp() when sendOtp != null:
+return sendOtp(_that.customer,_that.resendOtp);case _:
   return orElse();
 
 }
@@ -148,12 +152,13 @@ return verifyOtpButtonClick(_that.customer);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function( CustomerRegisterModel customer)  createAccount,required TResult Function( CustomerRegisterModel customer)  verifyOtpButtonClick,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function( CustomerRegisterModel customer)  createAccount,required TResult Function( CustomerRegisterModel customer)  verifyOtpButtonClick,required TResult Function( CustomerRegisterModel customer,  bool resendOtp)  sendOtp,}) {final _that = this;
 switch (_that) {
 case _initial():
 return initial();case _CreateAccount():
 return createAccount(_that.customer);case _VerifyOtpButtonClick():
-return verifyOtpButtonClick(_that.customer);case _:
+return verifyOtpButtonClick(_that.customer);case _SendOtp():
+return sendOtp(_that.customer,_that.resendOtp);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -170,12 +175,13 @@ return verifyOtpButtonClick(_that.customer);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function( CustomerRegisterModel customer)?  createAccount,TResult? Function( CustomerRegisterModel customer)?  verifyOtpButtonClick,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function( CustomerRegisterModel customer)?  createAccount,TResult? Function( CustomerRegisterModel customer)?  verifyOtpButtonClick,TResult? Function( CustomerRegisterModel customer,  bool resendOtp)?  sendOtp,}) {final _that = this;
 switch (_that) {
 case _initial() when initial != null:
 return initial();case _CreateAccount() when createAccount != null:
 return createAccount(_that.customer);case _VerifyOtpButtonClick() when verifyOtpButtonClick != null:
-return verifyOtpButtonClick(_that.customer);case _:
+return verifyOtpButtonClick(_that.customer);case _SendOtp() when sendOtp != null:
+return sendOtp(_that.customer,_that.resendOtp);case _:
   return null;
 
 }
@@ -348,6 +354,74 @@ as CustomerRegisterModel,
 }
 
 /// @nodoc
+
+
+class _SendOtp implements CustomerRegisterEvent {
+  const _SendOtp({required this.customer, required this.resendOtp});
+  
+
+ final  CustomerRegisterModel customer;
+ final  bool resendOtp;
+
+/// Create a copy of CustomerRegisterEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$SendOtpCopyWith<_SendOtp> get copyWith => __$SendOtpCopyWithImpl<_SendOtp>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SendOtp&&(identical(other.customer, customer) || other.customer == customer)&&(identical(other.resendOtp, resendOtp) || other.resendOtp == resendOtp));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,customer,resendOtp);
+
+@override
+String toString() {
+  return 'CustomerRegisterEvent.sendOtp(customer: $customer, resendOtp: $resendOtp)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$SendOtpCopyWith<$Res> implements $CustomerRegisterEventCopyWith<$Res> {
+  factory _$SendOtpCopyWith(_SendOtp value, $Res Function(_SendOtp) _then) = __$SendOtpCopyWithImpl;
+@useResult
+$Res call({
+ CustomerRegisterModel customer, bool resendOtp
+});
+
+
+
+
+}
+/// @nodoc
+class __$SendOtpCopyWithImpl<$Res>
+    implements _$SendOtpCopyWith<$Res> {
+  __$SendOtpCopyWithImpl(this._self, this._then);
+
+  final _SendOtp _self;
+  final $Res Function(_SendOtp) _then;
+
+/// Create a copy of CustomerRegisterEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? customer = null,Object? resendOtp = null,}) {
+  return _then(_SendOtp(
+customer: null == customer ? _self.customer : customer // ignore: cast_nullable_to_non_nullable
+as CustomerRegisterModel,resendOtp: null == resendOtp ? _self.resendOtp : resendOtp // ignore: cast_nullable_to_non_nullable
+as bool,
+  ));
+}
+
+
+}
+
+/// @nodoc
 mixin _$CustomerRegisterState {
 
 
@@ -391,12 +465,15 @@ extension CustomerRegisterStatePatterns on CustomerRegisterState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Initial value)?  initial,TResult Function( _loading value)?  loading,TResult Function( _verifyOtp value)?  verifyOtp,TResult Function( _verifyOtpLoading value)?  verifyOtpLoading,TResult Function( _success value)?  success,TResult Function( _failure value)?  failure,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Initial value)?  initial,TResult Function( _loading value)?  loading,TResult Function( _sendOtp value)?  sendOtp,TResult Function( _sendOtpLoading value)?  sendOtpLoading,TResult Function( _sendOtpFailed value)?  sendOtpFailed,TResult Function( _verifyOtp value)?  verifyOtp,TResult Function( _verifyOtpLoading value)?  verifyOtpLoading,TResult Function( _success value)?  success,TResult Function( _failure value)?  failure,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial(_that);case _loading() when loading != null:
-return loading(_that);case _verifyOtp() when verifyOtp != null:
+return loading(_that);case _sendOtp() when sendOtp != null:
+return sendOtp(_that);case _sendOtpLoading() when sendOtpLoading != null:
+return sendOtpLoading(_that);case _sendOtpFailed() when sendOtpFailed != null:
+return sendOtpFailed(_that);case _verifyOtp() when verifyOtp != null:
 return verifyOtp(_that);case _verifyOtpLoading() when verifyOtpLoading != null:
 return verifyOtpLoading(_that);case _success() when success != null:
 return success(_that);case _failure() when failure != null:
@@ -418,12 +495,15 @@ return failure(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Initial value)  initial,required TResult Function( _loading value)  loading,required TResult Function( _verifyOtp value)  verifyOtp,required TResult Function( _verifyOtpLoading value)  verifyOtpLoading,required TResult Function( _success value)  success,required TResult Function( _failure value)  failure,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Initial value)  initial,required TResult Function( _loading value)  loading,required TResult Function( _sendOtp value)  sendOtp,required TResult Function( _sendOtpLoading value)  sendOtpLoading,required TResult Function( _sendOtpFailed value)  sendOtpFailed,required TResult Function( _verifyOtp value)  verifyOtp,required TResult Function( _verifyOtpLoading value)  verifyOtpLoading,required TResult Function( _success value)  success,required TResult Function( _failure value)  failure,}){
 final _that = this;
 switch (_that) {
 case _Initial():
 return initial(_that);case _loading():
-return loading(_that);case _verifyOtp():
+return loading(_that);case _sendOtp():
+return sendOtp(_that);case _sendOtpLoading():
+return sendOtpLoading(_that);case _sendOtpFailed():
+return sendOtpFailed(_that);case _verifyOtp():
 return verifyOtp(_that);case _verifyOtpLoading():
 return verifyOtpLoading(_that);case _success():
 return success(_that);case _failure():
@@ -444,12 +524,15 @@ return failure(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Initial value)?  initial,TResult? Function( _loading value)?  loading,TResult? Function( _verifyOtp value)?  verifyOtp,TResult? Function( _verifyOtpLoading value)?  verifyOtpLoading,TResult? Function( _success value)?  success,TResult? Function( _failure value)?  failure,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Initial value)?  initial,TResult? Function( _loading value)?  loading,TResult? Function( _sendOtp value)?  sendOtp,TResult? Function( _sendOtpLoading value)?  sendOtpLoading,TResult? Function( _sendOtpFailed value)?  sendOtpFailed,TResult? Function( _verifyOtp value)?  verifyOtp,TResult? Function( _verifyOtpLoading value)?  verifyOtpLoading,TResult? Function( _success value)?  success,TResult? Function( _failure value)?  failure,}){
 final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial(_that);case _loading() when loading != null:
-return loading(_that);case _verifyOtp() when verifyOtp != null:
+return loading(_that);case _sendOtp() when sendOtp != null:
+return sendOtp(_that);case _sendOtpLoading() when sendOtpLoading != null:
+return sendOtpLoading(_that);case _sendOtpFailed() when sendOtpFailed != null:
+return sendOtpFailed(_that);case _verifyOtp() when verifyOtp != null:
 return verifyOtp(_that);case _verifyOtpLoading() when verifyOtpLoading != null:
 return verifyOtpLoading(_that);case _success() when success != null:
 return success(_that);case _failure() when failure != null:
@@ -470,11 +553,14 @@ return failure(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( CustomerRegisterModel customer)?  verifyOtp,TResult Function()?  verifyOtpLoading,TResult Function()?  success,TResult Function( String message)?  failure,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( CustomerRegisterModel customer)?  sendOtp,TResult Function()?  sendOtpLoading,TResult Function( String message,  CustomerRegisterModel customer)?  sendOtpFailed,TResult Function( CustomerRegisterModel customer)?  verifyOtp,TResult Function()?  verifyOtpLoading,TResult Function()?  success,TResult Function( String message)?  failure,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _loading() when loading != null:
-return loading();case _verifyOtp() when verifyOtp != null:
+return loading();case _sendOtp() when sendOtp != null:
+return sendOtp(_that.customer);case _sendOtpLoading() when sendOtpLoading != null:
+return sendOtpLoading();case _sendOtpFailed() when sendOtpFailed != null:
+return sendOtpFailed(_that.message,_that.customer);case _verifyOtp() when verifyOtp != null:
 return verifyOtp(_that.customer);case _verifyOtpLoading() when verifyOtpLoading != null:
 return verifyOtpLoading();case _success() when success != null:
 return success();case _failure() when failure != null:
@@ -496,11 +582,14 @@ return failure(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( CustomerRegisterModel customer)  verifyOtp,required TResult Function()  verifyOtpLoading,required TResult Function()  success,required TResult Function( String message)  failure,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( CustomerRegisterModel customer)  sendOtp,required TResult Function()  sendOtpLoading,required TResult Function( String message,  CustomerRegisterModel customer)  sendOtpFailed,required TResult Function( CustomerRegisterModel customer)  verifyOtp,required TResult Function()  verifyOtpLoading,required TResult Function()  success,required TResult Function( String message)  failure,}) {final _that = this;
 switch (_that) {
 case _Initial():
 return initial();case _loading():
-return loading();case _verifyOtp():
+return loading();case _sendOtp():
+return sendOtp(_that.customer);case _sendOtpLoading():
+return sendOtpLoading();case _sendOtpFailed():
+return sendOtpFailed(_that.message,_that.customer);case _verifyOtp():
 return verifyOtp(_that.customer);case _verifyOtpLoading():
 return verifyOtpLoading();case _success():
 return success();case _failure():
@@ -521,11 +610,14 @@ return failure(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( CustomerRegisterModel customer)?  verifyOtp,TResult? Function()?  verifyOtpLoading,TResult? Function()?  success,TResult? Function( String message)?  failure,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( CustomerRegisterModel customer)?  sendOtp,TResult? Function()?  sendOtpLoading,TResult? Function( String message,  CustomerRegisterModel customer)?  sendOtpFailed,TResult? Function( CustomerRegisterModel customer)?  verifyOtp,TResult? Function()?  verifyOtpLoading,TResult? Function()?  success,TResult? Function( String message)?  failure,}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _loading() when loading != null:
-return loading();case _verifyOtp() when verifyOtp != null:
+return loading();case _sendOtp() when sendOtp != null:
+return sendOtp(_that.customer);case _sendOtpLoading() when sendOtpLoading != null:
+return sendOtpLoading();case _sendOtpFailed() when sendOtpFailed != null:
+return sendOtpFailed(_that.message,_that.customer);case _verifyOtp() when verifyOtp != null:
 return verifyOtp(_that.customer);case _verifyOtpLoading() when verifyOtpLoading != null:
 return verifyOtpLoading();case _success() when success != null:
 return success();case _failure() when failure != null:
@@ -600,6 +692,172 @@ String toString() {
 
 
 
+
+/// @nodoc
+
+
+class _sendOtp implements CustomerRegisterState {
+  const _sendOtp({required this.customer});
+  
+
+ final  CustomerRegisterModel customer;
+
+/// Create a copy of CustomerRegisterState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$sendOtpCopyWith<_sendOtp> get copyWith => __$sendOtpCopyWithImpl<_sendOtp>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _sendOtp&&(identical(other.customer, customer) || other.customer == customer));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,customer);
+
+@override
+String toString() {
+  return 'CustomerRegisterState.sendOtp(customer: $customer)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$sendOtpCopyWith<$Res> implements $CustomerRegisterStateCopyWith<$Res> {
+  factory _$sendOtpCopyWith(_sendOtp value, $Res Function(_sendOtp) _then) = __$sendOtpCopyWithImpl;
+@useResult
+$Res call({
+ CustomerRegisterModel customer
+});
+
+
+
+
+}
+/// @nodoc
+class __$sendOtpCopyWithImpl<$Res>
+    implements _$sendOtpCopyWith<$Res> {
+  __$sendOtpCopyWithImpl(this._self, this._then);
+
+  final _sendOtp _self;
+  final $Res Function(_sendOtp) _then;
+
+/// Create a copy of CustomerRegisterState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? customer = null,}) {
+  return _then(_sendOtp(
+customer: null == customer ? _self.customer : customer // ignore: cast_nullable_to_non_nullable
+as CustomerRegisterModel,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class _sendOtpLoading implements CustomerRegisterState {
+  const _sendOtpLoading();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _sendOtpLoading);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'CustomerRegisterState.sendOtpLoading()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
+
+
+class _sendOtpFailed implements CustomerRegisterState {
+  const _sendOtpFailed({required this.message, required this.customer});
+  
+
+ final  String message;
+ final  CustomerRegisterModel customer;
+
+/// Create a copy of CustomerRegisterState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$sendOtpFailedCopyWith<_sendOtpFailed> get copyWith => __$sendOtpFailedCopyWithImpl<_sendOtpFailed>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _sendOtpFailed&&(identical(other.message, message) || other.message == message)&&(identical(other.customer, customer) || other.customer == customer));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,message,customer);
+
+@override
+String toString() {
+  return 'CustomerRegisterState.sendOtpFailed(message: $message, customer: $customer)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$sendOtpFailedCopyWith<$Res> implements $CustomerRegisterStateCopyWith<$Res> {
+  factory _$sendOtpFailedCopyWith(_sendOtpFailed value, $Res Function(_sendOtpFailed) _then) = __$sendOtpFailedCopyWithImpl;
+@useResult
+$Res call({
+ String message, CustomerRegisterModel customer
+});
+
+
+
+
+}
+/// @nodoc
+class __$sendOtpFailedCopyWithImpl<$Res>
+    implements _$sendOtpFailedCopyWith<$Res> {
+  __$sendOtpFailedCopyWithImpl(this._self, this._then);
+
+  final _sendOtpFailed _self;
+  final $Res Function(_sendOtpFailed) _then;
+
+/// Create a copy of CustomerRegisterState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? message = null,Object? customer = null,}) {
+  return _then(_sendOtpFailed(
+message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
+as String,customer: null == customer ? _self.customer : customer // ignore: cast_nullable_to_non_nullable
+as CustomerRegisterModel,
+  ));
+}
+
+
+}
 
 /// @nodoc
 

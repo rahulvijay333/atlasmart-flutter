@@ -19,7 +19,7 @@ class ScreenAdminOrders extends StatelessWidget {
             itemCount: 10,
             separatorBuilder: (context, index) => const SizedBox(height: 16),
             itemBuilder: (context, index) {
-               // Mock Data
+              // Mock Data
               final orderId = 'ORD-${2024001 + index}';
               final date = 'Dec ${index + 1}, 2024';
               final amount = (index + 1) * 4500.0;
@@ -68,7 +68,7 @@ class ScreenAdminOrders extends StatelessWidget {
                       const SizedBox(height: 12),
                       const Divider(height: 1, thickness: 0.5),
                       const SizedBox(height: 12),
-                      
+
                       // Body: Customer & Items
                       Row(
                         children: [
@@ -79,7 +79,10 @@ class ScreenAdminOrders extends StatelessWidget {
                               color: Colors.blue.withValues(alpha: 0.1),
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            child: Icon(Icons.shopping_bag_outlined, color: Colors.blue[700]),
+                            child: Icon(
+                              Icons.shopping_bag_outlined,
+                              color: Colors.blue[700],
+                            ),
                           ),
                           const SizedBox(width: 12),
                           Expanded(
@@ -107,7 +110,7 @@ class ScreenAdminOrders extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 16),
-                      
+
                       // Footer: Amount & Status
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,

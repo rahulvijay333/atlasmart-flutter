@@ -19,6 +19,7 @@ class ForgotPasswordState with _$ForgotPasswordState {
   const factory ForgotPasswordState.setPasswordLoading() = _setPasswordLoading;
 
   const factory ForgotPasswordState.success() = _success;
-  const factory ForgotPasswordState.setPasswordfailed({required String message}) =
-      _setPasswordfailed;
+  const factory ForgotPasswordState.setPasswordfailed({
+    required String message,
+  }) = _setPasswordfailed;
 }

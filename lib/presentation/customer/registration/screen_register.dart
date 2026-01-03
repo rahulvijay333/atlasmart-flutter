@@ -111,7 +111,11 @@ class _ScreenRegisterState extends State<ScreenRegister> {
                   BlocConsumer<CustomerRegisterBloc, CustomerRegisterState>(
                     listener: (context, state) {
                       state.whenOrNull(
-                        verifyOtp: (customer) {
+                        sendOtp: (customer) {
+                          BlocProvider.of<CustomerRegisterBloc>(context).add(
+                            CustomerRegisterEvent.sendOtp(customer: customer,resendOtp: false),
+                          );
+
                           Navigator.of(context).pushReplacement(
                             MaterialPageRoute(
                               builder: (context) =>

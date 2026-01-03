@@ -19,20 +19,29 @@ class _ScreenManageAdminsState extends State<ScreenManageAdmins> {
           padding: const EdgeInsets.all(16.0),
           child: Row(
             children: [
-              const Expanded(child: AdminSearchBar(hintText: AppStrings.searchAdminsHint)),
+              const Expanded(
+                child: AdminSearchBar(hintText: AppStrings.searchAdminsHint),
+              ),
               const SizedBox(width: 12),
               ElevatedButton.icon(
                 onPressed: () {
-                   Navigator.push(
-                     context,
-                     MaterialPageRoute(builder: (context) => const ScreenAddAdmin()),
-                   );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ScreenAddAdmin(),
+                    ),
+                  );
                 },
                 icon: const Icon(Icons.add, size: 18),
                 label: const Text(AppStrings.addNew),
                 style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 16,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                   elevation: 0,
                 ),
               ),
@@ -47,7 +56,7 @@ class _ScreenManageAdminsState extends State<ScreenManageAdmins> {
             itemBuilder: (context, index) {
               final isSuperAdmin = index == 0;
               final isActive = index != 2;
-              
+
               return Container(
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -68,11 +77,11 @@ class _ScreenManageAdminsState extends State<ScreenManageAdmins> {
                         children: [
                           CircleAvatar(
                             radius: 26,
-                            backgroundColor: isSuperAdmin 
-                                ? Colors.orange.withValues(alpha: 0.1) 
+                            backgroundColor: isSuperAdmin
+                                ? Colors.orange.withValues(alpha: 0.1)
                                 : Colors.blue.withValues(alpha: 0.1),
                             child: Icon(
-                              Icons.person_outline, 
+                              Icons.person_outline,
                               color: isSuperAdmin ? Colors.orange : Colors.blue,
                               size: 28,
                             ),
@@ -87,7 +96,11 @@ class _ScreenManageAdminsState extends State<ScreenManageAdmins> {
                                   color: Colors.white,
                                   shape: BoxShape.circle,
                                 ),
-                                child: const Icon(Icons.star, color: Colors.orange, size: 14),
+                                child: const Icon(
+                                  Icons.star,
+                                  color: Colors.orange,
+                                  size: 14,
+                                ),
                               ),
                             ),
                         ],
@@ -101,7 +114,9 @@ class _ScreenManageAdminsState extends State<ScreenManageAdmins> {
                               children: [
                                 Flexible(
                                   child: Text(
-                                    index == 0 ? AppStrings.currentUser : '${AppStrings.adminUser} ${index + 1}',
+                                    index == 0
+                                        ? AppStrings.currentUser
+                                        : '${AppStrings.adminUser} ${index + 1}',
                                     style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 16,
@@ -111,17 +126,24 @@ class _ScreenManageAdminsState extends State<ScreenManageAdmins> {
                                 ),
                                 const SizedBox(width: 8),
                                 Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 8,
+                                    vertical: 2,
+                                  ),
                                   decoration: BoxDecoration(
-                                    color: isSuperAdmin 
-                                        ? Colors.orange.withValues(alpha: 0.1) 
+                                    color: isSuperAdmin
+                                        ? Colors.orange.withValues(alpha: 0.1)
                                         : Colors.blue.withValues(alpha: 0.1),
                                     borderRadius: BorderRadius.circular(4),
                                   ),
                                   child: Text(
-                                    isSuperAdmin ? AppStrings.roleSuperAdmin : AppStrings.roleEditor,
+                                    isSuperAdmin
+                                        ? AppStrings.roleSuperAdmin
+                                        : AppStrings.roleEditor,
                                     style: TextStyle(
-                                      color: isSuperAdmin ? Colors.orange[800] : Colors.blue[800],
+                                      color: isSuperAdmin
+                                          ? Colors.orange[800]
+                                          : Colors.blue[800],
                                       fontSize: 10,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -142,11 +164,14 @@ class _ScreenManageAdminsState extends State<ScreenManageAdmins> {
                       ),
                       Switch(
                         value: isActive,
-                        onChanged: index == 0 ? null : (val) { // Cannot deactive self
-                          setState(() {
-                             // Toggle Logic mock
-                          });
-                        },
+                        onChanged: index == 0
+                            ? null
+                            : (val) {
+                                // Cannot deactive self
+                                setState(() {
+                                  // Toggle Logic mock
+                                });
+                              },
                         activeTrackColor: Colors.green,
                       ),
                       IconButton(

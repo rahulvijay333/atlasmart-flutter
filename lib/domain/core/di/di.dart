@@ -62,6 +62,6 @@ void setupDI() {
     () => ForgotPasswordBloc(sl<LoginService>()),
   );
   sl.registerFactory<CustomerRegisterBloc>(
-    () => CustomerRegisterBloc(sl<RegistrationService>()),
+    () => CustomerRegisterBloc(sl<RegistrationService>(), sl<LoginService>()),
   );
 }

@@ -5,7 +5,8 @@ class ScreenPushNotifications extends StatefulWidget {
   const ScreenPushNotifications({super.key});
 
   @override
-  State<ScreenPushNotifications> createState() => _ScreenPushNotificationsState();
+  State<ScreenPushNotifications> createState() =>
+      _ScreenPushNotificationsState();
 }
 
 class _ScreenPushNotificationsState extends State<ScreenPushNotifications> {
@@ -52,8 +53,10 @@ class _ScreenPushNotificationsState extends State<ScreenPushNotifications> {
 
           // Main Content: Form & Preview
           // On large screens this could be a Row, for now Column is fine
-          
-          const Text(AppStrings.composeNotification, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          const Text(
+            AppStrings.composeNotification,
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
           const SizedBox(height: 16),
 
           // Form Container
@@ -63,7 +66,7 @@ class _ScreenPushNotificationsState extends State<ScreenPushNotifications> {
               color: Colors.white,
               borderRadius: BorderRadius.circular(16),
               boxShadow: [
-                 BoxShadow(
+                BoxShadow(
                   color: Colors.grey.withValues(alpha: 0.1),
                   blurRadius: 10,
                   offset: const Offset(0, 4),
@@ -77,11 +80,20 @@ class _ScreenPushNotificationsState extends State<ScreenPushNotifications> {
                   initialValue: _selectedAudience,
                   decoration: InputDecoration(
                     labelText: AppStrings.targetAudience,
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                   ),
-                  items: [AppStrings.audienceAll, AppStrings.audienceBuyers, AppStrings.audienceInactive]
-                      .map((e) => DropdownMenuItem(value: e, child: Text(e)))
-                      .toList(),
+                  items:
+                      [
+                            AppStrings.audienceAll,
+                            AppStrings.audienceBuyers,
+                            AppStrings.audienceInactive,
+                          ]
+                          .map(
+                            (e) => DropdownMenuItem(value: e, child: Text(e)),
+                          )
+                          .toList(),
                   onChanged: (val) {
                     if (val != null) setState(() => _selectedAudience = val);
                   },
@@ -92,7 +104,9 @@ class _ScreenPushNotificationsState extends State<ScreenPushNotifications> {
                   decoration: InputDecoration(
                     labelText: AppStrings.notificationTitle,
                     hintText: AppStrings.notificationTitleHint,
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                   ),
                   onChanged: (_) => setState(() {}),
                 ),
@@ -103,7 +117,9 @@ class _ScreenPushNotificationsState extends State<ScreenPushNotifications> {
                   decoration: InputDecoration(
                     labelText: AppStrings.messageBody,
                     hintText: AppStrings.messageBodyHint,
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                   ),
                   onChanged: (_) => setState(() {}),
                 ),
@@ -123,7 +139,9 @@ class _ScreenPushNotificationsState extends State<ScreenPushNotifications> {
                     icon: const Icon(Icons.send_rounded),
                     label: const Text(AppStrings.sendNotification),
                     style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
                     ),
                   ),
                 ),
@@ -132,7 +150,10 @@ class _ScreenPushNotificationsState extends State<ScreenPushNotifications> {
           ),
 
           const SizedBox(height: 32),
-          const Text(AppStrings.mobilePreview, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          const Text(
+            AppStrings.mobilePreview,
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
           const SizedBox(height: 16),
 
           // Preview Container
@@ -145,7 +166,7 @@ class _ScreenPushNotificationsState extends State<ScreenPushNotifications> {
                 borderRadius: BorderRadius.circular(16),
                 border: Border.all(color: Colors.grey.shade300),
                 boxShadow: [
-                   BoxShadow(
+                  BoxShadow(
                     color: Colors.black.withValues(alpha: 0.1),
                     blurRadius: 15,
                     offset: const Offset(0, 5),
@@ -158,18 +179,32 @@ class _ScreenPushNotificationsState extends State<ScreenPushNotifications> {
                   Row(
                     children: [
                       Container(
-                        width: 24, 
-                        height: 24, 
+                        width: 24,
+                        height: 24,
                         decoration: BoxDecoration(
                           color: Theme.of(context).primaryColor,
                           borderRadius: BorderRadius.circular(6),
                         ),
-                        child: const Icon(Icons.notifications, size: 14, color: Colors.white),
+                        child: const Icon(
+                          Icons.notifications,
+                          size: 14,
+                          color: Colors.white,
+                        ),
                       ),
                       const SizedBox(width: 8),
-                      Text(AppStrings.appTitle, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Colors.grey[700])),
+                      Text(
+                        AppStrings.appTitle,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                          color: Colors.grey[700],
+                        ),
+                      ),
                       const Spacer(),
-                      Text(AppStrings.now, style: TextStyle(fontSize: 10, color: Colors.grey[500])),
+                      Text(
+                        AppStrings.now,
+                        style: TextStyle(fontSize: 10, color: Colors.grey[500]),
+                      ),
                     ],
                   ),
                   const SizedBox(height: 8),
@@ -180,14 +215,24 @@ class _ScreenPushNotificationsState extends State<ScreenPushNotifications> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                             Text(
-                              _titleController.text.isEmpty ? AppStrings.notificationTitle : _titleController.text,
-                              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                            Text(
+                              _titleController.text.isEmpty
+                                  ? AppStrings.notificationTitle
+                                  : _titleController.text,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                              ),
                             ),
                             const SizedBox(height: 4),
-                             Text(
-                              _bodyController.text.isEmpty ? AppStrings.notificationDefaultBody : _bodyController.text,
-                              style: TextStyle(fontSize: 12, color: Colors.grey[800]),
+                            Text(
+                              _bodyController.text.isEmpty
+                                  ? AppStrings.notificationDefaultBody
+                                  : _bodyController.text,
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.grey[800],
+                              ),
                             ),
                           ],
                         ),

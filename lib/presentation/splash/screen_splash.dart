@@ -71,6 +71,9 @@ class _ScreenSplashState extends State<ScreenSplash>
 
               break;
             default:
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (_) => const ScreenLogin()),
+              );
           }
         } else if (state is AuthUnauthenticated) {
           Navigator.of(context).pushReplacement(
