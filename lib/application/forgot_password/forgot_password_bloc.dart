@@ -21,7 +21,7 @@ class ForgotPasswordBloc
       emit(_sentEmailOtpLoading());
 
       try {
-        final status = await _loginService.sendEmailOtp(email: event.email);
+        final status = await _loginService.sendEmailOtpForPasswordReset(email: event.email);
 
         if (status == true) {
           emit(_verifyOtp());
@@ -35,7 +35,7 @@ class ForgotPasswordBloc
     on<_verifyOtpButtonClick>((event, emit) async {
       emit(_verifyOtpLoading());
       try {
-        final status = await _loginService.verifyOtp(
+        final status = await _loginService.verifyOtpForPasswordReset(
           otp: event.otp,
           email: event.email,
         );
