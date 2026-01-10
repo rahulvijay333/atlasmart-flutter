@@ -2,6 +2,7 @@ import 'package:atlasmart/application/profile/customer/customer_profile_bloc.dar
 import 'package:atlasmart/domain/core/constants/constants.dart';
 import 'package:atlasmart/domain/core/constants/font.dart';
 import 'package:atlasmart/presentation/common/button_widget.dart';
+import 'package:atlasmart/presentation/customer/profile/screen_edit_profile.dart';
 import 'package:atlasmart/presentation/login/screen_login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -34,45 +35,50 @@ class ScreenProfile extends StatelessWidget {
             height: 250,
             child: BlocBuilder<CustomerProfileBloc, CustomerProfileState>(
               builder: (context, state) {
-                return Column(mainAxisAlignment: MainAxisAlignment.center,
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ?state.whenOrNull(
                       loading: () => Center(child: CircularProgressIndicator()),
                       success: (profile) {
-                        return Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.all(4),
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: Theme.of(context).colorScheme.primary,
-                                  width: 2,
+                        return Padding(
+                          padding: const EdgeInsets.only(left: 16,right: 16),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(4),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: Theme.of(context).colorScheme.primary,
+                                    width: 2,
+                                  ),
+                                ),
+                                child: CircleAvatar(
+                                  radius: 60,
+                                  backgroundColor: Colors.grey.shade200,
+                                  child: Icon(
+                                    Icons.person,
+                                    size: 60,
+                                    color: Colors.grey,
+                                  ),
                                 ),
                               ),
-                              child: CircleAvatar(
-                                radius: 60,
-                                backgroundColor: Colors.grey.shade200,
-                                child: Icon(
-                                  Icons.person,
-                                  size: 60,
-                                  color: Colors.grey,
-                                ),
+                              SizedBox(height: 15),
+                              Text(
+                                profile.userName,overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
+                                style: Theme.of(context).textTheme.headlineSmall
+                                    ?.copyWith(fontWeight: FontWeight.bold),
                               ),
-                            ),
-                            SizedBox(height: 15),
-                            Text(
-                              profile.userName,
-                              style: Theme.of(context).textTheme.headlineSmall
-                                  ?.copyWith(fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              profile.userEmail,
-                              style: Theme.of(context).textTheme.bodyMedium
-                                  ?.copyWith(color: Colors.grey.shade600),
-                            ),
-                          ],
+                              Text(
+                                profile.userEmail,
+                                style: Theme.of(context).textTheme.bodyMedium
+                                    ?.copyWith(color: Colors.grey.shade600),
+                              ),
+                            ],
+                          ),
                         );
                       },
 
@@ -107,16 +113,39 @@ class ScreenProfile extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           sliver: SliverList(
             delegate: SliverChildListDelegate([
-              _buildSectionCard(
-                context,
-                title: AppStrings.myAccount,
-                children: [
-                  ListTileWidget(title: AppStrings.editProfile, ontap: () {}),
-                  ListTileWidget(
-                    title: AppStrings.shippingAddress,
-                    ontap: () {},
-                  ),
-                ],
+              BlocBuilder<CustomerProfileBloc, CustomerProfileState>(
+                builder: (context, state) {
+                  return Column(
+                    children: [
+                      ?state.whenOrNull(
+                        success: (profile) => _buildSectionCard(
+                          context,
+                          title: AppStrings.myAccount,
+                          children: [
+                            ListTileWidget(
+                              title: AppStrings.editProfile,
+                              ontap: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) {
+                                      return ScreenEditProfile(
+                                        profile: profile,
+                                      );
+                                    },
+                                  ),
+                                );
+                              },
+                            ),
+                            ListTileWidget(
+                              title: AppStrings.shippingAddress,
+                              ontap: () {},
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  );
+                },
               ),
               const SizedBox(height: 16),
               _buildSectionCard(

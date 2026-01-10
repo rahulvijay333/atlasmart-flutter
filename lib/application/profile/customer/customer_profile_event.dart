@@ -6,6 +6,6 @@ class CustomerProfileEvent with _$CustomerProfileEvent {
 
   const factory CustomerProfileEvent.getProfileDetails() = _GetProfileDetails;
 
-  const factory CustomerProfileEvent.updateProfileDetailsButtonClick() =
+  const factory CustomerProfileEvent.updateProfileDetailsButtonClick({required ProfileModel profile}) =
       _UpdateProfileDetailsButtonClick;
 }

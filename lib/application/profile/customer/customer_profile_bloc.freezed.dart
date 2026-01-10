@@ -125,12 +125,12 @@ return updateProfileDetailsButtonClick(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  started,TResult Function()?  getProfileDetails,TResult Function()?  updateProfileDetailsButtonClick,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  started,TResult Function()?  getProfileDetails,TResult Function( ProfileModel profile)?  updateProfileDetailsButtonClick,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started();case _GetProfileDetails() when getProfileDetails != null:
 return getProfileDetails();case _UpdateProfileDetailsButtonClick() when updateProfileDetailsButtonClick != null:
-return updateProfileDetailsButtonClick();case _:
+return updateProfileDetailsButtonClick(_that.profile);case _:
   return orElse();
 
 }
@@ -148,12 +148,12 @@ return updateProfileDetailsButtonClick();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  started,required TResult Function()  getProfileDetails,required TResult Function()  updateProfileDetailsButtonClick,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  started,required TResult Function()  getProfileDetails,required TResult Function( ProfileModel profile)  updateProfileDetailsButtonClick,}) {final _that = this;
 switch (_that) {
 case _Started():
 return started();case _GetProfileDetails():
 return getProfileDetails();case _UpdateProfileDetailsButtonClick():
-return updateProfileDetailsButtonClick();case _:
+return updateProfileDetailsButtonClick(_that.profile);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -170,12 +170,12 @@ return updateProfileDetailsButtonClick();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  started,TResult? Function()?  getProfileDetails,TResult? Function()?  updateProfileDetailsButtonClick,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  started,TResult? Function()?  getProfileDetails,TResult? Function( ProfileModel profile)?  updateProfileDetailsButtonClick,}) {final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started();case _GetProfileDetails() when getProfileDetails != null:
 return getProfileDetails();case _UpdateProfileDetailsButtonClick() when updateProfileDetailsButtonClick != null:
-return updateProfileDetailsButtonClick();case _:
+return updateProfileDetailsButtonClick(_that.profile);case _:
   return null;
 
 }
@@ -251,33 +251,67 @@ String toString() {
 
 
 class _UpdateProfileDetailsButtonClick implements CustomerProfileEvent {
-  const _UpdateProfileDetailsButtonClick();
+  const _UpdateProfileDetailsButtonClick({required this.profile});
   
 
+ final  ProfileModel profile;
 
-
+/// Create a copy of CustomerProfileEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$UpdateProfileDetailsButtonClickCopyWith<_UpdateProfileDetailsButtonClick> get copyWith => __$UpdateProfileDetailsButtonClickCopyWithImpl<_UpdateProfileDetailsButtonClick>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UpdateProfileDetailsButtonClick);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UpdateProfileDetailsButtonClick&&(identical(other.profile, profile) || other.profile == profile));
 }
 
 
 @override
-int get hashCode => runtimeType.hashCode;
+int get hashCode => Object.hash(runtimeType,profile);
 
 @override
 String toString() {
-  return 'CustomerProfileEvent.updateProfileDetailsButtonClick()';
+  return 'CustomerProfileEvent.updateProfileDetailsButtonClick(profile: $profile)';
 }
 
 
 }
 
+/// @nodoc
+abstract mixin class _$UpdateProfileDetailsButtonClickCopyWith<$Res> implements $CustomerProfileEventCopyWith<$Res> {
+  factory _$UpdateProfileDetailsButtonClickCopyWith(_UpdateProfileDetailsButtonClick value, $Res Function(_UpdateProfileDetailsButtonClick) _then) = __$UpdateProfileDetailsButtonClickCopyWithImpl;
+@useResult
+$Res call({
+ ProfileModel profile
+});
 
 
+
+
+}
+/// @nodoc
+class __$UpdateProfileDetailsButtonClickCopyWithImpl<$Res>
+    implements _$UpdateProfileDetailsButtonClickCopyWith<$Res> {
+  __$UpdateProfileDetailsButtonClickCopyWithImpl(this._self, this._then);
+
+  final _UpdateProfileDetailsButtonClick _self;
+  final $Res Function(_UpdateProfileDetailsButtonClick) _then;
+
+/// Create a copy of CustomerProfileEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? profile = null,}) {
+  return _then(_UpdateProfileDetailsButtonClick(
+profile: null == profile ? _self.profile : profile // ignore: cast_nullable_to_non_nullable
+as ProfileModel,
+  ));
+}
+
+
+}
 
 /// @nodoc
 mixin _$CustomerProfileState {
@@ -323,12 +357,13 @@ extension CustomerProfileStatePatterns on CustomerProfileState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Initial value)?  initial,TResult Function( _Loading value)?  loading,TResult Function( _Success value)?  success,TResult Function( _Failed value)?  failed,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Initial value)?  initial,TResult Function( _Loading value)?  loading,TResult Function( _updateLoading value)?  updateLoading,TResult Function( _Success value)?  success,TResult Function( _Failed value)?  failed,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial(_that);case _Loading() when loading != null:
-return loading(_that);case _Success() when success != null:
+return loading(_that);case _updateLoading() when updateLoading != null:
+return updateLoading(_that);case _Success() when success != null:
 return success(_that);case _Failed() when failed != null:
 return failed(_that);case _:
   return orElse();
@@ -348,12 +383,13 @@ return failed(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Initial value)  initial,required TResult Function( _Loading value)  loading,required TResult Function( _Success value)  success,required TResult Function( _Failed value)  failed,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Initial value)  initial,required TResult Function( _Loading value)  loading,required TResult Function( _updateLoading value)  updateLoading,required TResult Function( _Success value)  success,required TResult Function( _Failed value)  failed,}){
 final _that = this;
 switch (_that) {
 case _Initial():
 return initial(_that);case _Loading():
-return loading(_that);case _Success():
+return loading(_that);case _updateLoading():
+return updateLoading(_that);case _Success():
 return success(_that);case _Failed():
 return failed(_that);case _:
   throw StateError('Unexpected subclass');
@@ -372,12 +408,13 @@ return failed(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Initial value)?  initial,TResult? Function( _Loading value)?  loading,TResult? Function( _Success value)?  success,TResult? Function( _Failed value)?  failed,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Initial value)?  initial,TResult? Function( _Loading value)?  loading,TResult? Function( _updateLoading value)?  updateLoading,TResult? Function( _Success value)?  success,TResult? Function( _Failed value)?  failed,}){
 final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial(_that);case _Loading() when loading != null:
-return loading(_that);case _Success() when success != null:
+return loading(_that);case _updateLoading() when updateLoading != null:
+return updateLoading(_that);case _Success() when success != null:
 return success(_that);case _Failed() when failed != null:
 return failed(_that);case _:
   return null;
@@ -396,11 +433,12 @@ return failed(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( ProfileModel profile)?  success,TResult Function( String message)?  failed,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function()?  updateLoading,TResult Function( ProfileModel profile)?  success,TResult Function( String message)?  failed,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _Loading() when loading != null:
-return loading();case _Success() when success != null:
+return loading();case _updateLoading() when updateLoading != null:
+return updateLoading();case _Success() when success != null:
 return success(_that.profile);case _Failed() when failed != null:
 return failed(_that.message);case _:
   return orElse();
@@ -420,11 +458,12 @@ return failed(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( ProfileModel profile)  success,required TResult Function( String message)  failed,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function()  updateLoading,required TResult Function( ProfileModel profile)  success,required TResult Function( String message)  failed,}) {final _that = this;
 switch (_that) {
 case _Initial():
 return initial();case _Loading():
-return loading();case _Success():
+return loading();case _updateLoading():
+return updateLoading();case _Success():
 return success(_that.profile);case _Failed():
 return failed(_that.message);case _:
   throw StateError('Unexpected subclass');
@@ -443,11 +482,12 @@ return failed(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( ProfileModel profile)?  success,TResult? Function( String message)?  failed,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function()?  updateLoading,TResult? Function( ProfileModel profile)?  success,TResult? Function( String message)?  failed,}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _Loading() when loading != null:
-return loading();case _Success() when success != null:
+return loading();case _updateLoading() when updateLoading != null:
+return updateLoading();case _Success() when success != null:
 return success(_that.profile);case _Failed() when failed != null:
 return failed(_that.message);case _:
   return null;
@@ -513,6 +553,38 @@ int get hashCode => runtimeType.hashCode;
 @override
 String toString() {
   return 'CustomerProfileState.loading()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
+
+
+class _updateLoading implements CustomerProfileState {
+  const _updateLoading();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _updateLoading);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'CustomerProfileState.updateLoading()';
 }
 
 

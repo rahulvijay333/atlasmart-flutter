@@ -23,5 +23,17 @@ class CustomerProfileBloc
         emit(_Failed(message: e.toString()));
       }
     });
+
+    on<_UpdateProfileDetailsButtonClick>((event, emit) async {
+      emit(_updateLoading());
+
+      try {
+        final resp = await _profileService.editProfile(event.profile);
+
+        emit(_Success(profile: resp));
+      } catch (e) {
+        emit(_Failed(message: e.toString()));
+      }
+    });
   }
 }
