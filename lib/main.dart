@@ -1,5 +1,8 @@
 import 'package:atlasmart/application/forgot_password/forgot_password_bloc.dart';
 import 'package:atlasmart/application/login/login_bloc.dart';
+import 'package:atlasmart/application/profile/customer/customer_profile_bloc.dart';
+import 'package:atlasmart/domain/core/constants/colors.dart';
+import 'package:atlasmart/domain/core/constants/font.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,6 +44,8 @@ class _MainAppState extends State<MainApp> {
         BlocProvider(create: (context) => sl<CustomerRegisterBloc>()),
 
         BlocProvider(create: (context) => sl<ForgotPasswordBloc>()),
+
+        BlocProvider(create: (context) => sl<CustomerProfileBloc>()),
       ],
 
       child: MaterialApp(
@@ -53,6 +58,7 @@ class _MainAppState extends State<MainApp> {
             primary: const Color(0xFFFFA000),
             secondary: const Color(0xFF2E7D32), // Green as secondary/success
           ),
+          iconTheme: IconThemeData(color: AppColors.amberColor),
           scaffoldBackgroundColor: Colors.grey[50],
           appBarTheme: const AppBarTheme(
             backgroundColor: Colors.white,

@@ -1,4 +1,6 @@
+import 'package:atlasmart/application/profile/customer/customer_profile_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../domain/core/constants/strings.dart';
 
 class BottomNavWidget extends StatelessWidget {
@@ -18,6 +20,14 @@ class BottomNavWidget extends StatelessWidget {
           type: BottomNavigationBarType.fixed,
           onTap: (value) {
             navBarNotifier.value = value;
+
+            switch (value) {
+              case 3:
+                BlocProvider.of<CustomerProfileBloc>(
+                  context,
+                ).add(CustomerProfileEvent.getProfileDetails());
+                break;
+            }
           },
           selectedItemColor: Theme.of(context).colorScheme.primary,
           unselectedItemColor: Colors.grey,
