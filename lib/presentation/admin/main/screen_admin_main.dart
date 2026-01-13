@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../application/admin/users/all_users_bloc.dart';
 import '../../../domain/core/constants/strings.dart';
 import '../dashboard/screen_dashboard.dart';
 import '../users/screen_users.dart';
@@ -66,6 +68,12 @@ class _ScreenAdminMainState extends State<ScreenAdminMain> {
           setState(() {
             _selectedIndex = index;
           });
+          if (index == 5) {
+            BlocProvider.of<AllUsersBloc>(
+              context,
+            ).add(AllUsersEvent.getAllUsers());
+          }
+
           Navigator.pop(context); // Close drawer
         },
       ),

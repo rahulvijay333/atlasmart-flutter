@@ -42,7 +42,7 @@ class ScreenProfile extends StatelessWidget {
                       loading: () => Center(child: CircularProgressIndicator()),
                       success: (profile) {
                         return Padding(
-                          padding: const EdgeInsets.only(left: 16,right: 16),
+                          padding: const EdgeInsets.only(left: 16, right: 16),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -51,7 +51,9 @@ class ScreenProfile extends StatelessWidget {
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   border: Border.all(
-                                    color: Theme.of(context).colorScheme.primary,
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.primary,
                                     width: 2,
                                   ),
                                 ),
@@ -67,7 +69,8 @@ class ScreenProfile extends StatelessWidget {
                               ),
                               SizedBox(height: 15),
                               Text(
-                                profile.userName,overflow: TextOverflow.ellipsis,
+                                profile.userName,
+                                overflow: TextOverflow.ellipsis,
                                 maxLines: 2,
                                 style: Theme.of(context).textTheme.headlineSmall
                                     ?.copyWith(fontWeight: FontWeight.bold),

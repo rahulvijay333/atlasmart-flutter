@@ -1,10 +1,13 @@
+import 'package:atlasmart/application/admin/users/all_users_bloc.dart';
 import 'package:atlasmart/application/forgot_password/forgot_password_bloc.dart';
 import 'package:atlasmart/application/login/login_bloc.dart';
 import 'package:atlasmart/application/registration/customer/custom_registr_bloc/customer_register_bloc.dart';
+import 'package:atlasmart/domain/admin/users/user_service.dart';
 import 'package:atlasmart/domain/endpoints/api_endpoints.dart';
 import 'package:atlasmart/domain/login/login_service.dart';
 import 'package:atlasmart/domain/profile/profile_service.dart';
 import 'package:atlasmart/domain/token/token_service.dart';
+import 'package:atlasmart/infrastructure/admin/users/user_service_impl.dart';
 import 'package:atlasmart/infrastructure/login/login_service_impl.dart';
 import 'package:atlasmart/infrastructure/profile/profile_service_impl.dart';
 import 'package:atlasmart/infrastructure/registration/registration_service_impl.dart';
@@ -35,7 +38,7 @@ void setupDI() {
   // 2. Dio
   // -------------------------
   sl.registerLazySingleton<Dio>(() {
-    final dio = Dio(BaseOptions(baseUrl: ApiEndpoints.baseUrl));
+    final dio = Dio(BaseOptions(baseUrl: ApiEndpoints.baseUrlProduction));
 
     dio.interceptors.add(
       DioInterceptor(sl<TokenStorage>(), sl<TokenService>()),
@@ -56,6 +59,7 @@ void setupDI() {
   sl.registerLazySingleton<ProfileService>(
     () => ProfileServiceImpl(dio: sl<Dio>()),
   );
+  sl.registerLazySingleton<UserService>(() => UserServiceImpl(dio: sl<Dio>()));
 
   // -------------------------
   // 4. Blocs
@@ -74,4 +78,6 @@ void setupDI() {
   sl.registerFactory<CustomerProfileBloc>(
     () => CustomerProfileBloc(sl<ProfileService>()),
   );
+
+  sl.registerFactory<AllUsersBloc>(() => AllUsersBloc(sl<UserService>()));
 }
