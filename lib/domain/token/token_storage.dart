@@ -13,6 +13,10 @@ class TokenStorage {
     await _store.write(key: "role", value: role);
   }
 
+  Future<void> updateAccessToken(String access) async {
+    await _store.write(key: "access", value: access);
+  }
+
   Future<String?> getAccessToken() => _store.read(key: "access");
   Future<String?> getRefreshToken() => _store.read(key: "refresh");
   Future<String?> getRole() => _store.read(key: "role");

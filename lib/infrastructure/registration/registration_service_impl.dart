@@ -37,7 +37,7 @@ class RegistrationServiceImpl implements RegistrationService {
   Future<bool> customerOtpVerify(CustomerRegisterModel customer) async {
     try {
       final res = await dio.post(
-        ApiEndpoints.verifyOtp,
+        ApiEndpoints.verifyEmailOtp,
         data: {"email": customer.email, "otp": customer.otp},
       );
       if (res.statusCode == 200) {

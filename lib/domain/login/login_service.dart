@@ -6,11 +6,18 @@ abstract class LoginService {
 
   Future<void> logout();
   Future<bool> sendEmailOtp({required String email});
+  Future<bool> sendEmailOtpForPasswordReset({required String email});
+
   Future<(bool, AuthTokens?)> verifyOtp({
     required String email,
     required String otp,
-    bool isSaveConfigrequired
+    bool isSaveConfigrequired,
   });
+  Future<(bool, AuthTokens?)> verifyOtpForPasswordReset({
+    required String email,
+    required String otp,
+  });
+
   Future<bool> setPassword({
     required String email,
     required String otp,

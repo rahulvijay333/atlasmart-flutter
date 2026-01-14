@@ -196,14 +196,14 @@ class VerifyOtpWidget extends StatelessWidget {
         ),
         Text('Verify OTP', style: AppFont.subHeading16BoldStyle),
         const SizedBox(height: 10),
-    
+
         Text(
           'OTP sent to ${widget.user.data?.user?.email ?? ''}',
           style: TextStyle(color: Colors.grey),
         ),
-    
+
         const SizedBox(height: 30),
-    
+
         PinCodeTextField(
           appContext: context,
           autoDisposeControllers: false,
@@ -216,9 +216,9 @@ class VerifyOtpWidget extends StatelessWidget {
             //     );
           },
         ),
-    
+
         const SizedBox(height: 30),
-    
+
         BlocConsumer<LoginBloc, LoginState>(
           listener: (context, state) {},
           builder: (context, state) {

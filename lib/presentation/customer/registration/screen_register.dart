@@ -113,7 +113,10 @@ class _ScreenRegisterState extends State<ScreenRegister> {
                       state.whenOrNull(
                         sendOtp: (customer) {
                           BlocProvider.of<CustomerRegisterBloc>(context).add(
-                            CustomerRegisterEvent.sendOtp(customer: customer,resendOtp: false),
+                            CustomerRegisterEvent.sendOtp(
+                              customer: customer,
+                              resendOtp: false,
+                            ),
                           );
 
                           Navigator.of(context).pushReplacement(

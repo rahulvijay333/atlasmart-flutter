@@ -54,7 +54,7 @@ class LoginServiceImpl implements LoginService {
   Future<bool> sendEmailOtp({required String email}) async {
     try {
       final res = await dio.post(
-        ApiEndpoints.forgotPassword,
+        ApiEndpoints.sendEmailVerificationOtp,
         data: {"email": email},
       );
 
@@ -98,7 +98,7 @@ class LoginServiceImpl implements LoginService {
   }) async {
     try {
       final res = await dio.post(
-        ApiEndpoints.verifyOtp,
+        ApiEndpoints.verifyEmailOtp,
         data: {"email": email, "otp": otp},
       );
       final tokens = AuthTokens(
@@ -116,6 +116,51 @@ class LoginServiceImpl implements LoginService {
           );
         }
 
+        return (true, tokens);
+      } else {
+        return (false, null);
+      }
+    } on DioException catch (e) {
+      log(e.toString());
+      throw DioErrorHandler.handle(e);
+    }
+  }
+
+  @override
+  Future<bool> sendEmailOtpForPasswordReset({required String email}) async {
+    try {
+      final res = await dio.post(
+        ApiEndpoints.sendOtpForPaswwordReset,
+        data: {"email": email},
+      );
+
+      if (res.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } on DioException catch (e) {
+      throw DioErrorHandler.handle(e);
+    }
+  }
+
+  @override
+  Future<(bool, AuthTokens?)> verifyOtpForPasswordReset({
+    required String email,
+    required String otp,
+  }) async {
+    try {
+      final res = await dio.post(
+        ApiEndpoints.verifyOtpForPasswordReset,
+        data: {"email": email, "otp": otp},
+      );
+      final tokens = AuthTokens(
+        res.data['Data']["accessToken"],
+        res.data['Data']["refreshToken"],
+        res.data["Data"]["user"]["role"],
+      );
+
+      if (res.statusCode == 200) {
         return (true, tokens);
       } else {
         return (false, null);
