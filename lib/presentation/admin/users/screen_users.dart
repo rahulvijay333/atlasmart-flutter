@@ -90,7 +90,9 @@ class ScreenAdminUsers extends StatelessWidget {
                                     context,
                                   ).primaryColor.withValues(alpha: 0.1),
                                   child: Text(
-                                    user.userName[0],
+                                    user.userName.isNotEmpty
+                                        ? user.userName[0]
+                                        : '-',
                                     style: TextStyle(
                                       color: Theme.of(context).primaryColor,
                                       fontWeight: FontWeight.bold,
