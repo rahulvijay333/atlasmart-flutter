@@ -22,6 +22,7 @@ import '../../../infrastructure/interceptor/interceptor.dart';
 
 import '../../registration/registration_service.dart';
 import '../../token/token_storage.dart';
+import '../config/app_config.dart';
 
 final sl = GetIt.instance;
 
@@ -38,7 +39,7 @@ void setupDI() {
   // 2. Dio
   // -------------------------
   sl.registerLazySingleton<Dio>(() {
-    final dio = Dio(BaseOptions(baseUrl: ApiEndpoints.baseUrlProduction));
+    final dio = Dio(BaseOptions(baseUrl: AppConfig.instance.baseUrl));
 
     dio.interceptors.add(
       DioInterceptor(sl<TokenStorage>(), sl<TokenService>()),
