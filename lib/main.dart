@@ -3,18 +3,30 @@ import 'package:atlasmart/application/forgot_password/forgot_password_bloc.dart'
 import 'package:atlasmart/application/login/login_bloc.dart';
 import 'package:atlasmart/application/profile/customer/customer_profile_bloc.dart';
 import 'package:atlasmart/domain/core/constants/colors.dart';
-import 'package:atlasmart/domain/core/constants/font.dart';
+import 'package:atlasmart/domain/endpoints/api_endpoints.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'application/auth/auth_bloc.dart';
 import 'application/registration/customer/custom_registr_bloc/customer_register_bloc.dart';
+import 'domain/core/config/app_config.dart';
 import 'domain/core/di/di.dart';
 import 'presentation/splash/screen_splash.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+ final bool isRelease =
+      const bool.fromEnvironment('dart.vm.product');
+
+  AppConfig.initialize(
+    AppConfig(
+      flavor: isRelease ? Flavor.prod : Flavor.dev,
+      baseUrl: isRelease
+          ? ApiEndpoints.baseUrlProduction
+          : ApiEndpoints.baseUrl,
+    ),
+  );
   setupDI();
   runApp(const MainApp());
 }

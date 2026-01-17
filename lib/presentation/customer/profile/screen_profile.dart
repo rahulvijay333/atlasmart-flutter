@@ -173,21 +173,8 @@ class ScreenProfile extends StatelessWidget {
             ]),
           ),
         ),
-        SliverToBoxAdapter(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 24),
-            child: Center(
-              child: Text(
-                '${AppStrings.appVersion} ${AppConstants.appVersion}',
-                style: Theme.of(
-                  context,
-                ).textTheme.bodySmall?.copyWith(color: Colors.grey),
-              ),
-            ),
-          ),
-        ),
         SliverPadding(
-          padding: EdgeInsets.only(left: 16, right: 16, bottom: 30),
+          padding: EdgeInsets.only(left: 16, right: 16, top: 15),
           sliver: SliverToBoxAdapter(
             child: ButtonWidget(
               title: AppStrings.logout,
@@ -205,6 +192,19 @@ class ScreenProfile extends StatelessWidget {
                   (route) => false,
                 );
               },
+            ),
+          ),
+        ),
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 15),
+            child: Center(
+              child: Text(
+                '${AppStrings.appVersion} ${AppConstants.appVersion}',
+                style: Theme.of(
+                  context,
+                ).textTheme.bodySmall?.copyWith(color: Colors.grey),
+              ),
             ),
           ),
         ),
