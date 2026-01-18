@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:atlasmart/application/admin/manage_admins/manage_admins_bloc.dart';
 import 'package:atlasmart/application/admin/users/all_users_bloc.dart';
 import 'package:atlasmart/application/forgot_password/forgot_password_bloc.dart';
@@ -6,6 +8,9 @@ import 'package:atlasmart/application/profile_admin_customer/admin/bloc/admin_pr
 import 'package:atlasmart/application/profile_admin_customer/customer/customer_profile_bloc.dart';
 import 'package:atlasmart/domain/core/constants/colors.dart';
 import 'package:atlasmart/domain/endpoints/api_endpoints.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,12 +23,23 @@ import 'presentation/splash/screen_splash.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final bool isRelease = const bool.fromEnvironment('dart.vm.product');
+
+  if (kReleaseMode) {
+    await Firebase.initializeApp();
+    FlutterError.onError = (errorDetails) {
+      FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
+    };
+    // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
+    PlatformDispatcher.instance.onError = (error, stack) {
+      FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+      return true;
+    };
+  }
 
   AppConfig.initialize(
     AppConfig(
-      flavor: isRelease ? Flavor.prod : Flavor.dev,
-      baseUrl: isRelease
+      flavor: kReleaseMode ? Flavor.prod : Flavor.dev,
+      baseUrl: kReleaseMode
           ? ApiEndpoints.baseUrlProduction
           : ApiEndpoints.baseUrl,
     ),

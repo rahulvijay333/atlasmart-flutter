@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "603339184048",
+    "project_id": "push-notification-app-4cf86",
+    "storage_bucket": "push-notification-app-4cf86.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:603339184048:android:ae39cd6df57390dbab6875",
+        "android_client_info": {
+          "package_name": "com.atlasmart.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKqeq5vAxJMyxztZOszPoQaCmtoy2iq48"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

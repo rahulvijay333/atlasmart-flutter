@@ -147,7 +147,9 @@ class ScreenProfile extends StatelessWidget {
                             ),
                             ListTileWidget(
                               title: AppStrings.shippingAddress,
-                              ontap: () {},
+                              ontap: () {
+                                throw Exception('this is testing');
+                              },
                             ),
                           ],
                         ),
