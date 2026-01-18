@@ -62,7 +62,9 @@ class AdminProfileServiceImpl implements AdminProfileService {
       final response = await dio.get(ApiEndpoints.adminProfile);
 
       if (response.statusCode == 200) {
-        final data = AdminProfileResponseModel.fromJson(jsonEncode(response.data));
+        final data = AdminProfileResponseModel.fromJson(
+          jsonEncode(response.data),
+        );
 
         return AdminUserModel(
           userName: data.data?.name ?? '',

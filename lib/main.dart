@@ -1,3 +1,4 @@
+import 'package:atlasmart/application/admin/manage_admins/manage_admins_bloc.dart';
 import 'package:atlasmart/application/admin/users/all_users_bloc.dart';
 import 'package:atlasmart/application/forgot_password/forgot_password_bloc.dart';
 import 'package:atlasmart/application/login/login_bloc.dart';
@@ -62,6 +63,7 @@ class _MainAppState extends State<MainApp> {
 
         BlocProvider(create: (context) => sl<AdminProfileBloc>()),
         BlocProvider(create: (context) => sl<AllUsersBloc>()),
+        BlocProvider(create: (context) => sl<ManageAdminsBloc>()),
       ],
 
       child: MaterialApp(

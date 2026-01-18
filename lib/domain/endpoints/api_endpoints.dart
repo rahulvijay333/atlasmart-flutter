@@ -15,6 +15,6 @@ class ApiEndpoints {
 
   //admin
   static const getAllUsers = '/api/admins/users';
-  static const addNewAdmin = 'api/admins/register';
+  static const addNewAdmin = '/api/admins/register';
   static const adminProfile = '/api/admins/profile';
 }

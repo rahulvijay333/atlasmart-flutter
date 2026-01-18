@@ -15,14 +15,14 @@ class AdminProfileBloc extends Bloc<AdminProfileEvent, AdminProfileState> {
   AdminProfileBloc(this._profileService) : super(_Initial()) {
     on<_GetProfileDetails>((event, emit) async {
       // if (state is! _Success) {
-        emit(_Loading());
-        try {
-          final resp = await _profileService.getProfileDetails();
+      emit(_Loading());
+      try {
+        final resp = await _profileService.getProfileDetails();
 
-          emit(_Success(profile: resp));
-        } catch (e) {
-          emit(_Failed(message: e.toString()));
-        }
+        emit(_Success(profile: resp));
+      } catch (e) {
+        emit(_Failed(message: e.toString()));
+      }
       // }
     });
   }

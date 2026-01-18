@@ -54,7 +54,7 @@ class AppStrings {
   static const String pushNotifications = 'Push Notifications';
   static const String manageAdmins = 'Manage Admins';
 
-  static const String welcomeBackAdmin = 'Welcome back, Admin 👋';
+  static const String welcomeBackAdmin = 'Welcome,';
   static const String dashboardSubtitle =
       'Here is what\'s happening with your store today.';
   static const String totalSales = 'Total Sales';

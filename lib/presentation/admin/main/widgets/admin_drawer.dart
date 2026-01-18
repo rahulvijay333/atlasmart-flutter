@@ -1,6 +1,7 @@
 import 'package:atlasmart/application/profile_admin_customer/admin/bloc/admin_profile_bloc.dart';
 import 'package:atlasmart/domain/core/constants/colors.dart';
 import 'package:atlasmart/domain/core/constants/font.dart';
+import 'package:atlasmart/presentation/admin/admin_profile/screen_admin_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -31,7 +32,7 @@ class AdminDrawerWidget extends StatelessWidget {
         children: [
           // Premium Header
           Container(
-            padding: const EdgeInsets.fromLTRB(24, 60, 24, 24),
+            padding: const EdgeInsets.fromLTRB(10, 60, 10, 24),
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
@@ -56,7 +57,7 @@ class AdminDrawerWidget extends StatelessWidget {
                     child: Icon(Icons.person, color: Colors.orange, size: 30),
                   ),
                 ),
-                const SizedBox(width: 10),
+                const SizedBox(width: 5),
                 Expanded(
                   child: BlocBuilder<AdminProfileBloc, AdminProfileState>(
                     builder: (context, state) {
@@ -102,25 +103,52 @@ class AdminDrawerWidget extends StatelessWidget {
                               );
                             },
                             success: (profile) {
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                              return Row(
                                 children: [
-                                  Text(
-                                    profile.userName,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: AppFont.title16Style.copyWith(
-                                      color: AppColors.whiteColor,
-                                      fontWeight: FontWeight.bold,
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          profile.userName,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: AppFont.title16Style.copyWith(
+                                            color: AppColors.whiteColor,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        SizedBox(height: 4),
+                                        Text(
+                                          profile.userEmail,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: AppFont.title14Style.copyWith(
+                                            color: AppColors.whiteColor,
+                                          ),
+                                          maxLines: 2,
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                  SizedBox(height: 4),
-                                  Text(
-                                    profile.userEmail,overflow: TextOverflow.ellipsis,
-                                    style: AppFont.title14Style.copyWith(
-                                      color: AppColors.whiteColor,
-                                    ),
-                                    maxLines: 2,
+
+                                  IconButton(
+                                    onPressed: () {
+                                      Navigator.of(context)
+                                          .push(
+                                            MaterialPageRoute(
+                                              builder: (context) {
+                                                return ScreenAdminProfile();
+                                              },
+                                            ),
+                                          )
+                                          .then((value) {
+                                            if (context.mounted) {
+                                              Navigator.of(context).pop();
+                                            }
+                                          });
+                                    },
+                                    icon: Icon(Icons.arrow_forward_ios),
                                   ),
                                 ],
                               );

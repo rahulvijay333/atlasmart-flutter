@@ -1,4 +1,5 @@
 import 'package:atlasmart/application/profile_admin_customer/admin/bloc/admin_profile_bloc.dart';
+import 'package:atlasmart/domain/core/constants/font.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../domain/core/constants/strings.dart';
@@ -21,42 +22,44 @@ class ScreenAdminDashboard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Header Section
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        AppStrings.welcomeBackAdmin,
-                        style: Theme.of(context).textTheme.headlineSmall
-                            ?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black87,
-                            ),
+            BlocBuilder<AdminProfileBloc, AdminProfileState>(
+              builder: (context, state) {
+                String userName = '';
+
+                state.whenOrNull(
+                  success: (profile) {
+                    userName = profile.userName;
+                  },
+                );
+
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '${AppStrings.welcomeBackAdmin} $userName',
+                            style: AppFont.subHeading16BoldStyle,
+                          ),
+                          const SizedBox(height: 4),
+                        ],
                       ),
-                      const SizedBox(height: 4),
-                      Text(
-                        AppStrings.dashboardSubtitle,
-                        style: TextStyle(color: Colors.grey[600]),
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
+                    ),
+                    CircleAvatar(
+                      radius: 20,
+                      backgroundColor: Theme.of(
+                        context,
+                      ).primaryColor.withValues(alpha: 0.1),
+                      child: Icon(
+                        Icons.notifications_outlined,
+                        color: Theme.of(context).primaryColor,
                       ),
-                    ],
-                  ),
-                ),
-                CircleAvatar(
-                  radius: 20,
-                  backgroundColor: Theme.of(
-                    context,
-                  ).primaryColor.withValues(alpha: 0.1),
-                  child: Icon(
-                    Icons.notifications_outlined,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                ),
-              ],
+                    ),
+                  ],
+                );
+              },
             ),
             const SizedBox(height: 24),
 

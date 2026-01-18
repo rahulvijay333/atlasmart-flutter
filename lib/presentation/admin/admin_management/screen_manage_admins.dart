@@ -162,23 +162,23 @@ class _ScreenManageAdminsState extends State<ScreenManageAdmins> {
                           ],
                         ),
                       ),
-                      Switch(
-                        value: isActive,
-                        onChanged: index == 0
-                            ? null
-                            : (val) {
-                                // Cannot deactive self
-                                setState(() {
-                                  // Toggle Logic mock
-                                });
-                              },
-                        activeTrackColor: Colors.green,
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.edit_outlined, size: 20),
-                        color: Colors.grey,
-                        onPressed: () {},
-                      ),
+                      // Switch(
+                      //   value: isActive,
+                      //   onChanged: index == 0
+                      //       ? null
+                      //       : (val) {
+                      //           // Cannot deactive self
+                      //           setState(() {
+                      //             // Toggle Logic mock
+                      //           });
+                      //         },
+                      //   activeTrackColor: Colors.green,
+                      // ),
+                      // IconButton(
+                      //   icon: const Icon(Icons.edit_outlined, size: 20),
+                      //   color: Colors.grey,
+                      //   onPressed: () {},
+                      // ),
                     ],
                   ),
                 ),

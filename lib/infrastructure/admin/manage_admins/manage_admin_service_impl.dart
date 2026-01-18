@@ -14,10 +14,10 @@ class ManageAdminServiceImpl implements ManageAdminService {
   Future<bool> addNewAdmin(AdminUserModel admin) async {
     try {
       final res = await dio.post(
-        ApiEndpoints.customerRegister,
+        ApiEndpoints.addNewAdmin,
         data: {
           "email": admin.userEmail,
-          "password": admin.userName,
+          "password": admin.password,
           "name": admin.userName,
         },
       );

@@ -276,7 +276,7 @@ class VerifyOtpWidget extends StatelessWidget {
                   : false,
               height: 50,
 
-              title: 'Verify Otp',
+              title: 'Verify OTP',
               ontap: state != CustomerRegisterState.verifyOtpLoading()
                   ? () {
                       if (textEditingController.text.length == 6) {
@@ -289,7 +289,7 @@ class VerifyOtpWidget extends StatelessWidget {
                           ),
                         );
                       } else {
-                        AppSnackBar.show(context, 'Invalid Otp');
+                        AppSnackBar.show(context, 'Invalid OTP');
                       }
                     }
                   : () {},
