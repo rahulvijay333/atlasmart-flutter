@@ -1,4 +1,9 @@
+import 'package:atlasmart/application/profile_admin_customer/admin/bloc/admin_profile_bloc.dart';
+import 'package:atlasmart/domain/core/constants/colors.dart';
+import 'package:atlasmart/domain/core/constants/font.dart';
+import 'package:atlasmart/presentation/admin/admin_profile/screen_admin_profile.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../login/screen_login.dart';
 import '../../../../domain/core/constants/strings.dart';
@@ -27,7 +32,7 @@ class AdminDrawerWidget extends StatelessWidget {
         children: [
           // Premium Header
           Container(
-            padding: const EdgeInsets.fromLTRB(24, 60, 24, 24),
+            padding: const EdgeInsets.fromLTRB(10, 60, 10, 24),
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
@@ -52,25 +57,106 @@ class AdminDrawerWidget extends StatelessWidget {
                     child: Icon(Icons.person, color: Colors.orange, size: 30),
                   ),
                 ),
-                const SizedBox(width: 16),
+                const SizedBox(width: 5),
                 Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Text(
-                        AppStrings.adminPortal,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(height: 4),
-                      Text(
-                        'admin@atlasmart.com',
-                        style: TextStyle(color: Colors.white70, fontSize: 12),
-                      ),
-                    ],
+                  child: BlocBuilder<AdminProfileBloc, AdminProfileState>(
+                    builder: (context, state) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+
+                        children: [
+                          ?state.whenOrNull(
+                            loading: () {
+                              return Center(
+                                child: SizedBox(
+                                  width: 25,
+                                  height: 25,
+                                  child: CircularProgressIndicator(),
+                                ),
+                              );
+                            },
+
+                            failed: (message) {
+                              return Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Retry',
+                                      style: AppFont.title14BoldStyleWhiteColor,
+                                    ),
+                                    IconButton(
+                                      onPressed: () {
+                                        BlocProvider.of<AdminProfileBloc>(
+                                          context,
+                                        ).add(
+                                          AdminProfileEvent.getProfileDetails(),
+                                        );
+                                      },
+                                      icon: Icon(
+                                        Icons.refresh,
+                                        color: AppColors.whiteColor,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                            success: (profile) {
+                              return Row(
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          profile.userName,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: AppFont.title16Style.copyWith(
+                                            color: AppColors.whiteColor,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        SizedBox(height: 4),
+                                        Text(
+                                          profile.userEmail,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: AppFont.title14Style.copyWith(
+                                            color: AppColors.whiteColor,
+                                          ),
+                                          maxLines: 2,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+
+                                  IconButton(
+                                    onPressed: () {
+                                      Navigator.of(context)
+                                          .push(
+                                            MaterialPageRoute(
+                                              builder: (context) {
+                                                return ScreenAdminProfile();
+                                              },
+                                            ),
+                                          )
+                                          .then((value) {
+                                            if (context.mounted) {
+                                              Navigator.of(context).pop();
+                                            }
+                                          });
+                                    },
+                                    icon: Icon(Icons.arrow_forward_ios),
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                        ],
+                      );
+                    },
                   ),
                 ),
               ],

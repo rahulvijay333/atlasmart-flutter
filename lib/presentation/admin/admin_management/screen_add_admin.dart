@@ -1,4 +1,10 @@
+import 'package:atlasmart/application/admin/manage_admins/manage_admins_bloc.dart';
+import 'package:atlasmart/domain/admin/profile/model/admin_profile.dart';
+import 'package:atlasmart/domain/core/constants/font.dart';
+import 'package:atlasmart/presentation/common/button_widget.dart';
+import 'package:atlasmart/presentation/common/snack_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../domain/core/constants/strings.dart';
 
 class ScreenAddAdmin extends StatefulWidget {
@@ -80,6 +86,14 @@ class _ScreenAddAdminState extends State<ScreenAddAdmin> {
               // Name Field
               TextFormField(
                 controller: _nameController,
+                maxLength: 100,
+                buildCounter:
+                    (
+                      context, {
+                      required currentLength,
+                      required isFocused,
+                      required maxLength,
+                    }) => null,
                 decoration: const InputDecoration(
                   labelText: AppStrings.fullName,
                   border: OutlineInputBorder(),
@@ -133,50 +147,94 @@ class _ScreenAddAdminState extends State<ScreenAddAdmin> {
                   return null;
                 },
               ),
-              const SizedBox(height: 16),
+              // const SizedBox(height: 16),
 
-              // Role Dropdown
-              DropdownButtonFormField<String>(
-                initialValue: _selectedRole,
-                decoration: const InputDecoration(
-                  labelText: AppStrings.role,
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.admin_panel_settings_outlined),
-                ),
-                items: _roles.map((role) {
-                  return DropdownMenuItem(value: role, child: Text(role));
-                }).toList(),
-                onChanged: (value) {
-                  setState(() {
-                    _selectedRole = value!;
-                  });
-                },
-              ),
+              // // Role Dropdown
+              // DropdownButtonFormField<String>(
+              //   initialValue: _selectedRole,
+              //   decoration: const InputDecoration(
+              //     labelText: AppStrings.role,
+              //     border: OutlineInputBorder(),
+              //     prefixIcon: Icon(Icons.admin_panel_settings_outlined),
+              //   ),
+              //   items: _roles.map((role) {
+              //     return DropdownMenuItem(value: role, child: Text(role));
+              //   }).toList(),
+              //   onChanged: (value) {
+              //     setState(() {
+              //       _selectedRole = value!;
+              //     });
+              //   },
+              // ),
               const SizedBox(height: 32),
 
               // Submit Button
-              SizedBox(
-                width: double.infinity,
-                height: 50,
-                child: ElevatedButton(
-                  onPressed: _isLoading ? null : _submitForm,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Theme.of(context).primaryColor,
-                    foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  child: _isLoading
-                      ? const CircularProgressIndicator(color: Colors.white)
-                      : const Text(
-                          AppStrings.createAdminButton,
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                ),
+              BlocConsumer<ManageAdminsBloc, ManageAdminsState>(
+                listener: (context, state) {
+                  state.whenOrNull(
+                    success: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Text(
+                              'Success',
+                              style: AppFont.subHeading16BoldStyle,
+                              textAlign: TextAlign.center,
+                            ),
+                            content: Text(
+                              'Admin added successfully',
+                              style: AppFont.title14Style,
+                              textAlign: TextAlign.center,
+                            ),
+                            actions: [
+                              Center(
+                                child: TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text('OK'),
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+
+                    failure: (message) {
+                      AppSnackBar.show(context, message);
+                    },
+                  );
+                },
+                builder: (context, state) {
+                  return ButtonWidget(
+                    isloading: state == ManageAdminsState.loading()
+                        ? true
+                        : false,
+                    title: AppStrings.createAdminButton,
+                    height: 50,
+                    ontap: state != ManageAdminsState.loading()
+                        ? () {
+                            if (_formKey.currentState!.validate()) {
+                              final data =
+                                  AdminUserModel(
+                                    userName: _nameController.text.trim(),
+                                    userEmail: _emailController.text.trim(),
+                                    joinedDate: null,
+                                  ).copyWith(
+                                    password: _passwordController.text.trim(),
+                                  );
+
+                              BlocProvider.of<ManageAdminsBloc>(
+                                context,
+                              ).add(ManageAdminsEvent.addNewAdmin(data));
+                            }
+                          }
+                        : () {},
+                  );
+                },
               ),
             ],
           ),

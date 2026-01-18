@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:atlasmart/application/registration/customer/custom_registr_bloc/customer_register_bloc.dart';
 import 'package:atlasmart/domain/core/constants/colors.dart';
@@ -17,7 +16,7 @@ import '../../common/app_dialoge.dart';
 import '../../common/button_widget.dart';
 
 class ScreenOtpVerify extends StatefulWidget {
-  ScreenOtpVerify({super.key, required this.customer});
+  const ScreenOtpVerify({super.key, required this.customer});
   final CustomerRegisterModel customer;
 
   @override
@@ -277,7 +276,7 @@ class VerifyOtpWidget extends StatelessWidget {
                   : false,
               height: 50,
 
-              title: 'Verify Otp',
+              title: 'Verify OTP',
               ontap: state != CustomerRegisterState.verifyOtpLoading()
                   ? () {
                       if (textEditingController.text.length == 6) {
@@ -290,7 +289,7 @@ class VerifyOtpWidget extends StatelessWidget {
                           ),
                         );
                       } else {
-                        AppSnackBar.show(context, 'Invalid Otp');
+                        AppSnackBar.show(context, 'Invalid OTP');
                       }
                     }
                   : () {},

@@ -1,4 +1,6 @@
-import 'package:atlasmart/application/profile/customer/customer_profile_bloc.dart';
+import 'dart:io';
+
+import 'package:atlasmart/application/profile_admin_customer/customer/customer_profile_bloc.dart';
 import 'package:atlasmart/domain/core/constants/colors.dart';
 import 'package:atlasmart/domain/core/constants/font.dart';
 import 'package:atlasmart/domain/profile/model/profile_model.dart';
@@ -7,6 +9,8 @@ import 'package:atlasmart/presentation/common/snack_bar.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../domain/core/util/image_picker.dart';
 
 class ScreenEditProfile extends StatefulWidget {
   const ScreenEditProfile({super.key, required this.profile});
@@ -21,6 +25,7 @@ class _ScreenEditProfileState extends State<ScreenEditProfile> {
   final TextEditingController namecontroller = TextEditingController();
   final _formkey = GlobalKey<FormState>();
   bool editProfile = false;
+  File? selectedImage;
 
   @override
   void initState() {
@@ -72,6 +77,53 @@ class _ScreenEditProfileState extends State<ScreenEditProfile> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Center(
+                    child: Stack(
+                      alignment: AlignmentGeometry.bottomCenter,
+                      children: [
+                        CircleAvatar(
+                          radius: 80,
+                          backgroundColor: Colors.grey.shade200,
+                          backgroundImage: selectedImage != null
+                              ? FileImage(selectedImage!)
+                              : (widget.profile.profilePic != null &&
+                                    widget.profile.profilePic!.isNotEmpty)
+                              ? NetworkImage(widget.profile.profilePic!)
+                              : null,
+                          child:
+                              (selectedImage == null &&
+                                  (widget.profile.profilePic == null ||
+                                      widget.profile.profilePic!.isEmpty))
+                              ? const Icon(Icons.person, size: 60)
+                              : null,
+                        ),
+                        if (editProfile)
+                          Positioned(
+                            bottom: 0,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: AppColors.whiteColor,
+                              ),
+                              child: IconButton(
+                                icon: const Icon(
+                                  Icons.camera_alt,
+                                  color: Colors.black,
+                                ),
+                                onPressed: () async {
+                                  final image = await ImagePickerUtil.pickImage(
+                                    context,
+                                  );
+                                  if (image != null) {
+                                    setState(() => selectedImage = image);
+                                  }
+                                },
+                              ),
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
                   Text(
                     'Name',
                     style: AppFont.title16Style.copyWith(
@@ -99,6 +151,8 @@ class _ScreenEditProfileState extends State<ScreenEditProfile> {
                     validator: (value) {
                       if (value?.isEmpty == true) {
                         return 'Invalid Name';
+                      } else {
+                        return null;
                       }
                     },
                   ),
@@ -119,6 +173,7 @@ class _ScreenEditProfileState extends State<ScreenEditProfile> {
                                 CustomerProfileEvent.updateProfileDetailsButtonClick(
                                   profile: widget.profile.copyWith(
                                     userName: namecontroller.text.trim(),
+                                    newProfileImage: selectedImage,
                                   ),
                                 ),
                               );

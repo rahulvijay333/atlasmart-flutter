@@ -1,4 +1,4 @@
-import 'package:atlasmart/application/profile/customer/customer_profile_bloc.dart';
+import 'package:atlasmart/application/profile_admin_customer/customer/customer_profile_bloc.dart';
 import 'package:atlasmart/domain/core/constants/constants.dart';
 import 'package:atlasmart/domain/core/constants/font.dart';
 import 'package:atlasmart/presentation/common/button_widget.dart';
@@ -60,11 +60,17 @@ class ScreenProfile extends StatelessWidget {
                                 child: CircleAvatar(
                                   radius: 60,
                                   backgroundColor: Colors.grey.shade200,
-                                  child: Icon(
-                                    Icons.person,
-                                    size: 60,
-                                    color: Colors.grey,
-                                  ),
+                                  backgroundImage:
+                                      profile.profilePic!.isNotEmpty
+                                      ? NetworkImage(profile.profilePic!)
+                                      : null,
+                                  child: profile.profilePic!.isEmpty
+                                      ? Icon(
+                                          Icons.person,
+                                          size: 60,
+                                          color: Colors.grey,
+                                        )
+                                      : null,
                                 ),
                               ),
                               SizedBox(height: 15),

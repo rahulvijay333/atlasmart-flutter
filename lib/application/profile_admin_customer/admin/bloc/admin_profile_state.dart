@@ -1,7 +1,5 @@
 part of 'admin_profile_bloc.dart';
 
-
-
 @freezed
 class AdminProfileState with _$AdminProfileState {
   const factory AdminProfileState.initial() = _Initial;
@@ -11,6 +9,5 @@ class AdminProfileState with _$AdminProfileState {
   const factory AdminProfileState.success({required AdminUserModel profile}) =
       _Success;
 
-  const factory AdminProfileState.failed({required String message}) =
-      _Failed;
+  const factory AdminProfileState.failed({required String message}) = _Failed;
 }

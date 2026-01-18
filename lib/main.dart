@@ -1,7 +1,9 @@
+import 'package:atlasmart/application/admin/manage_admins/manage_admins_bloc.dart';
 import 'package:atlasmart/application/admin/users/all_users_bloc.dart';
 import 'package:atlasmart/application/forgot_password/forgot_password_bloc.dart';
 import 'package:atlasmart/application/login/login_bloc.dart';
-import 'package:atlasmart/application/profile/customer/customer_profile_bloc.dart';
+import 'package:atlasmart/application/profile_admin_customer/admin/bloc/admin_profile_bloc.dart';
+import 'package:atlasmart/application/profile_admin_customer/customer/customer_profile_bloc.dart';
 import 'package:atlasmart/domain/core/constants/colors.dart';
 import 'package:atlasmart/domain/endpoints/api_endpoints.dart';
 import 'package:flutter/material.dart';
@@ -16,8 +18,7 @@ import 'presentation/splash/screen_splash.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
- final bool isRelease =
-      const bool.fromEnvironment('dart.vm.product');
+  final bool isRelease = const bool.fromEnvironment('dart.vm.product');
 
   AppConfig.initialize(
     AppConfig(
@@ -60,7 +61,9 @@ class _MainAppState extends State<MainApp> {
 
         BlocProvider(create: (context) => sl<CustomerProfileBloc>()),
 
+        BlocProvider(create: (context) => sl<AdminProfileBloc>()),
         BlocProvider(create: (context) => sl<AllUsersBloc>()),
+        BlocProvider(create: (context) => sl<ManageAdminsBloc>()),
       ],
 
       child: MaterialApp(
