@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:atlasmart/application/profile/customer/customer_profile_bloc.dart';
+import 'package:atlasmart/application/profile_admin_customer/customer/customer_profile_bloc.dart';
 import 'package:atlasmart/domain/core/constants/colors.dart';
 import 'package:atlasmart/domain/core/constants/font.dart';
 import 'package:atlasmart/domain/profile/model/profile_model.dart';
@@ -173,7 +173,7 @@ class _ScreenEditProfileState extends State<ScreenEditProfile> {
                                 CustomerProfileEvent.updateProfileDetailsButtonClick(
                                   profile: widget.profile.copyWith(
                                     userName: namecontroller.text.trim(),
-                                    newProfileImage: selectedImage
+                                    newProfileImage: selectedImage,
                                   ),
                                 ),
                               );

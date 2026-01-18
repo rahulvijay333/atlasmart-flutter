@@ -26,6 +26,7 @@ class UserServiceImpl implements UserService {
                 userName: e.name ?? '',
                 userEmail: e.email ?? '',
                 joinedDate: e.createdAt,
+                userImage: e.profileImage,
               ),
             )
             .toList();

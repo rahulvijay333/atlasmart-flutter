@@ -14,7 +14,7 @@ class AppConfig {
 
   static void initialize(AppConfig config) {
     // assert(() {
-      log('Connected to ${config.flavor} | URL: ${config.baseUrl}');
+    log('Connected to ${config.flavor} | URL: ${config.baseUrl}');
     //   return true;
     // }());
 

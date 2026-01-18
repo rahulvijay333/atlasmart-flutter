@@ -7,6 +7,7 @@ import 'package:atlasmart/presentation/admin/main/screen_admin_main.dart'; // Ad
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../application/profile_admin_customer/admin/bloc/admin_profile_bloc.dart';
 import '../../domain/core/constants/constants.dart';
 import '../../domain/core/constants/strings.dart';
 import '../common/button_widget.dart';
@@ -167,6 +168,9 @@ class _ScreenLoginState extends State<ScreenLogin> {
                           success: (state) {
                             switch (state.tokens.role) {
                               case AppConstants.admin:
+                                BlocProvider.of<AdminProfileBloc>(
+                                  context,
+                                ).add(AdminProfileEvent.getProfileDetails());
                                 Navigator.of(context).pushReplacement(
                                   MaterialPageRoute(
                                     builder: (context) =>

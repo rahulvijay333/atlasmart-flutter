@@ -1,4 +1,4 @@
-import 'package:atlasmart/application/profile/customer/customer_profile_bloc.dart';
+import 'package:atlasmart/application/profile_admin_customer/customer/customer_profile_bloc.dart';
 import 'package:atlasmart/domain/core/constants/constants.dart';
 import 'package:atlasmart/domain/core/constants/font.dart';
 import 'package:atlasmart/presentation/common/button_widget.dart';

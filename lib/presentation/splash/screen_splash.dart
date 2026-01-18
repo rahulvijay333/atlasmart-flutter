@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../application/auth/auth_bloc.dart';
+import '../../application/profile_admin_customer/admin/bloc/admin_profile_bloc.dart';
 import '../admin/main/screen_admin_main.dart';
 
 class ScreenSplash extends StatefulWidget {
@@ -58,6 +59,9 @@ class _ScreenSplashState extends State<ScreenSplash>
         if (state is AuthAuthenticated) {
           switch (state.role) {
             case AppConstants.admin:
+              BlocProvider.of<AdminProfileBloc>(
+                context,
+              ).add(AdminProfileEvent.getProfileDetails());
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
                   builder: (context) => const ScreenAdminMain(),

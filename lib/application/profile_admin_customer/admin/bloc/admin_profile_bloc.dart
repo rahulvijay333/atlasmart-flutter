@@ -10,12 +10,20 @@ part 'admin_profile_state.dart';
 part 'admin_profile_bloc.freezed.dart';
 
 class AdminProfileBloc extends Bloc<AdminProfileEvent, AdminProfileState> {
-
   final AdminProfileService _profileService;
 
   AdminProfileBloc(this._profileService) : super(_Initial()) {
-    on<AdminProfileEvent>((event, emit) {
-      // TODO: implement event handler
+    on<_GetProfileDetails>((event, emit) async {
+      // if (state is! _Success) {
+        emit(_Loading());
+        try {
+          final resp = await _profileService.getProfileDetails();
+
+          emit(_Success(profile: resp));
+        } catch (e) {
+          emit(_Failed(message: e.toString()));
+        }
+      // }
     });
   }
 }

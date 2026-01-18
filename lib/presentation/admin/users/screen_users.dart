@@ -85,19 +85,27 @@ class ScreenAdminUsers extends StatelessWidget {
                             child: Row(
                               children: [
                                 CircleAvatar(
+                                  backgroundImage:
+                                      user.userImage?.isNotEmpty == true
+                                      ? NetworkImage(user.userImage!)
+                                      : null,
                                   radius: 24,
                                   backgroundColor: Theme.of(
                                     context,
                                   ).primaryColor.withValues(alpha: 0.1),
-                                  child: Text(
-                                    user.userName.isNotEmpty
-                                        ? user.userName[0]
-                                        : '-',
-                                    style: TextStyle(
-                                      color: Theme.of(context).primaryColor,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
+                                  child: user.userImage?.isNotEmpty == true
+                                      ? null
+                                      : Text(
+                                          user.userName.isNotEmpty
+                                              ? user.userName[0]
+                                              : '-',
+                                          style: TextStyle(
+                                            color: Theme.of(
+                                              context,
+                                            ).primaryColor,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
                                 ),
                                 const SizedBox(width: 16),
                                 Expanded(
