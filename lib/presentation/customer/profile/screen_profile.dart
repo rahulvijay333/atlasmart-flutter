@@ -60,11 +60,17 @@ class ScreenProfile extends StatelessWidget {
                                 child: CircleAvatar(
                                   radius: 60,
                                   backgroundColor: Colors.grey.shade200,
-                                  child: Icon(
-                                    Icons.person,
-                                    size: 60,
-                                    color: Colors.grey,
-                                  ),
+                                  backgroundImage:
+                                      profile.profilePic!.isNotEmpty
+                                      ? NetworkImage(profile.profilePic!)
+                                      : null,
+                                  child: profile.profilePic!.isEmpty
+                                      ? Icon(
+                                          Icons.person,
+                                          size: 60,
+                                          color: Colors.grey,
+                                        )
+                                      : null,
                                 ),
                               ),
                               SizedBox(height: 15),

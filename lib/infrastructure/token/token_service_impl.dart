@@ -1,4 +1,3 @@
-import 'package:atlasmart/domain/auth/model/auth_token.dart';
 import 'package:atlasmart/domain/endpoints/api_endpoints.dart';
 import 'package:atlasmart/domain/token/token_service.dart';
 import 'package:dio/dio.dart';

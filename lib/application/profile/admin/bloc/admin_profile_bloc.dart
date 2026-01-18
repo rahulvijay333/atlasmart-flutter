@@ -1,5 +1,6 @@
 import 'package:atlasmart/domain/admin/profile/admin_profile_service.dart';
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../domain/admin/profile/model/admin_profile.dart';

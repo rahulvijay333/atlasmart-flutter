@@ -3,7 +3,6 @@ import 'package:atlasmart/application/forgot_password/forgot_password_bloc.dart'
 import 'package:atlasmart/application/login/login_bloc.dart';
 import 'package:atlasmart/application/registration/customer/custom_registr_bloc/customer_register_bloc.dart';
 import 'package:atlasmart/domain/admin/users/user_service.dart';
-import 'package:atlasmart/domain/endpoints/api_endpoints.dart';
 import 'package:atlasmart/domain/login/login_service.dart';
 import 'package:atlasmart/domain/profile/profile_service.dart';
 import 'package:atlasmart/domain/token/token_service.dart';

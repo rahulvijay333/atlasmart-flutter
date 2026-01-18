@@ -7,6 +7,7 @@ class Data {
   String? role;
   bool? isVerified;
   DateTime? createdAt;
+  String? profileImage;
 
   Data({
     this.id,
@@ -14,7 +15,7 @@ class Data {
     this.name,
     this.role,
     this.isVerified,
-    this.createdAt,
+    this.createdAt,this.profileImage
   });
 
   factory Data.fromMap(Map<String, dynamic> data) => Data(
@@ -23,6 +24,7 @@ class Data {
     name: data['name'] as String?,
     role: data['role'] as String?,
     isVerified: data['is_verified'] as bool?,
+    profileImage: data['profile_image'] ?? '',
     createdAt: data['created_at'] == null
         ? null
         : DateTime.parse(data['created_at'] as String),

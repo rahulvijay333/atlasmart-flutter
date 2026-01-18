@@ -4,7 +4,6 @@ import 'package:atlasmart/domain/admin/users/model/user_model.dart';
 import 'package:atlasmart/domain/admin/users/user_service.dart';
 import 'package:atlasmart/infrastructure/admin/users/model/all_users_reponse_model/all_users_reponse_model.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 
 import '../../../domain/core/network/dio_error_handle.dart';
 import '../../../domain/endpoints/api_endpoints.dart';

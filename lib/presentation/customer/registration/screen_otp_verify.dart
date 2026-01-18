@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:atlasmart/application/registration/customer/custom_registr_bloc/customer_register_bloc.dart';
 import 'package:atlasmart/domain/core/constants/colors.dart';
@@ -17,7 +16,7 @@ import '../../common/app_dialoge.dart';
 import '../../common/button_widget.dart';
 
 class ScreenOtpVerify extends StatefulWidget {
-  ScreenOtpVerify({super.key, required this.customer});
+  const ScreenOtpVerify({super.key, required this.customer});
   final CustomerRegisterModel customer;
 
   @override

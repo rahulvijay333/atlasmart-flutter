@@ -1,5 +1,4 @@
 import 'package:atlasmart/domain/core/constants/colors.dart';
-import 'package:atlasmart/infrastructure/login/model/user_details/user.dart';
 import 'package:atlasmart/infrastructure/login/model/user_details/user_details.dart';
 import 'package:atlasmart/presentation/common/snack_bar.dart';
 import 'package:flutter/material.dart';
