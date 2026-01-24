@@ -16,7 +16,10 @@ class UserServiceImpl implements UserService {
   @override
   Future<List<UserModel>> getAllUsers() async {
     try {
-      final res = await dio.get(ApiEndpoints.getAllUsers);
+      final res = await dio.get(
+        ApiEndpoints.getAllUsers,
+        queryParameters: {'role': ''},
+      );
 
       if (res.statusCode == 200) {
         final data = AllUsersReponseModel.fromMap(res.data).data;

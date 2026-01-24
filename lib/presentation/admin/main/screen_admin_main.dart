@@ -75,6 +75,11 @@ class _ScreenAdminMainState extends State<ScreenAdminMain> {
               setState(() {
                 _selectedIndex = index;
               });
+              if (index == 5) {
+                BlocProvider.of<AllUsersBloc>(
+                  context,
+                ).add(AllUsersEvent.getAllUsers());
+              }
             } else {
               AppSnackBar.show(context, 'Not available for your account');
             }
@@ -83,11 +88,6 @@ class _ScreenAdminMainState extends State<ScreenAdminMain> {
               _selectedIndex = index;
             });
 
-            if (index == 5) {
-              BlocProvider.of<AllUsersBloc>(
-                context,
-              ).add(AllUsersEvent.getAllUsers());
-            }
             if (index == 1) {
               context.read<AdminProductListBloc>().add(
                 AdminProductListEvent.loadAdminProductList(),
@@ -107,7 +107,7 @@ class _ScreenAdminMainState extends State<ScreenAdminMain> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const ScreenAddProduct(),
+                    builder: (context) => const ScreenAddProduct(isEdit: false),
                   ),
                 ).then((value) {
                   if (context.mounted) {

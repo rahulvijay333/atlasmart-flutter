@@ -129,19 +129,20 @@ class ScreenAdminProducts extends StatelessWidget {
                                                     builder: (context) =>
                                                         ScreenAddProduct(
                                                           isEdit: true,
-                                                          productData: {
-                                                            'name':
-                                                                'Premium Product Name $index',
-                                                            'price':
-                                                                sellingPrice,
-                                                            'mrp': mrp,
-                                                            'stock': stock,
-                                                            'isActive':
-                                                                isActive,
-                                                          },
+                                                          product: product,
                                                         ),
                                                   ),
-                                                );
+                                                ).then((value) {
+                                                  if (context.mounted) {
+                                                    context
+                                                        .read<
+                                                          AdminProductListBloc
+                                                        >()
+                                                        .add(
+                                                          AdminProductListEvent.loadAdminProductList(),
+                                                        );
+                                                  }
+                                                });
                                               }
                                             },
                                             itemBuilder: (context) => [

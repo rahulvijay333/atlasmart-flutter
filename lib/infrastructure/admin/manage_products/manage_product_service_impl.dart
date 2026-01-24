@@ -61,9 +61,44 @@ class ManageProductServiceImpl implements ManageProductsService {
   }
 
   @override
-  editProduct(AdminProductsModel product) {
-    // TODO: implement editProduct
-    throw UnimplementedError();
+  editProduct(AdminProductsModel product) async {
+    try {
+      final formDataMap = <String, dynamic>{
+        'name': product.name,
+        'price': num.parse(product.price),
+        'stock': int.parse(product.stock ?? '0'),
+        'for_sale': true,
+      };
+
+      // if (profile.newProfileImage != null) {
+      //   final mimeType =
+      //       lookupMimeType(profile.newProfileImage!.path) ?? 'image/jpeg';
+      //   final parts = mimeType.split('/');
+      //   final extension = parts[1] == 'jpeg' ? 'jpg' : parts[1];
+
+      //   final fileName = '${profile.userName}.$extension';
+      //   formDataMap['profileImage'] = await MultipartFile.fromFile(
+      //     profile.newProfileImage!.path,
+      //     filename: fileName,
+      //     contentType: MediaType(parts[0], parts[1]),
+      //   );
+      // }
+
+      final response = await dio.post(
+        ApiEndpoints.adminProducts,
+        data: FormData.fromMap(formDataMap),
+        options: Options(contentType: 'multipart/form-data'),
+      );
+
+      if (response.statusCode == 201) {
+        return true;
+      } else {
+        return false;
+      }
+    } on DioException catch (e) {
+      log(e.toString());
+      throw DioErrorHandler.handle(e);
+    }
   }
 
   @override
