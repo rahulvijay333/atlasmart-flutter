@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:atlasmart/application/admin/admin_product_list/admin_product_list_bloc.dart';
 import 'package:atlasmart/application/admin/manage_admins/manage_admins_bloc.dart';
 import 'package:atlasmart/application/admin/users/all_users_bloc.dart';
 import 'package:atlasmart/application/forgot_password/forgot_password_bloc.dart';
@@ -15,6 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'application/admin/admin_add_or_update_product/admin_addor_update_product_bloc.dart';
 import 'application/auth/auth_bloc.dart';
 import 'application/registration/customer/custom_registr_bloc/customer_register_bloc.dart';
 import 'domain/core/config/app_config.dart';
@@ -80,6 +82,8 @@ class _MainAppState extends State<MainApp> {
         BlocProvider(create: (context) => sl<AdminProfileBloc>()),
         BlocProvider(create: (context) => sl<AllUsersBloc>()),
         BlocProvider(create: (context) => sl<ManageAdminsBloc>()),
+        BlocProvider(create: (context) => sl<AdminProductListBloc>()),
+        BlocProvider(create: (context) => sl<AdminAddorUpdateProductBloc>()),
       ],
 
       child: MaterialApp(

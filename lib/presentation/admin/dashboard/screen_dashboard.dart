@@ -2,11 +2,26 @@ import 'package:atlasmart/application/profile_admin_customer/admin/bloc/admin_pr
 import 'package:atlasmart/domain/core/constants/font.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../application/admin/admin_product_list/admin_product_list_bloc.dart';
 import '../../../domain/core/constants/strings.dart';
 import 'widgets/dashboard_stats_card.dart';
 
-class ScreenAdminDashboard extends StatelessWidget {
+class ScreenAdminDashboard extends StatefulWidget {
   const ScreenAdminDashboard({super.key});
+
+  @override
+  State<ScreenAdminDashboard> createState() => _ScreenAdminDashboardState();
+}
+
+class _ScreenAdminDashboardState extends State<ScreenAdminDashboard> {
+  @override
+  void initState() {
+    super.initState();
+
+    context.read<AdminProductListBloc>().add(
+      AdminProductListEvent.loadAdminProductList(),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +30,10 @@ class ScreenAdminDashboard extends StatelessWidget {
         BlocProvider.of<AdminProfileBloc>(
           context,
         ).add(AdminProfileEvent.getProfileDetails());
+
+        context.read<AdminProductListBloc>().add(
+          AdminProductListEvent.loadAdminProductList(),
+        );
       },
       child: SingleChildScrollView(
         padding: const EdgeInsets.all(20.0),
@@ -71,7 +90,7 @@ class ScreenAdminDashboard extends StatelessWidget {
               crossAxisSpacing: 16,
               mainAxisSpacing: 16,
               childAspectRatio: 1.5,
-              children: const [
+              children: [
                 DashboardStatsCard(
                   title: AppStrings.revenue,
                   value: '₹15,430',
@@ -90,11 +109,23 @@ class ScreenAdminDashboard extends StatelessWidget {
                   icon: Icons.person_add,
                   color: Colors.orange,
                 ),
-                DashboardStatsCard(
-                  title: AppStrings.products,
-                  value: '45',
-                  icon: Icons.inventory_2,
-                  color: Colors.purple,
+                BlocBuilder<AdminProductListBloc, AdminProductListState>(
+                  builder: (context, state) {
+                    String count = '';
+
+                    state.whenOrNull(
+                      success: (products) {
+                        count = products.length.toString();
+                      },
+                    );
+
+                    return DashboardStatsCard(
+                      title: AppStrings.products,
+                      value: count,
+                      icon: Icons.inventory_2,
+                      color: Colors.purple,
+                    );
+                  },
                 ),
               ],
             ),

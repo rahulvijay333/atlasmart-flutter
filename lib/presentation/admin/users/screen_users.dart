@@ -57,7 +57,7 @@ class ScreenAdminUsers extends StatelessWidget {
                     if (users.isEmpty) {
                       return Center(child: Text('No Users'));
                     }
-        
+
                     return Expanded(
                       child: ListView.separated(
                         padding: const EdgeInsets.symmetric(
@@ -72,9 +72,13 @@ class ScreenAdminUsers extends StatelessWidget {
                           final isActive = index % 3 != 0;
                           return GestureDetector(
                             onTap: () {
-                              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                                return ScreenUserDetails(user);
-                              },));
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return ScreenUserDetails(user);
+                                  },
+                                ),
+                              );
                             },
                             child: Container(
                               decoration: BoxDecoration(

@@ -1,4 +1,11 @@
+import 'package:atlasmart/domain/admin/manage_products/model/admin_products_model.dart';
+import 'package:atlasmart/presentation/common/button_widget.dart';
+import 'package:atlasmart/presentation/common/snack_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../application/admin/admin_add_or_update_product/admin_addor_update_product_bloc.dart';
+import '../../../domain/core/constants/font.dart';
 
 class ScreenAddProduct extends StatefulWidget {
   final bool isEdit;
@@ -74,72 +81,45 @@ class _ScreenAddProductState extends State<ScreenAddProduct> {
         backgroundColor: Colors.white,
         scrolledUnderElevation: 0,
       ),
-      bottomNavigationBar: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withValues(alpha: 0.1),
-              blurRadius: 10,
-              offset: const Offset(0, -5),
-            ),
-          ],
-        ),
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          style: ElevatedButton.styleFrom(
-            padding: const EdgeInsets.symmetric(vertical: 16),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-          ),
-          child: Text(
-            widget.isEdit ? 'Update Product' : 'Save Product',
-            style: const TextStyle(fontSize: 16),
-          ),
-        ),
-      ),
+
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
             // Status Toggle (Only visible if needed, or always prominent)
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              decoration: BoxDecoration(
-                color: _isActive
-                    ? Colors.green.withValues(alpha: 0.1)
-                    : Colors.red.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(
-                  color: _isActive
-                      ? Colors.green.withValues(alpha: 0.3)
-                      : Colors.red.withValues(alpha: 0.3),
-                ),
-              ),
-              child: SwitchListTile(
-                contentPadding: EdgeInsets.zero,
-                title: Text(
-                  _isActive ? 'Product Active' : 'Product Inactive',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: _isActive ? Colors.green : Colors.red,
-                  ),
-                ),
-                subtitle: const Text(
-                  'Inactive products will be hidden from users',
-                ),
-                value: _isActive,
-                activeTrackColor: Colors.green,
-                activeThumbColor: Colors.white,
-                onChanged: (val) {
-                  setState(() => _isActive = val);
-                },
-              ),
-            ),
+            // Container(
+            //   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            //   decoration: BoxDecoration(
+            //     color: _isActive
+            //         ? Colors.green.withValues(alpha: 0.1)
+            //         : Colors.red.withValues(alpha: 0.1),
+            //     borderRadius: BorderRadius.circular(12),
+            //     border: Border.all(
+            //       color: _isActive
+            //           ? Colors.green.withValues(alpha: 0.3)
+            //           : Colors.red.withValues(alpha: 0.3),
+            //     ),
+            //   ),
+            //   child: SwitchListTile(
+            //     contentPadding: EdgeInsets.zero,
+            //     title: Text(
+            //       _isActive ? 'Product Active' : 'Product Inactive',
+            //       style: TextStyle(
+            //         fontWeight: FontWeight.bold,
+            //         color: _isActive ? Colors.green : Colors.red,
+            //       ),
+            //     ),
+            //     subtitle: const Text(
+            //       'Inactive products will be hidden from users',
+            //     ),
+            //     value: _isActive,
+            //     activeTrackColor: Colors.green,
+            //     activeThumbColor: Colors.white,
+            //     onChanged: (val) {
+            //       setState(() => _isActive = val);
+            //     },
+            //   ),
+            // ),
             const SizedBox(height: 24),
 
             Column(
@@ -187,8 +167,8 @@ class _ScreenAddProductState extends State<ScreenAddProduct> {
                           ],
                         ),
                       ),
-                      _buildImagePreview(),
-                      _buildImagePreview(),
+                      // _buildImagePreview(),
+                      // _buildImagePreview(),
                     ],
                   ),
                 ),
@@ -205,12 +185,12 @@ class _ScreenAddProductState extends State<ScreenAddProduct> {
                   hint: 'Ex. Wireless Headphones',
                 ),
                 const SizedBox(height: 16),
-                _buildTextField(
-                  controller: _brandController,
-                  label: 'Brand',
-                  hint: 'Ex. Boat, Samsung',
-                ),
-                const SizedBox(height: 16),
+                // _buildTextField(
+                //   controller: _brandController,
+                //   label: 'Brand',
+                //   hint: 'Ex. Boat, Samsung',
+                // ),
+                // const SizedBox(height: 16),
                 _buildTextField(
                   controller: _descController,
                   label: 'Description',
@@ -220,7 +200,7 @@ class _ScreenAddProductState extends State<ScreenAddProduct> {
                 const SizedBox(height: 24),
 
                 const Text(
-                  'Pricing & Tax (Indian Market)',
+                  'Pricing & Category',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                 ),
                 const SizedBox(height: 16),
@@ -234,29 +214,29 @@ class _ScreenAddProductState extends State<ScreenAddProduct> {
                         keyboardType: TextInputType.number,
                       ),
                     ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: _buildTextField(
-                        controller: _priceController,
-                        label: 'Selling Price (₹)',
-                        hint: '1999',
-                        keyboardType: TextInputType.number,
-                      ),
-                    ),
+                    // const SizedBox(width: 16),
+                    // Expanded(
+                    //   child: _buildTextField(
+                    //     controller: _priceController,
+                    //     label: 'Selling Price (₹)',
+                    //     hint: '1999',
+                    //     keyboardType: TextInputType.number,
+                    //   ),
+                    // ),
                   ],
                 ),
                 const SizedBox(height: 16),
                 Row(
                   children: [
-                    Expanded(
-                      child: _buildTextField(
-                        controller: _gstController,
-                        label: 'GST (%)',
-                        hint: '18',
-                        keyboardType: TextInputType.number,
-                      ),
-                    ),
-                    const SizedBox(width: 16),
+                    // Expanded(
+                    //   child: _buildTextField(
+                    //     controller: _gstController,
+                    //     label: 'GST (%)',
+                    //     hint: '18',
+                    //     keyboardType: TextInputType.number,
+                    //   ),
+                    // ),
+                    // const SizedBox(width: 16),
                     Expanded(
                       child: DropdownButtonFormField<String>(
                         initialValue: _category,
@@ -318,6 +298,73 @@ class _ScreenAddProductState extends State<ScreenAddProduct> {
                       ),
                     ),
                   ],
+                ),
+                const SizedBox(height: 15),
+
+                BlocConsumer<
+                  AdminAddorUpdateProductBloc,
+                  AdminAddorUpdateProductState
+                >(
+                  listener: (context, state) {
+                    state.whenOrNull(
+                      failure: (message) {
+                        AppSnackBar.show(context, message);
+                      },
+
+                      success: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: Text(
+                                'Success',
+                                style: AppFont.subHeading16BoldStyle,
+                                textAlign: TextAlign.center,
+                              ),
+                              content: Text(
+                                'Product added successfully',
+                                style: AppFont.title14Style,
+                                textAlign: TextAlign.center,
+                              ),
+                              actions: [
+                                Center(
+                                  child: TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text('OK'),
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
+                    );
+                  },
+                  builder: (context, state) {
+                    return ButtonWidget(
+                      isloading: state == AdminAddorUpdateProductState.loading()
+                          ? true
+                          : false,
+                      title: widget.isEdit ? 'Update Product' : 'Save Product',
+                      height: 50,
+                      ontap: () {
+                        if (state != AdminAddorUpdateProductState.loading()) {
+                          final product = AdminProductsModel(
+                            name: _nameController.text.trim(),
+                            description: _descController.text.trim(),
+                            price: _mrpController.text.trim(),
+                          );
+
+                          context.read<AdminAddorUpdateProductBloc>().add(
+                            AdminAddorUpdateProductEvent.addProduct(product),
+                          );
+                        }
+                      },
+                    );
+                  },
                 ),
                 const SizedBox(height: 32),
               ],

@@ -5,6 +5,7 @@ import 'package:atlasmart/presentation/admin/admin_profile/screen_admin_profile.
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../application/login/login_bloc.dart';
 import '../../../login/screen_login.dart';
 import '../../../../domain/core/constants/strings.dart';
 
@@ -251,6 +252,9 @@ class AdminDrawerWidget extends StatelessWidget {
               title: AppStrings.logout,
               isSelected: false,
               onTap: () {
+                BlocProvider.of<LoginBloc>(
+                  context,
+                ).add(LoginEvent.logOutButtonClick());
                 Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(
                     builder: (context) {

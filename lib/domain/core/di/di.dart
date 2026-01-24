@@ -1,3 +1,5 @@
+import 'package:atlasmart/application/admin/admin_add_or_update_product/admin_addor_update_product_bloc.dart';
+import 'package:atlasmart/application/admin/admin_product_list/admin_product_list_bloc.dart';
 import 'package:atlasmart/application/admin/manage_admins/manage_admins_bloc.dart';
 import 'package:atlasmart/application/admin/users/all_users_bloc.dart';
 import 'package:atlasmart/application/forgot_password/forgot_password_bloc.dart';
@@ -5,6 +7,7 @@ import 'package:atlasmart/application/login/login_bloc.dart';
 import 'package:atlasmart/application/profile_admin_customer/admin/bloc/admin_profile_bloc.dart';
 import 'package:atlasmart/application/registration/customer/custom_registr_bloc/customer_register_bloc.dart';
 import 'package:atlasmart/domain/admin/manage_admins/manage_admin_service.dart';
+import 'package:atlasmart/domain/admin/manage_products/manage_products_service.dart';
 import 'package:atlasmart/domain/admin/profile/admin_profile_service.dart';
 import 'package:atlasmart/domain/admin/users/user_service.dart';
 import 'package:atlasmart/domain/login/login_service.dart';
@@ -12,6 +15,7 @@ import 'package:atlasmart/domain/profile/profile_service.dart';
 import 'package:atlasmart/domain/token/token_service.dart';
 import 'package:atlasmart/infrastructure/admin/admin_profile/admin_profile_service_impl.dart';
 import 'package:atlasmart/infrastructure/admin/manage_admins/manage_admin_service_impl.dart';
+import 'package:atlasmart/infrastructure/admin/manage_products/manage_product_service_impl.dart';
 import 'package:atlasmart/infrastructure/admin/users/user_service_impl.dart';
 import 'package:atlasmart/infrastructure/login/login_service_impl.dart';
 import 'package:atlasmart/infrastructure/profile/profile_service_impl.dart';
@@ -69,7 +73,13 @@ void setupDI() {
   sl.registerLazySingleton<AdminProfileService>(
     () => AdminProfileServiceImpl(sl<Dio>()),
   );
-  sl.registerLazySingleton<ManageAdminService>(() => ManageAdminServiceImpl(sl<Dio>()),);
+  sl.registerLazySingleton<ManageAdminService>(
+    () => ManageAdminServiceImpl(sl<Dio>()),
+  );
+
+  sl.registerLazySingleton<ManageProductsService>(
+    () => ManageProductServiceImpl(sl<Dio>()),
+  );
 
   // -------------------------
   // 4. Blocs
@@ -93,5 +103,11 @@ void setupDI() {
   sl.registerFactory<AdminProfileBloc>(
     () => AdminProfileBloc(sl<AdminProfileService>()),
   );
-  sl.registerFactory(() => ManageAdminsBloc(sl<ManageAdminService>()),);
+  sl.registerFactory(() => ManageAdminsBloc(sl<ManageAdminService>()));
+
+  sl.registerFactory(() => AdminProductListBloc(sl<ManageProductsService>()));
+
+  sl.registerFactory(
+    () => AdminAddorUpdateProductBloc(sl<ManageProductsService>()),
+  );
 }

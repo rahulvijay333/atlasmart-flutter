@@ -58,13 +58,13 @@ class _ScreenSplashState extends State<ScreenSplash>
       listener: (context, state) {
         if (state is AuthAuthenticated) {
           switch (state.role) {
-            case AppConstants.admin:
+            case AppConstants.admin || AppConstants.superUser:
               BlocProvider.of<AdminProfileBloc>(
                 context,
               ).add(AdminProfileEvent.getProfileDetails());
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
-                  builder: (context) => const ScreenAdminMain(),
+                  builder: (context) => ScreenAdminMain(role: state.role!),
                 ),
               );
               break;

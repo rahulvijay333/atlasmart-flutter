@@ -1,3 +1,6 @@
+import 'package:atlasmart/application/admin/admin_product_list/admin_product_list_bloc.dart';
+import 'package:atlasmart/domain/core/constants/constants.dart';
+import 'package:atlasmart/presentation/common/snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../application/admin/users/all_users_bloc.dart';
@@ -14,7 +17,9 @@ import '../admin_management/screen_manage_admins.dart';
 import 'widgets/admin_drawer.dart';
 
 class ScreenAdminMain extends StatefulWidget {
-  const ScreenAdminMain({super.key});
+  const ScreenAdminMain({super.key, required this.role});
+
+  final String role;
 
   @override
   State<ScreenAdminMain> createState() => _ScreenAdminMainState();
@@ -29,6 +34,7 @@ class _ScreenAdminMainState extends State<ScreenAdminMain> {
     const ScreenInventory(),
     const ScreenAdminOrders(),
     const ScreenAdminPayments(),
+
     const ScreenAdminUsers(),
     const ScreenPushNotifications(),
     const ScreenManageAdmins(),
@@ -39,8 +45,7 @@ class _ScreenAdminMainState extends State<ScreenAdminMain> {
       case 0:
         return AppStrings.dashboard;
       case 1:
-        return AppStrings
-            .products; // Not exactly 'Product Management' in AppStrings? I added 'Products'.
+        return AppStrings.products;
       case 2:
         return AppStrings.inventory;
       case 3:
@@ -65,16 +70,32 @@ class _ScreenAdminMainState extends State<ScreenAdminMain> {
       drawer: AdminDrawerWidget(
         selectedIndex: _selectedIndex,
         onDestinationSelected: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-          if (index == 5) {
-            BlocProvider.of<AllUsersBloc>(
-              context,
-            ).add(AllUsersEvent.getAllUsers());
+          if (index == 5 || index == 7) {
+            if (widget.role == AppConstants.superUser) {
+              setState(() {
+                _selectedIndex = index;
+              });
+            } else {
+              AppSnackBar.show(context, 'Not available for your account');
+            }
+          } else {
+            setState(() {
+              _selectedIndex = index;
+            });
+
+            if (index == 5) {
+              BlocProvider.of<AllUsersBloc>(
+                context,
+              ).add(AllUsersEvent.getAllUsers());
+            }
+            if (index == 1) {
+              context.read<AdminProductListBloc>().add(
+                AdminProductListEvent.loadAdminProductList(),
+              );
+            }
           }
 
-          Navigator.pop(context); // Close drawer
+          Navigator.pop(context);
         },
       ),
       body: _screens[_selectedIndex],
@@ -88,7 +109,13 @@ class _ScreenAdminMainState extends State<ScreenAdminMain> {
                   MaterialPageRoute(
                     builder: (context) => const ScreenAddProduct(),
                   ),
-                );
+                ).then((value) {
+                  if (context.mounted) {
+                    context.read<AdminProductListBloc>().add(
+                      AdminProductListEvent.loadAdminProductList(),
+                    );
+                  }
+                });
               },
               label: const Text('Add Product'),
               icon: const Icon(Icons.add),
