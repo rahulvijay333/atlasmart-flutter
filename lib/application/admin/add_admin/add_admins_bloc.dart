@@ -1,16 +1,16 @@
 import 'package:atlasmart/domain/admin/manage_admins/manage_admin_service.dart';
 import 'package:atlasmart/domain/admin/profile/model/admin_profile.dart';
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'manage_admins_event.dart';
-part 'manage_admins_state.dart';
-part 'manage_admins_bloc.freezed.dart';
+part 'add_admins_event.dart';
+part 'add_admins_state.dart';
+ part 'add_admins_bloc.freezed.dart'; 
 
-class ManageAdminsBloc extends Bloc<ManageAdminsEvent, ManageAdminsState> {
+class AddAdminBloc extends Bloc<AddAdminsEvent, AddAdminsState> {
   final ManageAdminService manageAdminService;
 
-  ManageAdminsBloc(this.manageAdminService) : super(_Initial()) {
+  AddAdminBloc(this.manageAdminService) : super(_Initial()) {
     on<_AddNewAdmin>((event, emit) async {
       emit(_loading());
 

@@ -26,7 +26,6 @@ class Datum {
   });
 
   factory Datum.fromMap(Map<String, dynamic> data) => Datum(
-    
     id: data['id'] as String?,
     name: data['name'] as String?,
     price: data['price'] as String?,

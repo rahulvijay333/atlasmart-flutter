@@ -1,5 +1,6 @@
 import 'package:atlasmart/application/admin/users/all_users_bloc.dart';
 import 'package:atlasmart/presentation/admin/users/screen_user_details.dart';
+import 'package:atlasmart/presentation/common/error_state_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -55,7 +56,15 @@ class ScreenAdminUsers extends StatelessWidget {
                   },
                   success: (users) {
                     if (users.isEmpty) {
-                      return Center(child: Text('No Users'));
+                      return ErrorStateWidgetWithMessage(
+                        'No Users',
+                        hasRefresh: true,
+                        ontap: () {
+                          BlocProvider.of<AllUsersBloc>(
+                            context,
+                          ).add(AllUsersEvent.getAllUsers());
+                        },
+                      );
                     }
 
                     return Expanded(

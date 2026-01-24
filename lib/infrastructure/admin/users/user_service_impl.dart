@@ -18,7 +18,7 @@ class UserServiceImpl implements UserService {
     try {
       final res = await dio.get(
         ApiEndpoints.getAllUsers,
-        queryParameters: {'role': ''},
+        queryParameters: {'role': 'customer'},
       );
 
       if (res.statusCode == 200) {

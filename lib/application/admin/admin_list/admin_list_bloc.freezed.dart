@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'manage_admins_bloc.dart';
+part of 'admin_list_bloc.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -12,7 +12,7 @@ part of 'manage_admins_bloc.dart';
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
-mixin _$ManageAdminsEvent {
+mixin _$AdminListEvent {
 
 
 
@@ -20,7 +20,7 @@ mixin _$ManageAdminsEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ManageAdminsEvent);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AdminListEvent);
 }
 
 
@@ -29,20 +29,20 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'ManageAdminsEvent()';
+  return 'AdminListEvent()';
 }
 
 
 }
 
 /// @nodoc
-class $ManageAdminsEventCopyWith<$Res>  {
-$ManageAdminsEventCopyWith(ManageAdminsEvent _, $Res Function(ManageAdminsEvent) __);
+class $AdminListEventCopyWith<$Res>  {
+$AdminListEventCopyWith(AdminListEvent _, $Res Function(AdminListEvent) __);
 }
 
 
-/// Adds pattern-matching-related methods to [ManageAdminsEvent].
-extension ManageAdminsEventPatterns on ManageAdminsEvent {
+/// Adds pattern-matching-related methods to [AdminListEvent].
+extension AdminListEventPatterns on AdminListEvent {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -55,12 +55,12 @@ extension ManageAdminsEventPatterns on ManageAdminsEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Started value)?  started,TResult Function( _AddNewAdmin value)?  addNewAdmin,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Started value)?  started,TResult Function( _GetAllAdminList value)?  getAllAdminList,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _Started() when started != null:
-return started(_that);case _AddNewAdmin() when addNewAdmin != null:
-return addNewAdmin(_that);case _:
+return started(_that);case _GetAllAdminList() when getAllAdminList != null:
+return getAllAdminList(_that);case _:
   return orElse();
 
 }
@@ -78,12 +78,12 @@ return addNewAdmin(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Started value)  started,required TResult Function( _AddNewAdmin value)  addNewAdmin,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Started value)  started,required TResult Function( _GetAllAdminList value)  getAllAdminList,}){
 final _that = this;
 switch (_that) {
 case _Started():
-return started(_that);case _AddNewAdmin():
-return addNewAdmin(_that);case _:
+return started(_that);case _GetAllAdminList():
+return getAllAdminList(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -100,12 +100,12 @@ return addNewAdmin(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Started value)?  started,TResult? Function( _AddNewAdmin value)?  addNewAdmin,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Started value)?  started,TResult? Function( _GetAllAdminList value)?  getAllAdminList,}){
 final _that = this;
 switch (_that) {
 case _Started() when started != null:
-return started(_that);case _AddNewAdmin() when addNewAdmin != null:
-return addNewAdmin(_that);case _:
+return started(_that);case _GetAllAdminList() when getAllAdminList != null:
+return getAllAdminList(_that);case _:
   return null;
 
 }
@@ -122,11 +122,11 @@ return addNewAdmin(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  started,TResult Function( AdminUserModel newAdmin)?  addNewAdmin,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  started,TResult Function()?  getAllAdminList,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Started() when started != null:
-return started();case _AddNewAdmin() when addNewAdmin != null:
-return addNewAdmin(_that.newAdmin);case _:
+return started();case _GetAllAdminList() when getAllAdminList != null:
+return getAllAdminList();case _:
   return orElse();
 
 }
@@ -144,11 +144,11 @@ return addNewAdmin(_that.newAdmin);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  started,required TResult Function( AdminUserModel newAdmin)  addNewAdmin,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  started,required TResult Function()  getAllAdminList,}) {final _that = this;
 switch (_that) {
 case _Started():
-return started();case _AddNewAdmin():
-return addNewAdmin(_that.newAdmin);case _:
+return started();case _GetAllAdminList():
+return getAllAdminList();case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -165,11 +165,11 @@ return addNewAdmin(_that.newAdmin);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  started,TResult? Function( AdminUserModel newAdmin)?  addNewAdmin,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  started,TResult? Function()?  getAllAdminList,}) {final _that = this;
 switch (_that) {
 case _Started() when started != null:
-return started();case _AddNewAdmin() when addNewAdmin != null:
-return addNewAdmin(_that.newAdmin);case _:
+return started();case _GetAllAdminList() when getAllAdminList != null:
+return getAllAdminList();case _:
   return null;
 
 }
@@ -180,7 +180,7 @@ return addNewAdmin(_that.newAdmin);case _:
 /// @nodoc
 
 
-class _Started implements ManageAdminsEvent {
+class _Started implements AdminListEvent {
   const _Started();
   
 
@@ -200,7 +200,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'ManageAdminsEvent.started()';
+  return 'AdminListEvent.started()';
 }
 
 
@@ -212,71 +212,10 @@ String toString() {
 /// @nodoc
 
 
-class _AddNewAdmin implements ManageAdminsEvent {
-  const _AddNewAdmin(this.newAdmin);
+class _GetAllAdminList implements AdminListEvent {
+  const _GetAllAdminList();
   
 
- final  AdminUserModel newAdmin;
-
-/// Create a copy of ManageAdminsEvent
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-_$AddNewAdminCopyWith<_AddNewAdmin> get copyWith => __$AddNewAdminCopyWithImpl<_AddNewAdmin>(this, _$identity);
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AddNewAdmin&&(identical(other.newAdmin, newAdmin) || other.newAdmin == newAdmin));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,newAdmin);
-
-@override
-String toString() {
-  return 'ManageAdminsEvent.addNewAdmin(newAdmin: $newAdmin)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class _$AddNewAdminCopyWith<$Res> implements $ManageAdminsEventCopyWith<$Res> {
-  factory _$AddNewAdminCopyWith(_AddNewAdmin value, $Res Function(_AddNewAdmin) _then) = __$AddNewAdminCopyWithImpl;
-@useResult
-$Res call({
- AdminUserModel newAdmin
-});
-
-
-
-
-}
-/// @nodoc
-class __$AddNewAdminCopyWithImpl<$Res>
-    implements _$AddNewAdminCopyWith<$Res> {
-  __$AddNewAdminCopyWithImpl(this._self, this._then);
-
-  final _AddNewAdmin _self;
-  final $Res Function(_AddNewAdmin) _then;
-
-/// Create a copy of ManageAdminsEvent
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? newAdmin = null,}) {
-  return _then(_AddNewAdmin(
-null == newAdmin ? _self.newAdmin : newAdmin // ignore: cast_nullable_to_non_nullable
-as AdminUserModel,
-  ));
-}
-
-
-}
-
-/// @nodoc
-mixin _$ManageAdminsState {
 
 
 
@@ -284,7 +223,7 @@ mixin _$ManageAdminsState {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ManageAdminsState);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _GetAllAdminList);
 }
 
 
@@ -293,20 +232,47 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'ManageAdminsState()';
+  return 'AdminListEvent.getAllAdminList()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
+mixin _$AdminListState {
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AdminListState);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'AdminListState()';
 }
 
 
 }
 
 /// @nodoc
-class $ManageAdminsStateCopyWith<$Res>  {
-$ManageAdminsStateCopyWith(ManageAdminsState _, $Res Function(ManageAdminsState) __);
+class $AdminListStateCopyWith<$Res>  {
+$AdminListStateCopyWith(AdminListState _, $Res Function(AdminListState) __);
 }
 
 
-/// Adds pattern-matching-related methods to [ManageAdminsState].
-extension ManageAdminsStatePatterns on ManageAdminsState {
+/// Adds pattern-matching-related methods to [AdminListState].
+extension AdminListStatePatterns on AdminListState {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -392,12 +358,12 @@ return failure(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function()?  success,TResult Function( String message)?  failure,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( List<AdminUserModel> adminList)?  success,TResult Function( String message)?  failure,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _loading() when loading != null:
 return loading();case _success() when success != null:
-return success();case _failure() when failure != null:
+return success(_that.adminList);case _failure() when failure != null:
 return failure(_that.message);case _:
   return orElse();
 
@@ -416,12 +382,12 @@ return failure(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function()  success,required TResult Function( String message)  failure,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( List<AdminUserModel> adminList)  success,required TResult Function( String message)  failure,}) {final _that = this;
 switch (_that) {
 case _Initial():
 return initial();case _loading():
 return loading();case _success():
-return success();case _failure():
+return success(_that.adminList);case _failure():
 return failure(_that.message);case _:
   throw StateError('Unexpected subclass');
 
@@ -439,12 +405,12 @@ return failure(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function()?  success,TResult? Function( String message)?  failure,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( List<AdminUserModel> adminList)?  success,TResult? Function( String message)?  failure,}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _loading() when loading != null:
 return loading();case _success() when success != null:
-return success();case _failure() when failure != null:
+return success(_that.adminList);case _failure() when failure != null:
 return failure(_that.message);case _:
   return null;
 
@@ -456,7 +422,7 @@ return failure(_that.message);case _:
 /// @nodoc
 
 
-class _Initial implements ManageAdminsState {
+class _Initial implements AdminListState {
   const _Initial();
   
 
@@ -476,7 +442,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'ManageAdminsState.initial()';
+  return 'AdminListState.initial()';
 }
 
 
@@ -488,7 +454,7 @@ String toString() {
 /// @nodoc
 
 
-class _loading implements ManageAdminsState {
+class _loading implements AdminListState {
   const _loading();
   
 
@@ -508,7 +474,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'ManageAdminsState.loading()';
+  return 'AdminListState.loading()';
 }
 
 
@@ -520,45 +486,85 @@ String toString() {
 /// @nodoc
 
 
-class _success implements ManageAdminsState {
-  const _success();
+class _success implements AdminListState {
+  const _success(final  List<AdminUserModel> adminList): _adminList = adminList;
   
 
+ final  List<AdminUserModel> _adminList;
+ List<AdminUserModel> get adminList {
+  if (_adminList is EqualUnmodifiableListView) return _adminList;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_adminList);
+}
 
 
+/// Create a copy of AdminListState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$successCopyWith<_success> get copyWith => __$successCopyWithImpl<_success>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _success);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _success&&const DeepCollectionEquality().equals(other._adminList, _adminList));
 }
 
 
 @override
-int get hashCode => runtimeType.hashCode;
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_adminList));
 
 @override
 String toString() {
-  return 'ManageAdminsState.success()';
+  return 'AdminListState.success(adminList: $adminList)';
 }
 
 
 }
 
+/// @nodoc
+abstract mixin class _$successCopyWith<$Res> implements $AdminListStateCopyWith<$Res> {
+  factory _$successCopyWith(_success value, $Res Function(_success) _then) = __$successCopyWithImpl;
+@useResult
+$Res call({
+ List<AdminUserModel> adminList
+});
 
 
+
+
+}
+/// @nodoc
+class __$successCopyWithImpl<$Res>
+    implements _$successCopyWith<$Res> {
+  __$successCopyWithImpl(this._self, this._then);
+
+  final _success _self;
+  final $Res Function(_success) _then;
+
+/// Create a copy of AdminListState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? adminList = null,}) {
+  return _then(_success(
+null == adminList ? _self._adminList : adminList // ignore: cast_nullable_to_non_nullable
+as List<AdminUserModel>,
+  ));
+}
+
+
+}
 
 /// @nodoc
 
 
-class _failure implements ManageAdminsState {
+class _failure implements AdminListState {
   const _failure(this.message);
   
 
  final  String message;
 
-/// Create a copy of ManageAdminsState
+/// Create a copy of AdminListState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
@@ -577,14 +583,14 @@ int get hashCode => Object.hash(runtimeType,message);
 
 @override
 String toString() {
-  return 'ManageAdminsState.failure(message: $message)';
+  return 'AdminListState.failure(message: $message)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$failureCopyWith<$Res> implements $ManageAdminsStateCopyWith<$Res> {
+abstract mixin class _$failureCopyWith<$Res> implements $AdminListStateCopyWith<$Res> {
   factory _$failureCopyWith(_failure value, $Res Function(_failure) _then) = __$failureCopyWithImpl;
 @useResult
 $Res call({
@@ -603,7 +609,7 @@ class __$failureCopyWithImpl<$Res>
   final _failure _self;
   final $Res Function(_failure) _then;
 
-/// Create a copy of ManageAdminsState
+/// Create a copy of AdminListState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? message = null,}) {
   return _then(_failure(

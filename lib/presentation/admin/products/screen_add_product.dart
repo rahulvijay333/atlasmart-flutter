@@ -355,9 +355,9 @@ class _ScreenAddProductState extends State<ScreenAddProduct> {
                           );
 
                           if (widget.isEdit == true) {
-                            context.read<AdminAddorUpdateProductBloc>().add(
-                              AdminAddorUpdateProductEvent.editProduct(product),
-                            );
+                            // context.read<AdminAddorUpdateProductBloc>().add(
+                            //   AdminAddorUpdateProductEvent.editProduct(product),
+                            // );
                           } else {
                             context.read<AdminAddorUpdateProductBloc>().add(
                               AdminAddorUpdateProductEvent.addProduct(product),

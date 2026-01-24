@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../domain/core/constants/font.dart';
 import '../../../domain/core/constants/strings.dart';
 import '../../customer/profile/widgets/list_tile_widget.dart';
+import 'screen_edit_admin_profile.dart';
 
 class ScreenAdminProfile extends StatelessWidget {
   const ScreenAdminProfile({super.key});
@@ -133,15 +134,15 @@ class ScreenAdminProfile extends StatelessWidget {
                               ListTileWidget(
                                 title: AppStrings.editProfile,
                                 ontap: () {
-                                  // Navigator.of(context).push(
-                                  //   MaterialPageRoute(
-                                  //     builder: (context) {
-                                  //       return ScreenEditProfile(
-                                  //         profile: profile,
-                                  //       );
-                                  //     },
-                                  //   ),
-                                  // );
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) {
+                                        return ScreenEditAdminProfile(
+                                          profile: profile,
+                                        );
+                                      },
+                                    ),
+                                  );
                                 },
                               ),
                               ListTileWidget(

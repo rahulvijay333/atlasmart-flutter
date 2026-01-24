@@ -1,4 +1,4 @@
-import 'package:atlasmart/application/admin/manage_admins/manage_admins_bloc.dart';
+import 'package:atlasmart/application/admin/add_admin/add_admins_bloc.dart';
 import 'package:atlasmart/domain/admin/profile/model/admin_profile.dart';
 import 'package:atlasmart/domain/core/constants/font.dart';
 import 'package:atlasmart/presentation/common/button_widget.dart';
@@ -169,7 +169,7 @@ class _ScreenAddAdminState extends State<ScreenAddAdmin> {
               const SizedBox(height: 32),
 
               // Submit Button
-              BlocConsumer<ManageAdminsBloc, ManageAdminsState>(
+              BlocConsumer<AddAdminBloc, AddAdminsState>(
                 listener: (context, state) {
                   state.whenOrNull(
                     success: () {
@@ -210,12 +210,12 @@ class _ScreenAddAdminState extends State<ScreenAddAdmin> {
                 },
                 builder: (context, state) {
                   return ButtonWidget(
-                    isloading: state == ManageAdminsState.loading()
+                    isloading: state == AddAdminsState.loading()
                         ? true
                         : false,
                     title: AppStrings.createAdminButton,
                     height: 50,
-                    ontap: state != ManageAdminsState.loading()
+                    ontap: state != AddAdminsState.loading()
                         ? () {
                             if (_formKey.currentState!.validate()) {
                               final data =
@@ -227,9 +227,9 @@ class _ScreenAddAdminState extends State<ScreenAddAdmin> {
                                     password: _passwordController.text.trim(),
                                   );
 
-                              BlocProvider.of<ManageAdminsBloc>(
+                              BlocProvider.of<AddAdminBloc>(
                                 context,
-                              ).add(ManageAdminsEvent.addNewAdmin(data));
+                              ).add(AddAdminsEvent.addNewAdmin(data));
                             }
                           }
                         : () {},

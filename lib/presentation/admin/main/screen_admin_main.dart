@@ -1,3 +1,4 @@
+import 'package:atlasmart/application/admin/admin_list/admin_list_bloc.dart';
 import 'package:atlasmart/application/admin/admin_product_list/admin_product_list_bloc.dart';
 import 'package:atlasmart/domain/core/constants/constants.dart';
 import 'package:atlasmart/presentation/common/snack_bar.dart';
@@ -79,6 +80,10 @@ class _ScreenAdminMainState extends State<ScreenAdminMain> {
                 BlocProvider.of<AllUsersBloc>(
                   context,
                 ).add(AllUsersEvent.getAllUsers());
+              }
+
+              if(index ==7) {
+                context.read<AdminListBloc>().add(AdminListEvent.getAllAdminList());
               }
             } else {
               AppSnackBar.show(context, 'Not available for your account');
