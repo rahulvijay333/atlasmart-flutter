@@ -55,9 +55,19 @@ class ManageProductServiceImpl implements ManageProductsService {
   }
 
   @override
-  deleteProduct() {
-    // TODO: implement deleteProduct
-    throw UnimplementedError();
+  Future<bool> deleteProduct(String id) async {
+    final res = await dio.delete('${ApiEndpoints.adminProducts}/$id');
+
+    try {
+      if (res.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } on DioException catch (e) {
+      log(e.toString());
+      throw DioErrorHandler.handle(e);
+    }
   }
 
   @override
@@ -84,13 +94,13 @@ class ManageProductServiceImpl implements ManageProductsService {
       //   );
       // }
 
-      final response = await dio.post(
-        ApiEndpoints.adminProducts,
+      final response = await dio.put(
+        '${ApiEndpoints.adminProducts}/${product.id}',
         data: FormData.fromMap(formDataMap),
         options: Options(contentType: 'multipart/form-data'),
       );
 
-      if (response.statusCode == 201) {
+      if (response.statusCode == 200) {
         return true;
       } else {
         return false;
@@ -114,6 +124,8 @@ class ManageProductServiceImpl implements ManageProductsService {
                 name: e.name ?? '',
                 description: '',
                 price: e.price ?? '',
+                id: e.id,
+                stock: e.stock?.toString(),
               ),
             )
             .toList();

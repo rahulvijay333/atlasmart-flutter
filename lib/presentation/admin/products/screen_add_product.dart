@@ -317,7 +317,9 @@ class _ScreenAddProductState extends State<ScreenAddProduct> {
                                 textAlign: TextAlign.center,
                               ),
                               content: Text(
-                                'Product added successfully',
+                                widget.isEdit == false
+                                    ? 'Product added successfully'
+                                    : 'Product updated successfully',
                                 style: AppFont.title14Style,
                                 textAlign: TextAlign.center,
                               ),
@@ -352,12 +354,14 @@ class _ScreenAddProductState extends State<ScreenAddProduct> {
                             description: _descController.text.trim(),
                             price: _mrpController.text.trim(),
                             newProfileImage: selectedImage,
+                            stock: _stockController.text.trim(),
+                            id: widget.product?.id,
                           );
 
                           if (widget.isEdit == true) {
-                            // context.read<AdminAddorUpdateProductBloc>().add(
-                            //   AdminAddorUpdateProductEvent.editProduct(product),
-                            // );
+                            context.read<AdminAddorUpdateProductBloc>().add(
+                              AdminAddorUpdateProductEvent.editProduct(product),
+                            );
                           } else {
                             context.read<AdminAddorUpdateProductBloc>().add(
                               AdminAddorUpdateProductEvent.addProduct(product),
@@ -415,6 +419,7 @@ class _ScreenAddProductState extends State<ScreenAddProduct> {
     return TextFormField(
       controller: controller,
       maxLines: maxLines,
+      textCapitalization: TextCapitalization.words,
       keyboardType: keyboardType,
       decoration: InputDecoration(
         labelText: label,

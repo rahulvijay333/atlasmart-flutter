@@ -1,7 +1,9 @@
 import 'package:atlasmart/application/admin/admin_product_list/admin_product_list_bloc.dart';
 import 'package:atlasmart/presentation/common/loading_widget.dart';
+import 'package:atlasmart/presentation/common/snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../domain/core/constants/font.dart';
 import '../../common/error_state_widget.dart';
 import '../common/admin_search_bar.dart';
 import '../../../domain/core/constants/strings.dart';
@@ -39,6 +41,18 @@ class ScreenAdminProducts extends StatelessWidget {
                 );
               },
               success: (products) {
+                if (products.isEmpty) {
+                  return ErrorStateWidgetWithMessage(
+                    'No products',
+                    hasRefresh: true,
+                    ontap: () {
+                      context.read<AdminProductListBloc>().add(
+                        AdminProductListEvent.loadAdminProductList(),
+                      );
+                    },
+                  );
+                }
+
                 return Expanded(
                   child: RefreshIndicator(
                     onRefresh: () async {
@@ -57,10 +71,12 @@ class ScreenAdminProducts extends StatelessWidget {
                       itemBuilder: (context, index) {
                         final product = products[index];
 
-                        final sellingPrice = (index + 1) * 1200;
-                        final mrp = sellingPrice * 1.2;
-                        final stock = 100 - index * 5;
-                        final isActive = index % 3 != 0; // Mock active status
+                        // final sellingPrice = (index + 1) * 1200;
+                        // final mrp = sellingPrice * 1.2;
+                        final stock = product.stock?.isNotEmpty == true
+                            ? int.parse(product.stock ?? '0')
+                            : 0;
+                        // final isActive = index % 3 != 0; // Mock active status
 
                         return Container(
                           decoration: BoxDecoration(
@@ -86,11 +102,20 @@ class ScreenAdminProducts extends StatelessWidget {
                                   decoration: BoxDecoration(
                                     color: Colors.grey[100],
                                     borderRadius: BorderRadius.circular(12),
+                                    image: product.image?.isNotEmpty == true
+                                        ? DecorationImage(
+                                            image: NetworkImage(
+                                              product.image ?? '',
+                                            ),
+                                          )
+                                        : null,
                                   ),
-                                  child: const Icon(
-                                    Icons.image_outlined,
-                                    color: Colors.grey,
-                                  ),
+                                  child: product.image == null
+                                      ? const Icon(
+                                          Icons.image_outlined,
+                                          color: Colors.grey,
+                                        )
+                                      : null,
                                 ),
                                 const SizedBox(width: 16),
                                 // Details
@@ -144,6 +169,63 @@ class ScreenAdminProducts extends StatelessWidget {
                                                   }
                                                 });
                                               }
+
+                                              if (value == 'delete') {
+                                                if (product.id != null) {
+                                                  showDialog(
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return AlertDialog(
+                                                        title: Center(
+                                                          child: Text(
+                                                            'Confirm',
+                                                            style: AppFont
+                                                                .subHeading16BoldStyle,
+                                                          ),
+                                                        ),
+                                                        content: Text(
+                                                          'Are you sure to delete this product? ',
+                                                        ),
+
+                                                        actions: [
+                                                          IconButton(
+                                                            onPressed: () {
+                                                              Navigator.of(
+                                                                context,
+                                                              ).pop();
+                                                            },
+                                                            icon: Text('No'),
+                                                          ),
+
+                                                          IconButton(
+                                                            onPressed: () {
+                                                              context
+                                                                  .read<
+                                                                    AdminProductListBloc
+                                                                  >()
+                                                                  .add(
+                                                                    AdminProductListEvent.deleteProduct(
+                                                                      product
+                                                                          .id!,
+                                                                    ),
+                                                                  );
+                                                              Navigator.of(
+                                                                context,
+                                                              ).pop();
+                                                            },
+                                                            icon: Text('Yes'),
+                                                          ),
+                                                        ],
+                                                      );
+                                                    },
+                                                  );
+                                                } else {
+                                                  AppSnackBar.show(
+                                                    context,
+                                                    'Product id missing',
+                                                  );
+                                                }
+                                              }
                                             },
                                             itemBuilder: (context) => [
                                               const PopupMenuItem(
@@ -166,36 +248,36 @@ class ScreenAdminProducts extends StatelessWidget {
                                       const SizedBox(height: 4),
                                       Row(
                                         children: [
-                                          Container(
-                                            padding: const EdgeInsets.symmetric(
-                                              horizontal: 6,
-                                              vertical: 2,
-                                            ),
-                                            decoration: BoxDecoration(
-                                              color: isActive
-                                                  ? Colors.green.withValues(
-                                                      alpha: 0.1,
-                                                    )
-                                                  : Colors.red.withValues(
-                                                      alpha: 0.1,
-                                                    ),
-                                              borderRadius:
-                                                  BorderRadius.circular(4),
-                                            ),
-                                            child: Text(
-                                              isActive
-                                                  ? AppStrings.active
-                                                  : AppStrings.inactive,
-                                              style: TextStyle(
-                                                color: isActive
-                                                    ? Colors.green
-                                                    : Colors.red,
-                                                fontSize: 10,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ),
-                                          const SizedBox(width: 8),
+                                          // Container(
+                                          //   padding: const EdgeInsets.symmetric(
+                                          //     horizontal: 6,
+                                          //     vertical: 2,
+                                          //   ),
+                                          //   decoration: BoxDecoration(
+                                          //     color: isActive
+                                          //         ? Colors.green.withValues(
+                                          //             alpha: 0.1,
+                                          //           )
+                                          //         : Colors.red.withValues(
+                                          //             alpha: 0.1,
+                                          //           ),
+                                          //     borderRadius:
+                                          //         BorderRadius.circular(4),
+                                          //   ),
+                                          //   child: Text(
+                                          //     isActive
+                                          //         ? AppStrings.active
+                                          //         : AppStrings.inactive,
+                                          //     style: TextStyle(
+                                          //       color: isActive
+                                          //           ? Colors.green
+                                          //           : Colors.red,
+                                          //       fontSize: 10,
+                                          //       fontWeight: FontWeight.bold,
+                                          //     ),
+                                          //   ),
+                                          // ),
+                                          // const SizedBox(width: 8),
                                           Text(
                                             '${AppStrings.category}: Electronics',
                                             style: TextStyle(
@@ -210,43 +292,43 @@ class ScreenAdminProducts extends StatelessWidget {
                                       Row(
                                         children: [
                                           Text(
-                                            '₹${sellingPrice.toStringAsFixed(0)}',
+                                            '₹${product.price}',
                                             style: const TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.bold,
                                               color: Colors.black87,
                                             ),
                                           ),
-                                          const SizedBox(width: 8),
-                                          Text(
-                                            '₹${mrp.toStringAsFixed(0)}',
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                              decoration:
-                                                  TextDecoration.lineThrough,
-                                              color: Colors.grey[500],
-                                            ),
-                                          ),
-                                          const SizedBox(width: 8),
-                                          Container(
-                                            padding: const EdgeInsets.symmetric(
-                                              horizontal: 6,
-                                              vertical: 2,
-                                            ),
-                                            decoration: BoxDecoration(
-                                              color: Colors.green.shade50,
-                                              borderRadius:
-                                                  BorderRadius.circular(4),
-                                            ),
-                                            child: const Text(
-                                              '20% ${AppStrings.off}',
-                                              style: TextStyle(
-                                                color: Colors.green,
-                                                fontSize: 10,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ),
+                                          // const SizedBox(width: 8),
+                                          // Text(
+                                          //   '₹${mrp.toStringAsFixed(0)}',
+                                          //   style: TextStyle(
+                                          //     fontSize: 12,
+                                          //     decoration:
+                                          //         TextDecoration.lineThrough,
+                                          //     color: Colors.grey[500],
+                                          //   ),
+                                          // ),
+                                          //   const SizedBox(width: 8),
+                                          //   Container(
+                                          //     padding: const EdgeInsets.symmetric(
+                                          //       horizontal: 6,
+                                          //       vertical: 2,
+                                          //     ),
+                                          //     decoration: BoxDecoration(
+                                          //       color: Colors.green.shade50,
+                                          //       borderRadius:
+                                          //           BorderRadius.circular(4),
+                                          //     ),
+                                          //     child: const Text(
+                                          //       '20% ${AppStrings.off}',
+                                          //       style: TextStyle(
+                                          //         color: Colors.green,
+                                          //         fontSize: 10,
+                                          //         fontWeight: FontWeight.bold,
+                                          //       ),
+                                          //     ),
+                                          //   ),
                                         ],
                                       ),
                                       const SizedBox(height: 8),
