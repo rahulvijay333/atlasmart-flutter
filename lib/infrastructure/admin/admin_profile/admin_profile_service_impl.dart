@@ -4,6 +4,8 @@ import 'dart:developer';
 import 'package:atlasmart/domain/admin/profile/admin_profile_service.dart';
 import 'package:atlasmart/domain/admin/profile/model/admin_profile.dart';
 import 'package:dio/dio.dart';
+import 'package:http_parser/http_parser.dart';
+import 'package:mime/mime.dart';
 
 import '../../../domain/core/network/dio_error_handle.dart';
 import '../../../domain/endpoints/api_endpoints.dart';
@@ -14,47 +16,47 @@ class AdminProfileServiceImpl implements AdminProfileService {
 
   AdminProfileServiceImpl(this.dio);
 
-  //  @override
-  // Future<AdminUserModel> editProfile(AdminUserModel profile) async {
-  //   try {
-  //     final formDataMap = <String, dynamic>{'name': profile.userName};
+  @override
+  Future<AdminUserModel> editProfile(AdminUserModel profile) async {
+    try {
+      final formDataMap = <String, dynamic>{'name': profile.userName};
 
-  //     if (profile.newProfileImage != null) {
-  //       final mimeType =
-  //           lookupMimeType(profile.newProfileImage!.path) ?? 'image/jpeg';
-  //       final parts = mimeType.split('/');
-  //       final extension = parts[1] == 'jpeg' ? 'jpg' : parts[1];
+      if (profile.newProfileImage != null) {
+        final mimeType =
+            lookupMimeType(profile.newProfileImage!.path) ?? 'image/jpeg';
+        final parts = mimeType.split('/');
+        final extension = parts[1] == 'jpeg' ? 'jpg' : parts[1];
 
-  //       final fileName = '${profile.userName}.$extension';
-  //       formDataMap['profileImage'] = await MultipartFile.fromFile(
-  //         profile.newProfileImage!.path,
-  //         filename: fileName,
-  //         contentType: MediaType(parts[0], parts[1]),
-  //       );
-  //     }
+        final fileName = '${profile.userName}.$extension';
+        formDataMap['profileImage'] = await MultipartFile.fromFile(
+          profile.newProfileImage!.path,
+          filename: fileName,
+          contentType: MediaType(parts[0], parts[1]),
+        );
+      }
 
-  //     final response = await dio.put(
-  //       ApiEndpoints.customerProfile,
-  //       data: FormData.fromMap(formDataMap),
-  //       options: Options(contentType: 'multipart/form-data'),
-  //     );
+      final response = await dio.put(
+        ApiEndpoints.customerProfile,
+        data: FormData.fromMap(formDataMap),
+        options: Options(contentType: 'multipart/form-data'),
+      );
 
-  //     if (response.statusCode == 200) {
-  //       final data = ProfileResponseModel.fromMap(response.data);
+      if (response.statusCode == 200) {
+        final data = AdminProfileResponseModel.fromMap(response.data);
 
-  //       return AdminUserModel(
-  //         userName: data.data?.name ?? '',
-  //         userEmail: data.data?.email ?? '',
-  //         profilePic: data.data?.profileImage ?? '',
-  //       );
-  //     } else {
-  //       throw Exception('Profile update failed');
-  //     }
-  //   } on DioException catch (e) {
-  //     log(e.toString());
-  //     throw DioErrorHandler.handle(e);
-  //   }
-  // }
+        return AdminUserModel(
+          userName: data.data?.name ?? '',
+          userEmail: data.data?.email ?? '',
+          joinedDate: data.data?.createdAt,
+        ).copyWith(userImage: data.data?.profileImage);
+      } else {
+        throw Exception('Profile update failed');
+      }
+    } on DioException catch (e) {
+      log(e.toString());
+      throw DioErrorHandler.handle(e);
+    }
+  }
 
   @override
   Future<AdminUserModel> getProfileDetails() async {
@@ -70,7 +72,7 @@ class AdminProfileServiceImpl implements AdminProfileService {
           userName: data.data?.name ?? '',
           userEmail: data.data?.email ?? '',
           joinedDate: null,
-        );
+        ).copyWith(userImage: data.data?.profileImage);
       } else {
         return AdminUserModel(userName: '', userEmail: '', joinedDate: null);
       }

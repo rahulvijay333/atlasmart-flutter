@@ -48,7 +48,7 @@ class _ScreenOtpVerifyState extends State<ScreenOtpVerify> {
                   case AppConstants.admin:
                     Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(
-                        builder: (context) => const ScreenAdminMain(),
+                        builder: (context) => ScreenAdminMain(role: state.role),
                       ),
                       (route) => false,
                     );

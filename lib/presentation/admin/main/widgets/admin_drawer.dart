@@ -1,21 +1,25 @@
 import 'package:atlasmart/application/profile_admin_customer/admin/bloc/admin_profile_bloc.dart';
 import 'package:atlasmart/domain/core/constants/colors.dart';
+import 'package:atlasmart/domain/core/constants/constants.dart';
 import 'package:atlasmart/domain/core/constants/font.dart';
 import 'package:atlasmart/presentation/admin/admin_profile/screen_admin_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../application/login/login_bloc.dart';
 import '../../../login/screen_login.dart';
 import '../../../../domain/core/constants/strings.dart';
 
 class AdminDrawerWidget extends StatelessWidget {
   final int selectedIndex;
   final Function(int) onDestinationSelected;
+  final String role;
 
-  const AdminDrawerWidget({
+  AdminDrawerWidget({
     super.key,
     required this.selectedIndex,
     required this.onDestinationSelected,
+    required this.role,
   });
 
   @override
@@ -43,123 +47,151 @@ class AdminDrawerWidget extends StatelessWidget {
                 end: Alignment.bottomRight,
               ),
             ),
-            child: Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(2),
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.circle,
-                  ),
-                  child: const CircleAvatar(
-                    radius: 28,
-                    backgroundColor: Colors.white,
-                    child: Icon(Icons.person, color: Colors.orange, size: 30),
-                  ),
-                ),
-                const SizedBox(width: 5),
-                Expanded(
-                  child: BlocBuilder<AdminProfileBloc, AdminProfileState>(
-                    builder: (context, state) {
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+            child: BlocBuilder<AdminProfileBloc, AdminProfileState>(
+              builder: (context, state) {
+                return Row(
+                  spacing: 5,
+                  children: [
+                    ?state.whenOrNull(
+                      success: (profile) {
+                        return Container(
+                          padding: const EdgeInsets.all(2),
+                          decoration: const BoxDecoration(
+                            color: Colors.white,
+                            shape: BoxShape.circle,
+                          ),
+                          child: CircleAvatar(
+                            radius: 28,
+                            backgroundImage:
+                                profile.userImage?.isNotEmpty == true
+                                ? NetworkImage(profile.userImage!)
+                                : null,
+                            backgroundColor:
+                                profile.userImage?.isEmpty == true ||
+                                    profile.userImage == null
+                                ? Colors.white
+                                : null,
+                            child:
+                                profile.userImage?.isEmpty == true ||
+                                    profile.userImage == null
+                                ? Icon(
+                                    Icons.person,
+                                    color: Colors.orange,
+                                    size: 30,
+                                  )
+                                : null,
+                          ),
+                        );
+                      },
+                    ),
+                    Expanded(
+                      child: BlocBuilder<AdminProfileBloc, AdminProfileState>(
+                        builder: (context, state) {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
 
-                        children: [
-                          ?state.whenOrNull(
-                            loading: () {
-                              return Center(
-                                child: SizedBox(
-                                  width: 25,
-                                  height: 25,
-                                  child: CircularProgressIndicator(),
-                                ),
-                              );
-                            },
+                            children: [
+                              ?state.whenOrNull(
+                                loading: () {
+                                  return Center(
+                                    child: SizedBox(
+                                      width: 25,
+                                      height: 25,
+                                      child: CircularProgressIndicator(),
+                                    ),
+                                  );
+                                },
 
-                            failed: (message) {
-                              return Center(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      'Retry',
-                                      style: AppFont.title14BoldStyleWhiteColor,
-                                    ),
-                                    IconButton(
-                                      onPressed: () {
-                                        BlocProvider.of<AdminProfileBloc>(
-                                          context,
-                                        ).add(
-                                          AdminProfileEvent.getProfileDetails(),
-                                        );
-                                      },
-                                      icon: Icon(
-                                        Icons.refresh,
-                                        color: AppColors.whiteColor,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            },
-                            success: (profile) {
-                              return Row(
-                                children: [
-                                  Expanded(
+                                failed: (message) {
+                                  return Center(
                                     child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Text(
-                                          profile.userName,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: AppFont.title16Style.copyWith(
-                                            color: AppColors.whiteColor,
-                                            fontWeight: FontWeight.bold,
-                                          ),
+                                          'Retry',
+                                          style: AppFont
+                                              .title14BoldStyleWhiteColor,
                                         ),
-                                        SizedBox(height: 4),
-                                        Text(
-                                          profile.userEmail,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: AppFont.title14Style.copyWith(
+                                        IconButton(
+                                          onPressed: () {
+                                            BlocProvider.of<AdminProfileBloc>(
+                                              context,
+                                            ).add(
+                                              AdminProfileEvent.getProfileDetails(),
+                                            );
+                                          },
+                                          icon: Icon(
+                                            Icons.refresh,
                                             color: AppColors.whiteColor,
                                           ),
-                                          maxLines: 2,
                                         ),
                                       ],
                                     ),
-                                  ),
-
-                                  IconButton(
-                                    onPressed: () {
-                                      Navigator.of(context)
-                                          .push(
-                                            MaterialPageRoute(
-                                              builder: (context) {
-                                                return ScreenAdminProfile();
-                                              },
+                                  );
+                                },
+                                success: (profile) {
+                                  return Row(
+                                    children: [
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              profile.userName,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: AppFont.title16Style
+                                                  .copyWith(
+                                                    color: AppColors.whiteColor,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
                                             ),
-                                          )
-                                          .then((value) {
-                                            if (context.mounted) {
-                                              Navigator.of(context).pop();
-                                            }
-                                          });
-                                    },
-                                    icon: Icon(Icons.arrow_forward_ios),
-                                  ),
-                                ],
-                              );
-                            },
-                          ),
-                        ],
-                      );
-                    },
-                  ),
-                ),
-              ],
+                                            SizedBox(height: 4),
+                                            Text(
+                                              profile.userEmail,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: AppFont.title14Style
+                                                  .copyWith(
+                                                    color: AppColors.whiteColor,
+                                                  ),
+                                              maxLines: 2,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+
+                                      IconButton(
+                                        onPressed: () {
+                                          Navigator.of(context)
+                                              .push(
+                                                MaterialPageRoute(
+                                                  builder: (context) {
+                                                    return ScreenAdminProfile();
+                                                  },
+                                                ),
+                                              )
+                                              .then((value) {
+                                                if (context.mounted) {
+                                                  Navigator.of(context).pop();
+                                                }
+                                              });
+                                        },
+                                        icon: Icon(Icons.arrow_forward_ios),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                );
+              },
             ),
           ),
 
@@ -209,22 +241,25 @@ class AdminDrawerWidget extends StatelessWidget {
                   isSelected: selectedIndex == 4,
                   onTap: () => onDestinationSelected(4),
                 ),
-                _buildDrawerItem(
-                  context: context,
-                  icon: Icons.people_outline,
-                  selectedIcon: Icons.people,
-                  title: AppStrings.users,
-                  isSelected: selectedIndex == 5,
-                  onTap: () => onDestinationSelected(5),
-                ),
-                _buildDrawerItem(
-                  context: context,
-                  icon: Icons.admin_panel_settings_outlined,
-                  selectedIcon: Icons.admin_panel_settings,
-                  title: AppStrings.manageAdmins,
-                  isSelected: selectedIndex == 7,
-                  onTap: () => onDestinationSelected(7),
-                ),
+                if (role == AppConstants.superUser) ...[
+                  _buildDrawerItem(
+                    context: context,
+                    icon: Icons.people_outline,
+                    selectedIcon: Icons.people,
+                    title: AppStrings.users,
+                    isSelected: selectedIndex == 5,
+                    onTap: () => onDestinationSelected(5),
+                  ),
+                  _buildDrawerItem(
+                    context: context,
+                    icon: Icons.admin_panel_settings_outlined,
+                    selectedIcon: Icons.admin_panel_settings,
+                    title: AppStrings.manageAdmins,
+                    isSelected: selectedIndex == 7,
+                    onTap: () => onDestinationSelected(7),
+                  ),
+                ],
+
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   child: Divider(),
@@ -251,6 +286,9 @@ class AdminDrawerWidget extends StatelessWidget {
               title: AppStrings.logout,
               isSelected: false,
               onTap: () {
+                BlocProvider.of<LoginBloc>(
+                  context,
+                ).add(LoginEvent.logOutButtonClick());
                 Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(
                     builder: (context) {

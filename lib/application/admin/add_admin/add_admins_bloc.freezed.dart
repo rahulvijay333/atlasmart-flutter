@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'manage_admins_bloc.dart';
+part of 'add_admins_bloc.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -12,7 +12,7 @@ part of 'manage_admins_bloc.dart';
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
-mixin _$ManageAdminsEvent {
+mixin _$AddAdminsEvent {
 
 
 
@@ -20,7 +20,7 @@ mixin _$ManageAdminsEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ManageAdminsEvent);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AddAdminsEvent);
 }
 
 
@@ -29,20 +29,20 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'ManageAdminsEvent()';
+  return 'AddAdminsEvent()';
 }
 
 
 }
 
 /// @nodoc
-class $ManageAdminsEventCopyWith<$Res>  {
-$ManageAdminsEventCopyWith(ManageAdminsEvent _, $Res Function(ManageAdminsEvent) __);
+class $AddAdminsEventCopyWith<$Res>  {
+$AddAdminsEventCopyWith(AddAdminsEvent _, $Res Function(AddAdminsEvent) __);
 }
 
 
-/// Adds pattern-matching-related methods to [ManageAdminsEvent].
-extension ManageAdminsEventPatterns on ManageAdminsEvent {
+/// Adds pattern-matching-related methods to [AddAdminsEvent].
+extension AddAdminsEventPatterns on AddAdminsEvent {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -180,7 +180,7 @@ return addNewAdmin(_that.newAdmin);case _:
 /// @nodoc
 
 
-class _Started implements ManageAdminsEvent {
+class _Started implements AddAdminsEvent {
   const _Started();
   
 
@@ -200,7 +200,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'ManageAdminsEvent.started()';
+  return 'AddAdminsEvent.started()';
 }
 
 
@@ -212,13 +212,13 @@ String toString() {
 /// @nodoc
 
 
-class _AddNewAdmin implements ManageAdminsEvent {
+class _AddNewAdmin implements AddAdminsEvent {
   const _AddNewAdmin(this.newAdmin);
   
 
  final  AdminUserModel newAdmin;
 
-/// Create a copy of ManageAdminsEvent
+/// Create a copy of AddAdminsEvent
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
@@ -237,14 +237,14 @@ int get hashCode => Object.hash(runtimeType,newAdmin);
 
 @override
 String toString() {
-  return 'ManageAdminsEvent.addNewAdmin(newAdmin: $newAdmin)';
+  return 'AddAdminsEvent.addNewAdmin(newAdmin: $newAdmin)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$AddNewAdminCopyWith<$Res> implements $ManageAdminsEventCopyWith<$Res> {
+abstract mixin class _$AddNewAdminCopyWith<$Res> implements $AddAdminsEventCopyWith<$Res> {
   factory _$AddNewAdminCopyWith(_AddNewAdmin value, $Res Function(_AddNewAdmin) _then) = __$AddNewAdminCopyWithImpl;
 @useResult
 $Res call({
@@ -263,7 +263,7 @@ class __$AddNewAdminCopyWithImpl<$Res>
   final _AddNewAdmin _self;
   final $Res Function(_AddNewAdmin) _then;
 
-/// Create a copy of ManageAdminsEvent
+/// Create a copy of AddAdminsEvent
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? newAdmin = null,}) {
   return _then(_AddNewAdmin(
@@ -276,7 +276,7 @@ as AdminUserModel,
 }
 
 /// @nodoc
-mixin _$ManageAdminsState {
+mixin _$AddAdminsState {
 
 
 
@@ -284,7 +284,7 @@ mixin _$ManageAdminsState {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ManageAdminsState);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AddAdminsState);
 }
 
 
@@ -293,20 +293,20 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'ManageAdminsState()';
+  return 'AddAdminsState()';
 }
 
 
 }
 
 /// @nodoc
-class $ManageAdminsStateCopyWith<$Res>  {
-$ManageAdminsStateCopyWith(ManageAdminsState _, $Res Function(ManageAdminsState) __);
+class $AddAdminsStateCopyWith<$Res>  {
+$AddAdminsStateCopyWith(AddAdminsState _, $Res Function(AddAdminsState) __);
 }
 
 
-/// Adds pattern-matching-related methods to [ManageAdminsState].
-extension ManageAdminsStatePatterns on ManageAdminsState {
+/// Adds pattern-matching-related methods to [AddAdminsState].
+extension AddAdminsStatePatterns on AddAdminsState {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -456,7 +456,7 @@ return failure(_that.message);case _:
 /// @nodoc
 
 
-class _Initial implements ManageAdminsState {
+class _Initial implements AddAdminsState {
   const _Initial();
   
 
@@ -476,7 +476,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'ManageAdminsState.initial()';
+  return 'AddAdminsState.initial()';
 }
 
 
@@ -488,7 +488,7 @@ String toString() {
 /// @nodoc
 
 
-class _loading implements ManageAdminsState {
+class _loading implements AddAdminsState {
   const _loading();
   
 
@@ -508,7 +508,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'ManageAdminsState.loading()';
+  return 'AddAdminsState.loading()';
 }
 
 
@@ -520,7 +520,7 @@ String toString() {
 /// @nodoc
 
 
-class _success implements ManageAdminsState {
+class _success implements AddAdminsState {
   const _success();
   
 
@@ -540,7 +540,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'ManageAdminsState.success()';
+  return 'AddAdminsState.success()';
 }
 
 
@@ -552,13 +552,13 @@ String toString() {
 /// @nodoc
 
 
-class _failure implements ManageAdminsState {
+class _failure implements AddAdminsState {
   const _failure(this.message);
   
 
  final  String message;
 
-/// Create a copy of ManageAdminsState
+/// Create a copy of AddAdminsState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
@@ -577,14 +577,14 @@ int get hashCode => Object.hash(runtimeType,message);
 
 @override
 String toString() {
-  return 'ManageAdminsState.failure(message: $message)';
+  return 'AddAdminsState.failure(message: $message)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$failureCopyWith<$Res> implements $ManageAdminsStateCopyWith<$Res> {
+abstract mixin class _$failureCopyWith<$Res> implements $AddAdminsStateCopyWith<$Res> {
   factory _$failureCopyWith(_failure value, $Res Function(_failure) _then) = __$failureCopyWithImpl;
 @useResult
 $Res call({
@@ -603,7 +603,7 @@ class __$failureCopyWithImpl<$Res>
   final _failure _self;
   final $Res Function(_failure) _then;
 
-/// Create a copy of ManageAdminsState
+/// Create a copy of AddAdminsState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? message = null,}) {
   return _then(_failure(

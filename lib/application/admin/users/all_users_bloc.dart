@@ -23,5 +23,20 @@ class AllUsersBloc extends Bloc<AllUsersEvent, AllUsersState> {
         emit(_failure(e.toString()));
       }
     });
+
+    on<_DeleteUser>((event, emit) async {
+      emit(_loading());
+
+      try {
+        final status = await _userService.deleteUser(event.id);
+        if (status == true) {
+          add(_GetAllUsers());
+        } else {
+          emit(_failure('Not able to delete, Try after some time'));
+        }
+      } catch (e) {
+        emit(_failure(e.toString()));
+      }
+    });
   }
 }

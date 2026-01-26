@@ -1,8 +1,10 @@
 import 'package:atlasmart/application/admin/users/all_users_bloc.dart';
 import 'package:atlasmart/presentation/admin/users/screen_user_details.dart';
+import 'package:atlasmart/presentation/common/error_state_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import '../../../domain/core/constants/font.dart';
 import '../common/admin_search_bar.dart';
 import '../../../domain/core/constants/strings.dart';
 
@@ -55,9 +57,17 @@ class ScreenAdminUsers extends StatelessWidget {
                   },
                   success: (users) {
                     if (users.isEmpty) {
-                      return Center(child: Text('No Users'));
+                      return ErrorStateWidgetWithMessage(
+                        'No Users',
+                        hasRefresh: true,
+                        ontap: () {
+                          BlocProvider.of<AllUsersBloc>(
+                            context,
+                          ).add(AllUsersEvent.getAllUsers());
+                        },
+                      );
                     }
-        
+
                     return Expanded(
                       child: ListView.separated(
                         padding: const EdgeInsets.symmetric(
@@ -72,9 +82,13 @@ class ScreenAdminUsers extends StatelessWidget {
                           final isActive = index % 3 != 0;
                           return GestureDetector(
                             onTap: () {
-                              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                                return ScreenUserDetails(user);
-                              },));
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return ScreenUserDetails(user);
+                                  },
+                                ),
+                              );
                             },
                             child: Container(
                               decoration: BoxDecoration(
@@ -145,6 +159,56 @@ class ScreenAdminUsers extends StatelessWidget {
                                             ),
                                           ),
                                         ],
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return AlertDialog(
+                                              title: Center(
+                                                child: Text(
+                                                  'Confirm',
+                                                  style: AppFont
+                                                      .subHeading16BoldStyle,
+                                                ),
+                                              ),
+                                              content: Text(
+                                                'Are you sure to delete this user? ',
+                                              ),
+
+                                              actions: [
+                                                IconButton(
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  icon: Text('No'),
+                                                ),
+
+                                                IconButton(
+                                                  onPressed: () {
+                                                    context
+                                                        .read<AllUsersBloc>()
+                                                        .add(
+                                                          AllUsersEvent.deleteUser(
+                                                            user.id!,
+                                                          ),
+                                                        );
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  icon: Text('Yes'),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      },
+                                      child: Icon(
+                                        Icons.delete_outline,
+                                        color: Colors.grey.withValues(
+                                          alpha: 0.5,
+                                        ),
                                       ),
                                     ),
                                     // Column(

@@ -25,5 +25,17 @@ class AdminProfileBloc extends Bloc<AdminProfileEvent, AdminProfileState> {
       }
       // }
     });
+
+    on<_UpdateProfileDetailsButtonClick>((event, emit) async {
+      emit(_Loading());
+
+      try {
+        final resp = await _profileService.editProfile(event.profile);
+
+        emit(_Success(profile: resp));
+      } catch (e) {
+        emit(_Failed(message: e.toString()));
+      }
+    });
   }
 }

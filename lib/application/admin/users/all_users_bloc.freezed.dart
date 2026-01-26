@@ -55,13 +55,14 @@ extension AllUsersEventPatterns on AllUsersEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Started value)?  started,TResult Function( _GetAllUsers value)?  getAllUsers,TResult Function( _searchUsers value)?  searchUsers,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Started value)?  started,TResult Function( _GetAllUsers value)?  getAllUsers,TResult Function( _searchUsers value)?  searchUsers,TResult Function( _DeleteUser value)?  deleteUser,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started(_that);case _GetAllUsers() when getAllUsers != null:
 return getAllUsers(_that);case _searchUsers() when searchUsers != null:
-return searchUsers(_that);case _:
+return searchUsers(_that);case _DeleteUser() when deleteUser != null:
+return deleteUser(_that);case _:
   return orElse();
 
 }
@@ -79,13 +80,14 @@ return searchUsers(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Started value)  started,required TResult Function( _GetAllUsers value)  getAllUsers,required TResult Function( _searchUsers value)  searchUsers,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Started value)  started,required TResult Function( _GetAllUsers value)  getAllUsers,required TResult Function( _searchUsers value)  searchUsers,required TResult Function( _DeleteUser value)  deleteUser,}){
 final _that = this;
 switch (_that) {
 case _Started():
 return started(_that);case _GetAllUsers():
 return getAllUsers(_that);case _searchUsers():
-return searchUsers(_that);case _:
+return searchUsers(_that);case _DeleteUser():
+return deleteUser(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -102,13 +104,14 @@ return searchUsers(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Started value)?  started,TResult? Function( _GetAllUsers value)?  getAllUsers,TResult? Function( _searchUsers value)?  searchUsers,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Started value)?  started,TResult? Function( _GetAllUsers value)?  getAllUsers,TResult? Function( _searchUsers value)?  searchUsers,TResult? Function( _DeleteUser value)?  deleteUser,}){
 final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started(_that);case _GetAllUsers() when getAllUsers != null:
 return getAllUsers(_that);case _searchUsers() when searchUsers != null:
-return searchUsers(_that);case _:
+return searchUsers(_that);case _DeleteUser() when deleteUser != null:
+return deleteUser(_that);case _:
   return null;
 
 }
@@ -125,12 +128,13 @@ return searchUsers(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  started,TResult Function()?  getAllUsers,TResult Function( String keyword)?  searchUsers,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  started,TResult Function()?  getAllUsers,TResult Function( String keyword)?  searchUsers,TResult Function( int id)?  deleteUser,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started();case _GetAllUsers() when getAllUsers != null:
 return getAllUsers();case _searchUsers() when searchUsers != null:
-return searchUsers(_that.keyword);case _:
+return searchUsers(_that.keyword);case _DeleteUser() when deleteUser != null:
+return deleteUser(_that.id);case _:
   return orElse();
 
 }
@@ -148,12 +152,13 @@ return searchUsers(_that.keyword);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  started,required TResult Function()  getAllUsers,required TResult Function( String keyword)  searchUsers,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  started,required TResult Function()  getAllUsers,required TResult Function( String keyword)  searchUsers,required TResult Function( int id)  deleteUser,}) {final _that = this;
 switch (_that) {
 case _Started():
 return started();case _GetAllUsers():
 return getAllUsers();case _searchUsers():
-return searchUsers(_that.keyword);case _:
+return searchUsers(_that.keyword);case _DeleteUser():
+return deleteUser(_that.id);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -170,12 +175,13 @@ return searchUsers(_that.keyword);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  started,TResult? Function()?  getAllUsers,TResult? Function( String keyword)?  searchUsers,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  started,TResult? Function()?  getAllUsers,TResult? Function( String keyword)?  searchUsers,TResult? Function( int id)?  deleteUser,}) {final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started();case _GetAllUsers() when getAllUsers != null:
 return getAllUsers();case _searchUsers() when searchUsers != null:
-return searchUsers(_that.keyword);case _:
+return searchUsers(_that.keyword);case _DeleteUser() when deleteUser != null:
+return deleteUser(_that.id);case _:
   return null;
 
 }
@@ -307,6 +313,72 @@ class __$searchUsersCopyWithImpl<$Res>
   return _then(_searchUsers(
 keyword: null == keyword ? _self.keyword : keyword // ignore: cast_nullable_to_non_nullable
 as String,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class _DeleteUser implements AllUsersEvent {
+  const _DeleteUser(this.id);
+  
+
+ final  int id;
+
+/// Create a copy of AllUsersEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$DeleteUserCopyWith<_DeleteUser> get copyWith => __$DeleteUserCopyWithImpl<_DeleteUser>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DeleteUser&&(identical(other.id, id) || other.id == id));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,id);
+
+@override
+String toString() {
+  return 'AllUsersEvent.deleteUser(id: $id)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$DeleteUserCopyWith<$Res> implements $AllUsersEventCopyWith<$Res> {
+  factory _$DeleteUserCopyWith(_DeleteUser value, $Res Function(_DeleteUser) _then) = __$DeleteUserCopyWithImpl;
+@useResult
+$Res call({
+ int id
+});
+
+
+
+
+}
+/// @nodoc
+class __$DeleteUserCopyWithImpl<$Res>
+    implements _$DeleteUserCopyWith<$Res> {
+  __$DeleteUserCopyWithImpl(this._self, this._then);
+
+  final _DeleteUser _self;
+  final $Res Function(_DeleteUser) _then;
+
+/// Create a copy of AllUsersEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? id = null,}) {
+  return _then(_DeleteUser(
+null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int,
   ));
 }
 

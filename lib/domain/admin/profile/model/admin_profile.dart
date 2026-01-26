@@ -14,6 +14,8 @@
 //   });
 // }
 
+import 'dart:io';
+
 class AdminUserModel {
   final String userName;
   final String userEmail;
@@ -22,6 +24,8 @@ class AdminUserModel {
   String? userImage;
   bool? userActiveStatus;
   String? password;
+  File? newProfileImage;
+  int? id;
 
   AdminUserModel({
     required this.userName,
@@ -37,6 +41,8 @@ class AdminUserModel {
     String? userImage,
     bool? userActiveStatus,
     String? password,
+    File? newProfileImage,
+    int? id
   }) {
     final model = AdminUserModel(
       userName: userName ?? this.userName,
@@ -48,6 +54,8 @@ class AdminUserModel {
     model.userImage = userImage ?? this.userImage;
     model.userActiveStatus = userActiveStatus ?? this.userActiveStatus;
     model.password = password ?? this.password;
+    model.newProfileImage = newProfileImage;
+    model.id =id;
 
     return model;
   }

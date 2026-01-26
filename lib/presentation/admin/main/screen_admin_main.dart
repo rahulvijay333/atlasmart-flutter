@@ -1,3 +1,6 @@
+import 'package:atlasmart/application/admin/admin_list/admin_list_bloc.dart';
+import 'package:atlasmart/application/admin/admin_product_list/admin_product_list_bloc.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../application/admin/users/all_users_bloc.dart';
@@ -14,7 +17,9 @@ import '../admin_management/screen_manage_admins.dart';
 import 'widgets/admin_drawer.dart';
 
 class ScreenAdminMain extends StatefulWidget {
-  const ScreenAdminMain({super.key});
+  const ScreenAdminMain({super.key, required this.role});
+
+  final String role;
 
   @override
   State<ScreenAdminMain> createState() => _ScreenAdminMainState();
@@ -29,6 +34,7 @@ class _ScreenAdminMainState extends State<ScreenAdminMain> {
     const ScreenInventory(),
     const ScreenAdminOrders(),
     const ScreenAdminPayments(),
+
     const ScreenAdminUsers(),
     const ScreenPushNotifications(),
     const ScreenManageAdmins(),
@@ -39,8 +45,7 @@ class _ScreenAdminMainState extends State<ScreenAdminMain> {
       case 0:
         return AppStrings.dashboard;
       case 1:
-        return AppStrings
-            .products; // Not exactly 'Product Management' in AppStrings? I added 'Products'.
+        return AppStrings.products;
       case 2:
         return AppStrings.inventory;
       case 3:
@@ -74,8 +79,19 @@ class _ScreenAdminMainState extends State<ScreenAdminMain> {
             ).add(AllUsersEvent.getAllUsers());
           }
 
-          Navigator.pop(context); // Close drawer
+          if (index == 7) {
+            context.read<AdminListBloc>().add(AdminListEvent.getAllAdminList());
+          }
+
+          if (index == 1) {
+            context.read<AdminProductListBloc>().add(
+              AdminProductListEvent.loadAdminProductList(),
+            );
+          }
+
+          Navigator.pop(context);
         },
+        role: widget.role,
       ),
       body: _screens[_selectedIndex],
       floatingActionButton:
@@ -86,9 +102,15 @@ class _ScreenAdminMainState extends State<ScreenAdminMain> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const ScreenAddProduct(),
+                    builder: (context) => const ScreenAddProduct(isEdit: false),
                   ),
-                );
+                ).then((value) {
+                  if (context.mounted) {
+                    context.read<AdminProductListBloc>().add(
+                      AdminProductListEvent.loadAdminProductList(),
+                    );
+                  }
+                });
               },
               label: const Text('Add Product'),
               icon: const Icon(Icons.add),

@@ -5,11 +5,13 @@ class UserModel {
   DateTime? joinedDate;
   String? userImage;
   bool? userActiveStatus;
+  int? id;
 
   UserModel({
     required this.userName,
     required this.userEmail,
     required this.joinedDate,
     this.userImage,
+    this.id
   });
 }

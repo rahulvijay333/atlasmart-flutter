@@ -77,6 +77,7 @@ class _ScreenRegisterState extends State<ScreenRegister> {
 
                   TextFormField(
                     controller: _nameController,
+                    textCapitalization: TextCapitalization.sentences,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.all(5),
                       hintStyle: AppFont.hintText14StyleGreyColor,
