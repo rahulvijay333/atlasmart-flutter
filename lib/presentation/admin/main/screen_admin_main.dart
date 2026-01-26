@@ -1,7 +1,6 @@
 import 'package:atlasmart/application/admin/admin_list/admin_list_bloc.dart';
 import 'package:atlasmart/application/admin/admin_product_list/admin_product_list_bloc.dart';
-import 'package:atlasmart/domain/core/constants/constants.dart';
-import 'package:atlasmart/presentation/common/snack_bar.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../application/admin/users/all_users_bloc.dart';
@@ -71,37 +70,28 @@ class _ScreenAdminMainState extends State<ScreenAdminMain> {
       drawer: AdminDrawerWidget(
         selectedIndex: _selectedIndex,
         onDestinationSelected: (index) {
-          if (index == 5 || index == 7) {
-            if (widget.role == AppConstants.superUser) {
-              setState(() {
-                _selectedIndex = index;
-              });
-              if (index == 5) {
-                BlocProvider.of<AllUsersBloc>(
-                  context,
-                ).add(AllUsersEvent.getAllUsers());
-              }
+          setState(() {
+            _selectedIndex = index;
+          });
+          if (index == 5) {
+            BlocProvider.of<AllUsersBloc>(
+              context,
+            ).add(AllUsersEvent.getAllUsers());
+          }
 
-              if(index ==7) {
-                context.read<AdminListBloc>().add(AdminListEvent.getAllAdminList());
-              }
-            } else {
-              AppSnackBar.show(context, 'Not available for your account');
-            }
-          } else {
-            setState(() {
-              _selectedIndex = index;
-            });
+          if (index == 7) {
+            context.read<AdminListBloc>().add(AdminListEvent.getAllAdminList());
+          }
 
-            if (index == 1) {
-              context.read<AdminProductListBloc>().add(
-                AdminProductListEvent.loadAdminProductList(),
-              );
-            }
+          if (index == 1) {
+            context.read<AdminProductListBloc>().add(
+              AdminProductListEvent.loadAdminProductList(),
+            );
           }
 
           Navigator.pop(context);
         },
+        role: widget.role,
       ),
       body: _screens[_selectedIndex],
       floatingActionButton:

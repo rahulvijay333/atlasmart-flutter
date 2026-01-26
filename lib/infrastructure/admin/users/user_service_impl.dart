@@ -17,7 +17,7 @@ class UserServiceImpl implements UserService {
   Future<List<UserModel>> getAllUsers() async {
     try {
       final res = await dio.get(
-        ApiEndpoints.getAllUsers,
+        ApiEndpoints.adminUsers,
         queryParameters: {'role': 'customer'},
       );
 
@@ -30,6 +30,7 @@ class UserServiceImpl implements UserService {
                 userEmail: e.email ?? '',
                 joinedDate: e.createdAt,
                 userImage: e.profileImage,
+                id: e.id,
               ),
             )
             .toList();
@@ -37,6 +38,22 @@ class UserServiceImpl implements UserService {
         return users;
       } else {
         return [];
+      }
+    } on DioException catch (e) {
+      log(e.toString());
+      throw DioErrorHandler.handle(e);
+    }
+  }
+
+  @override
+  Future<bool> deleteUser(int id) async {
+    try {
+      final res = await dio.delete('${ApiEndpoints.adminUsers}/$id');
+
+      if (res.statusCode == 200) {
+        return true;
+      } else {
+        return false;
       }
     } on DioException catch (e) {
       log(e.toString());

@@ -22,5 +22,21 @@ class AdminListBloc extends Bloc<AdminListEvent, AdminListState> {
         emit(_failure(e.toString()));
       }
     });
+
+    on<_DeleteAdmin>((event, emit) async {
+      emit(_loading());
+
+      try {
+        final status = await manageAdminService.deleteAdmin(event.id);
+
+        if (status == true) {
+          add(_GetAllAdminList());
+        } else {
+          emit(_failure('Not able to delete, Try after some time'));
+        }
+      } catch (e) {
+        emit(_failure(e.toString()));
+      }
+    });
   }
 }

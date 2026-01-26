@@ -55,12 +55,13 @@ extension AdminListEventPatterns on AdminListEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Started value)?  started,TResult Function( _GetAllAdminList value)?  getAllAdminList,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Started value)?  started,TResult Function( _GetAllAdminList value)?  getAllAdminList,TResult Function( _DeleteAdmin value)?  deleteAdmin,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started(_that);case _GetAllAdminList() when getAllAdminList != null:
-return getAllAdminList(_that);case _:
+return getAllAdminList(_that);case _DeleteAdmin() when deleteAdmin != null:
+return deleteAdmin(_that);case _:
   return orElse();
 
 }
@@ -78,12 +79,13 @@ return getAllAdminList(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Started value)  started,required TResult Function( _GetAllAdminList value)  getAllAdminList,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Started value)  started,required TResult Function( _GetAllAdminList value)  getAllAdminList,required TResult Function( _DeleteAdmin value)  deleteAdmin,}){
 final _that = this;
 switch (_that) {
 case _Started():
 return started(_that);case _GetAllAdminList():
-return getAllAdminList(_that);case _:
+return getAllAdminList(_that);case _DeleteAdmin():
+return deleteAdmin(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -100,12 +102,13 @@ return getAllAdminList(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Started value)?  started,TResult? Function( _GetAllAdminList value)?  getAllAdminList,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Started value)?  started,TResult? Function( _GetAllAdminList value)?  getAllAdminList,TResult? Function( _DeleteAdmin value)?  deleteAdmin,}){
 final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started(_that);case _GetAllAdminList() when getAllAdminList != null:
-return getAllAdminList(_that);case _:
+return getAllAdminList(_that);case _DeleteAdmin() when deleteAdmin != null:
+return deleteAdmin(_that);case _:
   return null;
 
 }
@@ -122,11 +125,12 @@ return getAllAdminList(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  started,TResult Function()?  getAllAdminList,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  started,TResult Function()?  getAllAdminList,TResult Function( int id)?  deleteAdmin,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started();case _GetAllAdminList() when getAllAdminList != null:
-return getAllAdminList();case _:
+return getAllAdminList();case _DeleteAdmin() when deleteAdmin != null:
+return deleteAdmin(_that.id);case _:
   return orElse();
 
 }
@@ -144,11 +148,12 @@ return getAllAdminList();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  started,required TResult Function()  getAllAdminList,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  started,required TResult Function()  getAllAdminList,required TResult Function( int id)  deleteAdmin,}) {final _that = this;
 switch (_that) {
 case _Started():
 return started();case _GetAllAdminList():
-return getAllAdminList();case _:
+return getAllAdminList();case _DeleteAdmin():
+return deleteAdmin(_that.id);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -165,11 +170,12 @@ return getAllAdminList();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  started,TResult? Function()?  getAllAdminList,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  started,TResult? Function()?  getAllAdminList,TResult? Function( int id)?  deleteAdmin,}) {final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started();case _GetAllAdminList() when getAllAdminList != null:
-return getAllAdminList();case _:
+return getAllAdminList();case _DeleteAdmin() when deleteAdmin != null:
+return deleteAdmin(_that.id);case _:
   return null;
 
 }
@@ -240,6 +246,72 @@ String toString() {
 
 
 
+
+/// @nodoc
+
+
+class _DeleteAdmin implements AdminListEvent {
+  const _DeleteAdmin(this.id);
+  
+
+ final  int id;
+
+/// Create a copy of AdminListEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$DeleteAdminCopyWith<_DeleteAdmin> get copyWith => __$DeleteAdminCopyWithImpl<_DeleteAdmin>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DeleteAdmin&&(identical(other.id, id) || other.id == id));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,id);
+
+@override
+String toString() {
+  return 'AdminListEvent.deleteAdmin(id: $id)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$DeleteAdminCopyWith<$Res> implements $AdminListEventCopyWith<$Res> {
+  factory _$DeleteAdminCopyWith(_DeleteAdmin value, $Res Function(_DeleteAdmin) _then) = __$DeleteAdminCopyWithImpl;
+@useResult
+$Res call({
+ int id
+});
+
+
+
+
+}
+/// @nodoc
+class __$DeleteAdminCopyWithImpl<$Res>
+    implements _$DeleteAdminCopyWith<$Res> {
+  __$DeleteAdminCopyWithImpl(this._self, this._then);
+
+  final _DeleteAdmin _self;
+  final $Res Function(_DeleteAdmin) _then;
+
+/// Create a copy of AdminListEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? id = null,}) {
+  return _then(_DeleteAdmin(
+null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
+}
+
+
+}
 
 /// @nodoc
 mixin _$AdminListState {

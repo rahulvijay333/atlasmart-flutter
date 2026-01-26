@@ -4,6 +4,7 @@ import 'package:atlasmart/presentation/common/error_state_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import '../../../domain/core/constants/font.dart';
 import '../common/admin_search_bar.dart';
 import '../../../domain/core/constants/strings.dart';
 
@@ -158,6 +159,56 @@ class ScreenAdminUsers extends StatelessWidget {
                                             ),
                                           ),
                                         ],
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return AlertDialog(
+                                              title: Center(
+                                                child: Text(
+                                                  'Confirm',
+                                                  style: AppFont
+                                                      .subHeading16BoldStyle,
+                                                ),
+                                              ),
+                                              content: Text(
+                                                'Are you sure to delete this user? ',
+                                              ),
+
+                                              actions: [
+                                                IconButton(
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  icon: Text('No'),
+                                                ),
+
+                                                IconButton(
+                                                  onPressed: () {
+                                                    context
+                                                        .read<AllUsersBloc>()
+                                                        .add(
+                                                          AllUsersEvent.deleteUser(
+                                                            user.id!,
+                                                          ),
+                                                        );
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  icon: Text('Yes'),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      },
+                                      child: Icon(
+                                        Icons.delete_outline,
+                                        color: Colors.grey.withValues(
+                                          alpha: 0.5,
+                                        ),
                                       ),
                                     ),
                                     // Column(

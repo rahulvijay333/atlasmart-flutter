@@ -35,12 +35,6 @@ class ManageAdminServiceImpl implements ManageAdminService {
   }
 
   @override
-  Future<bool> deleteAdmin(AdminUserModel admin) {
-    // TODO: implement deleteAdmin
-    throw UnimplementedError();
-  }
-
-  @override
   Future<AdminUserModel> editAdmin(AdminUserModel admin) {
     // TODO: implement editAdmin
     throw UnimplementedError();
@@ -50,7 +44,7 @@ class ManageAdminServiceImpl implements ManageAdminService {
   Future<List<AdminUserModel>> getAllAdmins() async {
     try {
       final res = await dio.get(
-        ApiEndpoints.getAllUsers,
+        ApiEndpoints.adminUsers,
         queryParameters: {'role': 'admin'},
       );
 
@@ -62,13 +56,29 @@ class ManageAdminServiceImpl implements ManageAdminService {
                 userName: e.name ?? '',
                 userEmail: e.email ?? '',
                 joinedDate: e.createdAt,
-              ).copyWith(userImage: e.profileImage ?? ''),
+              ).copyWith(userImage: e.profileImage ?? '', id: e.id),
             )
             .toList();
 
         return users;
       } else {
         return [];
+      }
+    } on DioException catch (e) {
+      log(e.toString());
+      throw DioErrorHandler.handle(e);
+    }
+  }
+
+  @override
+  Future<bool> deleteAdmin(int adminId) async {
+    try {
+      final res = await dio.delete('${ApiEndpoints.adminUsers}/$adminId');
+
+      if (res.statusCode == 200) {
+        return true;
+      } else {
+        return false;
       }
     } on DioException catch (e) {
       log(e.toString());

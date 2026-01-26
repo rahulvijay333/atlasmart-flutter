@@ -1,5 +1,6 @@
 import 'package:atlasmart/application/profile_admin_customer/admin/bloc/admin_profile_bloc.dart';
 import 'package:atlasmart/domain/core/constants/colors.dart';
+import 'package:atlasmart/domain/core/constants/constants.dart';
 import 'package:atlasmart/domain/core/constants/font.dart';
 import 'package:atlasmart/presentation/admin/admin_profile/screen_admin_profile.dart';
 import 'package:flutter/material.dart';
@@ -12,11 +13,13 @@ import '../../../../domain/core/constants/strings.dart';
 class AdminDrawerWidget extends StatelessWidget {
   final int selectedIndex;
   final Function(int) onDestinationSelected;
+  final String role;
 
   AdminDrawerWidget({
     super.key,
     required this.selectedIndex,
     required this.onDestinationSelected,
+    required this.role,
   });
 
   @override
@@ -238,22 +241,25 @@ class AdminDrawerWidget extends StatelessWidget {
                   isSelected: selectedIndex == 4,
                   onTap: () => onDestinationSelected(4),
                 ),
-                _buildDrawerItem(
-                  context: context,
-                  icon: Icons.people_outline,
-                  selectedIcon: Icons.people,
-                  title: AppStrings.users,
-                  isSelected: selectedIndex == 5,
-                  onTap: () => onDestinationSelected(5),
-                ),
-                _buildDrawerItem(
-                  context: context,
-                  icon: Icons.admin_panel_settings_outlined,
-                  selectedIcon: Icons.admin_panel_settings,
-                  title: AppStrings.manageAdmins,
-                  isSelected: selectedIndex == 7,
-                  onTap: () => onDestinationSelected(7),
-                ),
+                if (role == AppConstants.superUser) ...[
+                  _buildDrawerItem(
+                    context: context,
+                    icon: Icons.people_outline,
+                    selectedIcon: Icons.people,
+                    title: AppStrings.users,
+                    isSelected: selectedIndex == 5,
+                    onTap: () => onDestinationSelected(5),
+                  ),
+                  _buildDrawerItem(
+                    context: context,
+                    icon: Icons.admin_panel_settings_outlined,
+                    selectedIcon: Icons.admin_panel_settings,
+                    title: AppStrings.manageAdmins,
+                    isSelected: selectedIndex == 7,
+                    onTap: () => onDestinationSelected(7),
+                  ),
+                ],
+
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   child: Divider(),

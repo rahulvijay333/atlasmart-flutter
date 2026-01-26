@@ -86,6 +86,7 @@ class _ScreenAddAdminState extends State<ScreenAddAdmin> {
               // Name Field
               TextFormField(
                 controller: _nameController,
+                textCapitalization: TextCapitalization.sentences,
                 maxLength: 100,
                 buildCounter:
                     (
@@ -210,9 +211,7 @@ class _ScreenAddAdminState extends State<ScreenAddAdmin> {
                 },
                 builder: (context, state) {
                   return ButtonWidget(
-                    isloading: state == AddAdminsState.loading()
-                        ? true
-                        : false,
+                    isloading: state == AddAdminsState.loading() ? true : false,
                     title: AppStrings.createAdminButton,
                     height: 50,
                     ontap: state != AddAdminsState.loading()
