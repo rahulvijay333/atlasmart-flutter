@@ -46,7 +46,7 @@ class UserServiceImpl implements UserService {
   }
 
   @override
-  Future<bool> deleteUser(int id) async {
+  Future<bool> deleteUser(String id) async {
     try {
       final res = await dio.delete('${ApiEndpoints.adminUsers}/$id');
 

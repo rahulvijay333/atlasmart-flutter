@@ -71,7 +71,7 @@ class ManageAdminServiceImpl implements ManageAdminService {
   }
 
   @override
-  Future<bool> deleteAdmin(int adminId) async {
+  Future<bool> deleteAdmin(String adminId) async {
     try {
       final res = await dio.delete('${ApiEndpoints.adminUsers}/$adminId');
 

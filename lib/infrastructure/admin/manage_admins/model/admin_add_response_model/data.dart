@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 class Data {
-  int? id;
+  String? id;
   String? email;
   String? name;
   String? role;
@@ -18,7 +18,7 @@ class Data {
   });
 
   factory Data.fromMap(Map<String, dynamic> data) => Data(
-    id: data['id'] as int?,
+    id: data['id'] as String?,
     email: data['email'] as String?,
     name: data['name'] as String?,
     role: data['role'] as String?,

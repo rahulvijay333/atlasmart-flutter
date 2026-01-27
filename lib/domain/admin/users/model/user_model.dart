@@ -5,7 +5,7 @@ class UserModel {
   DateTime? joinedDate;
   String? userImage;
   bool? userActiveStatus;
-  int? id;
+  String? id;
 
   UserModel({
     required this.userName,

@@ -128,7 +128,7 @@ return deleteUser(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  started,TResult Function()?  getAllUsers,TResult Function( String keyword)?  searchUsers,TResult Function( int id)?  deleteUser,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  started,TResult Function()?  getAllUsers,TResult Function( String keyword)?  searchUsers,TResult Function( String id)?  deleteUser,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started();case _GetAllUsers() when getAllUsers != null:
@@ -152,7 +152,7 @@ return deleteUser(_that.id);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  started,required TResult Function()  getAllUsers,required TResult Function( String keyword)  searchUsers,required TResult Function( int id)  deleteUser,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  started,required TResult Function()  getAllUsers,required TResult Function( String keyword)  searchUsers,required TResult Function( String id)  deleteUser,}) {final _that = this;
 switch (_that) {
 case _Started():
 return started();case _GetAllUsers():
@@ -175,7 +175,7 @@ return deleteUser(_that.id);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  started,TResult? Function()?  getAllUsers,TResult? Function( String keyword)?  searchUsers,TResult? Function( int id)?  deleteUser,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  started,TResult? Function()?  getAllUsers,TResult? Function( String keyword)?  searchUsers,TResult? Function( String id)?  deleteUser,}) {final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started();case _GetAllUsers() when getAllUsers != null:
@@ -326,7 +326,7 @@ class _DeleteUser implements AllUsersEvent {
   const _DeleteUser(this.id);
   
 
- final  int id;
+ final  String id;
 
 /// Create a copy of AllUsersEvent
 /// with the given fields replaced by the non-null parameter values.
@@ -358,7 +358,7 @@ abstract mixin class _$DeleteUserCopyWith<$Res> implements $AllUsersEventCopyWit
   factory _$DeleteUserCopyWith(_DeleteUser value, $Res Function(_DeleteUser) _then) = __$DeleteUserCopyWithImpl;
 @useResult
 $Res call({
- int id
+ String id
 });
 
 
@@ -378,7 +378,7 @@ class __$DeleteUserCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') $Res call({Object? id = null,}) {
   return _then(_DeleteUser(
 null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as int,
+as String,
   ));
 }
 
