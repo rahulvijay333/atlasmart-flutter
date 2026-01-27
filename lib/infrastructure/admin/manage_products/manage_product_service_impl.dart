@@ -2,6 +2,8 @@ import 'dart:developer';
 
 import 'package:atlasmart/domain/admin/manage_products/manage_products_service.dart';
 import 'package:dio/dio.dart';
+import 'package:http_parser/http_parser.dart';
+import 'package:mime/mime.dart';
 
 import '../../../domain/admin/manage_products/model/admin_products_model.dart';
 import '../../../domain/core/network/dio_error_handle.dart';
@@ -23,19 +25,19 @@ class ManageProductServiceImpl implements ManageProductsService {
         'for_sale': true,
       };
 
-      // if (profile.newProfileImage != null) {
-      //   final mimeType =
-      //       lookupMimeType(profile.newProfileImage!.path) ?? 'image/jpeg';
-      //   final parts = mimeType.split('/');
-      //   final extension = parts[1] == 'jpeg' ? 'jpg' : parts[1];
+      if (product.newProfileImage != null) {
+        final mimeType =
+            lookupMimeType(product.newProfileImage!.path) ?? 'image/jpeg';
+        final parts = mimeType.split('/');
+        final extension = parts[1] == 'jpeg' ? 'jpg' : parts[1];
 
-      //   final fileName = '${profile.userName}.$extension';
-      //   formDataMap['profileImage'] = await MultipartFile.fromFile(
-      //     profile.newProfileImage!.path,
-      //     filename: fileName,
-      //     contentType: MediaType(parts[0], parts[1]),
-      //   );
-      // }
+        final fileName = '${product.name}.$extension';
+        formDataMap['image'] = await MultipartFile.fromFile(
+          product.newProfileImage!.path,
+          filename: fileName,
+          contentType: MediaType(parts[0], parts[1]),
+        );
+      }
 
       final response = await dio.post(
         ApiEndpoints.adminProducts,
@@ -51,6 +53,9 @@ class ManageProductServiceImpl implements ManageProductsService {
     } on DioException catch (e) {
       log(e.toString());
       throw DioErrorHandler.handle(e);
+    } catch (e) {
+      log(e.toString());
+      throw 'Error';
     }
   }
 
@@ -80,19 +85,19 @@ class ManageProductServiceImpl implements ManageProductsService {
         'for_sale': true,
       };
 
-      // if (profile.newProfileImage != null) {
-      //   final mimeType =
-      //       lookupMimeType(profile.newProfileImage!.path) ?? 'image/jpeg';
-      //   final parts = mimeType.split('/');
-      //   final extension = parts[1] == 'jpeg' ? 'jpg' : parts[1];
+    if (product.newProfileImage != null) {
+        final mimeType =
+            lookupMimeType(product.newProfileImage!.path) ?? 'image/jpeg';
+        final parts = mimeType.split('/');
+        final extension = parts[1] == 'jpeg' ? 'jpg' : parts[1];
 
-      //   final fileName = '${profile.userName}.$extension';
-      //   formDataMap['profileImage'] = await MultipartFile.fromFile(
-      //     profile.newProfileImage!.path,
-      //     filename: fileName,
-      //     contentType: MediaType(parts[0], parts[1]),
-      //   );
-      // }
+        final fileName = '${product.name}.$extension';
+        formDataMap['image'] = await MultipartFile.fromFile(
+          product.newProfileImage!.path,
+          filename: fileName,
+          contentType: MediaType(parts[0], parts[1]),
+        );
+      }
 
       final response = await dio.put(
         '${ApiEndpoints.adminProducts}/${product.id}',
@@ -126,6 +131,7 @@ class ManageProductServiceImpl implements ManageProductsService {
                 price: e.price ?? '',
                 id: e.id,
                 stock: e.stock?.toString(),
+                image: e.imageUrl
               ),
             )
             .toList();
