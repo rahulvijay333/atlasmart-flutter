@@ -55,12 +55,13 @@ extension AdminProductListEventPatterns on AdminProductListEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Started value)?  started,TResult Function( _LoadAdminProductList value)?  loadAdminProductList,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Started value)?  started,TResult Function( _LoadAdminProductList value)?  loadAdminProductList,TResult Function( _DeleteProduct value)?  deleteProduct,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started(_that);case _LoadAdminProductList() when loadAdminProductList != null:
-return loadAdminProductList(_that);case _:
+return loadAdminProductList(_that);case _DeleteProduct() when deleteProduct != null:
+return deleteProduct(_that);case _:
   return orElse();
 
 }
@@ -78,12 +79,13 @@ return loadAdminProductList(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Started value)  started,required TResult Function( _LoadAdminProductList value)  loadAdminProductList,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Started value)  started,required TResult Function( _LoadAdminProductList value)  loadAdminProductList,required TResult Function( _DeleteProduct value)  deleteProduct,}){
 final _that = this;
 switch (_that) {
 case _Started():
 return started(_that);case _LoadAdminProductList():
-return loadAdminProductList(_that);case _:
+return loadAdminProductList(_that);case _DeleteProduct():
+return deleteProduct(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -100,12 +102,13 @@ return loadAdminProductList(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Started value)?  started,TResult? Function( _LoadAdminProductList value)?  loadAdminProductList,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Started value)?  started,TResult? Function( _LoadAdminProductList value)?  loadAdminProductList,TResult? Function( _DeleteProduct value)?  deleteProduct,}){
 final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started(_that);case _LoadAdminProductList() when loadAdminProductList != null:
-return loadAdminProductList(_that);case _:
+return loadAdminProductList(_that);case _DeleteProduct() when deleteProduct != null:
+return deleteProduct(_that);case _:
   return null;
 
 }
@@ -122,11 +125,12 @@ return loadAdminProductList(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  started,TResult Function()?  loadAdminProductList,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  started,TResult Function()?  loadAdminProductList,TResult Function( String id)?  deleteProduct,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started();case _LoadAdminProductList() when loadAdminProductList != null:
-return loadAdminProductList();case _:
+return loadAdminProductList();case _DeleteProduct() when deleteProduct != null:
+return deleteProduct(_that.id);case _:
   return orElse();
 
 }
@@ -144,11 +148,12 @@ return loadAdminProductList();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  started,required TResult Function()  loadAdminProductList,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  started,required TResult Function()  loadAdminProductList,required TResult Function( String id)  deleteProduct,}) {final _that = this;
 switch (_that) {
 case _Started():
 return started();case _LoadAdminProductList():
-return loadAdminProductList();case _:
+return loadAdminProductList();case _DeleteProduct():
+return deleteProduct(_that.id);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -165,11 +170,12 @@ return loadAdminProductList();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  started,TResult? Function()?  loadAdminProductList,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  started,TResult? Function()?  loadAdminProductList,TResult? Function( String id)?  deleteProduct,}) {final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started();case _LoadAdminProductList() when loadAdminProductList != null:
-return loadAdminProductList();case _:
+return loadAdminProductList();case _DeleteProduct() when deleteProduct != null:
+return deleteProduct(_that.id);case _:
   return null;
 
 }
@@ -240,6 +246,72 @@ String toString() {
 
 
 
+
+/// @nodoc
+
+
+class _DeleteProduct implements AdminProductListEvent {
+  const _DeleteProduct(this.id);
+  
+
+ final  String id;
+
+/// Create a copy of AdminProductListEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$DeleteProductCopyWith<_DeleteProduct> get copyWith => __$DeleteProductCopyWithImpl<_DeleteProduct>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DeleteProduct&&(identical(other.id, id) || other.id == id));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,id);
+
+@override
+String toString() {
+  return 'AdminProductListEvent.deleteProduct(id: $id)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$DeleteProductCopyWith<$Res> implements $AdminProductListEventCopyWith<$Res> {
+  factory _$DeleteProductCopyWith(_DeleteProduct value, $Res Function(_DeleteProduct) _then) = __$DeleteProductCopyWithImpl;
+@useResult
+$Res call({
+ String id
+});
+
+
+
+
+}
+/// @nodoc
+class __$DeleteProductCopyWithImpl<$Res>
+    implements _$DeleteProductCopyWith<$Res> {
+  __$DeleteProductCopyWithImpl(this._self, this._then);
+
+  final _DeleteProduct _self;
+  final $Res Function(_DeleteProduct) _then;
+
+/// Create a copy of AdminProductListEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? id = null,}) {
+  return _then(_DeleteProduct(
+null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
 
 /// @nodoc
 mixin _$AdminProductListState {

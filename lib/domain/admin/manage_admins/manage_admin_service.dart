@@ -7,5 +7,5 @@ abstract class ManageAdminService {
 
   Future<AdminUserModel> editAdmin(AdminUserModel admin);
 
-  Future<bool> deleteAdmin(int adminId);
+  Future<bool> deleteAdmin(String adminId);
 }

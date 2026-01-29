@@ -2,6 +2,8 @@ import 'dart:developer';
 
 import 'package:atlasmart/domain/admin/manage_products/manage_products_service.dart';
 import 'package:dio/dio.dart';
+import 'package:http_parser/http_parser.dart';
+import 'package:mime/mime.dart';
 
 import '../../../domain/admin/manage_products/model/admin_products_model.dart';
 import '../../../domain/core/network/dio_error_handle.dart';
@@ -23,19 +25,19 @@ class ManageProductServiceImpl implements ManageProductsService {
         'for_sale': true,
       };
 
-      // if (profile.newProfileImage != null) {
-      //   final mimeType =
-      //       lookupMimeType(profile.newProfileImage!.path) ?? 'image/jpeg';
-      //   final parts = mimeType.split('/');
-      //   final extension = parts[1] == 'jpeg' ? 'jpg' : parts[1];
+      if (product.newProfileImage != null) {
+        final mimeType =
+            lookupMimeType(product.newProfileImage!.path) ?? 'image/jpeg';
+        final parts = mimeType.split('/');
+        final extension = parts[1] == 'jpeg' ? 'jpg' : parts[1];
 
-      //   final fileName = '${profile.userName}.$extension';
-      //   formDataMap['profileImage'] = await MultipartFile.fromFile(
-      //     profile.newProfileImage!.path,
-      //     filename: fileName,
-      //     contentType: MediaType(parts[0], parts[1]),
-      //   );
-      // }
+        final fileName = '${product.name}.$extension';
+        formDataMap['image'] = await MultipartFile.fromFile(
+          product.newProfileImage!.path,
+          filename: fileName,
+          contentType: MediaType(parts[0], parts[1]),
+        );
+      }
 
       final response = await dio.post(
         ApiEndpoints.adminProducts,
@@ -51,13 +53,26 @@ class ManageProductServiceImpl implements ManageProductsService {
     } on DioException catch (e) {
       log(e.toString());
       throw DioErrorHandler.handle(e);
+    } catch (e) {
+      log(e.toString());
+      throw 'Error';
     }
   }
 
   @override
-  deleteProduct() {
-    // TODO: implement deleteProduct
-    throw UnimplementedError();
+  Future<bool> deleteProduct(String id) async {
+    final res = await dio.delete('${ApiEndpoints.adminProducts}/$id');
+
+    try {
+      if (res.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } on DioException catch (e) {
+      log(e.toString());
+      throw DioErrorHandler.handle(e);
+    }
   }
 
   @override
@@ -70,27 +85,27 @@ class ManageProductServiceImpl implements ManageProductsService {
         'for_sale': true,
       };
 
-      // if (profile.newProfileImage != null) {
-      //   final mimeType =
-      //       lookupMimeType(profile.newProfileImage!.path) ?? 'image/jpeg';
-      //   final parts = mimeType.split('/');
-      //   final extension = parts[1] == 'jpeg' ? 'jpg' : parts[1];
+    if (product.newProfileImage != null) {
+        final mimeType =
+            lookupMimeType(product.newProfileImage!.path) ?? 'image/jpeg';
+        final parts = mimeType.split('/');
+        final extension = parts[1] == 'jpeg' ? 'jpg' : parts[1];
 
-      //   final fileName = '${profile.userName}.$extension';
-      //   formDataMap['profileImage'] = await MultipartFile.fromFile(
-      //     profile.newProfileImage!.path,
-      //     filename: fileName,
-      //     contentType: MediaType(parts[0], parts[1]),
-      //   );
-      // }
+        final fileName = '${product.name}.$extension';
+        formDataMap['image'] = await MultipartFile.fromFile(
+          product.newProfileImage!.path,
+          filename: fileName,
+          contentType: MediaType(parts[0], parts[1]),
+        );
+      }
 
-      final response = await dio.post(
-        ApiEndpoints.adminProducts,
+      final response = await dio.put(
+        '${ApiEndpoints.adminProducts}/${product.id}',
         data: FormData.fromMap(formDataMap),
         options: Options(contentType: 'multipart/form-data'),
       );
 
-      if (response.statusCode == 201) {
+      if (response.statusCode == 200) {
         return true;
       } else {
         return false;
@@ -114,6 +129,9 @@ class ManageProductServiceImpl implements ManageProductsService {
                 name: e.name ?? '',
                 description: '',
                 price: e.price ?? '',
+                id: e.id,
+                stock: e.stock?.toString(),
+                image: e.imageUrl
               ),
             )
             .toList();

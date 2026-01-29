@@ -125,7 +125,7 @@ return deleteAdmin(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  started,TResult Function()?  getAllAdminList,TResult Function( int id)?  deleteAdmin,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  started,TResult Function()?  getAllAdminList,TResult Function( String id)?  deleteAdmin,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started();case _GetAllAdminList() when getAllAdminList != null:
@@ -148,7 +148,7 @@ return deleteAdmin(_that.id);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  started,required TResult Function()  getAllAdminList,required TResult Function( int id)  deleteAdmin,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  started,required TResult Function()  getAllAdminList,required TResult Function( String id)  deleteAdmin,}) {final _that = this;
 switch (_that) {
 case _Started():
 return started();case _GetAllAdminList():
@@ -170,7 +170,7 @@ return deleteAdmin(_that.id);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  started,TResult? Function()?  getAllAdminList,TResult? Function( int id)?  deleteAdmin,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  started,TResult? Function()?  getAllAdminList,TResult? Function( String id)?  deleteAdmin,}) {final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started();case _GetAllAdminList() when getAllAdminList != null:
@@ -254,7 +254,7 @@ class _DeleteAdmin implements AdminListEvent {
   const _DeleteAdmin(this.id);
   
 
- final  int id;
+ final  String id;
 
 /// Create a copy of AdminListEvent
 /// with the given fields replaced by the non-null parameter values.
@@ -286,7 +286,7 @@ abstract mixin class _$DeleteAdminCopyWith<$Res> implements $AdminListEventCopyW
   factory _$DeleteAdminCopyWith(_DeleteAdmin value, $Res Function(_DeleteAdmin) _then) = __$DeleteAdminCopyWithImpl;
 @useResult
 $Res call({
- int id
+ String id
 });
 
 
@@ -306,7 +306,7 @@ class __$DeleteAdminCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') $Res call({Object? id = null,}) {
   return _then(_DeleteAdmin(
 null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as int,
+as String,
   ));
 }
 

@@ -24,5 +24,20 @@ class AdminProductListBloc
         emit(_Failure(e.toString()));
       }
     });
+
+    on<_DeleteProduct>((event, emit) async {
+      emit(_Loading());
+
+      try {
+        final status = await manageProductsService.deleteProduct(event.id);
+        if (status == true) {
+          add(_LoadAdminProductList());
+        } else {
+          emit(_Failure('Failed to delete this product'));
+        }
+      } catch (e) {
+        emit(_Failure(e.toString()));
+      }
+    });
   }
 }

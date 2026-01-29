@@ -7,5 +7,5 @@ class AllUsersEvent with _$AllUsersEvent {
   const factory AllUsersEvent.searchUsers({required String keyword}) =
       _searchUsers;
 
-  const factory AllUsersEvent.deleteUser(int id) = _DeleteUser;
+  const factory AllUsersEvent.deleteUser(String id) = _DeleteUser;
 }

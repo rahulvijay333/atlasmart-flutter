@@ -6,5 +6,5 @@ abstract class ManageProductsService {
   addProduct(AdminProductsModel product);
 
   editProduct(AdminProductsModel product);
-  deleteProduct();
+  deleteProduct(String id);
 }
