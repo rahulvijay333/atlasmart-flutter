@@ -5,8 +5,9 @@ class AdminProductsModel {
   final String description;
   final String price;
   final String? image;
-  final String? category;
+  final String? categoryid;
   final String? stock;
+  final String? categoryName;
   String? id;
 
   File? newProfileImage;
@@ -15,8 +16,9 @@ class AdminProductsModel {
     required this.name,
     required this.description,
     required this.price,
+    this.categoryName,
     this.image,
-    this.category,
+    this.categoryid,
     this.stock,
     this.newProfileImage,
     this.id,
@@ -27,19 +29,20 @@ class AdminProductsModel {
     String? description,
     String? price,
     String? image,
-    String? category,
+    String? categoryId,
     String? stock,
     File? newProfileImage,
   }) {
     return AdminProductsModel(
+      categoryName: categoryName,
       name: name ?? this.name,
       description: description ?? this.description,
       price: price ?? this.price,
       image: image ?? this.image,
-      category: category ?? this.category,
+      categoryid: categoryId ?? this.categoryid,
       stock: stock ?? this.stock,
-
       newProfileImage: newProfileImage,
+      id: id
     );
   }
 }

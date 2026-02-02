@@ -8,6 +8,7 @@ import 'package:atlasmart/application/admin/users/all_users_bloc.dart';
 import 'package:atlasmart/application/forgot_password/forgot_password_bloc.dart';
 import 'package:atlasmart/application/login/login_bloc.dart';
 import 'package:atlasmart/application/profile_admin_customer/admin/bloc/admin_profile_bloc.dart';
+import 'package:atlasmart/application/admin/inventory/inventory_bloc.dart';
 import 'package:atlasmart/application/registration/customer/custom_registr_bloc/customer_register_bloc.dart';
 import 'package:atlasmart/domain/admin/manage_admins/manage_admin_service.dart';
 import 'package:atlasmart/domain/admin/manage_category/manage_category.dart';
@@ -121,6 +122,8 @@ void setupDI() {
   );
 
   sl.registerFactory(() => AdminListBloc(sl<ManageAdminService>()));
+
+  sl.registerFactory(() => InventoryBloc(sl<ManageProductsService>()));
 
   sl.registerFactory(() => AddCategoryBloc(sl<ManageCategoryService>()));
   sl.registerFactory(() => CategoryListBloc(sl<ManageCategoryService>()));

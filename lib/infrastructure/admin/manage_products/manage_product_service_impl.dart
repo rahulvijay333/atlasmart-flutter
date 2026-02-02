@@ -22,6 +22,7 @@ class ManageProductServiceImpl implements ManageProductsService {
         'name': product.name,
         'price': num.parse(product.price),
         'stock': int.parse(product.stock ?? '0'),
+        'category_id': product.categoryid,
         'for_sale': true,
       };
 
@@ -82,6 +83,7 @@ class ManageProductServiceImpl implements ManageProductsService {
         'name': product.name,
         'price': num.parse(product.price),
         'stock': int.parse(product.stock ?? '0'),
+        'category_id': product.categoryid,
         'for_sale': true,
       };
 
@@ -118,9 +120,8 @@ class ManageProductServiceImpl implements ManageProductsService {
 
   @override
   Future<List<AdminProductsModel>> getAllProducts() async {
-    final res = await dio.get(ApiEndpoints.adminProducts);
-
     try {
+      final res = await dio.get(ApiEndpoints.adminProducts);
       if (res.statusCode == 200) {
         final data = AdminProductListResponseModel.fromMap(res.data).data;
         final users = data!
@@ -132,6 +133,7 @@ class ManageProductServiceImpl implements ManageProductsService {
                 id: e.id,
                 stock: e.stock?.toString(),
                 image: e.imageUrl,
+                categoryid: e.categoryId,
               ),
             )
             .toList();
@@ -141,7 +143,7 @@ class ManageProductServiceImpl implements ManageProductsService {
         return [];
       }
     } on DioException catch (e) {
-      log(e.toString());
+      // log(e.toString());
       throw DioErrorHandler.handle(e);
     }
   }

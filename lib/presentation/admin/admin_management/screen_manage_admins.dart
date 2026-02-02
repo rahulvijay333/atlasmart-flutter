@@ -1,4 +1,4 @@
-import 'package:atlasmart/domain/admin/profile/model/admin_profile.dart';
+
 import 'package:atlasmart/domain/core/constants/font.dart';
 import 'package:atlasmart/presentation/common/error_state_widget.dart';
 import 'package:atlasmart/presentation/common/loading_widget.dart';

@@ -4,6 +4,6 @@ abstract class ManageCategoryService {
   Future<List<CategoryModel>> getAllCategories();
 
   Future<bool> addCategory(CategoryModel category);
-
+  Future<bool> editCategory(CategoryModel category);
   Future<bool> deleteCategory(String id);
 }

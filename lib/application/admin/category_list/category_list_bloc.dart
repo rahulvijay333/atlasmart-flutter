@@ -22,5 +22,14 @@ class CategoryListBloc extends Bloc<CategoryListEvent, CategoryListState> {
         emit(_Failure(e.toString()));
       }
     });
+
+    on<_DeleteCategory>((event, emit) async {
+      try {
+        await _manageCategoryService.deleteCategory(event.id);
+        add(const _GetAllCategoryList());
+      } catch (e) {
+        emit(_Failure(e.toString()));
+      }
+    });
   }
 }

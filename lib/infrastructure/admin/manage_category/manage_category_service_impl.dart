@@ -16,7 +16,7 @@ class ManageCategoryServiceImpl implements ManageCategoryService {
   ManageCategoryServiceImpl({required this.dio});
 
   @override
- Future<bool> addCategory(CategoryModel category) async {
+  Future<bool> addCategory(CategoryModel category) async {
     try {
       final formDataMap = <String, dynamic>{'name': category.categoryName};
 
@@ -94,6 +94,45 @@ class ManageCategoryServiceImpl implements ManageCategoryService {
     } on DioException catch (e) {
       log(e.toString());
       throw DioErrorHandler.handle(e);
+    }
+  }
+
+  @override
+  Future<bool> editCategory(CategoryModel category) async {
+    try {
+      final formDataMap = <String, dynamic>{'name': category.categoryName};
+
+      if (category.selectedImage != null) {
+        final mimeType =
+            lookupMimeType(category.selectedImage!.path) ?? 'image/jpeg';
+        final parts = mimeType.split('/');
+        final extension = parts[1] == 'jpeg' ? 'jpg' : parts[1];
+
+        final fileName = '${category.categoryName}.$extension';
+        formDataMap['image'] = await MultipartFile.fromFile(
+          category.selectedImage!.path,
+          filename: fileName,
+          contentType: MediaType(parts[0], parts[1]),
+        );
+      }
+
+      final response = await dio.put(
+        '${ApiEndpoints.category}/${category.id}',
+        data: FormData.fromMap(formDataMap),
+        options: Options(contentType: 'multipart/form-data'),
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return true;
+      } else {
+        return false;
+      }
+    } on DioException catch (e) {
+      log(e.toString());
+      throw DioErrorHandler.handle(e);
+    } catch (e) {
+      log(e.toString());
+      throw 'Error';
     }
   }
 }

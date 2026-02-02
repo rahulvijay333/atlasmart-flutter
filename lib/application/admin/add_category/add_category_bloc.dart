@@ -1,6 +1,6 @@
 import 'package:atlasmart/domain/admin/manage_category/manage_category.dart';
 import 'package:atlasmart/domain/admin/manage_category/model/category_model.dart';
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'add_category_event.dart';
@@ -23,6 +23,23 @@ class AddCategoryBloc extends Bloc<AddCategoryEvent, AddCategoryState> {
           emit(_Success());
         } else {
           emit(_Failure('Category Add Failed'));
+        }
+      } catch (e) {
+        emit(_Failure(e.toString()));
+      }
+    });
+
+    on<_EditCategory>((event, emit) async {
+      emit(_Loading());
+      try {
+        final editStatus = await _manageCategoryService.editCategory(
+          event.category,
+        );
+
+        if (editStatus == true) {
+          emit(_Success());
+        } else {
+          emit(_Failure('Category Update Failed'));
         }
       } catch (e) {
         emit(_Failure(e.toString()));

@@ -3,6 +3,8 @@ class AppStrings {
   static const String appTitle = 'AtlasMart';
   static const String products = 'Products';
   static const String category = 'Category';
+  static const String categories = 'Categories';
+  static const String addCategory = 'Add Category';
   static const String home = 'Home';
   static const String noItems = 'No Items';
   //login
@@ -102,6 +104,7 @@ class AppStrings {
   static const String lowStock = 'Low Stock'; // or usage in pattern
   static const String off = 'OFF';
   static const String searchProductsHint = 'Search Products...';
+  static const String searchCategoriesHint = 'Search Categories...';
   static const String searchInventoryHint = 'Search Inventory...';
 
   static const String searchUsersHint = 'Search Users...';
