@@ -145,19 +145,37 @@ class AdminDrawerWidget extends StatelessWidget {
                                               style: AppFont.title16Style
                                                   .copyWith(
                                                     color: AppColors.whiteColor,
-                                                    fontWeight: FontWeight.bold,
                                                   ),
                                             ),
                                             SizedBox(height: 4),
                                             Text(
-                                              profile.userEmail,
+                                              profile.brandName ??
+                                                  profile.userEmail,
                                               overflow: TextOverflow.ellipsis,
                                               style: AppFont.title14Style
                                                   .copyWith(
+                                                    fontWeight: FontWeight.bold,
+                                                    letterSpacing: 1,
                                                     color: AppColors.whiteColor,
                                                   ),
                                               maxLines: 2,
                                             ),
+                                            if (profile
+                                                    .companyName
+                                                    ?.isNotEmpty ==
+                                                true)
+                                              Text(
+                                                profile.companyName!,
+
+                                                overflow: TextOverflow.ellipsis,
+                                                style: AppFont.title12Style
+                                                    .copyWith(
+                                                      letterSpacing: 1,
+                                                      color:
+                                                          AppColors.whiteColor,
+                                                    ),
+                                                maxLines: 1,
+                                              ),
                                           ],
                                         ),
                                       ),
@@ -217,14 +235,7 @@ class AdminDrawerWidget extends StatelessWidget {
                       1, // Products is Index 1 in main screen list
                   onTap: () => onDestinationSelected(1),
                 ),
-                _buildDrawerItem(
-                  context: context,
-                  icon: Icons.category_outlined,
-                  selectedIcon: Icons.category,
-                  title: AppStrings.categories,
-                  isSelected: selectedIndex == 2,
-                  onTap: () => onDestinationSelected(2),
-                ),
+
                 _buildDrawerItem(
                   context: context,
                   icon: Icons.inventory_2_outlined,
@@ -250,6 +261,14 @@ class AdminDrawerWidget extends StatelessWidget {
                   onTap: () => onDestinationSelected(5),
                 ),
                 if (role == AppConstants.superUser) ...[
+                  _buildDrawerItem(
+                    context: context,
+                    icon: Icons.category_outlined,
+                    selectedIcon: Icons.category,
+                    title: AppStrings.categories,
+                    isSelected: selectedIndex == 2,
+                    onTap: () => onDestinationSelected(2),
+                  ),
                   _buildDrawerItem(
                     context: context,
                     icon: Icons.people_outline,

@@ -15,7 +15,7 @@ class DioErrorHandler {
       return AppException("Request timed out.Please try again.");
     }
     final status = e.response?.statusCode;
-    final msg = e.response?.statusMessage ;
+    final msg = e.response?.data['Msg'] ?? e.response?.statusMessage;
 
     if (status == 401) {
       return AppException(msg ?? "Unauthorized request");

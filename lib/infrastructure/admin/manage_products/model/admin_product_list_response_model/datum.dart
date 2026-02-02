@@ -12,6 +12,8 @@ class Datum {
   DateTime? updatedAt;
   dynamic imageUrl;
   String? categoryId;
+  String? brandName;
+  String? companyName;
 
   Datum({
     this.id,
@@ -24,7 +26,9 @@ class Datum {
     this.createdAt,
     this.updatedAt,
     this.imageUrl,
-    this.categoryId
+    this.categoryId,
+    this.brandName,
+    this.companyName,
   });
 
   factory Datum.fromMap(Map<String, dynamic> data) => Datum(
@@ -44,7 +48,9 @@ class Datum {
         ? null
         : DateTime.parse(data['updated_at'] as String),
     imageUrl: data['image_url'] as dynamic,
-    categoryId: data['category_id']
+    categoryId: data['category_id'],
+    brandName: data['brand_name'],
+    companyName: data['company_name'],
   );
 
   Map<String, dynamic> toMap() => {

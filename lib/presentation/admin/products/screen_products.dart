@@ -287,6 +287,44 @@ class ScreenAdminProducts extends StatelessWidget {
                                           ),
                                         ],
                                       ),
+                                      if (product.brandName?.isNotEmpty ==
+                                          true) ...[
+                                        Row(
+                                          spacing: 2,
+                                          children: [
+                                            Text(
+                                              'Soldby',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                color: Colors.grey[600],
+                                              ),
+                                            ),
+                                            Text(
+                                              '${product.brandName}',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ] else ...[
+                                        Text(
+                                          'Soldby',
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            color: Colors.grey[600],
+                                          ),
+                                        ),
+                                        Text(
+                                          'NA',
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
+
                                       const SizedBox(height: 8),
                                       // Pricing
                                       Row(

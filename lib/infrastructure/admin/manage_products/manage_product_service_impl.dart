@@ -133,7 +133,8 @@ class ManageProductServiceImpl implements ManageProductsService {
                 id: e.id,
                 stock: e.stock?.toString(),
                 image: e.imageUrl,
-                categoryid: e.categoryId,
+                categoryid: e.categoryId,brandName:e.brandName,
+                companyName: e.companyName 
               ),
             )
             .toList();

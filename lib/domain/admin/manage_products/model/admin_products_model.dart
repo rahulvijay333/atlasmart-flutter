@@ -9,6 +9,8 @@ class AdminProductsModel {
   final String? stock;
   final String? categoryName;
   String? id;
+  String? brandName;
+  String? companyName;
 
   File? newProfileImage;
 
@@ -22,6 +24,8 @@ class AdminProductsModel {
     this.stock,
     this.newProfileImage,
     this.id,
+    this.brandName,
+    this.companyName
   });
 
   AdminProductsModel copyWith({
