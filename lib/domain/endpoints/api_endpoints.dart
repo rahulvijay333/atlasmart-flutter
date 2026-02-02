@@ -1,6 +1,6 @@
 class ApiEndpoints {
   static const baseUrl = 'http://10.0.2.2:3000';
-  static const baseUrlProduction = 'https://atlasmart-backend.onrender.com';
+  static const baseUrlProduction = 'https://atlas-prod-live.onrender.com';
 
   static const login = "/api/auth/login";
   static const sendOtpForPaswwordReset = "/api/auth/forgot-password";
@@ -18,4 +18,7 @@ class ApiEndpoints {
   static const addNewAdmin = '/api/admins/register';
   static const adminProfile = '/api/admins/profile';
   static const adminProducts = '/api/products';
+
+  //category
+  static const category = '/api/categories';
 }

@@ -191,8 +191,6 @@ class _ScreenAddAdminsState extends State<ScreenManageAdmins> {
                                 ),
                                 GestureDetector(
                                   onTap: () {
-                                 
-
                                     showDialog(
                                       context: context,
                                       builder: (context) {

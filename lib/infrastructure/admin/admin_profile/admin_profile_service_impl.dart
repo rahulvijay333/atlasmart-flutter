@@ -19,7 +19,11 @@ class AdminProfileServiceImpl implements AdminProfileService {
   @override
   Future<AdminUserModel> editProfile(AdminUserModel profile) async {
     try {
-      final formDataMap = <String, dynamic>{'name': profile.userName};
+      final formDataMap = <String, dynamic>{
+        'name': profile.userName,
+        'brandName': profile.brandName,
+        'companyName': profile.companyName,
+      };
 
       if (profile.newProfileImage != null) {
         final mimeType =
@@ -36,7 +40,7 @@ class AdminProfileServiceImpl implements AdminProfileService {
       }
 
       final response = await dio.put(
-        ApiEndpoints.customerProfile,
+        ApiEndpoints.adminProfile,
         data: FormData.fromMap(formDataMap),
         options: Options(contentType: 'multipart/form-data'),
       );
@@ -48,7 +52,11 @@ class AdminProfileServiceImpl implements AdminProfileService {
           userName: data.data?.name ?? '',
           userEmail: data.data?.email ?? '',
           joinedDate: data.data?.createdAt,
-        ).copyWith(userImage: data.data?.profileImage);
+        ).copyWith(
+          userImage: data.data?.profileImage,
+          companyName: data.data?.companyName,
+          brandName: data.data?.brandName,
+        );
       } else {
         throw Exception('Profile update failed');
       }
@@ -72,7 +80,11 @@ class AdminProfileServiceImpl implements AdminProfileService {
           userName: data.data?.name ?? '',
           userEmail: data.data?.email ?? '',
           joinedDate: null,
-        ).copyWith(userImage: data.data?.profileImage);
+        ).copyWith(
+          userImage: data.data?.profileImage,
+          companyName: data.data?.companyName,
+          brandName: data.data?.brandName,
+        );
       } else {
         return AdminUserModel(userName: '', userEmail: '', joinedDate: null);
       }

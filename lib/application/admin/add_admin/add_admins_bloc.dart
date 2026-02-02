@@ -5,7 +5,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'add_admins_event.dart';
 part 'add_admins_state.dart';
- part 'add_admins_bloc.freezed.dart'; 
+part 'add_admins_bloc.freezed.dart';
 
 class AddAdminBloc extends Bloc<AddAdminsEvent, AddAdminsState> {
   final ManageAdminService manageAdminService;

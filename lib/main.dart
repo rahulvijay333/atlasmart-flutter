@@ -1,7 +1,9 @@
 import 'dart:ui';
 
+import 'package:atlasmart/application/admin/add_category/add_category_bloc.dart';
 import 'package:atlasmart/application/admin/admin_product_list/admin_product_list_bloc.dart';
 import 'package:atlasmart/application/admin/add_admin/add_admins_bloc.dart';
+import 'package:atlasmart/application/admin/category_list/category_list_bloc.dart';
 import 'package:atlasmart/application/admin/users/all_users_bloc.dart';
 import 'package:atlasmart/application/forgot_password/forgot_password_bloc.dart';
 import 'package:atlasmart/application/login/login_bloc.dart';
@@ -86,6 +88,8 @@ class _MainAppState extends State<MainApp> {
         BlocProvider(create: (context) => sl<AdminProductListBloc>()),
         BlocProvider(create: (context) => sl<AdminAddorUpdateProductBloc>()),
         BlocProvider(create: (context) => sl<AdminListBloc>()),
+        BlocProvider(create: (context) => sl<AddCategoryBloc>()),
+        BlocProvider(create: (context) => sl<CategoryListBloc>()),
       ],
 
       child: MaterialApp(

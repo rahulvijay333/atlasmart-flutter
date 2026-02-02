@@ -22,6 +22,8 @@ class ScreenEditAdminProfile extends StatefulWidget {
 
 class _ScreenEditAdminProfileState extends State<ScreenEditAdminProfile> {
   final TextEditingController namecontroller = TextEditingController();
+  final TextEditingController brandcontroller = TextEditingController();
+  final TextEditingController companyNamecontroller = TextEditingController();
   final _formkey = GlobalKey<FormState>();
   bool editProfile = false;
   File? selectedImage;
@@ -29,6 +31,8 @@ class _ScreenEditAdminProfileState extends State<ScreenEditAdminProfile> {
   @override
   void initState() {
     namecontroller.text = widget.profile.userName;
+    brandcontroller.text = widget.profile.brandName ?? '';
+    companyNamecontroller.text = widget.profile.companyName ?? '';
     super.initState();
   }
 
@@ -155,6 +159,70 @@ class _ScreenEditAdminProfileState extends State<ScreenEditAdminProfile> {
                       }
                     },
                   ),
+                  Text(
+                    'Brand Name',
+                    style: AppFont.title16Style.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  TextFormField(
+                    controller: brandcontroller,
+                    readOnly: !editProfile,
+                    maxLength: 80,
+                    buildCounter:
+                        (
+                          context, {
+                          required currentLength,
+                          required isFocused,
+                          required maxLength,
+                        }) => null,
+                    textCapitalization: TextCapitalization.sentences,
+                    style: AppFont.title16Style.copyWith(
+                      color: editProfile ? null : Colors.grey,
+                    ),
+                    decoration: InputDecoration(
+                      fillColor: editProfile ? null : Colors.grey.shade50,
+                    ),
+                    validator: (value) {
+                      if (value?.isEmpty == true) {
+                        return 'Invalid Name';
+                      } else {
+                        return null;
+                      }
+                    },
+                  ),
+                  Text(
+                    'Company Name',
+                    style: AppFont.title16Style.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  TextFormField(
+                    controller: companyNamecontroller,
+                    readOnly: !editProfile,
+                    maxLength: 150,
+                    buildCounter:
+                        (
+                          context, {
+                          required currentLength,
+                          required isFocused,
+                          required maxLength,
+                        }) => null,
+                    textCapitalization: TextCapitalization.sentences,
+                    style: AppFont.title16Style.copyWith(
+                      color: editProfile ? null : Colors.grey,
+                    ),
+                    decoration: InputDecoration(
+                      fillColor: editProfile ? null : Colors.grey.shade50,
+                    ),
+                    validator: (value) {
+                      if (value?.isEmpty == true) {
+                        return 'Invalid Name';
+                      } else {
+                        return null;
+                      }
+                    },
+                  ),
                   Spacer(),
                   if (editProfile == true)
                     BlocBuilder<AdminProfileBloc, AdminProfileState>(
@@ -171,6 +239,9 @@ class _ScreenEditAdminProfileState extends State<ScreenEditAdminProfile> {
                                 AdminProfileEvent.updateProfileDetailsButtonClick(
                                   profile: widget.profile.copyWith(
                                     userName: namecontroller.text.trim(),
+                                    companyName: companyNamecontroller.text
+                                        .trim(),
+                                    brandName: brandcontroller.text.trim(),
                                     newProfileImage: selectedImage,
                                   ),
                                 ),

@@ -85,7 +85,7 @@ class ManageProductServiceImpl implements ManageProductsService {
         'for_sale': true,
       };
 
-    if (product.newProfileImage != null) {
+      if (product.newProfileImage != null) {
         final mimeType =
             lookupMimeType(product.newProfileImage!.path) ?? 'image/jpeg';
         final parts = mimeType.split('/');
@@ -131,7 +131,7 @@ class ManageProductServiceImpl implements ManageProductsService {
                 price: e.price ?? '',
                 id: e.id,
                 stock: e.stock?.toString(),
-                image: e.imageUrl
+                image: e.imageUrl,
               ),
             )
             .toList();

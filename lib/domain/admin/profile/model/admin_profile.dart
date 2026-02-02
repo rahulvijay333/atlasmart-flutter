@@ -26,6 +26,8 @@ class AdminUserModel {
   String? password;
   File? newProfileImage;
   String? id;
+  String? brandName;
+  String? companyName;
 
   AdminUserModel({
     required this.userName,
@@ -42,7 +44,9 @@ class AdminUserModel {
     bool? userActiveStatus,
     String? password,
     File? newProfileImage,
-    String? id
+    String? id,
+    String? companyName,
+    String? brandName,
   }) {
     final model = AdminUserModel(
       userName: userName ?? this.userName,
@@ -55,7 +59,9 @@ class AdminUserModel {
     model.userActiveStatus = userActiveStatus ?? this.userActiveStatus;
     model.password = password ?? this.password;
     model.newProfileImage = newProfileImage;
-    model.id =id;
+    model.id = id;
+    model.brandName = brandName;
+    model.companyName = companyName;
 
     return model;
   }
