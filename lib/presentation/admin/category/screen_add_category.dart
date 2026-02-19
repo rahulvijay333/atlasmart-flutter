@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:atlasmart/application/admin/add_category/add_category_bloc.dart';
 import 'package:atlasmart/domain/admin/manage_category/model/category_model.dart';
 import 'package:atlasmart/domain/core/constants/colors.dart';
@@ -9,6 +10,7 @@ import 'package:atlasmart/presentation/common/button_widget.dart';
 import 'package:atlasmart/presentation/common/snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ScreenAddCategory extends StatefulWidget {
   final bool isEdit;
@@ -22,7 +24,7 @@ class ScreenAddCategory extends StatefulWidget {
 
 class _ScreenAddCategoryState extends State<ScreenAddCategory> {
   late TextEditingController _nameController;
-  File? _selectedImage;
+  XFile? _selectedImage;
 
   @override
   void initState() {
@@ -65,7 +67,9 @@ class _ScreenAddCategoryState extends State<ScreenAddCategory> {
                       radius: 80,
                       backgroundColor: Colors.grey.shade200,
                       backgroundImage: _selectedImage != null
-                          ? FileImage(_selectedImage!)
+                          ? (kIsWeb
+                              ? NetworkImage(_selectedImage!.path)
+                              : FileImage(File(_selectedImage!.path)) as ImageProvider)
                           : (widget.category?.categoryImage != null &&
                                   widget.category!.categoryImage.isNotEmpty)
                               ? NetworkImage(widget.category!.categoryImage)

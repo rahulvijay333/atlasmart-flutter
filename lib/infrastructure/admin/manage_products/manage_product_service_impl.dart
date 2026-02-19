@@ -33,8 +33,9 @@ class ManageProductServiceImpl implements ManageProductsService {
         final extension = parts[1] == 'jpeg' ? 'jpg' : parts[1];
 
         final fileName = '${product.name}.$extension';
-        formDataMap['image'] = await MultipartFile.fromFile(
-          product.newProfileImage!.path,
+        final bytes = await product.newProfileImage!.readAsBytes();
+        formDataMap['image'] = MultipartFile.fromBytes(
+          bytes,
           filename: fileName,
           contentType: MediaType(parts[0], parts[1]),
         );
@@ -94,8 +95,9 @@ class ManageProductServiceImpl implements ManageProductsService {
         final extension = parts[1] == 'jpeg' ? 'jpg' : parts[1];
 
         final fileName = '${product.name}.$extension';
-        formDataMap['image'] = await MultipartFile.fromFile(
-          product.newProfileImage!.path,
+        final bytes = await product.newProfileImage!.readAsBytes();
+        formDataMap['image'] = MultipartFile.fromBytes(
+          bytes,
           filename: fileName,
           contentType: MediaType(parts[0], parts[1]),
         );
@@ -133,8 +135,9 @@ class ManageProductServiceImpl implements ManageProductsService {
                 id: e.id,
                 stock: e.stock?.toString(),
                 image: e.imageUrl,
-                categoryid: e.categoryId,brandName:e.brandName,
-                companyName: e.companyName 
+                categoryid: e.categoryId,
+                brandName: e.brandName,
+                companyName: e.companyName,
               ),
             )
             .toList();

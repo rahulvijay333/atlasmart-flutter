@@ -278,19 +278,19 @@ class ScreenAdminProducts extends StatelessWidget {
                                           //   ),
                                           // ),
                                           // const SizedBox(width: 8),
-                                          Text(
-                                            '${AppStrings.category}: Electronics',
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                              color: Colors.grey[600],
-                                            ),
-                                          ),
+                                          // Text(
+                                          //   '${product.categoryName}: Electronics',
+                                          //   style: TextStyle(
+                                          //     fontSize: 12,
+                                          //     color: Colors.grey[600],
+                                          //   ),
+                                          // ),
                                         ],
                                       ),
                                       if (product.brandName?.isNotEmpty ==
                                           true) ...[
                                         Row(
-                                          spacing: 2,
+                                          spacing: 5,
                                           children: [
                                             Text(
                                               'Soldby',
@@ -309,19 +309,24 @@ class ScreenAdminProducts extends StatelessWidget {
                                           ],
                                         ),
                                       ] else ...[
-                                        Text(
-                                          'Soldby',
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            color: Colors.grey[600],
-                                          ),
-                                        ),
-                                        Text(
-                                          'NA',
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.bold,
-                                          ),
+                                        Row(
+                                          spacing: 5,
+                                          children: [
+                                            Text(
+                                              'Soldby',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                color: Colors.grey[600],
+                                              ),
+                                            ),
+                                            Text(
+                                              'NA',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ],
 

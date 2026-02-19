@@ -6,6 +6,13 @@ class ScreenCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isDesktop = screenWidth > 1200;
+    final isTablet = screenWidth > 700 && screenWidth <= 1200;
+    final isMobile = screenWidth <= 700;
+
+    final sidePadding = isDesktop ? 64.0 : (isTablet ? 32.0 : 16.0);
+    final crossAxisCount = isDesktop ? 6 : (isTablet ? 4 : 2);
     return CustomScrollView(
       slivers: [
         SliverAppBar(
@@ -66,11 +73,11 @@ class ScreenCategory extends StatelessWidget {
                 ),
               );
             }, childCount: 12),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              mainAxisSpacing: 16,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: crossAxisCount,
+              mainAxisSpacing: 20,
               crossAxisSpacing: 16,
-              childAspectRatio: 1.0,
+              childAspectRatio: 1.5,
             ),
           ),
         ),

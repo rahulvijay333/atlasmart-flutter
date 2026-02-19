@@ -27,8 +27,9 @@ class ProfileServiceImpl implements ProfileService {
         final extension = parts[1] == 'jpeg' ? 'jpg' : parts[1];
 
         final fileName = '${profile.userName}.$extension';
-        formDataMap['profileImage'] = await MultipartFile.fromFile(
-          profile.newProfileImage!.path,
+        final bytes = await profile.newProfileImage!.readAsBytes();
+        formDataMap['profileImage'] = MultipartFile.fromBytes(
+          bytes,
           filename: fileName,
           contentType: MediaType(parts[0], parts[1]),
         );

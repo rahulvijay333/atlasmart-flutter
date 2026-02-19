@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -7,8 +7,8 @@ class ImagePickerUtil {
   static final ImagePicker _picker = ImagePicker();
 
   /// Call this ONE method from UI
-  static Future<File?> pickImage(BuildContext context) async {
-    return await showModalBottomSheet<File?>(
+  static Future<XFile?> pickImage(BuildContext context) async {
+    return await showModalBottomSheet<XFile?>(
       context: context,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
@@ -39,9 +39,9 @@ class ImagePickerUtil {
     );
   }
 
-  static Future<File?> _pickFromGallery() async {
-    // iOS only
-    if (Platform.isIOS) {
+  static Future<XFile?> _pickFromGallery() async {
+    // Permission handling only for mobile
+    if (!kIsWeb && defaultTargetPlatform == TargetPlatform.iOS) {
       final status = await Permission.photos.request();
       if (!status.isGranted) return null;
     }
@@ -51,11 +51,12 @@ class ImagePickerUtil {
       imageQuality: 50,
     );
 
-    return file != null ? File(file.path) : null;
+    return file;
   }
 
-  static Future<File?> _pickFromCamera() async {
-    if (Platform.isIOS) {
+  static Future<XFile?> _pickFromCamera() async {
+    // Permission handling only for mobile
+    if (!kIsWeb && defaultTargetPlatform == TargetPlatform.iOS) {
       final status = await Permission.camera.request();
       if (!status.isGranted) return null;
     }
@@ -65,6 +66,6 @@ class ImagePickerUtil {
       imageQuality: 50,
     );
 
-    return file != null ? File(file.path) : null;
+    return file;
   }
 }

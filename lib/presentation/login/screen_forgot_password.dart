@@ -65,25 +65,30 @@ class _ScreenForgotPasswordState extends State<ScreenForgotPassword> {
           },
           builder: (context, state) {
             return SingleChildScrollView(
-              child: Column(
-                children: [
-                  Image.asset(AppImage.appLogo, height: 180),
-                  const SizedBox(height: 20),
-
-                  /// 🔥 SWITCH UI BASED ON STATE
-                  ?state.whenOrNull(
-                    initial: () => _buildEnterEmail(state),
-                    enterEmail: () => _buildEnterEmail(state),
-                    sentEmailOtpLoading: () => _buildEnterEmail(state),
-                    sentEmailOtpFailed: (message) => _buildEnterEmail(state),
-                    verifyOtp: () => _buildVerifyOtp(state),
-                    verifyOtpLoading: () => _buildVerifyOtp(state),
-                    verifyOtpFailed: (message) => _buildVerifyOtp(state),
-                    setPassword: () => _buildSetPassword(state),
-                    setPasswordLoading: () => _buildSetPassword(state),
-                    setPasswordfailed: (message) => _buildSetPassword(state),
+              child: Center(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(maxWidth: 600),
+                  child: Column(
+                    children: [
+                      Image.asset(AppImage.appLogo, height: 180),
+                      const SizedBox(height: 20),
+                  
+                      /// 🔥 SWITCH UI BASED ON STATE
+                      ?state.whenOrNull(
+                        initial: () => _buildEnterEmail(state),
+                        enterEmail: () => _buildEnterEmail(state),
+                        sentEmailOtpLoading: () => _buildEnterEmail(state),
+                        sentEmailOtpFailed: (message) => _buildEnterEmail(state),
+                        verifyOtp: () => _buildVerifyOtp(state),
+                        verifyOtpLoading: () => _buildVerifyOtp(state),
+                        verifyOtpFailed: (message) => _buildVerifyOtp(state),
+                        setPassword: () => _buildSetPassword(state),
+                        setPasswordLoading: () => _buildSetPassword(state),
+                        setPasswordfailed: (message) => _buildSetPassword(state),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
             );
           },

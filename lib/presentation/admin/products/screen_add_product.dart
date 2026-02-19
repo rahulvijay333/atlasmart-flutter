@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 
 import 'package:atlasmart/domain/admin/manage_products/model/admin_products_model.dart';
 import 'package:atlasmart/presentation/common/button_widget.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:atlasmart/application/admin/category_list/category_list_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../../application/admin/admin_add_or_update_product/admin_addor_update_product_bloc.dart';
 import '../../../domain/core/constants/colors.dart';
 import '../../../domain/core/constants/font.dart';
@@ -34,7 +36,7 @@ class _ScreenAddProductState extends State<ScreenAddProduct> {
   late TextEditingController _stockController;
   // late TextEditingController _skuController;
   String? _selectedCategoryId;
-  File? selectedImage;
+  XFile? selectedImage;
   @override
   void initState() {
     super.initState();
@@ -142,7 +144,9 @@ class _ScreenAddProductState extends State<ScreenAddProduct> {
                           radius: 80,
                           backgroundColor: Colors.grey.shade200,
                           backgroundImage: selectedImage != null
-                              ? FileImage(selectedImage!)
+                              ? (kIsWeb
+                                  ? NetworkImage(selectedImage!.path)
+                                  : FileImage(File(selectedImage!.path)) as ImageProvider)
                               : (widget.product?.image != null &&
                                     widget.product!.image!.isNotEmpty)
                               ? NetworkImage(widget.product!.image!)

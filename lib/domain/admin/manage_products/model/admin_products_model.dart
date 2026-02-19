@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 
 class AdminProductsModel {
   final String name;
@@ -12,7 +12,7 @@ class AdminProductsModel {
   String? brandName;
   String? companyName;
 
-  File? newProfileImage;
+  XFile? newProfileImage;
 
   AdminProductsModel({
     required this.name,
@@ -35,7 +35,7 @@ class AdminProductsModel {
     String? image,
     String? categoryId,
     String? stock,
-    File? newProfileImage,
+    XFile? newProfileImage,
   }) {
     return AdminProductsModel(
       categoryName: categoryName,

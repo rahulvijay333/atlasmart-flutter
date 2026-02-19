@@ -1,9 +1,13 @@
+import 'package:atlasmart/domain/core/constants/colors.dart';
 import 'package:atlasmart/domain/core/constants/image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../domain/core/constants/strings.dart';
 import '../../common/product_tile_card.dart';
+import '../product/screen_product_details.dart';
 import 'widgets/category_mini_tile.dart';
+import 'widgets/home_carousel.dart';
+import 'widgets/promo_banner_widget.dart';
 import 'widgets/search_bar_widget.dart';
 
 class ScreenHome extends StatelessWidget {
@@ -11,98 +15,165 @@ class ScreenHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: [
-        SliverAppBar(
-          elevation: 0,
-          pinned: true,
-          surfaceTintColor: Colors.transparent,
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isDesktop = screenWidth > 1200;
+    final isTablet = screenWidth > 700 && screenWidth <= 1200;
+    final isMobile = screenWidth <= 700;
 
-          backgroundColor: Colors.white,
-          actions: [Icon(Icons.notifications, size: 28), SizedBox(width: 10)],
-          title: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Image.asset(AppImage.appLogoIcon, height: 28, width: 30),
-              const SizedBox(width: 8),
-              Text(
-                AppStrings.appTitle,
-                style: Theme.of(
-                  context,
-                ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+    final sidePadding = isDesktop ? 64.0 : (isTablet ? 32.0 : 16.0);
+    final crossAxisCount = isDesktop ? 6 : (isTablet ? 4 : 2);
+
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            elevation: 0,
+            pinned: true,
+            toolbarHeight: 70,
+            surfaceTintColor: Colors.transparent,
+            backgroundColor: Colors.white,
+            actions: [
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.notifications_none_outlined, size: 28),
               ),
+              const SizedBox(width: 8),
             ],
-          ),
-          bottom: PreferredSize(
-            preferredSize: Size.fromHeight(65),
-            child: Padding(
-              padding: const EdgeInsets.only(left: 16, right: 16, bottom: 10),
-              child: SearchBarWidget(),
+            title: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Image.asset(AppImage.appLogoIcon, height: 32, width: 32),
+                const SizedBox(width: 12),
+                Text(
+                  AppStrings.appTitle,
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                        fontWeight: FontWeight.w900,
+                        color: Colors.black,
+                        letterSpacing: -0.5,
+                      ),
+                ),
+              ],
+            ),
+            bottom: PreferredSize(
+              preferredSize: const Size.fromHeight(70),
+              child: Padding(
+                padding: EdgeInsets.only(
+                  left: sidePadding,
+                  right: sidePadding,
+                  bottom: 16,
+                ),
+                child: const SearchBarWidget(),
+              ),
             ),
           ),
-        ),
-        SliverToBoxAdapter(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 16, right: 16, top: 5),
-            child: Text(
-              AppStrings.category,
-              style: Theme.of(
-                context,
-              ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+          
+          // Hero Carousel
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: sidePadding - 8, vertical: 16),
+              child: const HomeCarousel(),
             ),
           ),
-        ),
-        SliverToBoxAdapter(
-          child: Container(
-            height: 80,
-            margin: EdgeInsets.only(top: 5),
-            child: Padding(
-              padding: const EdgeInsets.only(left: 16, right: 16),
+
+          // Categories Header
+          _buildSectionHeader(context, AppStrings.categories, sidePadding),
+
+          // Horizontal Categories
+          SliverToBoxAdapter(
+            child: SizedBox(
+              height: isDesktop ? 120 : 100,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
+                padding: EdgeInsets.symmetric(horizontal: sidePadding),
+                itemCount: categories.length,
                 itemBuilder: (context, index) => Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: Center(child: CatgoryMiniTileWidget()),
+                  padding: const EdgeInsets.only(right: 24.0),
+                  child: CatgoryMiniTileWidget(
+                    title: categories[index].name,
+                    icon: categories[index].icon,
+                    color: categories[index].color,
+                  ),
                 ),
-                itemCount: 10,
-                padding: const EdgeInsets.symmetric(horizontal: 4),
               ),
             ),
           ),
-        ),
-        SliverToBoxAdapter(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 16, right: 16, top: 5),
-            child: Text(
-              AppStrings.products,
-              style: Theme.of(
-                context,
-              ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
-            ),
-          ),
-        ),
 
-        SliverPadding(
-          padding: EdgeInsetsGeometry.only(
-            left: 16,
-            right: 16,
-            top: 5,
-            bottom: 16,
-          ),
-          sliver: SliverGrid(
-            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: 220,
-              mainAxisSpacing: 10,
-              crossAxisSpacing: 10,
-              childAspectRatio: 0.9,
-            ),
-            delegate: SliverChildBuilderDelegate(
-              (context, index) => const ProductTileWidget(),
-              childCount: 10,
+          // Promo Banner Area
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: sidePadding, vertical: 24),
+              child: const PromoBannerWidget(),
             ),
           ),
+
+          // Products Header
+          _buildSectionHeader(context, 'Featured Products', sidePadding),
+
+          // Responsive Product Grid
+          SliverPadding(
+            padding: EdgeInsets.only(
+              left: sidePadding,
+              right: sidePadding,
+              bottom: 32,
+            ),
+            sliver: SliverGrid(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: crossAxisCount,
+                mainAxisSpacing: 20,
+                crossAxisSpacing: 16,
+                childAspectRatio: 0.75,
+              ),
+              delegate: SliverChildBuilderDelegate(
+                (context, index) => GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const ScreenProductDetails(),
+                    ));
+                  },
+                  child: const ProductTileWidget(),
+                ),
+                childCount: 12,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSectionHeader(BuildContext context, String title, double padding) {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: EdgeInsets.only(left: padding, right: padding, top: 16, bottom: 16),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              title,
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.w800,
+                    color: Colors.black87,
+                  ),
+            ),
+            TextButton(
+              onPressed: () {},
+              child: const Text('View All'),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }
+
+final List<({String name, IconData icon, Color color})> categories = [
+  (name: 'Gadgets', icon: Icons.devices, color: Colors.blue),
+  (name: 'Fashion', icon: Icons.checkroom, color: Colors.pink),
+  (name: 'Groceries', icon: Icons.shopping_basket, color: Colors.green),
+  (name: 'Beauty', icon: Icons.face, color: Colors.purple),
+  (name: 'Home', icon: Icons.home_repair_service, color: Colors.orange),
+  (name: 'Sports', icon: Icons.sports_basketball, color: Colors.red),
+  (name: 'Toys', icon: Icons.toys, color: Colors.cyan),
+  (name: 'Automotive', icon: Icons.directions_car, color: Colors.indigo),
+];

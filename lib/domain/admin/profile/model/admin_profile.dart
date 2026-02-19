@@ -14,7 +14,7 @@
 //   });
 // }
 
-import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 
 class AdminUserModel {
   final String userName;
@@ -24,7 +24,7 @@ class AdminUserModel {
   String? userImage;
   bool? userActiveStatus;
   String? password;
-  File? newProfileImage;
+  XFile? newProfileImage;
   String? id;
   String? brandName;
   String? companyName;
@@ -43,7 +43,7 @@ class AdminUserModel {
     String? userImage,
     bool? userActiveStatus,
     String? password,
-    File? newProfileImage,
+    XFile? newProfileImage,
     String? id,
     String? companyName,
     String? brandName,

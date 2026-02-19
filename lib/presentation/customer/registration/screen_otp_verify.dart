@@ -110,70 +110,77 @@ class _ScreenOtpVerifyState extends State<ScreenOtpVerify> {
                 );
               },
               builder: (context, state) {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ?state.whenOrNull(
-                      sendOtpLoading: () => SizedBox(
-                        height: 350,
-                        width: double.infinity,
-                        child: Center(child: CircularProgressIndicator()),
-                      ),
-
-                      sendOtpFailed: (message, customer) {
-                        return Column(
-                          children: [
-                            Text('Account create process failed'),
-                            IconButton(
-                              onPressed: () {
+                return Center(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(maxWidth: 600),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ?state.whenOrNull(
+                          sendOtpLoading: () => SizedBox(
+                            height: 350,
+                            width: double.infinity,
+                            child: Center(child: CircularProgressIndicator()),
+                          ),
+                  
+                          sendOtpFailed: (message, customer) {
+                            return Column(
+                              children: [
+                                Text('Account create process failed'),
+                                IconButton(
+                                  onPressed: () {
+                                    BlocProvider.of<CustomerRegisterBloc>(
+                                      context,
+                                    ).add(
+                                      CustomerRegisterEvent.sendOtp(
+                                        customer: customer,
+                                        resendOtp: false,
+                                      ),
+                                    );
+                                  },
+                                  icon: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Retry',
+                                        style: AppFont.title14Style.copyWith(
+                                          color: AppColors.amberColor,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Icon(
+                                        Icons.refresh,
+                                        color: AppColors.amberColor,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
+                  
+                          verifyOtp: (customer) {
+                            return VerifyOtpWidget(
+                              customer: customer,
+                              textEditingController: textEditingController,
+                              secondsRemaining: _secondsRemaining,
+                              onResendOtp: () {
                                 BlocProvider.of<CustomerRegisterBloc>(
                                   context,
                                 ).add(
                                   CustomerRegisterEvent.sendOtp(
                                     customer: customer,
-                                    resendOtp: false,
+                                    resendOtp: true,
                                   ),
                                 );
+                                _startTimer();
                               },
-                              icon: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'Retry',
-                                    style: AppFont.title14Style.copyWith(
-                                      color: AppColors.amberColor,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Icon(
-                                    Icons.refresh,
-                                    color: AppColors.amberColor,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        );
-                      },
-
-                      verifyOtp: (customer) {
-                        return VerifyOtpWidget(
-                          customer: customer,
-                          textEditingController: textEditingController,
-                          secondsRemaining: _secondsRemaining,
-                          onResendOtp: () {
-                            BlocProvider.of<CustomerRegisterBloc>(context).add(
-                              CustomerRegisterEvent.sendOtp(
-                                customer: customer,
-                                resendOtp: true,
-                              ),
                             );
-                            _startTimer();
                           },
-                        );
-                      },
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 );
               },
             ),

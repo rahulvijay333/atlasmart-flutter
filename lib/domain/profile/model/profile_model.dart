@@ -1,10 +1,10 @@
-import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 
 class ProfileModel {
   final String userName;
   final String userEmail;
   final String? profilePic;
-  File? newProfileImage;
+  XFile? newProfileImage;
 
   ProfileModel({
     required this.userName,
@@ -18,7 +18,7 @@ class ProfileModel {
     String? userName,
     String? userEmail,
     String? profilePic,
-    File? newProfileImage,
+    XFile? newProfileImage,
   }) {
     return ProfileModel(
       userName: userName ?? this.userName,

@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart';
+import 'package:image_picker/image_picker.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,7 +28,7 @@ class _ScreenEditAdminProfileState extends State<ScreenEditAdminProfile> {
   final TextEditingController companyNamecontroller = TextEditingController();
   final _formkey = GlobalKey<FormState>();
   bool editProfile = false;
-  File? selectedImage;
+  XFile? selectedImage;
 
   @override
   void initState() {
@@ -88,7 +90,9 @@ class _ScreenEditAdminProfileState extends State<ScreenEditAdminProfile> {
                           radius: 80,
                           backgroundColor: Colors.grey.shade200,
                           backgroundImage: selectedImage != null
-                              ? FileImage(selectedImage!)
+                              ? (kIsWeb
+                                  ? NetworkImage(selectedImage!.path)
+                                  : FileImage(File(selectedImage!.path)) as ImageProvider)
                               : (widget.profile.userImage != null &&
                                     widget.profile.userImage!.isNotEmpty)
                               ? NetworkImage(widget.profile.userImage!)

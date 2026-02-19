@@ -80,133 +80,136 @@ class _ScreenLoginState extends State<ScreenLogin> {
                 ),
 
                 SizedBox(height: 20),
-                Column(
-                  spacing: 10,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      AppStrings.email,
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-
-                    TextFormField(
-                      controller: _emailController,
-                      decoration: InputDecoration(
-                        hintText: AppStrings.emailHint,
+                ConstrainedBox(
+                  constraints: BoxConstraints(maxWidth: 600),
+                  child: Column(
+                    spacing: 10,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        AppStrings.email,
+                        style: Theme.of(context).textTheme.titleMedium,
                       ),
-                    ),
-
-                    Text(
-                      AppStrings.password,
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-
-                    TextFormField(
-                      controller: _passwordController,
-                      obscureText: !showpassword,
-                      decoration: InputDecoration(
-                        suffixIcon: IconButton(
-                          onPressed: () {
-                            setState(() {
-                              showpassword = !showpassword;
-                            });
-                          },
-                          icon: Icon(
-                            showpassword
-                                ? Icons.visibility
-                                : Icons.visibility_off,
-                            color: Colors.grey,
-                          ),
+                  
+                      TextFormField(
+                        controller: _emailController,
+                        decoration: InputDecoration(
+                          hintText: AppStrings.emailHint,
                         ),
-                        hintText: AppStrings.passwordHint,
                       ),
-                    ),
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        TextButton(
-                          onPressed: () {
-                            BlocProvider.of<ForgotPasswordBloc>(
-                              context,
-                            ).add(ForgotPasswordEvent.reset());
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) {
-                                  return ScreenForgotPassword();
-                                },
-                              ),
-                            );
-                          },
-                          child: Text(
-                            'Forgot Password ?',
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary,
-                              fontWeight: FontWeight.bold,
+                  
+                      Text(
+                        AppStrings.password,
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                  
+                      TextFormField(
+                        controller: _passwordController,
+                        obscureText: !showpassword,
+                        decoration: InputDecoration(
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                showpassword = !showpassword;
+                              });
+                            },
+                            icon: Icon(
+                              showpassword
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: Colors.grey,
                             ),
                           ),
+                          hintText: AppStrings.passwordHint,
                         ),
-                      ],
-                    ),
-                    BlocConsumer<LoginBloc, LoginState>(
-                      listener: (context, state) {
-                        state.mapOrNull(
-                          initial: (_) {},
-                          loading: (_) {},
-                          notverified: (value) {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    ScreenOtpVerify(value.user),
+                      ),
+                  
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          TextButton(
+                            onPressed: () {
+                              BlocProvider.of<ForgotPasswordBloc>(
+                                context,
+                              ).add(ForgotPasswordEvent.reset());
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return ScreenForgotPassword();
+                                  },
+                                ),
+                              );
+                            },
+                            child: Text(
+                              'Forgot Password ?',
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.primary,
+                                fontWeight: FontWeight.bold,
                               ),
-                            );
-                          },
-
-                          failure: (state) {
-                            AppSnackBar.show(context, state.message);
-                          },
-                          success: (state) {
-                            switch (state.tokens.role) {
-                              case AppConstants.admin || AppConstants.superUser:
-                                BlocProvider.of<AdminProfileBloc>(
-                                  context,
-                                ).add(AdminProfileEvent.getProfileDetails());
-                                Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                    builder: (context) => ScreenAdminMain(
-                                      role: state.tokens.role,
+                            ),
+                          ),
+                        ],
+                      ),
+                      BlocConsumer<LoginBloc, LoginState>(
+                        listener: (context, state) {
+                          state.mapOrNull(
+                            initial: (_) {},
+                            loading: (_) {},
+                            notverified: (value) {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      ScreenOtpVerify(value.user),
+                                ),
+                              );
+                            },
+                  
+                            failure: (state) {
+                              AppSnackBar.show(context, state.message);
+                            },
+                            success: (state) {
+                              switch (state.tokens.role) {
+                                case AppConstants.admin || AppConstants.superUser:
+                                  BlocProvider.of<AdminProfileBloc>(
+                                    context,
+                                  ).add(AdminProfileEvent.getProfileDetails());
+                                  Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                      builder: (context) => ScreenAdminMain(
+                                        role: state.tokens.role,
+                                      ),
                                     ),
-                                  ),
-                                );
-                                break;
-                              case AppConstants.customer:
-                                Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                    builder: (context) => ScreenMain(),
-                                  ),
-                                );
-
-                                break;
-                              default:
-                            }
-                          },
-                        );
-                      },
-                      builder: (context, state) {
-                        return ButtonWidget(
-                          isloading: state == LoginState.loading()
-                              ? true
-                              : false,
-                          height: 50,
-
-                          title: AppStrings.login,
-                          ontap: state != LoginState.loading()
-                              ? handleLogin
-                              : () {},
-                        );
-                      },
-                    ),
-                  ],
+                                  );
+                                  break;
+                                case AppConstants.customer:
+                                  Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                      builder: (context) => ScreenMain(),
+                                    ),
+                                  );
+                  
+                                  break;
+                                default:
+                              }
+                            },
+                          );
+                        },
+                        builder: (context, state) {
+                          return ButtonWidget(
+                            isloading: state == LoginState.loading()
+                                ? true
+                                : false,
+                            height: 50,
+                  
+                            title: AppStrings.login,
+                            ontap: state != LoginState.loading()
+                                ? handleLogin
+                                : () {},
+                          );
+                        },
+                      ),
+                    ],
+                  ),
                 ),
 
                 Row(

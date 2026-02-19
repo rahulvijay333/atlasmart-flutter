@@ -27,8 +27,9 @@ class ManageCategoryServiceImpl implements ManageCategoryService {
         final extension = parts[1] == 'jpeg' ? 'jpg' : parts[1];
 
         final fileName = '${category.categoryName}.$extension';
-        formDataMap['image'] = await MultipartFile.fromFile(
-          category.selectedImage!.path,
+        final bytes = await category.selectedImage!.readAsBytes();
+        formDataMap['image'] = MultipartFile.fromBytes(
+          bytes,
           filename: fileName,
           contentType: MediaType(parts[0], parts[1]),
         );
@@ -109,8 +110,9 @@ class ManageCategoryServiceImpl implements ManageCategoryService {
         final extension = parts[1] == 'jpeg' ? 'jpg' : parts[1];
 
         final fileName = '${category.categoryName}.$extension';
-        formDataMap['image'] = await MultipartFile.fromFile(
-          category.selectedImage!.path,
+        final bytes = await category.selectedImage!.readAsBytes();
+        formDataMap['image'] = MultipartFile.fromBytes(
+          bytes,
           filename: fileName,
           contentType: MediaType(parts[0], parts[1]),
         );

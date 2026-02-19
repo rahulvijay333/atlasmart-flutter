@@ -57,121 +57,128 @@ class _ScreenRegisterState extends State<ScreenRegister> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Center(child: Image.asset(AppImage.appLogo, height: 250)),
-
-              Text(
-                AppStrings.createYourAccount,
-                style: AppFont.subHeading16BoldStyle,
-                textAlign: TextAlign.center,
-              ),
-
-              SizedBox(height: 30),
-              Column(
-                spacing: 10,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(AppStrings.fullName),
-
-                  TextFormField(
-                    controller: _nameController,
-                    textCapitalization: TextCapitalization.sentences,
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.all(5),
-                      hintStyle: AppFont.hintText14StyleGreyColor,
-                      border: InputBorder.none,
-                      hintText: AppStrings.fullNameHint,
-                    ),
-                  ),
-                  Text(AppStrings.email),
-
-                  TextFormField(
-                    controller: _emailController,
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.all(5),
-                      hintStyle: AppFont.hintText14StyleGreyColor,
-                      border: InputBorder.none,
-                      hintText: AppStrings.emailHint,
-                    ),
-                  ),
-
-                  Text(AppStrings.password),
-
-                  TextFormField(
-                    controller: _passwordController,
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.all(5),
-                      hintStyle: AppFont.hintText14StyleGreyColor,
-                      border: InputBorder.none,
-                      hintText: AppStrings.passwordHint,
-                    ),
-                  ),
-                  SizedBox(height: 15),
-                  BlocConsumer<CustomerRegisterBloc, CustomerRegisterState>(
-                    listener: (context, state) {
-                      state.whenOrNull(
-                        sendOtp: (customer) {
-                          BlocProvider.of<CustomerRegisterBloc>(context).add(
-                            CustomerRegisterEvent.sendOtp(
-                              customer: customer,
-                              resendOtp: false,
-                            ),
-                          );
-
-                          Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  ScreenOtpVerify(customer: customer),
-                            ),
-                          );
-                        },
-
-                        success: () {
-                          Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(
-                              builder: (context) => ScreenRegisterSuccess(),
-                            ),
-                          );
-                        },
-                        failure: (message) {
-                          AppSnackBar.show(context, message);
-                        },
-                      );
-                    },
-                    builder: (context, state) {
-                      return ButtonWidget(
-                        isloading: state == CustomerRegisterState.loading()
-                            ? true
-                            : false,
-                        height: 50,
-                        title: AppStrings.createAccount,
-                        ontap: state != CustomerRegisterState.loading()
-                            ? handleRegister
-                            : () {},
-                      );
-                    },
-                  ),
-                ],
-              ),
-              SizedBox(height: 25),
-              Row(
+          child: Center(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: 600),
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(AppStrings.alreadyHaveAccount),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Text(
-                      AppStrings.login,
-                      style: AppFont.title14BoldStyleOrangeColor,
-                    ),
+                  Center(child: Image.asset(AppImage.appLogo, height: 250)),
+
+                  Text(
+                    AppStrings.createYourAccount,
+                    style: AppFont.subHeading16BoldStyle,
+                    textAlign: TextAlign.center,
+                  ),
+
+                  SizedBox(height: 30),
+                  Column(
+                    spacing: 10,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(AppStrings.fullName),
+
+                      TextFormField(
+                        controller: _nameController,
+                        textCapitalization: TextCapitalization.sentences,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.all(5),
+                          hintStyle: AppFont.hintText14StyleGreyColor,
+                          border: InputBorder.none,
+                          hintText: AppStrings.fullNameHint,
+                        ),
+                      ),
+                      Text(AppStrings.email),
+
+                      TextFormField(
+                        controller: _emailController,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.all(5),
+                          hintStyle: AppFont.hintText14StyleGreyColor,
+                          border: InputBorder.none,
+                          hintText: AppStrings.emailHint,
+                        ),
+                      ),
+
+                      Text(AppStrings.password),
+
+                      TextFormField(
+                        controller: _passwordController,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.all(5),
+                          hintStyle: AppFont.hintText14StyleGreyColor,
+                          border: InputBorder.none,
+                          hintText: AppStrings.passwordHint,
+                        ),
+                      ),
+                      SizedBox(height: 15),
+                      BlocConsumer<CustomerRegisterBloc, CustomerRegisterState>(
+                        listener: (context, state) {
+                          state.whenOrNull(
+                            sendOtp: (customer) {
+                              BlocProvider.of<CustomerRegisterBloc>(
+                                context,
+                              ).add(
+                                CustomerRegisterEvent.sendOtp(
+                                  customer: customer,
+                                  resendOtp: false,
+                                ),
+                              );
+
+                              Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      ScreenOtpVerify(customer: customer),
+                                ),
+                              );
+                            },
+
+                            success: () {
+                              Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                  builder: (context) => ScreenRegisterSuccess(),
+                                ),
+                              );
+                            },
+                            failure: (message) {
+                              AppSnackBar.show(context, message);
+                            },
+                          );
+                        },
+                        builder: (context, state) {
+                          return ButtonWidget(
+                            isloading: state == CustomerRegisterState.loading()
+                                ? true
+                                : false,
+                            height: 50,
+                            title: AppStrings.createAccount,
+                            ontap: state != CustomerRegisterState.loading()
+                                ? handleRegister
+                                : () {},
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 25),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(AppStrings.alreadyHaveAccount),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Text(
+                          AppStrings.login,
+                          style: AppFont.title14BoldStyleOrangeColor,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
-            ],
+            ),
           ),
         ),
       ),

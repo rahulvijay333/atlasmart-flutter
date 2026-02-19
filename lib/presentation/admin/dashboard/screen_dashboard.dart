@@ -17,219 +17,316 @@ class _ScreenAdminDashboardState extends State<ScreenAdminDashboard> {
   @override
   void initState() {
     super.initState();
-
     context.read<AdminProductListBloc>().add(
-      AdminProductListEvent.loadAdminProductList(),
-    );
+          AdminProductListEvent.loadAdminProductList(),
+        );
   }
+
+  /// Responsive: 2 cols < 600, 3 cols < 960, 4 cols >= 960
+  static int _statsCrossAxisCount(double width) {
+    if (width < 600) return 2;
+    if (width < 960) return 3;
+    return 4;
+  }
+
+  /// Responsive padding
+  static double _padding(double width) {
+    if (width < 600) return 16;
+    if (width < 960) return 24;
+    return 32;
+  }
+
+  static const double _maxContentWidth = 1280;
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.sizeOf(context).width;
+    final padding = _padding(width);
+    final crossAxisCount = _statsCrossAxisCount(width);
+
     return RefreshIndicator(
       onRefresh: () async {
-        BlocProvider.of<AdminProfileBloc>(
-          context,
-        ).add(AdminProfileEvent.getProfileDetails());
-
+        context.read<AdminProfileBloc>().add(AdminProfileEvent.getProfileDetails());
         context.read<AdminProductListBloc>().add(
-          AdminProductListEvent.loadAdminProductList(),
-        );
+              AdminProductListEvent.loadAdminProductList(),
+            );
       },
       child: SingleChildScrollView(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: _maxContentWidth),
+            child: Padding(
+              padding: EdgeInsets.all(padding),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildHeader(context),
+                  SizedBox(height: padding * 1.5),
+                  _buildStatsGrid(context, crossAxisCount),
+                  SizedBox(height: padding * 1.5),
+                  _buildRecentOrders(context, width),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildHeader(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return BlocBuilder<AdminProfileBloc, AdminProfileState>(
+      builder: (context, state) {
+        String userName = '';
+        state.whenOrNull(
+          success: (profile) => userName = profile.userName,
+        );
+
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            // Header Section
-            BlocBuilder<AdminProfileBloc, AdminProfileState>(
-              builder: (context, state) {
-                String userName = '';
-
-                state.whenOrNull(
-                  success: (profile) {
-                    userName = profile.userName;
-                  },
-                );
-
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            '${AppStrings.welcomeBackAdmin} $userName',
-                            style: AppFont.subHeading16BoldStyle,
-                          ),
-                          const SizedBox(height: 4),
-                        ],
-                      ),
-                    ),
-                    CircleAvatar(
-                      radius: 20,
-                      backgroundColor: Theme.of(
-                        context,
-                      ).primaryColor.withValues(alpha: 0.1),
-                      child: Icon(
-                        Icons.notifications_outlined,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
-                  ],
-                );
-              },
+            Text(
+              '${AppStrings.welcomeBackAdmin} $userName',
+              style: theme.textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: theme.colorScheme.onSurface,
+                  ) ??
+                  AppFont.subHeading16BoldStyle,
             ),
-            const SizedBox(height: 24),
-
-            // Stats Grid
-            GridView.count(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              crossAxisCount: 2,
-              crossAxisSpacing: 16,
-              mainAxisSpacing: 16,
-              childAspectRatio: 1.5,
-              children: [
-                DashboardStatsCard(
-                  title: AppStrings.revenue,
-                  value: '₹15,430',
-                  icon: Icons.attach_money,
-                  color: Colors.green,
-                ),
-                DashboardStatsCard(
-                  title: AppStrings.totalOrders,
-                  value: '856',
-                  icon: Icons.shopping_cart,
-                  color: Colors.blue,
-                ),
-                DashboardStatsCard(
-                  title: AppStrings.newUsers,
-                  value: '124',
-                  icon: Icons.person_add,
-                  color: Colors.orange,
-                ),
-                BlocBuilder<AdminProductListBloc, AdminProductListState>(
-                  builder: (context, state) {
-                    String count = '';
-
-                    state.whenOrNull(
-                      success: (products) {
-                        count = products.length.toString();
-                      },
-                    );
-
-                    return DashboardStatsCard(
-                      title: AppStrings.products,
-                      value: count,
-                      icon: Icons.inventory_2,
-                      color: Colors.purple,
-                    );
-                  },
-                ),
-              ],
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.notifications_outlined),
+              style: IconButton.styleFrom(
+                backgroundColor: theme.colorScheme.surfaceContainerHighest,
+              ),
             ),
-            const SizedBox(height: 32),
+          ],
+        );
+      },
+    );
+  }
 
-            // Recent Orders Section
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  AppStrings.recentOrders,
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black87,
+  Widget _buildStatsGrid(BuildContext context, int crossAxisCount) {
+    return GridView.count(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      crossAxisCount: crossAxisCount,
+      crossAxisSpacing: 16,
+      mainAxisSpacing: 16,
+      childAspectRatio: 1.4,
+      children: [
+        DashboardStatsCard(
+          title: AppStrings.revenue,
+          value: '₹15,430',
+          icon: Icons.currency_rupee,
+          color: Colors.green,
+        ),
+        DashboardStatsCard(
+          title: AppStrings.totalOrders,
+          value: '856',
+          icon: Icons.shopping_cart_outlined,
+          color: Colors.blue,
+        ),
+        DashboardStatsCard(
+          title: AppStrings.newUsers,
+          value: '124',
+          icon: Icons.person_add_outlined,
+          color: Colors.orange,
+        ),
+        BlocBuilder<AdminProductListBloc, AdminProductListState>(
+          builder: (context, state) {
+            String count = '0';
+            state.whenOrNull(
+              success: (products) => count = products.length.toString(),
+            );
+            return DashboardStatsCard(
+              title: AppStrings.products,
+              value: count,
+              icon: Icons.inventory_2_outlined,
+              color: Colors.purple,
+            );
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildRecentOrders(BuildContext context, double width) {
+    final theme = Theme.of(context);
+    final useCompactLayout = width >= 700;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              AppStrings.recentOrders,
+              style: theme.textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: theme.colorScheme.onSurface,
                   ),
-                ),
-                TextButton(
-                  onPressed: () {
-                    // Navigate to Orders via Main Screen (User would use Drawer usually, but this could switch tab)
-                    // For now, this is visual.
-                  },
-                  child: const Text(AppStrings.viewAll),
-                ),
-              ],
             ),
-            const SizedBox(height: 16),
-            ListView.separated(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: 5,
-              separatorBuilder: (context, index) => const SizedBox(height: 12),
-              itemBuilder: (context, index) {
-                return Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(16),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withValues(alpha: 0.05),
-                        blurRadius: 10,
-                        offset: const Offset(0, 4),
-                      ),
-                    ],
-                    border: Border.all(
-                      color: Colors.grey.withValues(alpha: 0.1),
-                    ),
-                  ),
-                  child: ListTile(
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 12,
-                    ),
-                    leading: Container(
-                      width: 48,
-                      height: 48,
-                      decoration: BoxDecoration(
-                        color: Colors.blue.withValues(alpha: 0.1),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Icon(
-                        Icons.shopping_bag_outlined,
-                        color: Colors.blue[700],
-                      ),
-                    ),
-                    title: Text(
-                      'Order #OD-${9450 + index}',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
-                      ),
-                    ),
-                    subtitle: Padding(
-                      padding: const EdgeInsets.only(top: 4.0),
-                      child: Text(
-                        '3 Items • ₹${(index + 2) * 1450}',
-                        style: TextStyle(color: Colors.grey[600], fontSize: 12),
-                      ),
-                    ),
-                    trailing: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 6,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.green.withValues(alpha: 0.1),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Text(
-                        'Paid',
-                        style: TextStyle(
-                          color: Colors.green[700],
-                          fontSize: 11,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                );
-              },
+            TextButton(
+              onPressed: () {},
+              child: const Text(AppStrings.viewAll),
             ),
           ],
         ),
+        const SizedBox(height: 12),
+        Container(
+          decoration: BoxDecoration(
+            color: theme.colorScheme.surface,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: theme.colorScheme.outline.withValues(alpha: 0.2),
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: theme.colorScheme.shadow.withValues(alpha: 0.04),
+                blurRadius: 8,
+                offset: const Offset(0, 2),
+              ),
+            ],
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: useCompactLayout
+                ? _buildOrdersTable(theme)
+                : _buildOrdersList(theme),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildOrdersTable(ThemeData theme) {
+    return Table(
+      columnWidths: const {
+        0: FlexColumnWidth(1.2),
+        1: FlexColumnWidth(1),
+        2: FlexColumnWidth(0.8),
+      },
+      children: [
+        TableRow(
+          decoration: BoxDecoration(
+            color: theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
+          ),
+          children: [
+            _tableCell(theme, 'Order', isHeader: true),
+            _tableCell(theme, 'Details', isHeader: true),
+            _tableCell(theme, 'Status', isHeader: true),
+          ],
+        ),
+        ...List.generate(5, (index) {
+          return TableRow(
+            children: [
+              _tableCell(
+                theme,
+                'OD-${9450 + index}',
+                isHeader: false,
+              ),
+              _tableCell(
+                theme,
+                '3 Items • ₹${(index + 2) * 1450}',
+                isHeader: false,
+              ),
+              _tableCell(
+                theme,
+                'Paid',
+                isHeader: false,
+                isStatus: true,
+              ),
+            ],
+          );
+        }),
+      ],
+    );
+  }
+
+  Widget _tableCell(
+    ThemeData theme,
+    String text, {
+    required bool isHeader,
+    bool isStatus = false,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      child: isStatus && !isHeader
+          ? Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+              decoration: BoxDecoration(
+                color: Colors.green.withValues(alpha: 0.12),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Text(
+                text,
+                style: theme.textTheme.labelMedium?.copyWith(
+                      color: Colors.green.shade700,
+                      fontWeight: FontWeight.w600,
+                    ),
+              ),
+            )
+          : Text(
+              text,
+              style: isHeader
+                  ? theme.textTheme.labelLarge?.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: theme.colorScheme.onSurfaceVariant,
+                      )
+                  : theme.textTheme.bodyMedium?.copyWith(
+                        color: theme.colorScheme.onSurface,
+                      ),
+            ),
+    );
+  }
+
+  Widget _buildOrdersList(ThemeData theme) {
+    return ListView.separated(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: 5,
+      separatorBuilder: (_, __) => Divider(
+        height: 1,
+        color: theme.colorScheme.outline.withValues(alpha: 0.2),
       ),
+      itemBuilder: (context, index) {
+        return ListTile(
+          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          leading: CircleAvatar(
+            radius: 20,
+            backgroundColor: Colors.blue.withValues(alpha: 0.12),
+            child: Icon(Icons.shopping_bag_outlined, color: Colors.blue.shade700, size: 20),
+          ),
+          title: Text(
+            'Order #OD-${9450 + index}',
+            style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
+          ),
+          subtitle: Text(
+            '3 Items • ₹${(index + 2) * 1450}',
+            style: theme.textTheme.bodySmall?.copyWith(
+              color: theme.colorScheme.onSurfaceVariant,
+            ),
+          ),
+          trailing: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+            decoration: BoxDecoration(
+              color: Colors.green.withValues(alpha: 0.12),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Text(
+              'Paid',
+              style: theme.textTheme.labelSmall?.copyWith(
+                color: Colors.green.shade700,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }

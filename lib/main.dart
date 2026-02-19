@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:atlasmart/application/admin/add_category/add_category_bloc.dart';
 import 'package:atlasmart/application/admin/admin_product_list/admin_product_list_bloc.dart';
 import 'package:atlasmart/application/admin/add_admin/add_admins_bloc.dart';
@@ -18,6 +16,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 
 import 'application/admin/admin_add_or_update_product/admin_addor_update_product_bloc.dart';
 import 'application/admin/admin_list/admin_list_bloc.dart';
@@ -25,32 +24,44 @@ import 'application/auth/auth_bloc.dart';
 import 'application/registration/customer/custom_registr_bloc/customer_register_bloc.dart';
 import 'domain/core/config/app_config.dart';
 import 'domain/core/di/di.dart';
+import 'domain/core/key/stripe_key.dart';
 import 'presentation/splash/screen_splash.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  if (kReleaseMode) {
-    await Firebase.initializeApp();
-    FlutterError.onError = (errorDetails) {
-      FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
-    };
-    // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
-    PlatformDispatcher.instance.onError = (error, stack) {
-      FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
-      return true;
-    };
-  }
+  // if (kReleaseMode && !kIsWeb) {
+  //   await Firebase.initializeApp();
+  //   FlutterError.onError = (errorDetails) {
+  //     FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
+  //   };
+  //   // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
+  //   PlatformDispatcher.instance.onError = (error, stack) {
+  //     FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+  //     return true;
+  //   };
+  // }
 
   AppConfig.initialize(
     AppConfig(
       flavor: kReleaseMode ? Flavor.prod : Flavor.dev,
       baseUrl: kReleaseMode
           ? ApiEndpoints.baseUrlProduction
+          : kIsWeb
+          ? "http://localhost:3000"
           : ApiEndpoints.baseUrl,
     ),
   );
   setupDI();
+
+  // if (!kIsWeb) {
+  Stripe.publishableKey = strPubKey;
+  // ✅ Only apply native settings on mobile
+  if (!kIsWeb) {
+    await Stripe.instance.applySettings();
+  }
+  // }
+
   runApp(const MainApp());
 }
 
@@ -91,7 +102,7 @@ class _MainAppState extends State<MainApp> {
         BlocProvider(create: (context) => sl<AdminListBloc>()),
         BlocProvider(create: (context) => sl<AddCategoryBloc>()),
         BlocProvider(create: (context) => sl<CategoryListBloc>()),
-        BlocProvider(create: (context) => sl<InventoryBloc>(),)
+        BlocProvider(create: (context) => sl<InventoryBloc>()),
       ],
 
       child: MaterialApp(

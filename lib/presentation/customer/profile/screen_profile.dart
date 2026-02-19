@@ -157,24 +157,31 @@ class ScreenProfile extends StatelessWidget {
                 },
               ),
               const SizedBox(height: 16),
-              _buildSectionCard(
-                context,
-                title: AppStrings.myOrders,
-                children: [
-                  ListTileWidget(title: AppStrings.orderHistory, ontap: () {}),
-                ],
+              Center(
+                child: _buildSectionCard(
+                  context,
+                  title: AppStrings.myOrders,
+                  children: [
+                    ListTileWidget(
+                      title: AppStrings.orderHistory,
+                      ontap: () {},
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(height: 16),
-              _buildSectionCard(
-                context,
-                title: AppStrings.settings,
-                children: [
-                  ListTileWidget(title: AppStrings.appSettings, ontap: () {}),
-                  ListTileWidget(
-                    title: AppStrings.helpAndSupport,
-                    ontap: () {},
-                  ),
-                ],
+              Center(
+                child: _buildSectionCard(
+                  context,
+                  title: AppStrings.settings,
+                  children: [
+                    ListTileWidget(title: AppStrings.appSettings, ontap: () {}),
+                    ListTileWidget(
+                      title: AppStrings.helpAndSupport,
+                      ontap: () {},
+                    ),
+                  ],
+                ),
               ),
             ]),
           ),
@@ -182,22 +189,24 @@ class ScreenProfile extends StatelessWidget {
         SliverPadding(
           padding: EdgeInsets.only(left: 16, right: 16, top: 15),
           sliver: SliverToBoxAdapter(
-            child: ButtonWidget(
-              title: AppStrings.logout,
-              height: 50,
-              ontap: () {
-                BlocProvider.of<LoginBloc>(
-                  context,
-                ).add(LoginEvent.logOutButtonClick());
-                Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return ScreenLogin();
-                    },
-                  ),
-                  (route) => false,
-                );
-              },
+            child: Center(
+              child: ButtonWidget(
+                title: AppStrings.logout,
+                height: 50,
+                ontap: () {
+                  BlocProvider.of<LoginBloc>(
+                    context,
+                  ).add(LoginEvent.logOutButtonClick());
+                  Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return ScreenLogin();
+                      },
+                    ),
+                    (route) => false,
+                  );
+                },
+              ),
             ),
           ),
         ),
@@ -223,29 +232,32 @@ class ScreenProfile extends StatelessWidget {
     required String title,
     required List<Widget> children,
   }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 4, bottom: 8),
-          child: Text(
-            title,
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.bold,
-              color: Theme.of(context).colorScheme.primary,
+    return ConstrainedBox(
+      constraints: BoxConstraints(maxWidth: 600),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 4, bottom: 8),
+            child: Text(
+              title,
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).colorScheme.primary,
+              ),
             ),
           ),
-        ),
-        Card(
-          elevation: 0,
-          color: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-            side: BorderSide(color: Colors.grey.shade200),
+          Card(
+            elevation: 0,
+            color: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+              side: BorderSide(color: Colors.grey.shade200),
+            ),
+            child: Column(children: children),
           ),
-          child: Column(children: children),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
