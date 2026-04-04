@@ -31,11 +31,12 @@ class ProductTileWidget extends StatelessWidget {
                         product.image,
                         fit: BoxFit.cover,
                         width: double.infinity,
-                        errorBuilder: (context, error, stackTrace) => const Icon(
-                          Icons.image,
-                          size: 50,
-                          color: Colors.grey,
-                        ),
+                        errorBuilder: (context, error, stackTrace) =>
+                            const Icon(
+                              Icons.image,
+                              size: 50,
+                              color: Colors.grey,
+                            ),
                         loadingBuilder: (context, child, loadingProgress) {
                           if (loadingProgress == null) return child;
                           return const Center(

@@ -1,21 +1,23 @@
-class ShopProductModel {
+class CartModel {
+  final String id;
+  final String productId;
   final String name;
   final String image;
   final String brandName;
   final String company;
   final int stock;
   final String price;
-  final String description;
-  final String categoryName;
+  final int qty;
 
-  ShopProductModel({
+  CartModel({
+    required this.id,
+    required this.productId,
     required this.name,
     required this.image,
     required this.brandName,
     required this.company,
     required this.stock,
     required this.price,
-    required this.description,
-    required this.categoryName,
+    required this.qty,
   });
 }

@@ -178,24 +178,20 @@ class ScreenHome extends StatelessWidget {
                     crossAxisSpacing: 16,
                     childAspectRatio: 0.75,
                   ),
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                      final product = state.productList[index];
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => ScreenProductDetails(
-                                product: product,
-                              ),
-                            ),
-                          );
-                        },
-                        child: ProductTileWidget(product: product),
-                      );
-                    },
-                    childCount: state.productList.length,
-                  ),
+                  delegate: SliverChildBuilderDelegate((context, index) {
+                    final product = state.productList[index];
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                ScreenProductDetails(product: product),
+                          ),
+                        );
+                      },
+                      child: ProductTileWidget(product: product),
+                    );
+                  }, childCount: state.productList.length),
                 ),
               );
             },

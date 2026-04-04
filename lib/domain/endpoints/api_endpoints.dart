@@ -23,6 +23,6 @@ class ApiEndpoints {
   static const category = '/api/categories';
 
   static const userAddress = '/api/customers/addresses';
-  static const home ='/api/products/shop';
-
+  static const home = '/api/products/shop';
+  static const cart ='/api/customers/cart';
 }

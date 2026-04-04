@@ -25,17 +25,20 @@ class HomeServiceImpl implements HomeService {
             ).data?.products ??
             [];
 
-        final product = data.map(
-          (e) => ShopProductModel(
-            name: e.name ?? '',
-            image: e.imageUrl ?? '',
-            brandName: e.brandName ?? '',
-            company: e.companyName ?? '',
-            stock: e.stock ?? 0,
-            price: e.price ?? '',
-            description: e.description ?? '',categoryName: e.categoryName ??''
-          ),
-        ).toList();
+        final product = data
+            .map(
+              (e) => ShopProductModel(
+                name: e.name ?? '',
+                image: e.imageUrl ?? '',
+                brandName: e.brandName ?? '',
+                company: e.companyName ?? '',
+                stock: e.stock ?? 0,
+                price: e.price ?? '',
+                description: e.description ?? '',
+                categoryName: e.categoryName ?? '',
+              ),
+            )
+            .toList();
 
         return product;
       } else {

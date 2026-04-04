@@ -44,9 +44,14 @@ class ScreenProductDetails extends StatelessWidget {
                       ? Image.network(
                           product.image,
                           fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) => const Center(
-                            child: Icon(Icons.image, size: 100, color: Colors.grey),
-                          ),
+                          errorBuilder: (context, error, stackTrace) =>
+                              const Center(
+                                child: Icon(
+                                  Icons.image,
+                                  size: 100,
+                                  color: Colors.grey,
+                                ),
+                              ),
                           loadingBuilder: (context, child, loadingProgress) {
                             if (loadingProgress == null) return child;
                             return const Center(
@@ -55,7 +60,11 @@ class ScreenProductDetails extends StatelessWidget {
                           },
                         )
                       : const Center(
-                          child: Icon(Icons.image, size: 100, color: Colors.grey),
+                          child: Icon(
+                            Icons.image,
+                            size: 100,
+                            color: Colors.grey,
+                          ),
                         ),
                 ),
                 Padding(

@@ -5,6 +5,7 @@ import 'package:atlasmart/application/admin/category_list/category_list_bloc.dar
 import 'package:atlasmart/application/admin/inventory/inventory_bloc.dart';
 import 'package:atlasmart/application/admin/users/all_users_bloc.dart';
 import 'package:atlasmart/application/customer/address/address_bloc.dart';
+import 'package:atlasmart/application/customer/cart/cart_bloc.dart';
 import 'package:atlasmart/application/customer/forgot_password/forgot_password_bloc.dart';
 import 'package:atlasmart/application/customer/home/customer_home_bloc.dart';
 import 'package:atlasmart/application/login/login_bloc.dart';
@@ -98,7 +99,8 @@ class _MainAppState extends State<MainApp> {
         BlocProvider(create: (context) => sl<CategoryListBloc>()),
         BlocProvider(create: (context) => sl<InventoryBloc>()),
         BlocProvider(create: (context) => sl<AddressBloc>()),
-        BlocProvider(create: (context) => sl<CustomerHomeBloc>(),)
+        BlocProvider(create: (context) => sl<CustomerHomeBloc>()),
+        BlocProvider(create: (context) => sl<CartBloc>()),
       ],
 
       child: MaterialApp(
