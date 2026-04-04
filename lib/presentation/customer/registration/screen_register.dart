@@ -1,12 +1,12 @@
 import 'package:atlasmart/domain/core/constants/font.dart';
 import 'package:atlasmart/domain/core/constants/strings.dart';
-import 'package:atlasmart/domain/registration/model/customer_register_model.dart';
+import 'package:atlasmart/domain/customer/registration/model/customer_register_model.dart';
 import 'package:atlasmart/presentation/customer/registration/screen_otp_verify.dart';
 import 'package:atlasmart/presentation/customer/registration/screen_register_success.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../application/registration/customer/custom_registr_bloc/customer_register_bloc.dart';
+import '../../../application/customer/registration/customer/custom_registr_bloc/customer_register_bloc.dart';
 import '../../../domain/core/constants/colors.dart';
 import '../../../domain/core/constants/image.dart';
 import '../../common/button_widget.dart';

@@ -18,8 +18,8 @@ class _ScreenAdminDashboardState extends State<ScreenAdminDashboard> {
   void initState() {
     super.initState();
     context.read<AdminProductListBloc>().add(
-          AdminProductListEvent.loadAdminProductList(),
-        );
+      AdminProductListEvent.loadAdminProductList(),
+    );
   }
 
   /// Responsive: 2 cols < 600, 3 cols < 960, 4 cols >= 960
@@ -46,10 +46,12 @@ class _ScreenAdminDashboardState extends State<ScreenAdminDashboard> {
 
     return RefreshIndicator(
       onRefresh: () async {
-        context.read<AdminProfileBloc>().add(AdminProfileEvent.getProfileDetails());
+        context.read<AdminProfileBloc>().add(
+          AdminProfileEvent.getProfileDetails(),
+        );
         context.read<AdminProductListBloc>().add(
-              AdminProductListEvent.loadAdminProductList(),
-            );
+          AdminProductListEvent.loadAdminProductList(),
+        );
       },
       child: SingleChildScrollView(
         child: Center(
@@ -80,16 +82,15 @@ class _ScreenAdminDashboardState extends State<ScreenAdminDashboard> {
     return BlocBuilder<AdminProfileBloc, AdminProfileState>(
       builder: (context, state) {
         String userName = '';
-        state.whenOrNull(
-          success: (profile) => userName = profile.userName,
-        );
+        state.whenOrNull(success: (profile) => userName = profile.userName);
 
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               '${AppStrings.welcomeBackAdmin} $userName',
-              style: theme.textTheme.titleLarge?.copyWith(
+              style:
+                  theme.textTheme.titleLarge?.copyWith(
                     fontWeight: FontWeight.w600,
                     color: theme.colorScheme.onSurface,
                   ) ??
@@ -166,14 +167,11 @@ class _ScreenAdminDashboardState extends State<ScreenAdminDashboard> {
             Text(
               AppStrings.recentOrders,
               style: theme.textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: theme.colorScheme.onSurface,
-                  ),
+                fontWeight: FontWeight.w600,
+                color: theme.colorScheme.onSurface,
+              ),
             ),
-            TextButton(
-              onPressed: () {},
-              child: const Text(AppStrings.viewAll),
-            ),
+            TextButton(onPressed: () {}, child: const Text(AppStrings.viewAll)),
           ],
         ),
         const SizedBox(height: 12),
@@ -213,7 +211,9 @@ class _ScreenAdminDashboardState extends State<ScreenAdminDashboard> {
       children: [
         TableRow(
           decoration: BoxDecoration(
-            color: theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
+            color: theme.colorScheme.surfaceContainerHighest.withValues(
+              alpha: 0.5,
+            ),
           ),
           children: [
             _tableCell(theme, 'Order', isHeader: true),
@@ -224,22 +224,13 @@ class _ScreenAdminDashboardState extends State<ScreenAdminDashboard> {
         ...List.generate(5, (index) {
           return TableRow(
             children: [
-              _tableCell(
-                theme,
-                'OD-${9450 + index}',
-                isHeader: false,
-              ),
+              _tableCell(theme, 'OD-${9450 + index}', isHeader: false),
               _tableCell(
                 theme,
                 '3 Items • ₹${(index + 2) * 1450}',
                 isHeader: false,
               ),
-              _tableCell(
-                theme,
-                'Paid',
-                isHeader: false,
-                isStatus: true,
-              ),
+              _tableCell(theme, 'Paid', isHeader: false, isStatus: true),
             ],
           );
         }),
@@ -265,21 +256,21 @@ class _ScreenAdminDashboardState extends State<ScreenAdminDashboard> {
               child: Text(
                 text,
                 style: theme.textTheme.labelMedium?.copyWith(
-                      color: Colors.green.shade700,
-                      fontWeight: FontWeight.w600,
-                    ),
+                  color: Colors.green.shade700,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             )
           : Text(
               text,
               style: isHeader
                   ? theme.textTheme.labelLarge?.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: theme.colorScheme.onSurfaceVariant,
-                      )
+                      fontWeight: FontWeight.w600,
+                      color: theme.colorScheme.onSurfaceVariant,
+                    )
                   : theme.textTheme.bodyMedium?.copyWith(
-                        color: theme.colorScheme.onSurface,
-                      ),
+                      color: theme.colorScheme.onSurface,
+                    ),
             ),
     );
   }
@@ -295,15 +286,24 @@ class _ScreenAdminDashboardState extends State<ScreenAdminDashboard> {
       ),
       itemBuilder: (context, index) {
         return ListTile(
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 8,
+          ),
           leading: CircleAvatar(
             radius: 20,
             backgroundColor: Colors.blue.withValues(alpha: 0.12),
-            child: Icon(Icons.shopping_bag_outlined, color: Colors.blue.shade700, size: 20),
+            child: Icon(
+              Icons.shopping_bag_outlined,
+              color: Colors.blue.shade700,
+              size: 20,
+            ),
           ),
           title: Text(
             'Order #OD-${9450 + index}',
-            style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
+            style: theme.textTheme.titleSmall?.copyWith(
+              fontWeight: FontWeight.w600,
+            ),
           ),
           subtitle: Text(
             '3 Items • ₹${(index + 2) * 1450}',

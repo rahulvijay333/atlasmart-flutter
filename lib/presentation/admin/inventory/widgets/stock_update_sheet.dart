@@ -91,14 +91,14 @@ class _StockUpdateSheetState extends State<StockUpdateSheet> {
                       _stockChange > 0
                           ? '+$_stockChange'
                           : _stockChange < 0
-                              ? '$_stockChange'
-                              : 'No Change',
+                          ? '$_stockChange'
+                          : 'No Change',
                       style: TextStyle(
                         color: _stockChange > 0
                             ? Colors.green
                             : _stockChange < 0
-                                ? Colors.red
-                                : Colors.grey,
+                            ? Colors.red
+                            : Colors.grey,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -177,10 +177,8 @@ class _StockUpdateSheetState extends State<StockUpdateSheet> {
                             stock: '$_newTotal',
                           );
                           context.read<InventoryBloc>().add(
-                                InventoryEvent.updateStock(
-                                  product: updatedProduct,
-                                ),
-                              );
+                            InventoryEvent.updateStock(product: updatedProduct),
+                          );
                         },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Theme.of(context).primaryColor,

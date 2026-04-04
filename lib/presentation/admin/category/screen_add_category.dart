@@ -29,7 +29,9 @@ class _ScreenAddCategoryState extends State<ScreenAddCategory> {
   @override
   void initState() {
     super.initState();
-    _nameController = TextEditingController(text: widget.category?.categoryName);
+    _nameController = TextEditingController(
+      text: widget.category?.categoryName,
+    );
   }
 
   @override
@@ -51,11 +53,9 @@ class _ScreenAddCategoryState extends State<ScreenAddCategory> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-             Text(
+            Text(
               'Image',
-              style: AppFont.title16Style.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+              style: AppFont.title16Style.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 12),
             SizedBox(
@@ -68,13 +68,15 @@ class _ScreenAddCategoryState extends State<ScreenAddCategory> {
                       backgroundColor: Colors.grey.shade200,
                       backgroundImage: _selectedImage != null
                           ? (kIsWeb
-                              ? NetworkImage(_selectedImage!.path)
-                              : FileImage(File(_selectedImage!.path)) as ImageProvider)
+                                ? NetworkImage(_selectedImage!.path)
+                                : FileImage(File(_selectedImage!.path))
+                                      as ImageProvider)
                           : (widget.category?.categoryImage != null &&
-                                  widget.category!.categoryImage.isNotEmpty)
-                              ? NetworkImage(widget.category!.categoryImage)
-                              : null,
-                      child: _selectedImage == null &&
+                                widget.category!.categoryImage.isNotEmpty)
+                          ? NetworkImage(widget.category!.categoryImage)
+                          : null,
+                      child:
+                          _selectedImage == null &&
                               (widget.category?.categoryImage == null ||
                                   widget.category!.categoryImage.isEmpty)
                           ? const Icon(
@@ -201,12 +203,12 @@ class _ScreenAddCategoryState extends State<ScreenAddCategory> {
 
                     if (widget.isEdit) {
                       context.read<AddCategoryBloc>().add(
-                            AddCategoryEvent.editCategory(category),
-                          );
+                        AddCategoryEvent.editCategory(category),
+                      );
                     } else {
                       context.read<AddCategoryBloc>().add(
-                            AddCategoryEvent.addCategory(category),
-                          );
+                        AddCategoryEvent.addCategory(category),
+                      );
                     }
                   },
                 );

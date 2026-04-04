@@ -91,8 +91,9 @@ class _ScreenEditAdminProfileState extends State<ScreenEditAdminProfile> {
                           backgroundColor: Colors.grey.shade200,
                           backgroundImage: selectedImage != null
                               ? (kIsWeb
-                                  ? NetworkImage(selectedImage!.path)
-                                  : FileImage(File(selectedImage!.path)) as ImageProvider)
+                                    ? NetworkImage(selectedImage!.path)
+                                    : FileImage(File(selectedImage!.path))
+                                          as ImageProvider)
                               : (widget.profile.userImage != null &&
                                     widget.profile.userImage!.isNotEmpty)
                               ? NetworkImage(widget.profile.userImage!)

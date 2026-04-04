@@ -48,10 +48,10 @@ class ScreenHome extends StatelessWidget {
                 Text(
                   AppStrings.appTitle,
                   style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                        fontWeight: FontWeight.w900,
-                        color: Colors.black,
-                        letterSpacing: -0.5,
-                      ),
+                    fontWeight: FontWeight.w900,
+                    color: Colors.black,
+                    letterSpacing: -0.5,
+                  ),
                 ),
               ],
             ),
@@ -67,11 +67,14 @@ class ScreenHome extends StatelessWidget {
               ),
             ),
           ),
-          
+
           // Hero Carousel
           SliverToBoxAdapter(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: sidePadding - 8, vertical: 16),
+              padding: EdgeInsets.symmetric(
+                horizontal: sidePadding - 8,
+                vertical: 16,
+              ),
               child: const HomeCarousel(),
             ),
           ),
@@ -102,7 +105,10 @@ class ScreenHome extends StatelessWidget {
           // Promo Banner Area
           SliverToBoxAdapter(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: sidePadding, vertical: 24),
+              padding: EdgeInsets.symmetric(
+                horizontal: sidePadding,
+                vertical: 24,
+              ),
               child: const PromoBannerWidget(),
             ),
           ),
@@ -127,9 +133,11 @@ class ScreenHome extends StatelessWidget {
               delegate: SliverChildBuilderDelegate(
                 (context, index) => GestureDetector(
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const ScreenProductDetails(),
-                    ));
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const ScreenProductDetails(),
+                      ),
+                    );
                   },
                   child: const ProductTileWidget(),
                 ),
@@ -142,24 +150,30 @@ class ScreenHome extends StatelessWidget {
     );
   }
 
-  Widget _buildSectionHeader(BuildContext context, String title, double padding) {
+  Widget _buildSectionHeader(
+    BuildContext context,
+    String title,
+    double padding,
+  ) {
     return SliverToBoxAdapter(
       child: Padding(
-        padding: EdgeInsets.only(left: padding, right: padding, top: 16, bottom: 16),
+        padding: EdgeInsets.only(
+          left: padding,
+          right: padding,
+          top: 16,
+          bottom: 16,
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               title,
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.w800,
-                    color: Colors.black87,
-                  ),
+                fontWeight: FontWeight.w800,
+                color: Colors.black87,
+              ),
             ),
-            TextButton(
-              onPressed: () {},
-              child: const Text('View All'),
-            ),
+            TextButton(onPressed: () {}, child: const Text('View All')),
           ],
         ),
       ),

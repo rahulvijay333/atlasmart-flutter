@@ -25,7 +25,7 @@ class AdminProductsModel {
     this.newProfileImage,
     this.id,
     this.brandName,
-    this.companyName
+    this.companyName,
   });
 
   AdminProductsModel copyWith({
@@ -46,7 +46,7 @@ class AdminProductsModel {
       categoryid: categoryId ?? this.categoryid,
       stock: stock ?? this.stock,
       newProfileImage: newProfileImage,
-      id: id
+      id: id,
     );
   }
 }

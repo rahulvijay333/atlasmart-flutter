@@ -21,8 +21,8 @@ class PromoBannerWidget extends StatelessWidget {
       ),
       child: isWeb
           ? ConstrainedBox(
-            constraints: BoxConstraints(maxHeight: 250),
-            child: Row(
+              constraints: BoxConstraints(maxHeight: 250),
+              child: Row(
                 children: [
                   Expanded(child: _buildTextContent(context, isWeb)),
                   const SizedBox(width: 32),
@@ -37,7 +37,7 @@ class PromoBannerWidget extends StatelessWidget {
                   ),
                 ],
               ),
-          )
+            )
           : Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

@@ -1,7 +1,5 @@
 import 'dart:developer';
 
-
-
 enum Flavor { dev, prod }
 
 class AppConfig {

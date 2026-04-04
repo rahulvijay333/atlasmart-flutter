@@ -1,4 +1,4 @@
-import 'package:atlasmart/domain/registration/model/customer_register_model.dart';
+import 'package:atlasmart/domain/customer/registration/model/customer_register_model.dart';
 
 abstract class RegistrationService {
   Future<(bool, CustomerRegisterModel)> customerRegistration(

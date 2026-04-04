@@ -1,4 +1,4 @@
-import 'package:atlasmart/application/forgot_password/forgot_password_bloc.dart';
+import 'package:atlasmart/application/customer/forgot_password/forgot_password_bloc.dart';
 import 'package:atlasmart/application/login/login_bloc.dart';
 import 'package:atlasmart/domain/core/constants/image.dart';
 import 'package:atlasmart/presentation/customer/main/screen_main.dart';
@@ -90,19 +90,19 @@ class _ScreenLoginState extends State<ScreenLogin> {
                         AppStrings.email,
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
-                  
+
                       TextFormField(
                         controller: _emailController,
                         decoration: InputDecoration(
                           hintText: AppStrings.emailHint,
                         ),
                       ),
-                  
+
                       Text(
                         AppStrings.password,
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
-                  
+
                       TextFormField(
                         controller: _passwordController,
                         obscureText: !showpassword,
@@ -123,7 +123,7 @@ class _ScreenLoginState extends State<ScreenLogin> {
                           hintText: AppStrings.passwordHint,
                         ),
                       ),
-                  
+
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
@@ -163,13 +163,14 @@ class _ScreenLoginState extends State<ScreenLogin> {
                                 ),
                               );
                             },
-                  
+
                             failure: (state) {
                               AppSnackBar.show(context, state.message);
                             },
                             success: (state) {
                               switch (state.tokens.role) {
-                                case AppConstants.admin || AppConstants.superUser:
+                                case AppConstants.admin ||
+                                    AppConstants.superUser:
                                   BlocProvider.of<AdminProfileBloc>(
                                     context,
                                   ).add(AdminProfileEvent.getProfileDetails());
@@ -187,7 +188,7 @@ class _ScreenLoginState extends State<ScreenLogin> {
                                       builder: (context) => ScreenMain(),
                                     ),
                                   );
-                  
+
                                   break;
                                 default:
                               }
@@ -200,7 +201,7 @@ class _ScreenLoginState extends State<ScreenLogin> {
                                 ? true
                                 : false,
                             height: 50,
-                  
+
                             title: AppStrings.login,
                             ontap: state != LoginState.loading()
                                 ? handleLogin

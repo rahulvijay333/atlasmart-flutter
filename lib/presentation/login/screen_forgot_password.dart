@@ -1,4 +1,4 @@
-import 'package:atlasmart/application/forgot_password/forgot_password_bloc.dart';
+import 'package:atlasmart/application/customer/forgot_password/forgot_password_bloc.dart';
 import 'package:atlasmart/domain/core/constants/colors.dart';
 import 'package:atlasmart/presentation/common/snack_bar.dart';
 import 'package:atlasmart/presentation/login/screen_password_reset_success.dart';
@@ -72,19 +72,21 @@ class _ScreenForgotPasswordState extends State<ScreenForgotPassword> {
                     children: [
                       Image.asset(AppImage.appLogo, height: 180),
                       const SizedBox(height: 20),
-                  
+
                       /// 🔥 SWITCH UI BASED ON STATE
                       ?state.whenOrNull(
                         initial: () => _buildEnterEmail(state),
                         enterEmail: () => _buildEnterEmail(state),
                         sentEmailOtpLoading: () => _buildEnterEmail(state),
-                        sentEmailOtpFailed: (message) => _buildEnterEmail(state),
+                        sentEmailOtpFailed: (message) =>
+                            _buildEnterEmail(state),
                         verifyOtp: () => _buildVerifyOtp(state),
                         verifyOtpLoading: () => _buildVerifyOtp(state),
                         verifyOtpFailed: (message) => _buildVerifyOtp(state),
                         setPassword: () => _buildSetPassword(state),
                         setPasswordLoading: () => _buildSetPassword(state),
-                        setPasswordfailed: (message) => _buildSetPassword(state),
+                        setPasswordfailed: (message) =>
+                            _buildSetPassword(state),
                       ),
                     ],
                   ),

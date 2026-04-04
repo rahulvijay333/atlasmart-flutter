@@ -73,7 +73,10 @@ class _ScreenOtpVerifyState extends State<ScreenOtpVerify> {
                 children: [
                   ?state.whenOrNull(
                     notverified: (user) {
-                      return EmailNotVerifiedWidget(widget: widget, state: state);
+                      return EmailNotVerifiedWidget(
+                        widget: widget,
+                        state: state,
+                      );
                     },
                     verifyOtpSentLoading: () =>
                         EmailNotVerifiedWidget(widget: widget, state: state),

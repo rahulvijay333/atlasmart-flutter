@@ -91,8 +91,9 @@ class _ScreenEditProfileState extends State<ScreenEditProfile> {
                               backgroundColor: Colors.grey.shade200,
                               backgroundImage: selectedImage != null
                                   ? (kIsWeb
-                                      ? NetworkImage(selectedImage!.path)
-                                      : FileImage(File(selectedImage!.path)) as ImageProvider)
+                                        ? NetworkImage(selectedImage!.path)
+                                        : FileImage(File(selectedImage!.path))
+                                              as ImageProvider)
                                   : (widget.profile.profilePic != null &&
                                         widget.profile.profilePic!.isNotEmpty)
                                   ? NetworkImage(widget.profile.profilePic!)
@@ -118,9 +119,10 @@ class _ScreenEditProfileState extends State<ScreenEditProfile> {
                                       color: Colors.black,
                                     ),
                                     onPressed: () async {
-                                      final image = await ImagePickerUtil.pickImage(
-                                        context,
-                                      );
+                                      final image =
+                                          await ImagePickerUtil.pickImage(
+                                            context,
+                                          );
                                       if (image != null) {
                                         setState(() => selectedImage = image);
                                       }
@@ -176,7 +178,9 @@ class _ScreenEditProfileState extends State<ScreenEditProfile> {
                               height: 50,
                               ontap: () {
                                 if (_formkey.currentState!.validate()) {
-                                  BlocProvider.of<CustomerProfileBloc>(context).add(
+                                  BlocProvider.of<CustomerProfileBloc>(
+                                    context,
+                                  ).add(
                                     CustomerProfileEvent.updateProfileDetailsButtonClick(
                                       profile: widget.profile.copyWith(
                                         userName: namecontroller.text.trim(),

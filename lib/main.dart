@@ -4,7 +4,7 @@ import 'package:atlasmart/application/admin/add_admin/add_admins_bloc.dart';
 import 'package:atlasmart/application/admin/category_list/category_list_bloc.dart';
 import 'package:atlasmart/application/admin/inventory/inventory_bloc.dart';
 import 'package:atlasmart/application/admin/users/all_users_bloc.dart';
-import 'package:atlasmart/application/forgot_password/forgot_password_bloc.dart';
+import 'package:atlasmart/application/customer/forgot_password/forgot_password_bloc.dart';
 import 'package:atlasmart/application/login/login_bloc.dart';
 import 'package:atlasmart/application/profile_admin_customer/admin/bloc/admin_profile_bloc.dart';
 import 'package:atlasmart/application/profile_admin_customer/customer/customer_profile_bloc.dart';
@@ -21,10 +21,10 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 import 'application/admin/admin_add_or_update_product/admin_addor_update_product_bloc.dart';
 import 'application/admin/admin_list/admin_list_bloc.dart';
 import 'application/auth/auth_bloc.dart';
-import 'application/registration/customer/custom_registr_bloc/customer_register_bloc.dart';
+import 'application/customer/registration/customer/custom_registr_bloc/customer_register_bloc.dart';
 import 'domain/core/config/app_config.dart';
 import 'domain/core/di/di.dart';
-import 'domain/core/key/stripe_key.dart';
+
 import 'presentation/splash/screen_splash.dart';
 
 void main() async {
@@ -53,14 +53,6 @@ void main() async {
     ),
   );
   setupDI();
-
-  // if (!kIsWeb) {
-  Stripe.publishableKey = strPubKey;
-  // ✅ Only apply native settings on mobile
-  if (!kIsWeb) {
-    await Stripe.instance.applySettings();
-  }
-  // }
 
   runApp(const MainApp());
 }

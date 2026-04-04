@@ -52,10 +52,11 @@ class ScreenProductDetails extends StatelessWidget {
                         children: [
                           Text(
                             AppStrings.categoryPlaceholder,
-                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              color: Theme.of(context).colorScheme.primary,
-                              fontWeight: FontWeight.w600,
-                            ),
+                            style: Theme.of(context).textTheme.bodyMedium
+                                ?.copyWith(
+                                  color: Theme.of(context).colorScheme.primary,
+                                  fontWeight: FontWeight.w600,
+                                ),
                           ),
                           const Row(
                             children: [
@@ -72,9 +73,8 @@ class ScreenProductDetails extends StatelessWidget {
                       const SizedBox(height: 8),
                       Text(
                         AppStrings.productTitlePlaceholder,
-                        style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: Theme.of(context).textTheme.headlineSmall
+                            ?.copyWith(fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 8),
                       Text(
@@ -87,9 +87,8 @@ class ScreenProductDetails extends StatelessWidget {
                       const SizedBox(height: 16),
                       Text(
                         "Product Description",
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: Theme.of(context).textTheme.titleMedium
+                            ?.copyWith(fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 8),
                       Text(
@@ -113,11 +112,16 @@ class ScreenProductDetails extends StatelessWidget {
                             children: [
                               Text(
                                 AppStrings.sellerNamePlaceholder,
-                                style: const TextStyle(fontWeight: FontWeight.bold),
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                               const Text(
                                 "Official Seller",
-                                style: TextStyle(color: Colors.grey, fontSize: 12),
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 12,
+                                ),
                               ),
                             ],
                           ),

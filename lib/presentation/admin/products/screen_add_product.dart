@@ -145,8 +145,9 @@ class _ScreenAddProductState extends State<ScreenAddProduct> {
                           backgroundColor: Colors.grey.shade200,
                           backgroundImage: selectedImage != null
                               ? (kIsWeb
-                                  ? NetworkImage(selectedImage!.path)
-                                  : FileImage(File(selectedImage!.path)) as ImageProvider)
+                                    ? NetworkImage(selectedImage!.path)
+                                    : FileImage(File(selectedImage!.path))
+                                          as ImageProvider)
                               : (widget.product?.image != null &&
                                     widget.product!.image!.isNotEmpty)
                               ? NetworkImage(widget.product!.image!)

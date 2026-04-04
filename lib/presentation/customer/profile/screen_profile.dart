@@ -2,6 +2,7 @@ import 'package:atlasmart/application/profile_admin_customer/customer/customer_p
 import 'package:atlasmart/domain/core/constants/constants.dart';
 import 'package:atlasmart/domain/core/constants/font.dart';
 import 'package:atlasmart/presentation/common/button_widget.dart';
+import 'package:atlasmart/presentation/customer/address/screen_address.dart';
 import 'package:atlasmart/presentation/customer/profile/screen_edit_profile.dart';
 import 'package:atlasmart/presentation/login/screen_login.dart';
 import 'package:flutter/material.dart';
@@ -147,7 +148,13 @@ class ScreenProfile extends StatelessWidget {
                             ),
                             ListTileWidget(
                               title: AppStrings.shippingAddress,
-                              ontap: () {},
+                              ontap: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => const ScreenAddress(),
+                                  ),
+                                );
+                              },
                             ),
                           ],
                         ),

@@ -32,7 +32,7 @@ class StripeHelper {
                       redirect: PaymentConfirmationRedirect.ifRequired,
                     ),
                   );
-            
+
                   Navigator.pop(context);
                 } catch (e) {
                   debugPrint("Stripe error: $e");

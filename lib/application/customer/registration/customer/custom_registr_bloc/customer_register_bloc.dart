@@ -1,7 +1,7 @@
 import 'package:atlasmart/domain/core/constants/strings.dart';
 import 'package:atlasmart/domain/login/login_service.dart';
-import 'package:atlasmart/domain/registration/model/customer_register_model.dart';
-import 'package:atlasmart/domain/registration/registration_service.dart';
+import 'package:atlasmart/domain/customer/registration/model/customer_register_model.dart';
+import 'package:atlasmart/domain/customer/registration/registration_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 

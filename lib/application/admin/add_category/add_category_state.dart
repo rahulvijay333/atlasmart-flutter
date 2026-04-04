@@ -6,7 +6,4 @@ class AddCategoryState with _$AddCategoryState {
   const factory AddCategoryState.loading() = _Loading;
   const factory AddCategoryState.success() = _Success;
   const factory AddCategoryState.failure(String message) = _Failure;
-  
-  
-  
 }

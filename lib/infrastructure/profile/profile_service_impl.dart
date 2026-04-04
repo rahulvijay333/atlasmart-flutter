@@ -1,8 +1,8 @@
 import 'dart:developer';
 
 import 'package:atlasmart/domain/endpoints/api_endpoints.dart';
-import 'package:atlasmart/domain/profile/model/profile_model.dart';
-import 'package:atlasmart/domain/profile/profile_service.dart';
+import 'package:atlasmart/domain/customer/profile/model/profile_model.dart';
+import 'package:atlasmart/domain/customer/profile/profile_service.dart';
 import 'package:atlasmart/infrastructure/profile/model/profile_response_model/profile_response_model.dart';
 import 'package:dio/dio.dart';
 import 'package:http_parser/http_parser.dart';

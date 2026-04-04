@@ -12,56 +12,55 @@ class InventoryBloc extends Bloc<InventoryEvent, InventoryState> {
 
   InventoryBloc(this._manageProductsService) : super(InventoryState.initial()) {
     on<_LoadInventory>((event, emit) async {
-      emit(state.copyWith(
-        isLoading: true,
-        errorMessage: null,
-        // Reset success state on new load
-        updateSuccess: false,
-      ));
+      emit(
+        state.copyWith(
+          isLoading: true,
+          errorMessage: null,
+          // Reset success state on new load
+          updateSuccess: false,
+        ),
+      );
 
       try {
         final products = await _manageProductsService.getAllProducts();
-        emit(state.copyWith(
-          isLoading: false,
-          products: products,
-        ));
+        emit(state.copyWith(isLoading: false, products: products));
       } catch (e) {
-        emit(state.copyWith(
-          isLoading: false,
-          errorMessage: e.toString(),
-        ));
+        emit(state.copyWith(isLoading: false, errorMessage: e.toString()));
       }
     });
 
     on<_UpdateStock>((event, emit) async {
-      emit(state.copyWith(
-        isUpdating: true,
-        updateSuccess: false,
-        updateErrorMessage: null,
-      ));
+      emit(
+        state.copyWith(
+          isUpdating: true,
+          updateSuccess: false,
+          updateErrorMessage: null,
+        ),
+      );
 
       try {
         final success = await _manageProductsService.editProduct(event.product);
         if (success) {
-          emit(state.copyWith(
-            isUpdating: false,
-            updateSuccess: true,
-          ));
+          emit(state.copyWith(isUpdating: false, updateSuccess: true));
           // Trigger local refresh
           add(const InventoryEvent.loadInventory());
         } else {
-          emit(state.copyWith(
-            isUpdating: false,
-            updateSuccess: false,
-            updateErrorMessage: 'Update failed',
-          ));
+          emit(
+            state.copyWith(
+              isUpdating: false,
+              updateSuccess: false,
+              updateErrorMessage: 'Update failed',
+            ),
+          );
         }
       } catch (e) {
-        emit(state.copyWith(
-          isUpdating: false,
-          updateSuccess: false,
-          updateErrorMessage: e.toString(),
-        ));
+        emit(
+          state.copyWith(
+            isUpdating: false,
+            updateSuccess: false,
+            updateErrorMessage: e.toString(),
+          ),
+        );
       }
     });
   }

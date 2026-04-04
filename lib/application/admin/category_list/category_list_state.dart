@@ -6,10 +6,8 @@ class CategoryListState with _$CategoryListState {
 
   const factory CategoryListState.loading() = _Loading;
 
-  const factory CategoryListState.success(List<CategoryModel> categoryList) = _Success;
+  const factory CategoryListState.success(List<CategoryModel> categoryList) =
+      _Success;
 
   const factory CategoryListState.failure(String message) = _Failure;
-  
-  
-  
 }

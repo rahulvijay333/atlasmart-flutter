@@ -92,20 +92,20 @@ class _ScreenAdminMainState extends State<ScreenAdminMain> {
 
           if (index == 1) {
             context.read<AdminProductListBloc>().add(
-                  AdminProductListEvent.loadAdminProductList(),
-                );
+              AdminProductListEvent.loadAdminProductList(),
+            );
           }
 
           if (index == 3) {
             context.read<InventoryBloc>().add(
-                  const InventoryEvent.loadInventory(),
-                );
+              const InventoryEvent.loadInventory(),
+            );
           }
 
           if (index == 2) {
             context.read<CategoryListBloc>().add(
-                  const CategoryListEvent.getAllCategoryList(),
-                );
+              const CategoryListEvent.getAllCategoryList(),
+            );
           }
 
           Navigator.pop(context);
@@ -120,13 +120,14 @@ class _ScreenAdminMainState extends State<ScreenAdminMain> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const ScreenAddProduct(isEdit: false),
+                      builder: (context) =>
+                          const ScreenAddProduct(isEdit: false),
                     ),
                   ).then((value) {
                     if (context.mounted) {
                       context.read<AdminProductListBloc>().add(
-                            AdminProductListEvent.loadAdminProductList(),
-                          );
+                        AdminProductListEvent.loadAdminProductList(),
+                      );
                     }
                   });
                 } else {
@@ -138,8 +139,8 @@ class _ScreenAdminMainState extends State<ScreenAdminMain> {
                   ).then((value) {
                     if (value == true && context.mounted) {
                       context.read<CategoryListBloc>().add(
-                            const CategoryListEvent.getAllCategoryList(),
-                          );
+                        const CategoryListEvent.getAllCategoryList(),
+                      );
                     }
                   });
                 }

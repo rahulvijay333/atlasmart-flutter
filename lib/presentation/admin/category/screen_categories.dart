@@ -32,8 +32,8 @@ class ScreenCategories extends StatelessWidget {
                   hasRefresh: true,
                   ontap: () {
                     context.read<CategoryListBloc>().add(
-                          const CategoryListEvent.getAllCategoryList(),
-                        );
+                      const CategoryListEvent.getAllCategoryList(),
+                    );
                   },
                 ),
               ),
@@ -45,8 +45,8 @@ class ScreenCategories extends StatelessWidget {
                       hasRefresh: true,
                       ontap: () {
                         context.read<CategoryListBloc>().add(
-                              const CategoryListEvent.getAllCategoryList(),
-                            );
+                          const CategoryListEvent.getAllCategoryList(),
+                        );
                       },
                     ),
                   );
@@ -56,8 +56,8 @@ class ScreenCategories extends StatelessWidget {
                   child: RefreshIndicator(
                     onRefresh: () async {
                       context.read<CategoryListBloc>().add(
-                            const CategoryListEvent.getAllCategoryList(),
-                          );
+                        const CategoryListEvent.getAllCategoryList(),
+                      );
                     },
                     child: ListView.separated(
                       padding: const EdgeInsets.symmetric(
@@ -132,9 +132,8 @@ class ScreenCategories extends StatelessWidget {
                                   ).then((value) {
                                     if (value == true && context.mounted) {
                                       context.read<CategoryListBloc>().add(
-                                            const CategoryListEvent
-                                                .getAllCategoryList(),
-                                          );
+                                        const CategoryListEvent.getAllCategoryList(),
+                                      );
                                     }
                                   });
                                 } else if (value == 'delete') {
@@ -189,8 +188,8 @@ class ScreenCategories extends StatelessWidget {
             TextButton(
               onPressed: () {
                 context.read<CategoryListBloc>().add(
-                      CategoryListEvent.deleteCategory(id),
-                    );
+                  CategoryListEvent.deleteCategory(id),
+                );
                 Navigator.pop(context);
               },
               child: const Text(

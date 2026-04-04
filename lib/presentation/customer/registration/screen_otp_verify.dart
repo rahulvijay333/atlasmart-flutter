@@ -122,7 +122,7 @@ class _ScreenOtpVerifyState extends State<ScreenOtpVerify> {
                             width: double.infinity,
                             child: Center(child: CircularProgressIndicator()),
                           ),
-                  
+
                           sendOtpFailed: (message, customer) {
                             return Column(
                               children: [
@@ -158,7 +158,7 @@ class _ScreenOtpVerifyState extends State<ScreenOtpVerify> {
                               ],
                             );
                           },
-                  
+
                           verifyOtp: (customer) {
                             return VerifyOtpWidget(
                               customer: customer,

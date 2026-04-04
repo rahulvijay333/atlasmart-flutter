@@ -2,7 +2,7 @@ import 'package:atlasmart/domain/core/constants/strings.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../domain/login/login_service.dart';
+import '../../../domain/login/login_service.dart';
 
 part 'forgot_password_event.dart';
 part 'forgot_password_state.dart';

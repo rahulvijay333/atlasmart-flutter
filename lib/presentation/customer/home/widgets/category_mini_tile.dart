@@ -6,12 +6,7 @@ class CatgoryMiniTileWidget extends StatelessWidget {
   final IconData? icon;
   final Color? color;
 
-  const CatgoryMiniTileWidget({
-    super.key,
-    this.title,
-    this.icon,
-    this.color,
-  });
+  const CatgoryMiniTileWidget({super.key, this.title, this.icon, this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -42,9 +37,9 @@ class CatgoryMiniTileWidget extends StatelessWidget {
         Text(
           title ?? AppStrings.categoryPlaceholder,
           style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                fontWeight: FontWeight.w600,
-                color: Colors.grey.shade800,
-              ),
+            fontWeight: FontWeight.w600,
+            color: Colors.grey.shade800,
+          ),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),

@@ -12,9 +12,9 @@ abstract class InventoryState with _$InventoryState {
   }) = _InventoryState;
 
   factory InventoryState.initial() => const InventoryState(
-        products: [],
-        isLoading: false,
-        isUpdating: false,
-        updateSuccess: false,
-      );
+    products: [],
+    isLoading: false,
+    isUpdating: false,
+    updateSuccess: false,
+  );
 }
