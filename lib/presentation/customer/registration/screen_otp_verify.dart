@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:atlasmart/application/registration/customer/custom_registr_bloc/customer_register_bloc.dart';
 import 'package:atlasmart/domain/core/constants/colors.dart';
 import 'package:atlasmart/domain/core/constants/font.dart';
 import 'package:atlasmart/presentation/common/snack_bar.dart';
@@ -9,9 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
+import '../../../application/customer/registration/customer/custom_registr_bloc/customer_register_bloc.dart';
 import '../../../domain/core/constants/image.dart';
 
-import '../../../domain/registration/model/customer_register_model.dart';
+import '../../../domain/customer/registration/model/customer_register_model.dart';
+
 import '../../common/app_dialoge.dart';
 import '../../common/button_widget.dart';
 

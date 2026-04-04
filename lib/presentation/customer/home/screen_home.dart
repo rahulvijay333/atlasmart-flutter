@@ -1,6 +1,6 @@
-import 'package:atlasmart/domain/core/constants/colors.dart';
-import 'package:atlasmart/domain/core/constants/image.dart';
+import 'package:atlasmart/domain/core/constants/image.dart';import 'package:atlasmart/application/admin/category_list/category_list_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../domain/core/constants/strings.dart';
 import '../../common/product_tile_card.dart';
@@ -18,7 +18,6 @@ class ScreenHome extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     final isDesktop = screenWidth > 1200;
     final isTablet = screenWidth > 700 && screenWidth <= 1200;
-    final isMobile = screenWidth <= 700;
 
     final sidePadding = isDesktop ? 64.0 : (isTablet ? 32.0 : 16.0);
     final crossAxisCount = isDesktop ? 6 : (isTablet ? 4 : 2);
@@ -86,18 +85,41 @@ class ScreenHome extends StatelessWidget {
           SliverToBoxAdapter(
             child: SizedBox(
               height: isDesktop ? 120 : 100,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                padding: EdgeInsets.symmetric(horizontal: sidePadding),
-                itemCount: categories.length,
-                itemBuilder: (context, index) => Padding(
-                  padding: const EdgeInsets.only(right: 24.0),
-                  child: CatgoryMiniTileWidget(
-                    title: categories[index].name,
-                    icon: categories[index].icon,
-                    color: categories[index].color,
-                  ),
-                ),
+              child: BlocBuilder<CategoryListBloc, CategoryListState>(
+                builder: (context, state) {
+                  return state.maybeWhen(
+                    loading: () => const Center(child: CircularProgressIndicator()),
+                    success: (categoriesList) {
+                      if (categoriesList.isEmpty) {
+                        return const Center(child: Text('No categories found'));
+                      }
+                      return ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        padding: EdgeInsets.symmetric(horizontal: sidePadding),
+                        itemCount: categoriesList.length,
+                        itemBuilder: (context, index) {
+                          final category = categoriesList[index];
+                          return Padding(
+                            padding: const EdgeInsets.only(right: 24.0),
+                            child: CatgoryMiniTileWidget(
+                              title: category.categoryName,
+                              imageUrl: category.categoryImage,
+                              onTap: () {
+                                // Navigator will be added later
+                              },
+                            ),
+                          );
+                        },
+                      );
+                    },
+                    orElse: () {
+                      context.read<CategoryListBloc>().add(
+                        const CategoryListEvent.getAllCategoryList(),
+                      );
+                      return const Center(child: CircularProgressIndicator());
+                    },
+                  );
+                },
               ),
             ),
           ),
@@ -181,13 +203,3 @@ class ScreenHome extends StatelessWidget {
   }
 }
 
-final List<({String name, IconData icon, Color color})> categories = [
-  (name: 'Gadgets', icon: Icons.devices, color: Colors.blue),
-  (name: 'Fashion', icon: Icons.checkroom, color: Colors.pink),
-  (name: 'Groceries', icon: Icons.shopping_basket, color: Colors.green),
-  (name: 'Beauty', icon: Icons.face, color: Colors.purple),
-  (name: 'Home', icon: Icons.home_repair_service, color: Colors.orange),
-  (name: 'Sports', icon: Icons.sports_basketball, color: Colors.red),
-  (name: 'Toys', icon: Icons.toys, color: Colors.cyan),
-  (name: 'Automotive', icon: Icons.directions_car, color: Colors.indigo),
-];

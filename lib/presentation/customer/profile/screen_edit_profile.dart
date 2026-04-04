@@ -5,7 +5,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:atlasmart/application/profile_admin_customer/customer/customer_profile_bloc.dart';
 import 'package:atlasmart/domain/core/constants/colors.dart';
 import 'package:atlasmart/domain/core/constants/font.dart';
-import 'package:atlasmart/domain/profile/model/profile_model.dart';
 import 'package:atlasmart/presentation/common/button_widget.dart';
 import 'package:atlasmart/presentation/common/snack_bar.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../domain/core/util/image_picker.dart';
+import '../../../domain/customer/profile/model/profile_model.dart';
 
 class ScreenEditProfile extends StatefulWidget {
   const ScreenEditProfile({super.key, required this.profile});
