@@ -47,67 +47,73 @@ class ScreenCategory extends StatelessWidget {
                   );
                 }
                 return SliverPadding(
-                  padding: EdgeInsets.symmetric(horizontal: sidePadding, vertical: 16),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: sidePadding,
+                    vertical: 16,
+                  ),
                   sliver: SliverGrid(
-                    delegate: SliverChildBuilderDelegate(
-                      (context, index) {
-                        final category = categories[index];
-                        return Card(
-                          elevation: 2,
-                          surfaceTintColor: Colors.white,
-                          color: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          child: InkWell(
-                            onTap: () {
-                              // Navigation lator by user
-                            },
-                            borderRadius: BorderRadius.circular(16),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                  width: 60,
-                                  height: 60,
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey.shade100,
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(30),
-                                    child: category.categoryImage.isNotEmpty
-                                        ? Image.network(
-                                            category.categoryImage,
-                                            fit: BoxFit.cover,
-                                            errorBuilder: (context, error, stackTrace) => const Icon(
-                                              Icons.category_outlined,
-                                              color: Colors.grey,
-                                            ),
-                                          )
-                                        : const Icon(Icons.category_outlined, color: Colors.grey),
-                                  ),
+                    delegate: SliverChildBuilderDelegate((context, index) {
+                      final category = categories[index];
+                      return Card(
+                        elevation: 2,
+                        surfaceTintColor: Colors.white,
+                        color: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: InkWell(
+                          onTap: () {
+                            // Navigation lator by user
+                          },
+                          borderRadius: BorderRadius.circular(16),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                width: 60,
+                                height: 60,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey.shade100,
+                                  shape: BoxShape.circle,
                                 ),
-                                const SizedBox(height: 12),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                  child: Text(
-                                    category.categoryName,
-                                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(30),
+                                  child: category.categoryImage.isNotEmpty
+                                      ? Image.network(
+                                          category.categoryImage,
+                                          fit: BoxFit.cover,
+                                          errorBuilder:
+                                              (context, error, stackTrace) =>
+                                                  const Icon(
+                                                    Icons.category_outlined,
+                                                    color: Colors.grey,
+                                                  ),
+                                        )
+                                      : const Icon(
+                                          Icons.category_outlined,
+                                          color: Colors.grey,
+                                        ),
                                 ),
-                              ],
-                            ),
+                              ),
+                              const SizedBox(height: 12),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 8.0,
+                                ),
+                                child: Text(
+                                  category.categoryName,
+                                  style: Theme.of(context).textTheme.titleSmall
+                                      ?.copyWith(fontWeight: FontWeight.w600),
+                                  textAlign: TextAlign.center,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ],
                           ),
-                        );
-                      },
-                      childCount: categories.length,
-                    ),
+                        ),
+                      );
+                    }, childCount: categories.length),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: crossAxisCount,
                       mainAxisSpacing: 20,

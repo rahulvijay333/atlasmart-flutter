@@ -1,8 +1,10 @@
+import 'package:atlasmart/domain/customer/home/model/shop_product_model.dart';
 import 'package:flutter/material.dart';
-import '../../domain/core/constants/strings.dart';
 
 class ProductTileWidget extends StatelessWidget {
-  const ProductTileWidget({super.key});
+  final ShopProductModel product;
+
+  const ProductTileWidget({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +22,30 @@ class ProductTileWidget extends StatelessWidget {
                   top: Radius.circular(12),
                 ),
               ),
-              child: const Center(
-                child: Icon(Icons.image, size: 50, color: Colors.grey),
+              child: ClipRRect(
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(12),
+                ),
+                child: product.image.isNotEmpty
+                    ? Image.network(
+                        product.image,
+                        fit: BoxFit.cover,
+                        width: double.infinity,
+                        errorBuilder: (context, error, stackTrace) => const Icon(
+                          Icons.image,
+                          size: 50,
+                          color: Colors.grey,
+                        ),
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return const Center(
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          );
+                        },
+                      )
+                    : const Center(
+                        child: Icon(Icons.image, size: 50, color: Colors.grey),
+                      ),
               ),
             ),
           ),
@@ -31,7 +55,7 @@ class ProductTileWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  AppStrings.productTitlePlaceholder,
+                  product.name,
                   style: Theme.of(
                     context,
                   ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),
@@ -40,7 +64,7 @@ class ProductTileWidget extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  AppStrings.sellerNamePlaceholder,
+                  product.brandName,
                   style: Theme.of(
                     context,
                   ).textTheme.bodySmall?.copyWith(color: Colors.grey.shade600),
@@ -49,7 +73,7 @@ class ProductTileWidget extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  '5999 Rs',
+                  '${product.price} Rs',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                     color: Theme.of(context).colorScheme.primary,

@@ -8,7 +8,6 @@ class Address {
   String? state;
   String? pincode;
   String? country;
- 
 
   Address({
     this.id,
@@ -18,7 +17,6 @@ class Address {
     this.state,
     this.pincode,
     this.country,
-  
   });
 
   factory Address.fromMap(Map<String, dynamic> data) => Address(
@@ -29,7 +27,6 @@ class Address {
     state: data['state'] as String?,
     pincode: data['pincode'] as String?,
     country: data['country'] as String?,
-  
   );
 
   Map<String, dynamic> toMap() => {

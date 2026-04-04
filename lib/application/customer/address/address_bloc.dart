@@ -23,7 +23,9 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
     FetchAddresses event,
     Emitter<AddressState> emit,
   ) async {
-    emit(state.copyWith(isLoading: true, errorMessage: null, actionSuccess: false));
+    emit(
+      state.copyWith(isLoading: true, errorMessage: null, actionSuccess: false),
+    );
 
     try {
       final addresses = await addressService.getUserAddress();
@@ -38,15 +40,19 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
     AddAddress event,
     Emitter<AddressState> emit,
   ) async {
-    emit(state.copyWith(isLoading: true, errorMessage: null, actionSuccess: false));
+    emit(
+      state.copyWith(isLoading: true, errorMessage: null, actionSuccess: false),
+    );
 
     try {
       final addresses = await addressService.addAddress(event.address);
-      emit(state.copyWith(
-        isLoading: false,
-        addresses: addresses,
-        actionSuccess: true,
-      ));
+      emit(
+        state.copyWith(
+          isLoading: false,
+          addresses: addresses,
+          actionSuccess: true,
+        ),
+      );
     } catch (e) {
       log(e.toString());
       emit(state.copyWith(isLoading: false, errorMessage: e.toString()));
@@ -57,15 +63,19 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
     UpdateAddress event,
     Emitter<AddressState> emit,
   ) async {
-    emit(state.copyWith(isLoading: true, errorMessage: null, actionSuccess: false));
+    emit(
+      state.copyWith(isLoading: true, errorMessage: null, actionSuccess: false),
+    );
 
     try {
       final addresses = await addressService.updateAddress(event.address);
-      emit(state.copyWith(
-        isLoading: false,
-        addresses: addresses,
-        actionSuccess: true,
-      ));
+      emit(
+        state.copyWith(
+          isLoading: false,
+          addresses: addresses,
+          actionSuccess: true,
+        ),
+      );
     } catch (e) {
       log(e.toString());
       emit(state.copyWith(isLoading: false, errorMessage: e.toString()));
@@ -76,15 +86,19 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
     DeleteAddress event,
     Emitter<AddressState> emit,
   ) async {
-    emit(state.copyWith(isLoading: true, errorMessage: null, actionSuccess: false));
+    emit(
+      state.copyWith(isLoading: true, errorMessage: null, actionSuccess: false),
+    );
 
     try {
       final addresses = await addressService.deleteUserAddress(event.id);
-      emit(state.copyWith(
-        isLoading: false,
-        addresses: addresses,
-        actionSuccess: true,
-      ));
+      emit(
+        state.copyWith(
+          isLoading: false,
+          addresses: addresses,
+          actionSuccess: true,
+        ),
+      );
     } catch (e) {
       log(e.toString());
       emit(state.copyWith(isLoading: false, errorMessage: e.toString()));

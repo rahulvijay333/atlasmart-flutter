@@ -13,11 +13,7 @@ class _HomeCarouselState extends State<HomeCarousel> {
   int _currentPage = 0;
   late Timer _timer;
 
-  final List<String> _banners = [
-    'assets/electronics_banner.png',
-    'assets/fashion_banner.png',
-    'assets/grocery_banner.png',
-  ];
+  final List<String> _banners = ['assets/vishu_banner.png'];
 
   @override
   void initState() {
@@ -55,7 +51,7 @@ class _HomeCarouselState extends State<HomeCarousel> {
     return Column(
       children: [
         SizedBox(
-          height: isWeb ? 350 : 200,
+          height: isWeb ? 250 : 200,
           child: PageView.builder(
             controller: _pageController,
             onPageChanged: (index) {

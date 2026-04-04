@@ -22,5 +22,7 @@ class ApiEndpoints {
   //category
   static const category = '/api/categories';
 
-  static const userAddress='/api/customers/addresses';
+  static const userAddress = '/api/customers/addresses';
+  static const home ='/api/products/shop';
+
 }

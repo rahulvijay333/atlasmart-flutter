@@ -62,14 +62,21 @@ class _ScreenAddUpdateAddressState extends State<ScreenAddUpdateAddress> {
           if (state.actionSuccess) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text(isEdit ? 'Address updated successfully' : 'Address added successfully'),
+                content: Text(
+                  isEdit
+                      ? 'Address updated successfully'
+                      : 'Address added successfully',
+                ),
                 backgroundColor: Colors.green,
               ),
             );
             Navigator.pop(context);
           } else if (state.errorMessage != null) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.errorMessage!), backgroundColor: Colors.red),
+              SnackBar(
+                content: Text(state.errorMessage!),
+                backgroundColor: Colors.red,
+              ),
             );
           }
         },
@@ -84,14 +91,18 @@ class _ScreenAddUpdateAddressState extends State<ScreenAddUpdateAddress> {
                   label: 'Address Line 1',
                   hint: 'House No, Building Name',
                   icon: Icons.home_outlined,
-                  validator: (value) => value == null || value.isEmpty ? 'Please enter address' : null,
+                  validator: (value) => value == null || value.isEmpty
+                      ? 'Please enter address'
+                      : null,
                 ),
                 _buildTextField(
                   controller: _streetController,
                   label: 'Street',
                   hint: 'Street, Area, Colony',
                   icon: Icons.streetview_outlined,
-                  validator: (value) => value == null || value.isEmpty ? 'Please enter street' : null,
+                  validator: (value) => value == null || value.isEmpty
+                      ? 'Please enter street'
+                      : null,
                 ),
                 Row(
                   children: [
@@ -101,7 +112,9 @@ class _ScreenAddUpdateAddressState extends State<ScreenAddUpdateAddress> {
                         label: 'City',
                         hint: 'City',
                         icon: Icons.location_city_outlined,
-                        validator: (value) => value == null || value.isEmpty ? 'Enter city' : null,
+                        validator: (value) => value == null || value.isEmpty
+                            ? 'Enter city'
+                            : null,
                       ),
                     ),
                     const SizedBox(width: 16),
@@ -111,7 +124,9 @@ class _ScreenAddUpdateAddressState extends State<ScreenAddUpdateAddress> {
                         label: 'State',
                         hint: 'State',
                         icon: Icons.map_outlined,
-                        validator: (value) => value == null || value.isEmpty ? 'Enter state' : null,
+                        validator: (value) => value == null || value.isEmpty
+                            ? 'Enter state'
+                            : null,
                       ),
                     ),
                   ],
@@ -126,7 +141,8 @@ class _ScreenAddUpdateAddressState extends State<ScreenAddUpdateAddress> {
                         icon: Icons.pin_drop_outlined,
                         keyboardType: TextInputType.number,
                         validator: (value) {
-                          if (value == null || value.isEmpty) return 'Enter pincode';
+                          if (value == null || value.isEmpty)
+                            return 'Enter pincode';
                           if (value.length != 6) return 'Invalid pincode';
                           return null;
                         },
@@ -139,7 +155,9 @@ class _ScreenAddUpdateAddressState extends State<ScreenAddUpdateAddress> {
                         label: 'Country',
                         hint: 'Country',
                         icon: Icons.public_outlined,
-                        validator: (value) => value == null || value.isEmpty ? 'Enter country' : null,
+                        validator: (value) => value == null || value.isEmpty
+                            ? 'Enter country'
+                            : null,
                       ),
                     ),
                   ],

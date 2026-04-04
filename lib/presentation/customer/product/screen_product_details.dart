@@ -1,8 +1,10 @@
+import 'package:atlasmart/domain/customer/home/model/shop_product_model.dart';
 import 'package:flutter/material.dart';
-import '../../../domain/core/constants/strings.dart';
 
 class ScreenProductDetails extends StatelessWidget {
-  const ScreenProductDetails({super.key});
+  final ShopProductModel product;
+
+  const ScreenProductDetails({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +40,23 @@ class ScreenProductDetails extends StatelessWidget {
                   height: 350,
                   width: double.infinity,
                   color: Colors.grey.shade100,
-                  child: const Center(
-                    child: Icon(Icons.image, size: 100, color: Colors.grey),
-                  ),
+                  child: product.image.isNotEmpty
+                      ? Image.network(
+                          product.image,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) => const Center(
+                            child: Icon(Icons.image, size: 100, color: Colors.grey),
+                          ),
+                          loadingBuilder: (context, child, loadingProgress) {
+                            if (loadingProgress == null) return child;
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          },
+                        )
+                      : const Center(
+                          child: Icon(Icons.image, size: 100, color: Colors.grey),
+                        ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
@@ -51,7 +67,7 @@ class ScreenProductDetails extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            AppStrings.categoryPlaceholder,
+                            product.company,
                             style: Theme.of(context).textTheme.bodyMedium
                                 ?.copyWith(
                                   color: Theme.of(context).colorScheme.primary,
@@ -72,13 +88,13 @@ class ScreenProductDetails extends StatelessWidget {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        AppStrings.productTitlePlaceholder,
+                        product.name,
                         style: Theme.of(context).textTheme.headlineSmall
                             ?.copyWith(fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        "5999 Rs",
+                        "${product.price} Rs",
                         style: Theme.of(context).textTheme.titleLarge?.copyWith(
                           color: Theme.of(context).colorScheme.primary,
                           fontWeight: FontWeight.bold,
@@ -92,7 +108,7 @@ class ScreenProductDetails extends StatelessWidget {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        "This is a premium product built for excellence and durability. Experience state-of-the-art design and unmatched performance with our latest offering. Perfect for modern lifestyles.",
+                        product.description,
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           color: Colors.grey.shade700,
                           height: 1.5,
@@ -111,7 +127,7 @@ class ScreenProductDetails extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                AppStrings.sellerNamePlaceholder,
+                                product.brandName,
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                 ),

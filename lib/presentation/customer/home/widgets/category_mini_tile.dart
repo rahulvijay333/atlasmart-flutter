@@ -29,10 +29,7 @@ class CatgoryMiniTileWidget extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.grey.shade100,
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(
-                color: Colors.grey.shade200,
-                width: 1,
-              ),
+              border: Border.all(color: Colors.grey.shade200, width: 1),
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(16),

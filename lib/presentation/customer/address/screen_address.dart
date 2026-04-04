@@ -25,7 +25,10 @@ class ScreenAddress extends StatelessWidget {
         listener: (context, state) {
           if (state.errorMessage != null) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.errorMessage!), backgroundColor: Colors.red),
+              SnackBar(
+                content: Text(state.errorMessage!),
+                backgroundColor: Colors.red,
+              ),
             );
           }
         },
@@ -39,11 +42,19 @@ class ScreenAddress extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.location_on_outlined, size: 64, color: Colors.grey[400]),
+                  Icon(
+                    Icons.location_on_outlined,
+                    size: 64,
+                    color: Colors.grey[400],
+                  ),
                   const SizedBox(height: 16),
                   Text(
                     'No addresses saved yet',
-                    style: TextStyle(fontSize: 18, color: Colors.grey[600], fontWeight: FontWeight.w500),
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.grey[600],
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                   const SizedBox(height: 8),
                   Text(
@@ -79,11 +90,17 @@ class ScreenAddress extends StatelessWidget {
                         children: [
                           Row(
                             children: [
-                              Icon(Icons.home_outlined, color: AppColors.amberColor),
+                              Icon(
+                                Icons.home_outlined,
+                                color: AppColors.amberColor,
+                              ),
                               const SizedBox(width: 8),
                               const Text(
                                 'Home', // Could be dynamic if address has a label
-                                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
                               ),
                             ],
                           ),
@@ -94,13 +111,20 @@ class ScreenAddress extends StatelessWidget {
                                 onPressed: () {
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
-                                      builder: (context) => ScreenAddUpdateAddress(address: address),
+                                      builder: (context) =>
+                                          ScreenAddUpdateAddress(
+                                            address: address,
+                                          ),
                                     ),
                                   );
                                 },
                               ),
                               IconButton(
-                                icon: const Icon(Icons.delete_outline, size: 20, color: Colors.redAccent),
+                                icon: const Icon(
+                                  Icons.delete_outline,
+                                  size: 20,
+                                  color: Colors.redAccent,
+                                ),
                                 onPressed: () {
                                   _showDeleteConfirmation(context, address.id!);
                                 },

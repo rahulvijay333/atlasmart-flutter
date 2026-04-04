@@ -1,4 +1,6 @@
-import 'package:atlasmart/domain/core/constants/image.dart';import 'package:atlasmart/application/admin/category_list/category_list_bloc.dart';
+import 'package:atlasmart/application/customer/home/customer_home_bloc.dart';
+import 'package:atlasmart/domain/core/constants/image.dart';
+import 'package:atlasmart/application/admin/category_list/category_list_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -7,7 +9,6 @@ import '../../common/product_tile_card.dart';
 import '../product/screen_product_details.dart';
 import 'widgets/category_mini_tile.dart';
 import 'widgets/home_carousel.dart';
-import 'widgets/promo_banner_widget.dart';
 import 'widgets/search_bar_widget.dart';
 
 class ScreenHome extends StatelessWidget {
@@ -15,6 +16,10 @@ class ScreenHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<CustomerHomeBloc>().add(LoadingHome());
+    });
+
     final screenWidth = MediaQuery.of(context).size.width;
     final isDesktop = screenWidth > 1200;
     final isTablet = screenWidth > 700 && screenWidth <= 1200;
@@ -88,7 +93,8 @@ class ScreenHome extends StatelessWidget {
               child: BlocBuilder<CategoryListBloc, CategoryListState>(
                 builder: (context, state) {
                   return state.maybeWhen(
-                    loading: () => const Center(child: CircularProgressIndicator()),
+                    loading: () =>
+                        const Center(child: CircularProgressIndicator()),
                     success: (categoriesList) {
                       if (categoriesList.isEmpty) {
                         return const Center(child: Text('No categories found'));
@@ -125,47 +131,74 @@ class ScreenHome extends StatelessWidget {
           ),
 
           // Promo Banner Area
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: sidePadding,
-                vertical: 24,
-              ),
-              child: const PromoBannerWidget(),
-            ),
-          ),
+          // SliverToBoxAdapter(
+          //   child: Padding(
+          //     padding: EdgeInsets.symmetric(
+          //       horizontal: sidePadding,
+          //       vertical: 24,
+          //     ),
+          //     child: const PromoBannerWidget(),
+          //   ),
+          // ),
 
           // Products Header
           _buildSectionHeader(context, 'Featured Products', sidePadding),
 
           // Responsive Product Grid
-          SliverPadding(
-            padding: EdgeInsets.only(
-              left: sidePadding,
-              right: sidePadding,
-              bottom: 32,
-            ),
-            sliver: SliverGrid(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: crossAxisCount,
-                mainAxisSpacing: 20,
-                crossAxisSpacing: 16,
-                childAspectRatio: 0.75,
-              ),
-              delegate: SliverChildBuilderDelegate(
-                (context, index) => GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const ScreenProductDetails(),
-                      ),
-                    );
-                  },
-                  child: const ProductTileWidget(),
+          BlocBuilder<CustomerHomeBloc, CustomerHomeState>(
+            builder: (context, state) {
+              if (state.isLoading && state.productList.isEmpty) {
+                return const SliverFillRemaining(
+                  child: Center(child: CircularProgressIndicator()),
+                );
+              }
+
+              if (state.errorMessage != null && state.productList.isEmpty) {
+                return SliverFillRemaining(
+                  child: Center(child: Text('Error: ${state.errorMessage}')),
+                );
+              }
+
+              if (state.productList.isEmpty) {
+                return const SliverFillRemaining(
+                  child: Center(child: Text('No products found')),
+                );
+              }
+
+              return SliverPadding(
+                padding: EdgeInsets.only(
+                  left: sidePadding,
+                  right: sidePadding,
+                  bottom: 32,
                 ),
-                childCount: 12,
-              ),
-            ),
+                sliver: SliverGrid(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: crossAxisCount,
+                    mainAxisSpacing: 20,
+                    crossAxisSpacing: 16,
+                    childAspectRatio: 0.75,
+                  ),
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      final product = state.productList[index];
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => ScreenProductDetails(
+                                product: product,
+                              ),
+                            ),
+                          );
+                        },
+                        child: ProductTileWidget(product: product),
+                      );
+                    },
+                    childCount: state.productList.length,
+                  ),
+                ),
+              );
+            },
           ),
         ],
       ),
@@ -202,4 +235,3 @@ class ScreenHome extends StatelessWidget {
     );
   }
 }
-

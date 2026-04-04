@@ -13,11 +13,8 @@ class AddressState {
     required this.actionSuccess,
   });
 
-  factory AddressState.initial() => AddressState(
-        isLoading: false,
-        addresses: [],
-        actionSuccess: false,
-      );
+  factory AddressState.initial() =>
+      AddressState(isLoading: false, addresses: [], actionSuccess: false);
 
   AddressState copyWith({
     bool? isLoading,

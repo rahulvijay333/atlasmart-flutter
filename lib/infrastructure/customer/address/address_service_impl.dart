@@ -91,16 +91,18 @@ class AddressServiceImpl implements AddressService {
     final data = AddressResponseModel.fromMap(responseData);
     final addresses = data.data?.addresses ?? [];
 
-    return addresses.map(
-      (e) => AddressModel(
-        id: e.id,
-        address1: e.address1 ?? '',
-        street: e.street ?? '',
-        city: e.city ?? '',
-        state: e.state ?? '',
-        pincode: e.pincode ?? '',
-        country: e.country ?? '',
-      ),
-    ).toList();
+    return addresses
+        .map(
+          (e) => AddressModel(
+            id: e.id,
+            address1: e.address1 ?? '',
+            street: e.street ?? '',
+            city: e.city ?? '',
+            state: e.state ?? '',
+            pincode: e.pincode ?? '',
+            country: e.country ?? '',
+          ),
+        )
+        .toList();
   }
 }
