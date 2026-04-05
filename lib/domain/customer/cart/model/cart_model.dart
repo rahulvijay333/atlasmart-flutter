@@ -9,6 +9,8 @@ class CartModel {
   final String price;
   final int qty;
 
+  
+
   CartModel({
     required this.id,
     required this.productId,

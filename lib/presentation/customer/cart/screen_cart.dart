@@ -56,34 +56,29 @@ class ScreenCart extends StatelessWidget {
           body: state.isloading && state.cartList.isEmpty
               ? const Center(child: CircularProgressIndicator())
               : state.cartList.isEmpty && !state.isloading
-                  ? _buildEmptyState(context)
-                  : CustomScrollView(
-                      slivers: [
-                        SliverPadding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 16,
-                            vertical: 8,
-                          ),
-                          sliver: SliverList(
-                            delegate: SliverChildBuilderDelegate(
-                              (context, index) {
-                                final item = state.cartList[index];
-                                return Center(
-                                  child: ConstrainedBox(
-                                    constraints: const BoxConstraints(
-                                      maxWidth: 600,
-                                    ),
-                                    child: _CartItemTile(item: item),
-                                  ),
-                                );
-                              },
-                              childCount: state.cartList.length,
+              ? _buildEmptyState(context)
+              : CustomScrollView(
+                  slivers: [
+                    SliverPadding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 8,
+                      ),
+                      sliver: SliverList(
+                        delegate: SliverChildBuilderDelegate((context, index) {
+                          final item = state.cartList[index];
+                          return Center(
+                            child: ConstrainedBox(
+                              constraints: const BoxConstraints(maxWidth: 600),
+                              child: _CartItemTile(item: item),
                             ),
-                          ),
-                        ),
-                        const SliverToBoxAdapter(child: SizedBox(height: 80)),
-                      ],
+                          );
+                        }, childCount: state.cartList.length),
+                      ),
                     ),
+                    const SliverToBoxAdapter(child: SizedBox(height: 80)),
+                  ],
+                ),
           bottomNavigationBar: state.cartList.isNotEmpty
               ? _buildBottomCheckoutBar(context, totalAmount)
               : null,
@@ -112,15 +107,12 @@ class ScreenCart extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 24),
-        ElevatedButton(
-          onPressed: () => Navigator.pop(context),
-          child: const Text('Start Shopping'),
-        ),
       ],
     );
   }
 
   Widget _buildBottomCheckoutBar(BuildContext context, double totalAmount) {
+    final cart = BlocProvider.of<CartBloc>(context);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
       decoration: BoxDecoration(
@@ -139,9 +131,12 @@ class ScreenCart extends StatelessWidget {
           children: [
             Expanded(
               child: Column(
+                spacing: 2,
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  if (cart.state.ismodifyingCart == true)
+                    LinearProgressIndicator(),
                   Text(
                     'Total',
                     style: TextStyle(color: Colors.grey.shade600, fontSize: 13),
@@ -286,9 +281,15 @@ class _CartItemTile extends StatelessWidget {
                     ),
                     IconButton(
                       onPressed: () {
-                        context.read<CartBloc>().add(DeleteCart(productID: item.id));
+                        context.read<CartBloc>().add(
+                          DeleteCart(productID: item.id),
+                        );
                       },
-                      icon: const Icon(Icons.delete_outline, size: 20, color: Colors.redAccent),
+                      icon: const Icon(
+                        Icons.delete_outline,
+                        size: 20,
+                        color: Colors.redAccent,
+                      ),
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(),
                     ),
@@ -329,7 +330,9 @@ class _CartItemTile extends StatelessWidget {
                                   ),
                                 );
                               } else {
-                                context.read<CartBloc>().add(DeleteCart(productID: item.id));
+                                context.read<CartBloc>().add(
+                                  DeleteCart(productID: item.id),
+                                );
                               }
                             },
                           ),
@@ -337,19 +340,23 @@ class _CartItemTile extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(horizontal: 8),
                             child: Text(
                               "${item.qty}",
-                              style: const TextStyle(fontWeight: FontWeight.bold),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                           _QtyButton(
                             icon: Icons.add,
                             onTap: () {
-                              context.read<CartBloc>().add(
-                                AddorUpdateCart(
-                                  productID: item.productId,
-                                  cartID: item.id,
-                                  qty: (item.qty + 1).toString(),
-                                ),
-                              );
+                              if (item.qty < item.stock) {
+                                context.read<CartBloc>().add(
+                                  AddorUpdateCart(
+                                    productID: item.productId,
+                                    cartID: item.id,
+                                    qty: (item.qty + 1).toString(),
+                                  ),
+                                );
+                              }
                             },
                           ),
                         ],

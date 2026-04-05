@@ -20,7 +20,7 @@ class CartServiceImpl implements CartService {
     String qty,
   ) async {
     try {
-      final response = await dio.post(
+      final response = await dio.put(
         ApiEndpoints.cart,
         data: {
           "product_id": productId,
