@@ -5,7 +5,7 @@ class Cart {
   String? productId;
   int? quantity;
   String? totalPrice;
- 
+
   String? productName;
   String? brandName;
   String? companyName;
@@ -17,7 +17,7 @@ class Cart {
     this.productId,
     this.quantity,
     this.totalPrice,
-  
+
     this.productName,
     this.brandName,
     this.companyName,
@@ -30,7 +30,7 @@ class Cart {
     productId: data['product_id'] as String?,
     quantity: data['quantity'] as int?,
     totalPrice: data['total_price'] as String?,
-  
+
     productName: data['product_name'] as String?,
     brandName: data['brand_name'] as String?,
     companyName: data['company_name'] as String?,

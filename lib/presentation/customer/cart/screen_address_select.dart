@@ -1,6 +1,8 @@
 import 'package:atlasmart/application/customer/address/address_bloc.dart';
+import 'package:atlasmart/application/customer/checkout/checkout_bloc.dart';
 import 'package:atlasmart/domain/customer/address/model/address_model.dart';
 import 'package:atlasmart/presentation/customer/address/screen_add_update_address.dart';
+import 'package:atlasmart/presentation/customer/cart/screen_checkout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -75,13 +77,13 @@ class _ScreenAddressSelectState extends State<ScreenAddressSelect> {
                             onEdit: () {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
-                                  builder: (context) => ScreenAddUpdateAddress(
-                                    address: address,
-                                  ),
+                                  builder: (context) =>
+                                      ScreenAddUpdateAddress(address: address),
                                 ),
                               );
                             },
-                            onDelete: () => _confirmDelete(context, address.id!),
+                            onDelete: () =>
+                                _confirmDelete(context, address.id!),
                           );
                         },
                       ),
@@ -135,7 +137,10 @@ class _ScreenAddressSelectState extends State<ScreenAddressSelect> {
     );
   }
 
-  Widget _buildConfirmButton(BuildContext context, List<AddressModel> addresses) {
+  Widget _buildConfirmButton(
+    BuildContext context,
+    List<AddressModel> addresses,
+  ) {
     final bool isAnySelected = _selectedAddressId != null;
 
     return Container(
@@ -156,11 +161,17 @@ class _ScreenAddressSelectState extends State<ScreenAddressSelect> {
           child: ElevatedButton(
             onPressed: isAnySelected
                 ? () {
-                    final selected = addresses.firstWhere(
-                      (e) => e.id == _selectedAddressId,
+                    if (_selectedAddressId != null) {
+                      BlocProvider.of<CheckoutBloc>(
+                        context,
+                      ).add(Checkout(selectAddressId: _selectedAddressId!));
+                    }
+
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const ScreenCheckout(),
+                      ),
                     );
-                    debugPrint('Delivering to: ${selected.address1}');
-                    // Final navigation or payment step goes here.
                   }
                 : null,
             style: ElevatedButton.styleFrom(
@@ -173,7 +184,7 @@ class _ScreenAddressSelectState extends State<ScreenAddressSelect> {
               disabledBackgroundColor: Colors.grey.shade300,
             ),
             child: const Text(
-              'Deliver here and Checkout',
+              'Confirm Address',
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
           ),
@@ -313,8 +324,11 @@ class _NoAddressFound extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 40),
         child: Column(
           children: [
-            Icon(Icons.location_off_outlined,
-                size: 60, color: Colors.grey.shade300),
+            Icon(
+              Icons.location_off_outlined,
+              size: 60,
+              color: Colors.grey.shade300,
+            ),
             const SizedBox(height: 16),
             Text(
               'No addresses found.\nAdd one to proceed.',

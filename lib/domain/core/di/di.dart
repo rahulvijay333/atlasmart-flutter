@@ -7,6 +7,7 @@ import 'package:atlasmart/application/admin/category_list/category_list_bloc.dar
 import 'package:atlasmart/application/admin/users/all_users_bloc.dart';
 import 'package:atlasmart/application/customer/address/address_bloc.dart';
 import 'package:atlasmart/application/customer/cart/cart_bloc.dart';
+import 'package:atlasmart/application/customer/checkout/checkout_bloc.dart';
 import 'package:atlasmart/application/customer/forgot_password/forgot_password_bloc.dart';
 import 'package:atlasmart/application/customer/home/customer_home_bloc.dart';
 import 'package:atlasmart/application/login/login_bloc.dart';
@@ -20,6 +21,7 @@ import 'package:atlasmart/domain/admin/profile/admin_profile_service.dart';
 import 'package:atlasmart/domain/admin/users/user_service.dart';
 import 'package:atlasmart/domain/customer/address/address_service.dart';
 import 'package:atlasmart/domain/customer/cart/cart_service.dart';
+import 'package:atlasmart/domain/customer/checkout/checkout_service.dart';
 import 'package:atlasmart/domain/customer/home/home_service.dart';
 import 'package:atlasmart/domain/login/login_service.dart';
 import 'package:atlasmart/domain/customer/profile/profile_service.dart';
@@ -31,6 +33,7 @@ import 'package:atlasmart/infrastructure/admin/manage_products/manage_product_se
 import 'package:atlasmart/infrastructure/admin/users/user_service_impl.dart';
 import 'package:atlasmart/infrastructure/customer/address/address_service_impl.dart';
 import 'package:atlasmart/infrastructure/customer/cart/cart_service_impl.dart';
+import 'package:atlasmart/infrastructure/customer/checkout/checkout_service_impl.dart';
 import 'package:atlasmart/infrastructure/customer/home/home_service_impl.dart';
 import 'package:atlasmart/infrastructure/login/login_service_impl.dart';
 import 'package:atlasmart/infrastructure/profile/profile_service_impl.dart';
@@ -105,7 +108,8 @@ void setupDI() {
   );
   sl.registerLazySingleton<HomeService>(() => HomeServiceImpl(dio: sl<Dio>()));
 
-  sl.registerLazySingleton<CartService>(() => CartServiceImpl(dio: sl<Dio>()),);
+  sl.registerLazySingleton<CartService>(() => CartServiceImpl(dio: sl<Dio>()));
+  sl.registerLazySingleton<CheckoutService>(() => CheckoutServiceImpl(dio: sl<Dio>()),);
 
   // -------------------------
   // 4. Blocs
@@ -145,5 +149,6 @@ void setupDI() {
   sl.registerFactory(() => CategoryListBloc(sl<ManageCategoryService>()));
   sl.registerFactory(() => AddressBloc(sl<AddressService>()));
   sl.registerFactory(() => CustomerHomeBloc(sl<HomeService>()));
-  sl.registerFactory(() => CartBloc(sl<CartService>()),);
+  sl.registerFactory(() => CartBloc(sl<CartService>()));
+  sl.registerFactory(() => CheckoutBloc(sl<CheckoutService>()),);
 }
