@@ -1,10 +1,10 @@
 import 'package:atlasmart/application/customer/cart/cart_bloc.dart';
 import 'package:atlasmart/domain/customer/cart/model/cart_model.dart';
+import 'package:atlasmart/presentation/customer/cart/screen_address_select.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../domain/core/constants/strings.dart';
-import '../../../domain/core/util/payment_stripe/stripe_service.dart';
 
 class ScreenCart extends StatelessWidget {
   const ScreenCart({super.key});
@@ -136,10 +136,10 @@ class ScreenCart extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   if (cart.state.ismodifyingCart == true)
-                    LinearProgressIndicator(),
-                  Text(
+                    const LinearProgressIndicator(),
+                  const Text(
                     'Total',
-                    style: TextStyle(color: Colors.grey.shade600, fontSize: 13),
+                    style: TextStyle(color: Colors.grey, fontSize: 13),
                   ),
                   Text(
                     '${totalAmount.toStringAsFixed(0)} Rs',
@@ -165,12 +165,11 @@ class ScreenCart extends StatelessWidget {
                   ),
                 ),
                 child: ElevatedButton(
-                  onPressed: () async {
-                    await StripeService.instance.startPayment(
-                      context: context,
-                      onSuccess: () => debugPrint("Success!"),
-                      onCancel: () => debugPrint("Cancelled"),
-                      onError: (err) => debugPrint("Error: $err"),
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const ScreenAddressSelect(),
+                      ),
                     );
                   },
                   style: ElevatedButton.styleFrom(
