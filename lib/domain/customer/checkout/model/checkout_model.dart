@@ -1,13 +1,15 @@
 class CheckoutModel {
   final String razorpayOrderId;
+  final String razorpayKey;
 
   final Summary summary;
 
-  CheckoutModel({required this.razorpayOrderId, required this.summary});
+  CheckoutModel({required this.razorpayOrderId, required this.summary, required this.razorpayKey});
 
   factory CheckoutModel.fromJson(Map<String, dynamic> json) {
     return CheckoutModel(
       razorpayOrderId: json['razorpay_order_id'] as String,
+      razorpayKey: json['razorpayId'],
 
       summary: Summary.fromJson(json['summary']),
     );

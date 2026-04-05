@@ -7,6 +7,7 @@ class Data {
   String? checkoutGroupId;
   String? clientSecret;
   String? razorpayOrderId;
+  String?  razorpayId;
   String? currency;
   Summary? summary;
   List<Item>? items;
@@ -17,13 +18,14 @@ class Data {
     this.razorpayOrderId,
     this.currency,
     this.summary,
-    this.items,
+    this.items,this.razorpayId
   });
 
   factory Data.fromMap(Map<String, dynamic> data) => Data(
     checkoutGroupId: data['checkout_group_id'] as String?,
     clientSecret: data['clientSecret'] as String?,
     razorpayOrderId: data['razorpay_order_id'] as String?,
+    razorpayId: data['razorpayId'] as String?,
     currency: data['currency'] as String?,
     summary: data['summary'] == null
         ? null

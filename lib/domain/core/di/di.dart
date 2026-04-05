@@ -10,6 +10,7 @@ import 'package:atlasmart/application/customer/cart/cart_bloc.dart';
 import 'package:atlasmart/application/customer/checkout/checkout_bloc.dart';
 import 'package:atlasmart/application/customer/forgot_password/forgot_password_bloc.dart';
 import 'package:atlasmart/application/customer/home/customer_home_bloc.dart';
+import 'package:atlasmart/application/customer/payment_status/payment_status_bloc.dart';
 import 'package:atlasmart/application/login/login_bloc.dart';
 import 'package:atlasmart/application/profile_admin_customer/admin/bloc/admin_profile_bloc.dart';
 import 'package:atlasmart/application/admin/inventory/inventory_bloc.dart';
@@ -151,4 +152,5 @@ void setupDI() {
   sl.registerFactory(() => CustomerHomeBloc(sl<HomeService>()));
   sl.registerFactory(() => CartBloc(sl<CartService>()));
   sl.registerFactory(() => CheckoutBloc(sl<CheckoutService>()),);
+  sl.registerFactory(() => PaymentStatusBloc(sl<CheckoutService>()),);
 }

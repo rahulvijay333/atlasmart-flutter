@@ -26,4 +26,5 @@ class ApiEndpoints {
   static const home = '/api/products/shop';
   static const cart = '/api/customers/cart';
   static const checkout ='/api/orders/checkout';
+  static const verifyPayment='/api/orders/verify-payment';
 }

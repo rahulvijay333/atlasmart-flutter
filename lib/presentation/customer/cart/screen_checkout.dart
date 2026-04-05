@@ -1,6 +1,11 @@
 import 'package:atlasmart/application/customer/checkout/checkout_bloc.dart';
+import 'package:atlasmart/application/customer/payment_status/payment_status_bloc.dart';
+import 'package:atlasmart/presentation/common/snack_bar.dart';
+import 'package:atlasmart/presentation/customer/cart/screen_payment_process.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../domain/core/util/razorpay/razorpay_util.dart';
 
 class ScreenCheckout extends StatelessWidget {
   const ScreenCheckout({super.key});
@@ -21,15 +26,13 @@ class ScreenCheckout extends StatelessWidget {
           body: state.isloading
               ? const Center(child: CircularProgressIndicator())
               : state.error != null
-                  ? _buildErrorState(context, state.error!)
-                  : state.checkoutData == null
-                      ? _buildEmptyState(context)
-                      : ListView(
-                          padding: const EdgeInsets.all(16),
-                          children: [
-                            _buildOrderSummary(context, state),
-                          ],
-                        ),
+              ? _buildErrorState(context, state.error!)
+              : state.checkoutData == null
+              ? _buildEmptyState(context)
+              : ListView(
+                  padding: const EdgeInsets.all(16),
+                  children: [_buildOrderSummary(context, state)],
+                ),
           bottomNavigationBar: state.checkoutData != null
               ? _buildBottomBar(context, state)
               : null,
@@ -166,12 +169,41 @@ class ScreenCheckout extends StatelessWidget {
           width: double.infinity,
           child: ElevatedButton(
             onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(
-                    'Initiating Payment with Order ID: ${state.checkoutData!.razorpayOrderId}',
-                  ),
-                ),
+              final data = state.checkoutData;
+
+              final razorpay = RazorpayUtil(
+                onSuccess: (paymentId, orderId, signature) {
+                  print("SUCCESS: $paymentId");
+
+                  if (context.mounted) {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return ScreenPaymentProcess(
+                            orderId: orderId,
+                            paymentId: paymentId,
+                            signature: signature,
+                          );
+                        },
+                      ),
+                    );
+                  }
+                },
+                onError: (error) {
+                  AppSnackBar.show(context, error);
+                },
+                onCancel: () {
+                  AppSnackBar.show(context, 'Payment Cancelled');
+                },
+              );
+
+              razorpay.open(
+                key: data?.razorpayKey ?? '',
+                amount: (double.parse(data?.summary.grandTotal ?? '0.0') * 100)
+                    .round(), // in paise
+                name: "AtlasMart",
+                description: '',
+                orderId: data?.razorpayOrderId ?? '',
               );
             },
             style: ElevatedButton.styleFrom(
