@@ -7,6 +7,3 @@ class Checkout extends CheckoutEvent {
 
   Checkout({required this.selectAddressId});
 }
-
-
-

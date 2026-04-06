@@ -4,7 +4,11 @@ class CheckoutModel {
 
   final Summary summary;
 
-  CheckoutModel({required this.razorpayOrderId, required this.summary, required this.razorpayKey});
+  CheckoutModel({
+    required this.razorpayOrderId,
+    required this.summary,
+    required this.razorpayKey,
+  });
 
   factory CheckoutModel.fromJson(Map<String, dynamic> json) {
     return CheckoutModel(

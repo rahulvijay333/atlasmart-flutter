@@ -25,6 +25,8 @@ class ApiEndpoints {
   static const userAddress = '/api/customers/addresses';
   static const home = '/api/products/shop';
   static const cart = '/api/customers/cart';
-  static const checkout ='/api/orders/checkout';
-  static const verifyPayment='/api/orders/verify-payment';
+  static const checkout = '/api/orders/checkout';
+  static const verifyPayment = '/api/orders/verify-payment';
+  static const order='/api/orders';
+  static const purchasedProducts='/api/orders/purchased-products';
 }

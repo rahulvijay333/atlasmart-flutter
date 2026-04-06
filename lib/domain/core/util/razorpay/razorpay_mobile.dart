@@ -1,21 +1,21 @@
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class RazorpayImpl {
-  final Function(String paymentId,String orderId,String signatur)? onSuccess;
+  final Function(String paymentId, String orderId, String signatur)? onSuccess;
   final Function(String error)? onError;
   final Function()? onCancel;
 
   late Razorpay _razorpay;
 
-  RazorpayImpl({
-    this.onSuccess,
-    this.onError,
-    this.onCancel,
-  }) {
+  RazorpayImpl({this.onSuccess, this.onError, this.onCancel}) {
     _razorpay = Razorpay();
 
     _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, (PaymentSuccessResponse res) {
-      onSuccess?.call(res.paymentId ?? "",res.orderId ?? '',res.signature ?? '');
+      onSuccess?.call(
+        res.paymentId ?? "",
+        res.orderId ?? '',
+        res.signature ?? '',
+      );
     });
 
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, (PaymentFailureResponse res) {
@@ -33,7 +33,7 @@ class RazorpayImpl {
     required int amount,
     required String name,
     required String description,
-    required String orderId
+    required String orderId,
     // required String email,
     // required String contact,
   }) {
@@ -42,7 +42,7 @@ class RazorpayImpl {
       'amount': amount,
       'name': name,
       'description': description,
-       'order_id': orderId,
+      'order_id': orderId,
       // 'prefill': {
       //   'contact': contact,
       //   'email': email,
