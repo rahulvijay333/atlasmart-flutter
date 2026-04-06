@@ -1,9 +1,11 @@
 import 'package:atlasmart/application/customer/orders/orders_bloc.dart';
 import 'package:atlasmart/domain/customer/orders/model/ordered_product_model.dart';
+import 'package:atlasmart/presentation/customer/orders/screen_order_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../domain/core/constants/colors.dart';
+import '../../../domain/core/util/data_format.dart';
 
 class ScreenOrders extends StatefulWidget {
   const ScreenOrders({super.key});
@@ -30,26 +32,31 @@ class _ScreenOrdersState extends State<ScreenOrders> {
         elevation: 0,
         surfaceTintColor: Colors.transparent,
       ),
-      body: BlocBuilder<OrdersBloc, OrdersState>(
-        builder: (context, state) {
-          return state.when(
-            initial: () => const Center(child: CircularProgressIndicator()),
-            loading: () => const Center(child: CircularProgressIndicator()),
-            failure: () => _buildErrorState(context),
-            success: (orders) {
-              if (orders.isEmpty) {
-                return _buildEmptyState(context);
-              }
-              return ListView.builder(
-                padding: const EdgeInsets.all(16),
-                itemCount: orders.length,
-                itemBuilder: (context, index) {
-                  return _OrderCard(order: orders[index]);
+      body: Center(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: 600),
+          child: BlocBuilder<OrdersBloc, OrdersState>(
+            builder: (context, state) {
+              return state.when(
+                initial: () => const Center(child: CircularProgressIndicator()),
+                loading: () => const Center(child: CircularProgressIndicator()),
+                failure: () => _buildErrorState(context),
+                success: (orders) {
+                  if (orders.isEmpty) {
+                    return _buildEmptyState(context);
+                  }
+                  return ListView.builder(
+                    padding: const EdgeInsets.all(16),
+                    itemCount: orders.length,
+                    itemBuilder: (context, index) {
+                      return _OrderCard(order: orders[index]);
+                    },
+                  );
                 },
               );
             },
-          );
-        },
+          ),
+        ),
       ),
     );
   }
@@ -110,7 +117,11 @@ class _OrderCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // Future order details navigation
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => ScreenOrderDetails(orderId: order.orderId),
+          ),
+        );
       },
       child: Container(
         margin: const EdgeInsets.only(bottom: 16),
@@ -136,7 +147,7 @@ class _OrderCard extends StatelessWidget {
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  order.purchaseDate,
+                  CustomDateFormat.ddmmmyyyWithTime(order.purchaseDate),
                   style: TextStyle(color: Colors.grey.shade600, fontSize: 13),
                 ),
               ],
