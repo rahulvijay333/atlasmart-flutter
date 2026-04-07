@@ -29,4 +29,5 @@ class ApiEndpoints {
   static const verifyPayment = '/api/orders/verify-payment';
   static const order='/api/orders';
   static const purchasedProducts='/api/orders/purchased-products';
+  static const invoiceDownload ='/api/orders/';
 }

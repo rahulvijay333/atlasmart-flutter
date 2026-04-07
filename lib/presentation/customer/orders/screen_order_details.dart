@@ -1,9 +1,13 @@
 import 'package:atlasmart/application/customer/order_details/order_details_bloc.dart';
+import 'package:atlasmart/domain/core/constants/colors.dart';
 import 'package:atlasmart/domain/customer/orders/model/order_detail_model.dart';
+import 'package:atlasmart/domain/endpoints/api_endpoints.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../domain/core/di/di.dart';
 import '../../../domain/core/util/data_format.dart';
+import '../../../domain/core/util/invoice_download/invoice_service.dart';
 
 class ScreenOrderDetails extends StatefulWidget {
   final String orderId;
@@ -21,6 +25,8 @@ class _ScreenOrderDetailsState extends State<ScreenOrderDetails> {
       OrderDetailsEvent.getOrderDetails(widget.orderId),
     );
   }
+
+  bool isDownloading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -98,6 +104,37 @@ class _ScreenOrderDetailsState extends State<ScreenOrderDetails> {
             'Status',
             'Processing',
             valueColor: Colors.orange.shade700,
+          ),
+          const SizedBox(height: 8),
+          _buildInvoiceDownload(
+            'Invoice',
+            'Download',
+            loading: isDownloading,
+            valueColor: AppColors.whiteColor,
+            ontap: () async {
+              if (isDownloading == false) {
+                setState(() {
+                  isDownloading = true;
+                });
+                final invoiceService = sl<InvoiceService>();
+
+                try {
+                  await invoiceService.downloadInvoice(
+                    url:
+                        "${ApiEndpoints.invoiceDownload}${widget.orderId}/invoice",
+                    fileName: "invoice_${order.orderNumber}",
+                  );
+                } catch (e) {
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(SnackBar(content: Text(e.toString())));
+                } finally {
+                  setState(() {
+                    isDownloading = false;
+                  });
+                }
+              }
+            },
           ),
         ],
       ),
@@ -277,6 +314,55 @@ class _ScreenOrderDetailsState extends State<ScreenOrderDetails> {
           style: TextStyle(
             fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
             color: valueColor,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildInvoiceDownload(
+    String label,
+    String value, {
+    bool isBold = false,
+    Color? valueColor,
+    Function()? ontap,
+    bool loading = false,
+  }) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(label, style: TextStyle(color: Colors.grey.shade700)),
+        GestureDetector(
+          onTap: ontap,
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              color: loading ? null : AppColors.amberColor,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.only(
+                left: 8.0,
+                right: 8,
+                top: 5,
+                bottom: 5,
+              ),
+              child: loading == true
+                  ? SizedBox(
+                      width: 25,
+                      height: 25,
+
+                      child: Center(child: CircularProgressIndicator()),
+                    )
+                  : Text(
+                      value,
+                      style: TextStyle(
+                        fontWeight: isBold
+                            ? FontWeight.bold
+                            : FontWeight.normal,
+                        color: valueColor,
+                      ),
+                    ),
+            ),
           ),
         ),
       ],

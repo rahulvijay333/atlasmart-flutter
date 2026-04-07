@@ -55,6 +55,7 @@ import '../../../infrastructure/interceptor/interceptor.dart';
 import '../../customer/registration/registration_service.dart';
 import '../../token/token_storage.dart';
 import '../config/app_config.dart';
+import '../util/invoice_download/invoice_service.dart';
 
 final sl = GetIt.instance;
 
@@ -118,7 +119,10 @@ void setupDI() {
     () => CheckoutServiceImpl(dio: sl<Dio>()),
   );
 
-  sl.registerLazySingleton<OrderService>(() => OrderServiceImpl(dio: sl<Dio>()),);
+  sl.registerLazySingleton<OrderService>(
+    () => OrderServiceImpl(dio: sl<Dio>()),
+  );
+  sl.registerLazySingleton<InvoiceService>(() => InvoiceService(sl<Dio>()));
 
   // -------------------------
   // 4. Blocs
@@ -161,6 +165,6 @@ void setupDI() {
   sl.registerFactory(() => CartBloc(sl<CartService>()));
   sl.registerFactory(() => CheckoutBloc(sl<CheckoutService>()));
   sl.registerFactory(() => PaymentStatusBloc(sl<CheckoutService>()));
-  sl.registerFactory(() => OrdersBloc(sl<OrderService>()),);
-  sl.registerFactory(() => OrderDetailsBloc(sl<OrderService>()),);
+  sl.registerFactory(() => OrdersBloc(sl<OrderService>()));
+  sl.registerFactory(() => OrderDetailsBloc(sl<OrderService>()));
 }
