@@ -1,7 +1,10 @@
 import 'package:atlasmart/application/admin/category_list/category_list_bloc.dart';
 import 'package:atlasmart/domain/core/constants/strings.dart';
+import 'package:atlasmart/presentation/customer/category/screen_category_products.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../application/customer/home/customer_home_bloc.dart';
 
 class ScreenCategory extends StatelessWidget {
   const ScreenCategory({super.key});
@@ -63,7 +66,18 @@ class ScreenCategory extends StatelessWidget {
                         ),
                         child: InkWell(
                           onTap: () {
-                            // Navigation lator by user
+                            BlocProvider.of<CustomerHomeBloc>(context).add(
+                              SearchByCategory(categoryId: category.id ?? ''),
+                            );
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return ScreenCategoryProducts(categoryName: category.categoryName,
+                                    categoryId: category.id ?? '',
+                                  );
+                                },
+                              ),
+                            );
                           },
                           borderRadius: BorderRadius.circular(16),
                           child: Column(

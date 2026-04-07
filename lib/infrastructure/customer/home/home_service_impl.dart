@@ -28,6 +28,7 @@ class HomeServiceImpl implements HomeService {
         final product = data
             .map(
               (e) => ShopProductModel(
+                id: e.id ?? '',
                 name: e.name ?? '',
                 image: e.imageUrl ?? '',
                 brandName: e.brandName ?? '',
@@ -42,7 +43,89 @@ class HomeServiceImpl implements HomeService {
 
         return product;
       } else {
-        throw Exception('Failed to fetch addresses');
+        throw Exception('Failed to fetch home products');
+      }
+    } on DioException catch (e) {
+      log(e.toString());
+      throw DioErrorHandler.handle(e);
+    }
+  }
+
+  @override
+  Future<dynamic> searchProduct(String searchKey) async {
+    try {
+      final response = await dio.get(
+        ApiEndpoints.home,
+        queryParameters: {'search': searchKey},
+      );
+
+      if (response.statusCode == 200) {
+        final data =
+            ShopProductlistResponseModel.fromMap(
+              response.data,
+            ).data?.products ??
+            [];
+
+        final product = data
+            .map(
+              (e) => ShopProductModel(
+                id: e.id ?? '',
+                name: e.name ?? '',
+                image: e.imageUrl ?? '',
+                brandName: e.brandName ?? '',
+                company: e.companyName ?? '',
+                stock: e.stock ?? 0,
+                price: e.price ?? '',
+                description: e.description ?? '',
+                categoryName: e.categoryName ?? '',
+              ),
+            )
+            .toList();
+
+        return product;
+      } else {
+        throw Exception('Failed to search products');
+      }
+    } on DioException catch (e) {
+      log(e.toString());
+      throw DioErrorHandler.handle(e);
+    }
+  }
+  
+  @override
+  Future<dynamic> searchByCategory(String categoryId)async {
+     try {
+      final response = await dio.get(
+        ApiEndpoints.home,
+        queryParameters: {'category': categoryId},
+      );
+
+      if (response.statusCode == 200) {
+        final data =
+            ShopProductlistResponseModel.fromMap(
+              response.data,
+            ).data?.products ??
+            [];
+
+        final product = data
+            .map(
+              (e) => ShopProductModel(
+                id: e.id ?? '',
+                name: e.name ?? '',
+                image: e.imageUrl ?? '',
+                brandName: e.brandName ?? '',
+                company: e.companyName ?? '',
+                stock: e.stock ?? 0,
+                price: e.price ?? '',
+                description: e.description ?? '',
+                categoryName: e.categoryName ?? '',
+              ),
+            )
+            .toList();
+
+        return product;
+      } else {
+        throw Exception('Failed to search products');
       }
     } on DioException catch (e) {
       log(e.toString());

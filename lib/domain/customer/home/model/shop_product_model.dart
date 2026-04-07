@@ -1,4 +1,5 @@
 class ShopProductModel {
+  final String id;
   final String name;
   final String image;
   final String brandName;
@@ -7,8 +8,10 @@ class ShopProductModel {
   final String price;
   final String description;
   final String categoryName;
+ 
 
   ShopProductModel({
+    required this.id,
     required this.name,
     required this.image,
     required this.brandName,

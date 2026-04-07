@@ -182,19 +182,19 @@ class ScreenProfile extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              Center(
-                child: _buildSectionCard(
-                  context,
-                  title: AppStrings.settings,
-                  children: [
-                    ListTileWidget(title: AppStrings.appSettings, ontap: () {}),
-                    ListTileWidget(
-                      title: AppStrings.helpAndSupport,
-                      ontap: () {},
-                    ),
-                  ],
-                ),
-              ),
+              // Center(
+              //   child: _buildSectionCard(
+              //     context,
+              //     title: AppStrings.settings,
+              //     children: [
+              //       ListTileWidget(title: AppStrings.appSettings, ontap: () {}),
+              //       ListTileWidget(
+              //         title: AppStrings.helpAndSupport,
+              //         ontap: () {},
+              //       ),
+              //     ],
+              //   ),
+              // ),
             ]),
           ),
         ),
