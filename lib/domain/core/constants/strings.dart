@@ -114,8 +114,14 @@ class AppStrings {
   static const String searchOrdersHint = 'Search Orders...';
   static const String totalAmount = 'Total Amount';
   static const String statusDelivered = 'Delivered';
+  static const String statusShipped = 'Shipped';
   static const String statusPending = 'Pending';
   static const String statusProcessing = 'Processing';
+  static const String statusCanceled = 'Canceled';
+  static const String updateStatus = 'Update Status';
+  static const String orderStatus = 'Order Status';
+  static const String note = 'Note';
+  static const String addNoteHint = 'Add a note for this status update...';
 
   static const String searchPaymentsHint = 'Search Payments...';
   static const String paymentIdPrefix = 'Payment ID: ';

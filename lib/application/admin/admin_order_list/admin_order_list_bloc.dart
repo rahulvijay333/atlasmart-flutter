@@ -23,5 +23,23 @@ class AdminOrderListBloc
         emit(state.copyWith(isloading: false, error: e.toString()));
       }
     });
+
+    on<UpdateOrderStatus>((event, emit) async {
+      emit(state.copyWith(isUpdating: true, updateError: null, updateSuccess: null));
+
+      try {
+        await manageOrderService.updateOrderStatus(
+          orderId: event.orderId,
+          status: event.status,
+          note: event.note,
+        );
+
+        // Success: Reload orders and signal success
+        add(LoadingAdminOrders());
+        emit(state.copyWith(isUpdating: false, updateSuccess: true));
+      } catch (e) {
+        emit(state.copyWith(isUpdating: false, updateError: e.toString()));
+      }
+    });
   }
 }

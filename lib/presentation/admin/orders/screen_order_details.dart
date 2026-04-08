@@ -1,4 +1,6 @@
+import 'package:atlasmart/application/admin/admin_order_list/admin_order_list_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../domain/admin/manage_orders/model/manage_order_model.dart';
 import '../../../domain/core/constants/colors.dart';
 import '../../../domain/core/constants/strings.dart';
@@ -10,50 +12,218 @@ class ScreenAdminOrderDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Determine status details
-    final currentStatus = order.statusHistory.isNotEmpty
-        ? order.statusHistory.last.status.toLowerCase()
-        : 'pending';
-    final isDelivered = currentStatus == 'delivered';
-    final isPending = currentStatus == 'pending';
+    return BlocListener<AdminOrderListBloc, AdminOrderListState>(
+      listenWhen: (previous, current) =>
+          previous.isUpdating != current.isUpdating ||
+          previous.updateSuccess != current.updateSuccess ||
+          previous.updateError != current.updateError,
+      listener: (context, state) {
+        if (state.updateSuccess == true) {
+          Navigator.of(context, rootNavigator: true).pop(); // Close dialog
+          // ScaffoldMessenger.of(context).showSnackBar(
+          //   const SnackBar(
+          //     content: Text('Order status updated successfully'),
+          //     backgroundColor: Colors.green,
+          //   ),
+          // );
+        } else if (state.updateError != null) {
+          // ScaffoldMessenger.of(context).showSnackBar(
+          //   SnackBar(
+          //     content: Text(state.updateError!),
+          //     backgroundColor: Colors.red,
+          //   ),
+          // );
+        }
+      },
+      child: BlocBuilder<AdminOrderListBloc, AdminOrderListState>(
+        builder: (context, state) {
+          // Find the latest version of this order from the Bloc state
+          final currentOrder = state.orderList.firstWhere(
+            (o) => o.orderId == order.orderId,
+            orElse: () => order,
+          );
 
-    return Scaffold(
-      backgroundColor: Colors.grey[50],
-      appBar: AppBar(
-        title: Text('Order ${order.orderNumber}'),
-        centerTitle: true,
+          // Determine status details based on the latest data
+          final currentStatus = currentOrder.statusHistory.isNotEmpty
+              ? currentOrder.statusHistory.last.status.toLowerCase()
+              : 'pending';
+          final isDelivered = currentStatus == 'delivered';
+          final isPending = currentStatus == 'pending';
+
+          return Scaffold(
+            backgroundColor: Colors.grey[50],
+            appBar: AppBar(
+              title: Text('Order ${currentOrder.orderNumber}'),
+              centerTitle: true,
+            ),
+            body: SingleChildScrollView(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Status & Date Summary Card
+                  _buildSummaryCard(currentStatus, isDelivered, isPending, currentOrder.date),
+                  const SizedBox(height: 20),
+
+                  // Customer Details Section
+                  _buildSectionTitle('Customer Information'),
+                  _buildCustomerCard(currentOrder),
+                  const SizedBox(height: 20),
+
+                  // Order Items Section
+                  _buildSectionTitle('Order Items'),
+                  _buildItemsList(currentOrder),
+                  const SizedBox(height: 20),
+
+                  // Shipping Address Section
+                  _buildSectionTitle('Delivery Address'),
+                  _buildAddressCard(currentOrder),
+                  const SizedBox(height: 20),
+
+                  // Payment Summary Section
+                  _buildSectionTitle('Payment Summary'),
+                  _buildPaymentSummaryCard(currentOrder),
+                  const SizedBox(height: 40),
+                ],
+              ),
+            ),
+            bottomNavigationBar: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: ElevatedButton(
+                onPressed: () => _showUpdateStatusDialog(context, currentOrder),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.amberColor,
+                  foregroundColor: Colors.white,
+                  minimumSize: const Size(double.infinity, 54),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  elevation: 0,
+                ),
+                child: const Text(
+                  AppStrings.updateStatus,
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                ),
+              ),
+            ),
+          );
+        },
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Status & Date Summary Card
-            _buildSummaryCard(currentStatus, isDelivered, isPending),
-            const SizedBox(height: 20),
+    );
+  }
 
-            // Customer Details Section
-            _buildSectionTitle('Customer Information'),
-            _buildCustomerCard(),
-            const SizedBox(height: 20),
+  void _showUpdateStatusDialog(BuildContext context, ManageAdminOrderModel currentOrder) {
+    String selectedStatus = AppStrings.statusProcessing;
+    final TextEditingController noteController = TextEditingController();
 
-            // Order Items Section
-            _buildSectionTitle('Order Items'),
-            _buildItemsList(),
-            const SizedBox(height: 20),
-
-            // Shipping Address Section
-            _buildSectionTitle('Delivery Address'),
-            _buildAddressCard(),
-            const SizedBox(height: 20),
-
-            // Payment Summary Section
-            _buildSectionTitle('Payment Summary'),
-            _buildPaymentSummaryCard(),
-            const SizedBox(height: 40),
-          ],
-        ),
-      ),
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (dialogContext) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return BlocBuilder<AdminOrderListBloc, AdminOrderListState>(
+              builder: (context, state) {
+                return AlertDialog(
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                  title: const Text(AppStrings.updateStatus),
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (state.updateError != null) ...[
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: Colors.red.withValues(alpha: 0.1),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Row(
+                            children: [
+                              const Icon(Icons.error_outline, color: Colors.red, size: 20),
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: Text(
+                                  state.updateError!,
+                                  style: const TextStyle(color: Colors.red, fontSize: 12),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                      ],
+                      DropdownButtonFormField<String>(
+                        value: selectedStatus,
+                        items: [
+                          AppStrings.statusProcessing,
+                          AppStrings.statusShipped,
+                          AppStrings.statusDelivered,
+                          AppStrings.statusCanceled,
+                        ].map((s) => DropdownMenuItem(value: s, child: Text(s))).toList(),
+                        onChanged: state.isUpdating
+                            ? null
+                            : (val) {
+                                if (val != null) {
+                                  setState(() => selectedStatus = val);
+                                }
+                              },
+                        decoration: InputDecoration(
+                          labelText: AppStrings.orderStatus,
+                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      TextField(
+                        controller: noteController,
+                        enabled: !state.isUpdating,
+                        maxLines: 3,
+                        decoration: InputDecoration(
+                          labelText: AppStrings.note,
+                          hintText: AppStrings.addNoteHint,
+                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                          alignLabelWithHint: true,
+                        ),
+                      ),
+                    ],
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: state.isUpdating ? null : () => Navigator.pop(dialogContext),
+                      child: const Text(AppStrings.cancel),
+                    ),
+                    ElevatedButton(
+                      onPressed: state.isUpdating
+                          ? null
+                          : () {
+                              context.read<AdminOrderListBloc>().add(
+                                    UpdateOrderStatus(
+                                      orderId: currentOrder.orderId,
+                                      status: selectedStatus.toLowerCase(),
+                                      note: noteController.text,
+                                    ),
+                                  );
+                            },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.amberColor,
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                      ),
+                      child: state.isUpdating
+                          ? const SizedBox(
+                              height: 20,
+                              width: 20,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: Colors.white,
+                              ),
+                            )
+                          : const Text(AppStrings.update),
+                    ),
+                  ],
+                );
+              },
+            );
+          },
+        );
+      },
     );
   }
 
@@ -72,7 +242,7 @@ class ScreenAdminOrderDetails extends StatelessWidget {
     );
   }
 
-  Widget _buildSummaryCard(String status, bool isDelivered, bool isPending) {
+  Widget _buildSummaryCard(String status, bool isDelivered, bool isPending, String date) {
     Color statusColor = isDelivered
         ? Colors.green
         : isPending
@@ -125,7 +295,7 @@ class ScreenAdminOrderDetails extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'Placed on ${order.date}',
+                  'Placed on $date',
                   style: TextStyle(
                     color: Colors.grey[600],
                     fontSize: 13,
@@ -139,7 +309,7 @@ class ScreenAdminOrderDetails extends StatelessWidget {
     );
   }
 
-  Widget _buildCustomerCard() {
+  Widget _buildCustomerCard(ManageAdminOrderModel currentOrder) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -152,7 +322,7 @@ class ScreenAdminOrderDetails extends StatelessWidget {
           CircleAvatar(
             backgroundColor: AppColors.amberColor.withValues(alpha: 0.1),
             child: Text(
-              order.customerName.isNotEmpty ? order.customerName[0] : '?',
+              currentOrder.customerName.isNotEmpty ? currentOrder.customerName[0] : '?',
               style: TextStyle(color: AppColors.amberColor, fontWeight: FontWeight.bold),
             ),
           ),
@@ -162,11 +332,11 @@ class ScreenAdminOrderDetails extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  order.customerName,
+                  currentOrder.customerName,
                   style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                 ),
                 Text(
-                  order.customerEmail,
+                  currentOrder.customerEmail,
                   style: TextStyle(color: Colors.grey[600], fontSize: 13),
                 ),
               ],
@@ -177,7 +347,7 @@ class ScreenAdminOrderDetails extends StatelessWidget {
     );
   }
 
-  Widget _buildItemsList() {
+  Widget _buildItemsList(ManageAdminOrderModel currentOrder) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -187,10 +357,10 @@ class ScreenAdminOrderDetails extends StatelessWidget {
       child: ListView.separated(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
-        itemCount: order.orderedItems.length,
+        itemCount: currentOrder.orderedItems.length,
         separatorBuilder: (context, index) => Divider(height: 1, color: Colors.grey.shade100, indent: 70),
         itemBuilder: (context, index) {
-          final item = order.orderedItems[index];
+          final item = currentOrder.orderedItems[index];
           return Padding(
             padding: const EdgeInsets.all(12.0),
             child: Row(
@@ -247,8 +417,8 @@ class ScreenAdminOrderDetails extends StatelessWidget {
     );
   }
 
-  Widget _buildAddressCard() {
-    final addr = order.customerAddress;
+  Widget _buildAddressCard(ManageAdminOrderModel currentOrder) {
+    final addr = currentOrder.customerAddress;
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(16),
@@ -280,7 +450,7 @@ class ScreenAdminOrderDetails extends StatelessWidget {
     );
   }
 
-  Widget _buildPaymentSummaryCard() {
+  Widget _buildPaymentSummaryCard(ManageAdminOrderModel currentOrder) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -296,7 +466,7 @@ class ScreenAdminOrderDetails extends StatelessWidget {
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
           Text(
-            '₹${order.totalAmount}',
+            '₹${currentOrder.totalAmount}',
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 22,

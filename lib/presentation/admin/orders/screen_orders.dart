@@ -19,7 +19,7 @@ class ScreenAdminOrders extends StatelessWidget {
         Expanded(
           child: BlocBuilder<AdminOrderListBloc, AdminOrderListState>(
             builder: (context, state) {
-              if (state.isloading) {
+              if (state.isloading && state.orderList.isEmpty) {
                 return const Center(child: CircularProgressIndicator());
               }
 

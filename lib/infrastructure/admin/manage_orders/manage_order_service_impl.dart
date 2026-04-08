@@ -75,8 +75,22 @@ class ManageOrderServiceImpl implements ManageOrderService {
   }
 
   @override
-  Future<dynamic> updateOrderStatus() {
-    // TODO: implement updateOrderStatus
-    throw UnimplementedError();
+  Future<void> updateOrderStatus({
+    required String orderId,
+    required String status,
+    required String note,
+  }) async {
+    try {
+      await dio.patch(
+        '${ApiEndpoints.adminOrders}/$orderId/status',
+        data: {
+          'status': status,
+          'note': note,
+        },
+      );
+    } on DioException catch (e) {
+      log(e.toString());
+      throw DioErrorHandler.handle(e);
+    }
   }
 }
