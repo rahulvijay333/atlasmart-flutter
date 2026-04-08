@@ -1,4 +1,5 @@
 import 'package:atlasmart/application/admin/add_category/add_category_bloc.dart';
+import 'package:atlasmart/application/admin/admin_order_list/admin_order_list_bloc.dart';
 import 'package:atlasmart/application/admin/admin_product_list/admin_product_list_bloc.dart';
 import 'package:atlasmart/application/admin/add_admin/add_admins_bloc.dart';
 import 'package:atlasmart/application/admin/category_list/category_list_bloc.dart';
@@ -107,9 +108,9 @@ class _MainAppState extends State<MainApp> {
         BlocProvider(create: (context) => sl<CartBloc>()),
         BlocProvider(create: (context) => sl<CheckoutBloc>()),
         BlocProvider(create: (context) => sl<PaymentStatusBloc>()),
-        BlocProvider(create: (context) => sl<OrdersBloc>(),),
-        BlocProvider(create: (context) => sl<OrderDetailsBloc>(),)
-
+        BlocProvider(create: (context) => sl<OrdersBloc>()),
+        BlocProvider(create: (context) => sl<OrderDetailsBloc>()),
+        BlocProvider(create: (context) => sl<AdminOrderListBloc>(),)
       ],
 
       child: MaterialApp(

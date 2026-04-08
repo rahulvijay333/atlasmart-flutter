@@ -173,9 +173,13 @@ class ScreenProfile extends StatelessWidget {
                     ListTileWidget(
                       title: AppStrings.orderHistory,
                       ontap: () {
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                          return ScreenOrders();
-                        },));
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return ScreenOrders();
+                            },
+                          ),
+                        );
                       },
                     ),
                   ],

@@ -27,17 +27,12 @@ class ScreenHome extends StatelessWidget {
       );
     });
 
-
-
     final screenWidth = MediaQuery.of(context).size.width;
     final isDesktop = screenWidth > 1200;
     final isTablet = screenWidth > 700 && screenWidth <= 1200;
 
     final sidePadding = isDesktop ? 64.0 : (isTablet ? 32.0 : 16.0);
     final crossAxisCount = isDesktop ? 6 : (isTablet ? 4 : 2);
- 
-
-   
 
     return Scaffold(
       backgroundColor: Colors.white,

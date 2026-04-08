@@ -72,7 +72,8 @@ class ScreenCategory extends StatelessWidget {
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (context) {
-                                  return ScreenCategoryProducts(categoryName: category.categoryName,
+                                  return ScreenCategoryProducts(
+                                    categoryName: category.categoryName,
                                     categoryId: category.id ?? '',
                                   );
                                 },

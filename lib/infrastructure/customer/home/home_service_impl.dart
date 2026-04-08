@@ -91,10 +91,10 @@ class HomeServiceImpl implements HomeService {
       throw DioErrorHandler.handle(e);
     }
   }
-  
+
   @override
-  Future<dynamic> searchByCategory(String categoryId)async {
-     try {
+  Future<dynamic> searchByCategory(String categoryId) async {
+    try {
       final response = await dio.get(
         ApiEndpoints.home,
         queryParameters: {'category': categoryId},

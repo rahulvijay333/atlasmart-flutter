@@ -9,23 +9,28 @@ class CustomerHomeState {
   CustomerHomeState({
     required this.isLoading,
     required this.productList,
-    required this.errorMessage,required this.isSearching,
+    required this.errorMessage,
+    required this.isSearching,
   });
 
-  factory CustomerHomeState.initial() =>
-      CustomerHomeState(isLoading: false, productList: [], errorMessage: null,isSearching: false);
+  factory CustomerHomeState.initial() => CustomerHomeState(
+    isLoading: false,
+    productList: [],
+    errorMessage: null,
+    isSearching: false,
+  );
 
   CustomerHomeState copyWith({
     bool? isLoading,
     List<ShopProductModel>? productList,
     String? errorMessage,
-    bool? isSearching
+    bool? isSearching,
   }) {
     return CustomerHomeState(
       isLoading: isLoading ?? this.isLoading,
       productList: productList ?? this.productList,
       errorMessage: errorMessage ?? this.errorMessage,
-      isSearching: isSearching ?? this.isSearching
+      isSearching: isSearching ?? this.isSearching,
     );
   }
 }

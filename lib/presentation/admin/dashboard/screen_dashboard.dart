@@ -66,7 +66,7 @@ class _ScreenAdminDashboardState extends State<ScreenAdminDashboard> {
                   SizedBox(height: padding * 1.5),
                   _buildStatsGrid(context, crossAxisCount),
                   SizedBox(height: padding * 1.5),
-                  _buildRecentOrders(context, width),
+                  // _buildRecentOrders(context, width),
                 ],
               ),
             ),

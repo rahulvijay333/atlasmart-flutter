@@ -71,7 +71,9 @@ class _ScreenSearchProductState extends State<ScreenSearchProduct> {
                     suffixIcon: IconButton(
                       icon: const Icon(Icons.clear, color: Colors.grey),
                       onPressed: () {
-                          context.read<CustomerHomeBloc>().add(SearchProducts(searchKey: ''));
+                        context.read<CustomerHomeBloc>().add(
+                          SearchProducts(searchKey: ''),
+                        );
                         _searchController.clear();
                       },
                     ),

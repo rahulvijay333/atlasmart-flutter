@@ -18,6 +18,7 @@ class ApiEndpoints {
   static const addNewAdmin = '/api/admins/register';
   static const adminProfile = '/api/admins/profile';
   static const adminProducts = '/api/products';
+  static const adminOrders='/api/admins/orders';
 
   //category
   static const category = '/api/categories';
@@ -27,7 +28,7 @@ class ApiEndpoints {
   static const cart = '/api/customers/cart';
   static const checkout = '/api/orders/checkout';
   static const verifyPayment = '/api/orders/verify-payment';
-  static const order='/api/orders';
-  static const purchasedProducts='/api/orders/purchased-products';
-  static const invoiceDownload ='/api/orders/';
+  static const order = '/api/orders';
+  static const purchasedProducts = '/api/orders/purchased-products';
+  static const invoiceDownload = '/api/orders/';
 }

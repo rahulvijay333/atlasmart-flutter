@@ -10,9 +10,7 @@ class SearchBarWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => const ScreenSearchProduct(),
-          ),
+          MaterialPageRoute(builder: (context) => const ScreenSearchProduct()),
         );
       },
       child: Container(

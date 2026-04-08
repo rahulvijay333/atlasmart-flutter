@@ -8,7 +8,6 @@ class ShopProductModel {
   final String price;
   final String description;
   final String categoryName;
- 
 
   ShopProductModel({
     required this.id,

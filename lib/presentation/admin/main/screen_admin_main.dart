@@ -6,6 +6,7 @@ import 'package:atlasmart/presentation/admin/category/screen_add_category.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../application/admin/admin_order_list/admin_order_list_bloc.dart';
 import '../../../application/admin/inventory/inventory_bloc.dart';
 import '../../../application/admin/users/all_users_bloc.dart';
 import '../../../domain/core/constants/strings.dart';
@@ -105,6 +106,12 @@ class _ScreenAdminMainState extends State<ScreenAdminMain> {
           if (index == 2) {
             context.read<CategoryListBloc>().add(
               const CategoryListEvent.getAllCategoryList(),
+            );
+          }
+
+          if (index == 4) {
+            context.read<AdminOrderListBloc>().add(
+              LoadingAdminOrders(),
             );
           }
 

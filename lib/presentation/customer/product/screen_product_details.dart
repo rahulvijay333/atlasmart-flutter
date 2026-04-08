@@ -76,10 +76,7 @@ class ScreenProductDetails extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                flex: 4,
-                child: _buildProductImage(),
-              ),
+              Expanded(flex: 4, child: _buildProductImage()),
               const SizedBox(width: 48),
               Expanded(
                 flex: 5,
@@ -108,27 +105,16 @@ class ScreenProductDetails extends StatelessWidget {
           ? Image.network(
               product.image,
               fit: BoxFit.contain,
-              errorBuilder: (context, error, stackTrace) =>
-                  const Center(
-                    child: Icon(
-                      Icons.image,
-                      size: 100,
-                      color: Colors.grey,
-                    ),
-                  ),
+              errorBuilder: (context, error, stackTrace) => const Center(
+                child: Icon(Icons.image, size: 100, color: Colors.grey),
+              ),
               loadingBuilder: (context, child, loadingProgress) {
                 if (loadingProgress == null) return child;
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
+                return const Center(child: CircularProgressIndicator());
               },
             )
           : const Center(
-              child: Icon(
-                Icons.image,
-                size: 100,
-                color: Colors.grey,
-              ),
+              child: Icon(Icons.image, size: 100, color: Colors.grey),
             ),
     );
   }
@@ -143,18 +129,15 @@ class ScreenProductDetails extends StatelessWidget {
             Text(
               product.company,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Theme.of(context).colorScheme.primary,
-                    fontWeight: FontWeight.w600,
-                  ),
+                color: Theme.of(context).colorScheme.primary,
+                fontWeight: FontWeight.w600,
+              ),
             ),
             const Row(
               children: [
                 Icon(Icons.star, color: Colors.amber, size: 20),
                 SizedBox(width: 4),
-                Text(
-                  "4.5",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
+                Text("4.5", style: TextStyle(fontWeight: FontWeight.bold)),
               ],
             ),
           ],
@@ -162,28 +145,32 @@ class ScreenProductDetails extends StatelessWidget {
         const SizedBox(height: 8),
         Text(
           product.name,
-          style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
+          style: Theme.of(
+            context,
+          ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 8),
         Text(
           "${product.price} Rs",
           style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                color: Theme.of(context).colorScheme.primary,
-                fontWeight: FontWeight.bold,
-              ),
+            color: Theme.of(context).colorScheme.primary,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         const SizedBox(height: 24),
         Text(
           "Product Description",
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+          style: Theme.of(
+            context,
+          ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 8),
         Text(
           product.description,
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: Colors.grey.shade700,
-                height: 1.5,
-              ),
+            color: Colors.grey.shade700,
+            height: 1.5,
+          ),
         ),
         const SizedBox(height: 32),
         Row(
@@ -199,24 +186,16 @@ class ScreenProductDetails extends StatelessWidget {
               children: [
                 Text(
                   product.brandName,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 const Text(
                   "Official Seller",
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 12,
-                  ),
+                  style: TextStyle(color: Colors.grey, fontSize: 12),
                 ),
               ],
             ),
             const Spacer(),
-            TextButton(
-              onPressed: () {},
-              child: const Text("View Store"),
-            ),
+            TextButton(onPressed: () {}, child: const Text("View Store")),
           ],
         ),
       ],
@@ -226,7 +205,9 @@ class ScreenProductDetails extends StatelessWidget {
   Widget _buildCartActions(BuildContext context) {
     return BlocBuilder<CartBloc, CartState>(
       builder: (context, state) {
-        final cartItem = state.cartList.where((item) => item.productId == product.id).firstOrNull;
+        final cartItem = state.cartList
+            .where((item) => item.productId == product.id)
+            .firstOrNull;
 
         if (state.ismodifyingCart) {
           return Container(
@@ -246,23 +227,26 @@ class ScreenProductDetails extends StatelessWidget {
                     color: Colors.grey.shade100,
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 4,
+                    vertical: 4,
+                  ),
                   child: Row(
                     children: [
                       IconButton(
                         onPressed: () {
                           if (cartItem.qty > 1) {
                             context.read<CartBloc>().add(
-                                  AddorUpdateCart(
-                                    productID: product.id,
-                                    cartID: cartItem.id,
-                                    qty: (cartItem.qty - 1).toString(),
-                                  ),
-                                );
+                              AddorUpdateCart(
+                                productID: product.id,
+                                cartID: cartItem.id,
+                                qty: (cartItem.qty - 1).toString(),
+                              ),
+                            );
                           } else {
                             context.read<CartBloc>().add(
-                                  DeleteCart(productID: cartItem.id),
-                                );
+                              DeleteCart(productID: cartItem.id),
+                            );
                           }
                         },
                         icon: const Icon(Icons.remove, size: 20),
@@ -273,19 +257,22 @@ class ScreenProductDetails extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 8),
                         child: Text(
                           "${cartItem.qty}",
-                          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                       IconButton(
                         onPressed: () {
                           if (cartItem.qty < cartItem.stock) {
                             context.read<CartBloc>().add(
-                                  AddorUpdateCart(
-                                    productID: product.id,
-                                    cartID: cartItem.id,
-                                    qty: (cartItem.qty + 1).toString(),
-                                  ),
-                                );
+                              AddorUpdateCart(
+                                productID: product.id,
+                                cartID: cartItem.id,
+                                qty: (cartItem.qty + 1).toString(),
+                              ),
+                            );
                           }
                         },
                         icon: const Icon(Icons.add, size: 20),
@@ -300,10 +287,10 @@ class ScreenProductDetails extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: () {
                       Navigator.of(context).push(
-                         MaterialPageRoute(
-                           builder: (context) => const ScreenCart(),
-                         ),
-                       );
+                        MaterialPageRoute(
+                          builder: (context) => const ScreenCart(),
+                        ),
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 16),
@@ -321,11 +308,8 @@ class ScreenProductDetails extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: () {
                       context.read<CartBloc>().add(
-                            AddorUpdateCart(
-                              productID: product.id,
-                              qty: "1",
-                            ),
-                          );
+                        AddorUpdateCart(productID: product.id, qty: "1"),
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 16),
@@ -338,7 +322,7 @@ class ScreenProductDetails extends StatelessWidget {
                     child: const Text("Add to Cart"),
                   ),
                 ),
-              ]
+              ],
             ],
           ),
         );
