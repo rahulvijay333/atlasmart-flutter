@@ -33,21 +33,33 @@ import 'application/customer/registration/customer/custom_registr_bloc/customer_
 import 'domain/core/config/app_config.dart';
 import 'domain/core/di/di.dart';
 
+import 'domain/core/key/fbz.dart';
 import 'presentation/splash/screen_splash.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // if (kReleaseMode && !kIsWeb) {
-  //   await Firebase.initializeApp();
-  //   FlutterError.onError = (errorDetails) {
-  //     FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
-  //   };
-  //   // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
-  //   PlatformDispatcher.instance.onError = (error, stack) {
-  //     FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
-  //     return true;
-  //   };
+  if (kIsWeb) {
+    await Firebase.initializeApp(
+      options: FirebaseOptions(
+        apiKey: FIREBASE_API_KEY,
+        appId: FIREBASE_APP_ID,
+        messagingSenderId: FIREBASE_MESSAGING_SENDER_ID,
+        projectId: FIREBASE_PROJECT_ID,
+      ), // ✅ FIX
+    );
+  } else {
+    await Firebase.initializeApp();
+  }
+
+  FlutterError.onError = (errorDetails) {
+    FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
+  };
+  // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
+  PlatformDispatcher.instance.onError = (error, stack) {
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    return true;
+  };
   // }
 
   AppConfig.initialize(
@@ -110,7 +122,7 @@ class _MainAppState extends State<MainApp> {
         BlocProvider(create: (context) => sl<PaymentStatusBloc>()),
         BlocProvider(create: (context) => sl<OrdersBloc>()),
         BlocProvider(create: (context) => sl<OrderDetailsBloc>()),
-        BlocProvider(create: (context) => sl<AdminOrderListBloc>(),)
+        BlocProvider(create: (context) => sl<AdminOrderListBloc>()),
       ],
 
       child: MaterialApp(
