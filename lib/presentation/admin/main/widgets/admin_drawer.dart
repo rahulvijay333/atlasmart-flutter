@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../application/login/login_bloc.dart';
+import '../../../common/snack_bar.dart';
 import '../../../login/screen_login.dart';
 import '../../../../domain/core/constants/strings.dart';
 
@@ -306,26 +307,43 @@ class AdminDrawerWidget extends StatelessWidget {
           // Footer
           Padding(
             padding: const EdgeInsets.all(16.0),
-            child: _buildDrawerItem(
-              context: context,
-              icon: Icons.logout_rounded,
-              selectedIcon: Icons.logout_rounded,
-              title: AppStrings.logout,
-              isSelected: false,
-              onTap: () {
-                BlocProvider.of<LoginBloc>(
-                  context,
-                ).add(LoginEvent.logOutButtonClick());
-                Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return ScreenLogin();
-                    },
-                  ),
-                  (route) => false,
+            child: BlocConsumer<LoginBloc, LoginState>(
+              listener: (context, state) {
+                state.whenOrNull(
+                  failure: (message) {
+                    AppSnackBar.show(context, message);
+                  },
+                  initial: () {
+                    Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return ScreenLogin();
+                        },
+                      ),
+                      (route) => false,
+                    );
+                  },
                 );
               },
-              isLogout: true,
+              builder: (context, state) {
+                final isLoading = state == LoginState.loading();
+                return _buildDrawerItem(
+                  context: context,
+                  icon: Icons.logout_rounded,
+                  selectedIcon: Icons.logout_rounded,
+                  title: AppStrings.logout,
+                  isSelected: false,
+                  onTap: isLoading
+                      ? () {}
+                      : () {
+                          BlocProvider.of<LoginBloc>(
+                            context,
+                          ).add(LoginEvent.logOutButtonClick());
+                        },
+                  isLogout: true,
+                  isLoading: isLoading,
+                );
+              },
             ),
           ),
         ],
@@ -341,6 +359,7 @@ class AdminDrawerWidget extends StatelessWidget {
     required bool isSelected,
     required VoidCallback onTap,
     bool isLogout = false,
+    bool isLoading = false,
   }) {
     final primaryColor = Theme.of(context).primaryColor;
     final color = isLogout
@@ -360,7 +379,16 @@ class AdminDrawerWidget extends StatelessWidget {
       ),
       child: ListTile(
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-        leading: Icon(isSelected ? selectedIcon : icon, color: color, size: 24),
+        leading: isLoading
+            ? SizedBox(
+                width: 24,
+                height: 24,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                  color: color,
+                ),
+              )
+            : Icon(isSelected ? selectedIcon : icon, color: color, size: 24),
         title: Text(
           title,
           style: TextStyle(
