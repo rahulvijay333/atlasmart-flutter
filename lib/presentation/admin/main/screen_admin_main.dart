@@ -110,9 +110,7 @@ class _ScreenAdminMainState extends State<ScreenAdminMain> {
           }
 
           if (index == 4) {
-            context.read<AdminOrderListBloc>().add(
-              LoadingAdminOrders(),
-            );
+            context.read<AdminOrderListBloc>().add(LoadingAdminOrders());
           }
 
           Navigator.pop(context);

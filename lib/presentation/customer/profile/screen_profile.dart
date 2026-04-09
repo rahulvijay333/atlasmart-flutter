@@ -2,6 +2,7 @@ import 'package:atlasmart/application/profile_admin_customer/customer/customer_p
 import 'package:atlasmart/domain/core/constants/constants.dart';
 import 'package:atlasmart/domain/core/constants/font.dart';
 import 'package:atlasmart/presentation/common/button_widget.dart';
+import 'package:atlasmart/presentation/common/snack_bar.dart';
 import 'package:atlasmart/presentation/customer/address/screen_address.dart';
 import 'package:atlasmart/presentation/customer/orders/screen_orders.dart';
 import 'package:atlasmart/presentation/customer/profile/screen_edit_profile.dart';
@@ -11,6 +12,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../application/login/login_bloc.dart';
 import '../../../domain/core/constants/strings.dart';
+import '../main/widgets/bottom_nav.dart';
 import 'widgets/list_tile_widget.dart';
 
 class ScreenProfile extends StatelessWidget {
@@ -157,6 +159,18 @@ class ScreenProfile extends StatelessWidget {
                                 );
                               },
                             ),
+                            ListTileWidget(
+                              title: AppStrings.orderHistory,
+                              ontap: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) {
+                                      return ScreenOrders();
+                                    },
+                                  ),
+                                );
+                              },
+                            ),
                           ],
                         ),
                       ),
@@ -164,27 +178,7 @@ class ScreenProfile extends StatelessWidget {
                   );
                 },
               ),
-              const SizedBox(height: 16),
-              Center(
-                child: _buildSectionCard(
-                  context,
-                  title: AppStrings.myOrders,
-                  children: [
-                    ListTileWidget(
-                      title: AppStrings.orderHistory,
-                      ontap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return ScreenOrders();
-                            },
-                          ),
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ),
+
               const SizedBox(height: 16),
               // Center(
               //   child: _buildSectionCard(
@@ -206,20 +200,37 @@ class ScreenProfile extends StatelessWidget {
           padding: EdgeInsets.only(left: 16, right: 16, top: 15),
           sliver: SliverToBoxAdapter(
             child: Center(
-              child: ButtonWidget(
-                title: AppStrings.logout,
-                height: 50,
-                ontap: () {
-                  BlocProvider.of<LoginBloc>(
-                    context,
-                  ).add(LoginEvent.logOutButtonClick());
-                  Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return ScreenLogin();
-                      },
-                    ),
-                    (route) => false,
+              child: BlocConsumer<LoginBloc, LoginState>(
+                listener: (context, state) {
+                  state.whenOrNull(
+                    failure: (message) {
+                      AppSnackBar.show(context, message);
+                    },
+
+                    initial: () {
+                      Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return ScreenLogin();
+                          },
+                        ),
+                        (route) => false,
+                      );
+                    },
+                  );
+                },
+                builder: (context, state) {
+                  return ButtonWidget(
+                    isloading: state == LoginState.loading(),
+                    title: AppStrings.logout,
+                    height: 50,
+                    ontap: state != LoginState.loading()
+                        ? () {
+                            BlocProvider.of<LoginBloc>(
+                              context,
+                            ).add(LoginEvent.logOutButtonClick());
+                          }
+                        : () {},
                   );
                 },
               ),

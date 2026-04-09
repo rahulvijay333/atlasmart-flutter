@@ -28,7 +28,11 @@ class ScreenAdminOrders extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Icon(Icons.error_outline, size: 48, color: Colors.red),
+                      const Icon(
+                        Icons.error_outline,
+                        size: 48,
+                        color: Colors.red,
+                      ),
                       const SizedBox(height: 16),
                       Text(state.error!),
                       const SizedBox(height: 16),
@@ -50,7 +54,11 @@ class ScreenAdminOrders extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.shopping_bag_outlined, size: 48, color: Colors.grey),
+                      Icon(
+                        Icons.shopping_bag_outlined,
+                        size: 48,
+                        color: Colors.grey,
+                      ),
                       const SizedBox(height: 16),
                       Text('No orders found'),
                     ],
@@ -63,9 +71,13 @@ class ScreenAdminOrders extends StatelessWidget {
                   context.read<AdminOrderListBloc>().add(LoadingAdminOrders());
                 },
                 child: ListView.separated(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 8,
+                  ),
                   itemCount: state.orderList.length,
-                  separatorBuilder: (context, index) => const SizedBox(height: 16),
+                  separatorBuilder: (context, index) =>
+                      const SizedBox(height: 16),
                   itemBuilder: (context, index) {
                     final order = state.orderList[index];
 
@@ -75,12 +87,12 @@ class ScreenAdminOrders extends StatelessWidget {
                     final date = order.date.split(' ').first;
                     final amount = double.tryParse(order.totalAmount) ?? 0.0;
                     final itemsCount = order.orderedItems.length;
-                    
+
                     // Determine status
-                    final currentStatus = order.statusHistory.isNotEmpty 
-                        ? order.statusHistory.last.status.toLowerCase() 
+                    final currentStatus = order.statusHistory.isNotEmpty
+                        ? order.statusHistory.last.status.toLowerCase()
                         : 'pending';
-                    
+
                     final isDelivered = currentStatus == 'delivered';
                     final isPending = currentStatus == 'pending';
 
@@ -89,7 +101,8 @@ class ScreenAdminOrders extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => ScreenAdminOrderDetails(order: order),
+                            builder: (context) =>
+                                ScreenAdminOrderDetails(order: order),
                           ),
                         );
                       },
@@ -113,7 +126,8 @@ class ScreenAdminOrders extends StatelessWidget {
                             children: [
                               // Header: Order ID and Date
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     orderId,
@@ -154,7 +168,8 @@ class ScreenAdminOrders extends StatelessWidget {
                                   const SizedBox(width: 12),
                                   Expanded(
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           order.customerName,
@@ -180,10 +195,12 @@ class ScreenAdminOrders extends StatelessWidget {
 
                               // Footer: Amount & Status
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         AppStrings.totalAmount,
@@ -204,7 +221,11 @@ class ScreenAdminOrders extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  _buildStatusBadge(isDelivered, isPending, currentStatus),
+                                  _buildStatusBadge(
+                                    isDelivered,
+                                    isPending,
+                                    currentStatus,
+                                  ),
                                 ],
                               ),
                             ],

@@ -8,7 +8,4 @@ class StatusHistoryItem {
     required this.note,
     required this.updatedAt,
   });
-
-
- 
 }

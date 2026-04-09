@@ -2,9 +2,13 @@ import '../../infrastructure/login/model/user_details/user_details.dart';
 import '../auth/model/auth_token.dart';
 
 abstract class LoginService {
-  Future<(AuthTokens, UserDetails)> login(String email, String password);
+  Future<(AuthTokens, UserDetails)> login(
+    String email,
+    String password,
+    String? fcToken,
+  );
 
-  Future<void> logout();
+  Future<bool> logout(String? fcToken);
   Future<bool> sendEmailOtp({required String email});
   Future<bool> sendEmailOtpForPasswordReset({required String email});
 

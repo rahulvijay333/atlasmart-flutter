@@ -8,6 +8,7 @@ import 'package:atlasmart/infrastructure/customer/orders/model/order_detail_resp
 import 'package:atlasmart/infrastructure/customer/orders/model/ordered_product_response_model/ordered_product_response_model.dart';
 import 'package:dio/dio.dart';
 
+import '../../../domain/admin/manage_orders/model/status.dart';
 import '../../../domain/core/network/dio_error_handle.dart';
 import '../../../domain/customer/orders/model/ordered_product_model.dart';
 import '../../../domain/endpoints/api_endpoints.dart';
@@ -19,17 +20,27 @@ class OrderServiceImpl implements OrderService {
 
   @override
   Future<dynamic> getOrderDetails(String orderId) async {
-    final response = await dio.get('${ApiEndpoints.order}/$orderId');
-
     try {
+      final response = await dio.get('${ApiEndpoints.order}/$orderId');
       if (response.statusCode == 201 || response.statusCode == 200) {
         final data = OrderDetailResponseModel.fromMap(response.data).data;
 
         final items = data?.order?.items ?? [];
 
         final order = data?.order;
+        final status = data?.order?.statusHistory ?? [];
 
         final orderDetail = OrderDetailModel(
+          statusHistory: status
+              .map(
+                (e) => StatusHistoryItem(
+                  status: e.status ?? '',
+                  note: e.note ?? '',
+                  updatedAt: e.updatedAt?.toLocal().toString() ?? '',
+                ),
+              )
+              .toList(),
+
           orderNumber: order?.orderNumber ?? '',
           purchaseDate: order?.createdAt?.toLocal().toString() ?? '',
           orderedProducts: items
@@ -59,6 +70,8 @@ class OrderServiceImpl implements OrderService {
     } on DioException catch (e) {
       log(e.toString());
       throw DioErrorHandler.handle(e);
+    } catch (e) {
+      log(e.toString());
     }
   }
 

@@ -62,7 +62,12 @@ class ScreenAdminOrderDetails extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Status & Date Summary Card
-                  _buildSummaryCard(currentStatus, isDelivered, isPending, currentOrder.date),
+                  _buildSummaryCard(
+                    currentStatus,
+                    isDelivered,
+                    isPending,
+                    currentOrder.date,
+                  ),
                   const SizedBox(height: 20),
 
                   // Customer Details Section
@@ -95,7 +100,9 @@ class ScreenAdminOrderDetails extends StatelessWidget {
                   backgroundColor: AppColors.amberColor,
                   foregroundColor: Colors.white,
                   minimumSize: const Size(double.infinity, 54),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                   elevation: 0,
                 ),
                 child: const Text(
@@ -110,7 +117,10 @@ class ScreenAdminOrderDetails extends StatelessWidget {
     );
   }
 
-  void _showUpdateStatusDialog(BuildContext context, ManageAdminOrderModel currentOrder) {
+  void _showUpdateStatusDialog(
+    BuildContext context,
+    ManageAdminOrderModel currentOrder,
+  ) {
     String selectedStatus = AppStrings.statusProcessing;
     final TextEditingController noteController = TextEditingController();
 
@@ -123,7 +133,9 @@ class ScreenAdminOrderDetails extends StatelessWidget {
             return BlocBuilder<AdminOrderListBloc, AdminOrderListState>(
               builder: (context, state) {
                 return AlertDialog(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
                   title: const Text(AppStrings.updateStatus),
                   content: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -137,12 +149,19 @@ class ScreenAdminOrderDetails extends StatelessWidget {
                           ),
                           child: Row(
                             children: [
-                              const Icon(Icons.error_outline, color: Colors.red, size: 20),
+                              const Icon(
+                                Icons.error_outline,
+                                color: Colors.red,
+                                size: 20,
+                              ),
                               const SizedBox(width: 8),
                               Expanded(
                                 child: Text(
                                   state.updateError!,
-                                  style: const TextStyle(color: Colors.red, fontSize: 12),
+                                  style: const TextStyle(
+                                    color: Colors.red,
+                                    fontSize: 12,
+                                  ),
                                 ),
                               ),
                             ],
@@ -152,12 +171,20 @@ class ScreenAdminOrderDetails extends StatelessWidget {
                       ],
                       DropdownButtonFormField<String>(
                         value: selectedStatus,
-                        items: [
-                          AppStrings.statusProcessing,
-                          AppStrings.statusShipped,
-                          AppStrings.statusDelivered,
-                          AppStrings.statusCanceled,
-                        ].map((s) => DropdownMenuItem(value: s, child: Text(s))).toList(),
+                        items:
+                            [
+                                  AppStrings.statusProcessing,
+                                  AppStrings.statusShipped,
+                                  AppStrings.statusDelivered,
+                                  AppStrings.statusCanceled,
+                                ]
+                                .map(
+                                  (s) => DropdownMenuItem(
+                                    value: s,
+                                    child: Text(s),
+                                  ),
+                                )
+                                .toList(),
                         onChanged: state.isUpdating
                             ? null
                             : (val) {
@@ -167,7 +194,9 @@ class ScreenAdminOrderDetails extends StatelessWidget {
                               },
                         decoration: InputDecoration(
                           labelText: AppStrings.orderStatus,
-                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
                         ),
                       ),
                       const SizedBox(height: 20),
@@ -178,7 +207,9 @@ class ScreenAdminOrderDetails extends StatelessWidget {
                         decoration: InputDecoration(
                           labelText: AppStrings.note,
                           hintText: AppStrings.addNoteHint,
-                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
                           alignLabelWithHint: true,
                         ),
                       ),
@@ -186,7 +217,9 @@ class ScreenAdminOrderDetails extends StatelessWidget {
                   ),
                   actions: [
                     TextButton(
-                      onPressed: state.isUpdating ? null : () => Navigator.pop(dialogContext),
+                      onPressed: state.isUpdating
+                          ? null
+                          : () => Navigator.pop(dialogContext),
                       child: const Text(AppStrings.cancel),
                     ),
                     ElevatedButton(
@@ -194,17 +227,19 @@ class ScreenAdminOrderDetails extends StatelessWidget {
                           ? null
                           : () {
                               context.read<AdminOrderListBloc>().add(
-                                    UpdateOrderStatus(
-                                      orderId: currentOrder.orderId,
-                                      status: selectedStatus.toLowerCase(),
-                                      note: noteController.text,
-                                    ),
-                                  );
+                                UpdateOrderStatus(
+                                  orderId: currentOrder.orderId,
+                                  status: selectedStatus.toLowerCase(),
+                                  note: noteController.text,
+                                ),
+                              );
                             },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.amberColor,
                         foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
                       ),
                       child: state.isUpdating
                           ? const SizedBox(
@@ -242,12 +277,17 @@ class ScreenAdminOrderDetails extends StatelessWidget {
     );
   }
 
-  Widget _buildSummaryCard(String status, bool isDelivered, bool isPending, String date) {
+  Widget _buildSummaryCard(
+    String status,
+    bool isDelivered,
+    bool isPending,
+    String date,
+  ) {
     Color statusColor = isDelivered
         ? Colors.green
         : isPending
-            ? Colors.orange
-            : Colors.blue;
+        ? Colors.orange
+        : Colors.blue;
 
     return Container(
       padding: const EdgeInsets.all(20),
@@ -274,8 +314,8 @@ class ScreenAdminOrderDetails extends StatelessWidget {
               isDelivered
                   ? Icons.check_circle_rounded
                   : isPending
-                      ? Icons.access_time_filled_rounded
-                      : Icons.sync_rounded,
+                  ? Icons.access_time_filled_rounded
+                  : Icons.sync_rounded,
               color: statusColor,
               size: 30,
             ),
@@ -296,10 +336,7 @@ class ScreenAdminOrderDetails extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   'Placed on $date',
-                  style: TextStyle(
-                    color: Colors.grey[600],
-                    fontSize: 13,
-                  ),
+                  style: TextStyle(color: Colors.grey[600], fontSize: 13),
                 ),
               ],
             ),
@@ -322,8 +359,13 @@ class ScreenAdminOrderDetails extends StatelessWidget {
           CircleAvatar(
             backgroundColor: AppColors.amberColor.withValues(alpha: 0.1),
             child: Text(
-              currentOrder.customerName.isNotEmpty ? currentOrder.customerName[0] : '?',
-              style: TextStyle(color: AppColors.amberColor, fontWeight: FontWeight.bold),
+              currentOrder.customerName.isNotEmpty
+                  ? currentOrder.customerName[0]
+                  : '?',
+              style: TextStyle(
+                color: AppColors.amberColor,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
           const SizedBox(width: 16),
@@ -333,7 +375,10 @@ class ScreenAdminOrderDetails extends StatelessWidget {
               children: [
                 Text(
                   currentOrder.customerName,
-                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                  ),
                 ),
                 Text(
                   currentOrder.customerEmail,
@@ -358,7 +403,8 @@ class ScreenAdminOrderDetails extends StatelessWidget {
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         itemCount: currentOrder.orderedItems.length,
-        separatorBuilder: (context, index) => Divider(height: 1, color: Colors.grey.shade100, indent: 70),
+        separatorBuilder: (context, index) =>
+            Divider(height: 1, color: Colors.grey.shade100, indent: 70),
         itemBuilder: (context, index) {
           final item = currentOrder.orderedItems[index];
           return Padding(
@@ -376,7 +422,11 @@ class ScreenAdminOrderDetails extends StatelessWidget {
                       width: 50,
                       height: 50,
                       color: Colors.grey[200],
-                      child: const Icon(Icons.image_not_supported, size: 20, color: Colors.grey),
+                      child: const Icon(
+                        Icons.image_not_supported,
+                        size: 20,
+                        color: Colors.grey,
+                      ),
                     ),
                   ),
                 ),
@@ -387,7 +437,10 @@ class ScreenAdminOrderDetails extends StatelessWidget {
                     children: [
                       Text(
                         item.productName,
-                        style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
+                        ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -399,14 +452,20 @@ class ScreenAdminOrderDetails extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
                     color: Colors.grey[100],
                     borderRadius: BorderRadius.circular(6),
                   ),
                   child: Text(
                     'x${item.qty ?? 1}',
-                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                    ),
                   ),
                 ),
               ],
@@ -432,14 +491,22 @@ class ScreenAdminOrderDetails extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Icons.location_on_outlined, size: 18, color: AppColors.amberColor),
+              Icon(
+                Icons.location_on_outlined,
+                size: 18,
+                color: AppColors.amberColor,
+              ),
               const SizedBox(width: 8),
-              const Text('Shipping Address', style: TextStyle(fontWeight: FontWeight.bold)),
+              const Text(
+                'Shipping Address',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
             ],
           ),
           const SizedBox(height: 12),
           Text(addr.address1, style: const TextStyle(fontSize: 14)),
-          if (addr.street.isNotEmpty) Text(addr.street, style: const TextStyle(fontSize: 14)),
+          if (addr.street.isNotEmpty)
+            Text(addr.street, style: const TextStyle(fontSize: 14)),
           Text(
             '${addr.city}, ${addr.state} - ${addr.pincode}',
             style: const TextStyle(fontSize: 14),

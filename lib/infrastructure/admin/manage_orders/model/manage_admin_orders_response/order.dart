@@ -26,7 +26,6 @@ class Order {
   DateTime? createdAt;
   DateTime? updatedAt;
   int? v;
- 
 
   Order({
     this.id,
@@ -48,7 +47,6 @@ class Order {
     this.createdAt,
     this.updatedAt,
     this.v,
-   
   });
 
   factory Order.fromMap(Map<String, dynamic> data) => Order(
@@ -87,7 +85,6 @@ class Order {
         ? null
         : DateTime.parse(data['updatedAt'] as String),
     v: data['__v'] as int?,
-    
   );
 
   Map<String, dynamic> toMap() => {

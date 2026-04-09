@@ -12,6 +12,7 @@ import '../../domain/core/constants/constants.dart';
 import '../../domain/core/constants/strings.dart';
 import '../common/button_widget.dart';
 import '../common/snack_bar.dart';
+import '../customer/main/widgets/bottom_nav.dart';
 import 'screen_forgot_password.dart';
 import 'screen_otp_verify.dart';
 
@@ -183,6 +184,7 @@ class _ScreenLoginState extends State<ScreenLogin> {
                                   );
                                   break;
                                 case AppConstants.customer:
+                                 BottomNavWidget.navBarNotifier.value = 0;
                                   Navigator.of(context).pushReplacement(
                                     MaterialPageRoute(
                                       builder: (context) => ScreenMain(),

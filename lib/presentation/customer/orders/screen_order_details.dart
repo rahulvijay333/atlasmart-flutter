@@ -102,7 +102,7 @@ class _ScreenOrderDetailsState extends State<ScreenOrderDetails> {
           const SizedBox(height: 8),
           _buildDetailRow(
             'Status',
-            'Processing',
+            order.statusHistory.last.status.toUpperCase(),
             valueColor: Colors.orange.shade700,
           ),
           const SizedBox(height: 8),

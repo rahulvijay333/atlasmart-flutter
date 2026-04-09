@@ -34,6 +34,7 @@ import 'domain/core/config/app_config.dart';
 import 'domain/core/di/di.dart';
 
 import 'domain/core/key/fbz.dart';
+import 'domain/core/util/firebase/firebase.dart';
 import 'presentation/splash/screen_splash.dart';
 
 void main() async {
@@ -73,6 +74,10 @@ void main() async {
     ),
   );
   setupDI();
+
+  if (!kIsWeb) {
+    await FirebaseNotificationService.instance.init();
+  }
 
   runApp(const MainApp());
 }

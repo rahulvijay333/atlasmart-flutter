@@ -25,7 +25,13 @@ class AdminOrderListBloc
     });
 
     on<UpdateOrderStatus>((event, emit) async {
-      emit(state.copyWith(isUpdating: true, updateError: null, updateSuccess: null));
+      emit(
+        state.copyWith(
+          isUpdating: true,
+          updateError: null,
+          updateSuccess: null,
+        ),
+      );
 
       try {
         await manageOrderService.updateOrderStatus(

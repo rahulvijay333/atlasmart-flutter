@@ -3,6 +3,7 @@ class ApiEndpoints {
   static const baseUrlProduction = 'https://atlas-prod-live.onrender.com';
 
   static const login = "/api/auth/login";
+  static const logOut = '/api/auth/logout';
   static const sendOtpForPaswwordReset = "/api/auth/forgot-password";
   static const sendEmailVerificationOtp = '/api/auth/send-verification-otp';
   static const setPassword = "/api/auth/reset-password";
@@ -18,7 +19,7 @@ class ApiEndpoints {
   static const addNewAdmin = '/api/admins/register';
   static const adminProfile = '/api/admins/profile';
   static const adminProducts = '/api/products';
-  static const adminOrders='/api/admins/orders';
+  static const adminOrders = '/api/admins/orders';
 
   //category
   static const category = '/api/categories';

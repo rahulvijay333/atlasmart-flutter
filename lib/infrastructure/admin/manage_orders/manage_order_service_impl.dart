@@ -83,10 +83,7 @@ class ManageOrderServiceImpl implements ManageOrderService {
     try {
       await dio.patch(
         '${ApiEndpoints.adminOrders}/$orderId/status',
-        data: {
-          'status': status,
-          'note': note,
-        },
+        data: {'status': status, 'note': note},
       );
     } on DioException catch (e) {
       log(e.toString());

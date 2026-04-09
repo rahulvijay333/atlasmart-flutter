@@ -3,11 +3,13 @@ import 'dart:convert';
 import 'item.dart';
 import 'payment.dart';
 import 'shipping_address_snapshot.dart';
+import 'status_history.dart';
+import 'user_id.dart';
 
 class Order {
   String? id;
   String? checkoutGroupId;
-  String? userId;
+  UserId? userId;
   String? sellerId;
   List<Item>? items;
   ShippingAddressSnapshot? shippingAddressSnapshot;
@@ -18,11 +20,13 @@ class Order {
   String? discountAmount;
   String? grandTotal;
   String? status;
+  List<StatusHistory>? statusHistory;
   Payment? payment;
   String? orderNumber;
   DateTime? createdAt;
   DateTime? updatedAt;
   int? v;
+
 
   Order({
     this.id,
@@ -38,17 +42,21 @@ class Order {
     this.discountAmount,
     this.grandTotal,
     this.status,
+    this.statusHistory,
     this.payment,
     this.orderNumber,
     this.createdAt,
     this.updatedAt,
     this.v,
+    
   });
 
   factory Order.fromMap(Map<String, dynamic> data) => Order(
     id: data['_id'] as String?,
     checkoutGroupId: data['checkout_group_id'] as String?,
-    userId: data['user_id'] as String?,
+    userId: data['user_id'] == null
+        ? null
+        : UserId.fromMap(data['user_id'] as Map<String, dynamic>),
     sellerId: data['seller_id'] as String?,
     items: (data['items'] as List<dynamic>?)
         ?.map((e) => Item.fromMap(e as Map<String, dynamic>))
@@ -65,6 +73,9 @@ class Order {
     discountAmount: data['discount_amount'] as String?,
     grandTotal: data['grand_total'] as String?,
     status: data['status'] as String?,
+    statusHistory: (data['status_history'] as List<dynamic>?)
+        ?.map((e) => StatusHistory.fromMap(e as Map<String, dynamic>))
+        .toList(),
     payment: data['payment'] == null
         ? null
         : Payment.fromMap(data['payment'] as Map<String, dynamic>),
@@ -76,12 +87,13 @@ class Order {
         ? null
         : DateTime.parse(data['updatedAt'] as String),
     v: data['__v'] as int?,
+    
   );
 
   Map<String, dynamic> toMap() => {
     '_id': id,
     'checkout_group_id': checkoutGroupId,
-    'user_id': userId,
+    'user_id': userId?.toMap(),
     'seller_id': sellerId,
     'items': items?.map((e) => e.toMap()).toList(),
     'shipping_address_snapshot': shippingAddressSnapshot?.toMap(),
@@ -92,12 +104,13 @@ class Order {
     'discount_amount': discountAmount,
     'grand_total': grandTotal,
     'status': status,
+    'status_history': statusHistory?.map((e) => e.toMap()).toList(),
     'payment': payment?.toMap(),
     'order_number': orderNumber,
     'createdAt': createdAt?.toIso8601String(),
     'updatedAt': updatedAt?.toIso8601String(),
     '__v': v,
-    'id': id,
+  
   };
 
   /// `dart:convert`

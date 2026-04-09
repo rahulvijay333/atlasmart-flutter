@@ -39,7 +39,6 @@ class ShippingAddressSnapshot {
     'state': state,
     'pincode': pincode,
     'country': country,
-    '_id': id,
   };
 
   /// `dart:convert`
