@@ -30,6 +30,6 @@ class OrderProduct {
   OrderProduct({
     required this.productName,
     required this.productImage,
-    required this.brandname,
+    required this.brandname,this.qty
   });
 }

@@ -49,6 +49,7 @@ class OrderServiceImpl implements OrderService {
                   productName: e.name ?? '',
                   productImage: e.productImage ?? '',
                   brandname: e.brandName ?? '',
+                  qty: e.quantity ?? 1,
                 ),
               )
               .toList(),
@@ -88,6 +89,7 @@ class OrderServiceImpl implements OrderService {
         final productlist = items
             .map(
               (e) => OrderedProductModel(
+                orderStatus: e.orderStatus ?? '',
                 orderId: e.orderId ?? '',
                 orderNumber: e.orderNumber ?? '',
                 purchaseDate: e.purchasedAt?.toLocal().toString() ?? '',

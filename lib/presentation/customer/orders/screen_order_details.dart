@@ -103,7 +103,8 @@ class _ScreenOrderDetailsState extends State<ScreenOrderDetails> {
           _buildDetailRow(
             'Status',
             order.statusHistory.last.status.toUpperCase(),
-            valueColor: Colors.orange.shade700,
+            valueColor: Colors.green,
+            isBold: true,
           ),
           const SizedBox(height: 8),
           _buildInvoiceDownload(
@@ -191,18 +192,20 @@ class _ScreenOrderDetailsState extends State<ScreenOrderDetails> {
               children: [
                 Text(
                   product.productName,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                  maxLines: 1,
+                  style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 14),
+                  maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
                 Text(
                   product.brandname,
-                  style: TextStyle(color: Colors.grey.shade600, fontSize: 13),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
                 ),
                 if (product.qty != null)
                   Text(
                     'Qty: ${product.qty}',
-                    style: const TextStyle(fontSize: 12),
+                    style: const TextStyle(fontSize: 14),
                   ),
               ],
             ),

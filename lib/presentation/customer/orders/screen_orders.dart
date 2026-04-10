@@ -23,38 +23,43 @@ class _ScreenOrdersState extends State<ScreenOrders> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey.shade50,
-      appBar: AppBar(
-        title: const Text('My Orders'),
-        centerTitle: true,
-        backgroundColor: Colors.white,
-        elevation: 0,
-        surfaceTintColor: Colors.transparent,
-      ),
-      body: Center(
-        child: ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: 600),
-          child: BlocBuilder<OrdersBloc, OrdersState>(
-            builder: (context, state) {
-              return state.when(
-                initial: () => const Center(child: CircularProgressIndicator()),
-                loading: () => const Center(child: CircularProgressIndicator()),
-                failure: () => _buildErrorState(context),
-                success: (orders) {
-                  if (orders.isEmpty) {
-                    return _buildEmptyState(context);
-                  }
-                  return ListView.builder(
-                    padding: const EdgeInsets.all(16),
-                    itemCount: orders.length,
-                    itemBuilder: (context, index) {
-                      return _OrderCard(order: orders[index]);
-                    },
-                  );
-                },
-              );
-            },
+    return RefreshIndicator(
+      onRefresh: ()async {
+         context.read<OrdersBloc>().add(const OrdersEvent.getOrderedProducts());
+      },
+      child: Scaffold(
+        backgroundColor: Colors.grey.shade50,
+        appBar: AppBar(
+          title: const Text('My Orders'),
+          centerTitle: true,
+          backgroundColor: Colors.white,
+          elevation: 0,
+          surfaceTintColor: Colors.transparent,
+        ),
+        body: Center(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: 600),
+            child: BlocBuilder<OrdersBloc, OrdersState>(
+              builder: (context, state) {
+                return state.when(
+                  initial: () => const Center(child: CircularProgressIndicator()),
+                  loading: () => const Center(child: CircularProgressIndicator()),
+                  failure: () => _buildErrorState(context),
+                  success: (orders) {
+                    if (orders.isEmpty) {
+                      return _buildEmptyState(context);
+                    }
+                    return ListView.builder(
+                      padding: const EdgeInsets.all(16),
+                      itemCount: orders.length,
+                      itemBuilder: (context, index) {
+                        return _OrderCard(order: orders[index]);
+                      },
+                    );
+                  },
+                );
+              },
+            ),
           ),
         ),
       ),
@@ -186,13 +191,36 @@ class _OrderCard extends StatelessWidget {
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
-                      const SizedBox(height: 4),
+
                       Text(
                         order.brandname,
                         style: TextStyle(
                           color: Colors.grey.shade600,
-                          fontSize: 14,
+                          fontSize: 12,
                         ),
+                      ),
+
+                      const SizedBox(height: 8),
+                      Row(
+                        spacing: 5,
+                        children: [
+                          Container(
+                            width: 8,
+                            height: 8,
+                            decoration: BoxDecoration(
+                              color: Colors.green,
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                          Text(
+                            order.orderStatus.toUpperCase(),
+                            style: TextStyle(
+                              color: Colors.green,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),

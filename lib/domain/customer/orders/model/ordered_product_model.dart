@@ -5,6 +5,7 @@ class OrderedProductModel {
   final String orderNumber;
   final String brandname;
   final String purchaseDate;
+  final String orderStatus;
 
   OrderedProductModel({
     required this.productName,
@@ -13,5 +14,6 @@ class OrderedProductModel {
     required this.orderNumber,
     required this.brandname,
     required this.purchaseDate,
+    required this.orderStatus,
   });
 }
