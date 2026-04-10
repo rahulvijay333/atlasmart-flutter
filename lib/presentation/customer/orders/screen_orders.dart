@@ -24,8 +24,8 @@ class _ScreenOrdersState extends State<ScreenOrders> {
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-      onRefresh: ()async {
-         context.read<OrdersBloc>().add(const OrdersEvent.getOrderedProducts());
+      onRefresh: () async {
+        context.read<OrdersBloc>().add(const OrdersEvent.getOrderedProducts());
       },
       child: Scaffold(
         backgroundColor: Colors.grey.shade50,
@@ -42,8 +42,10 @@ class _ScreenOrdersState extends State<ScreenOrders> {
             child: BlocBuilder<OrdersBloc, OrdersState>(
               builder: (context, state) {
                 return state.when(
-                  initial: () => const Center(child: CircularProgressIndicator()),
-                  loading: () => const Center(child: CircularProgressIndicator()),
+                  initial: () =>
+                      const Center(child: CircularProgressIndicator()),
+                  loading: () =>
+                      const Center(child: CircularProgressIndicator()),
                   failure: () => _buildErrorState(context),
                   success: (orders) {
                     if (orders.isEmpty) {
@@ -124,6 +126,7 @@ class _OrderCard extends StatelessWidget {
       onTap: () {
         Navigator.of(context).push(
           MaterialPageRoute(
+            settings: const RouteSettings(name: 'order_details'),
             builder: (context) => ScreenOrderDetails(orderId: order.orderId),
           ),
         );

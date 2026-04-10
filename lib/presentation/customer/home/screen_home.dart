@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../domain/core/constants/strings.dart';
 import '../../common/product_tile_card.dart';
+import '../../common/widgets/app_notification_banner.dart';
 import '../category/screen_category_products.dart';
 import '../main/widgets/bottom_nav.dart';
 import '../product/screen_product_details.dart';
@@ -53,7 +54,16 @@ class ScreenHome extends StatelessWidget {
               backgroundColor: Colors.white,
               actions: [
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                       AppNotificationBanner.show(
+          title: "Notification",
+          body:  "",
+          onTap: () {
+            // Handle navigation or specific action on tap
+            log("Banner tapped!");
+          },
+        );
+                  },
                   icon: const Icon(Icons.notifications_none_outlined, size: 28),
                 ),
                 const SizedBox(width: 8),

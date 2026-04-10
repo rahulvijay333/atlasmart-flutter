@@ -5,15 +5,31 @@ import 'package:atlasmart/presentation/customer/main/widgets/bottom_nav.dart';
 import 'package:atlasmart/presentation/customer/profile/screen_profile.dart';
 import 'package:flutter/material.dart';
 
-class ScreenMain extends StatelessWidget {
-  ScreenMain({super.key});
+import '../../../domain/core/util/firebase/firebase.dart';
 
+class ScreenMain extends StatefulWidget {
+  const ScreenMain({super.key});
+
+  @override
+  State<ScreenMain> createState() => _ScreenMainState();
+}
+
+class _ScreenMainState extends State<ScreenMain> {
   final screens = [
     ScreenHome(),
     ScreenCategory(),
     ScreenCart(),
     ScreenProfile(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    // 🔗 Handle any deep link that was stored during app startup
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      FirebaseNotificationService.instance.processInitialMessage();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +39,6 @@ class ScreenMain extends StatelessWidget {
         valueListenable: BottomNavWidget.navBarNotifier,
         builder: (context, index, child) => screens[index],
       ),
-
       bottomNavigationBar: BottomNavWidget(),
     );
   }

@@ -35,6 +35,7 @@ import 'domain/core/di/di.dart';
 
 import 'domain/core/key/fbz.dart';
 import 'domain/core/util/firebase/firebase.dart';
+import 'domain/core/util/navigator_key.dart';
 import 'presentation/splash/screen_splash.dart';
 
 void main() async {
@@ -66,11 +67,13 @@ void main() async {
   AppConfig.initialize(
     AppConfig(
       flavor: kReleaseMode ? Flavor.prod : Flavor.dev,
-      baseUrl: kReleaseMode
+      baseUrl: 
+      kReleaseMode
           ? ApiEndpoints.baseUrlProduction
           : kIsWeb
           ? "http://localhost:3000"
-          : ApiEndpoints.baseUrl,
+          : 
+          ApiEndpoints.baseUrl,
     ),
   );
   setupDI();
@@ -94,6 +97,11 @@ class _MainAppState extends State<MainApp> {
   void initState() {
     super.initState();
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    
+    // 🔔 Handle notifications after the app widget tree is ready
+    if (!kIsWeb) {
+      FirebaseNotificationService.instance.handleNotificationClick();
+    }
   }
 
   @override
@@ -131,6 +139,7 @@ class _MainAppState extends State<MainApp> {
       ],
 
       child: MaterialApp(
+        navigatorKey: navigatorKey,
         debugShowCheckedModeBanner: false,
         title: 'AtlasMart',
         theme: ThemeData(
