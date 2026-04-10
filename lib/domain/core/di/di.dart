@@ -5,12 +5,14 @@ import 'package:atlasmart/application/admin/admin_order_list/admin_order_list_bl
 import 'package:atlasmart/application/admin/admin_product_list/admin_product_list_bloc.dart';
 import 'package:atlasmart/application/admin/add_admin/add_admins_bloc.dart';
 import 'package:atlasmart/application/admin/category_list/category_list_bloc.dart';
+import 'package:atlasmart/application/admin/manage_admin_notification/manage_admin_notification_bloc.dart';
 import 'package:atlasmart/application/admin/users/all_users_bloc.dart';
 import 'package:atlasmart/application/customer/address/address_bloc.dart';
 import 'package:atlasmart/application/customer/cart/cart_bloc.dart';
 import 'package:atlasmart/application/customer/checkout/checkout_bloc.dart';
 import 'package:atlasmart/application/customer/forgot_password/forgot_password_bloc.dart';
 import 'package:atlasmart/application/customer/home/customer_home_bloc.dart';
+import 'package:atlasmart/application/customer/notification/notification_bloc.dart';
 import 'package:atlasmart/application/customer/order_details/order_details_bloc.dart';
 import 'package:atlasmart/application/customer/orders/orders_bloc.dart';
 import 'package:atlasmart/application/customer/payment_status/payment_status_bloc.dart';
@@ -20,6 +22,7 @@ import 'package:atlasmart/application/admin/inventory/inventory_bloc.dart';
 import 'package:atlasmart/application/customer/registration/customer/custom_registr_bloc/customer_register_bloc.dart';
 import 'package:atlasmart/domain/admin/manage_admins/manage_admin_service.dart';
 import 'package:atlasmart/domain/admin/manage_category/manage_category.dart';
+import 'package:atlasmart/domain/admin/manage_notification/manage_notification_service.dart';
 import 'package:atlasmart/domain/admin/manage_orders/manage_order_service.dart';
 import 'package:atlasmart/domain/admin/manage_products/manage_products_service.dart';
 import 'package:atlasmart/domain/admin/profile/admin_profile_service.dart';
@@ -28,6 +31,7 @@ import 'package:atlasmart/domain/customer/address/address_service.dart';
 import 'package:atlasmart/domain/customer/cart/cart_service.dart';
 import 'package:atlasmart/domain/customer/checkout/checkout_service.dart';
 import 'package:atlasmart/domain/customer/home/home_service.dart';
+import 'package:atlasmart/domain/customer/notifications/notification_service.dart';
 import 'package:atlasmart/domain/customer/orders/order_service.dart';
 import 'package:atlasmart/domain/login/login_service.dart';
 import 'package:atlasmart/domain/customer/profile/profile_service.dart';
@@ -35,6 +39,7 @@ import 'package:atlasmart/domain/token/token_service.dart';
 import 'package:atlasmart/infrastructure/admin/admin_profile/admin_profile_service_impl.dart';
 import 'package:atlasmart/infrastructure/admin/manage_admins/manage_admin_service_impl.dart';
 import 'package:atlasmart/infrastructure/admin/manage_category/manage_category_service_impl.dart';
+import 'package:atlasmart/infrastructure/admin/manage_notification/manage_notification_impl.dart';
 import 'package:atlasmart/infrastructure/admin/manage_orders/manage_order_service_impl.dart';
 import 'package:atlasmart/infrastructure/admin/manage_products/manage_product_service_impl.dart';
 import 'package:atlasmart/infrastructure/admin/users/user_service_impl.dart';
@@ -42,6 +47,7 @@ import 'package:atlasmart/infrastructure/customer/address/address_service_impl.d
 import 'package:atlasmart/infrastructure/customer/cart/cart_service_impl.dart';
 import 'package:atlasmart/infrastructure/customer/checkout/checkout_service_impl.dart';
 import 'package:atlasmart/infrastructure/customer/home/home_service_impl.dart';
+import 'package:atlasmart/infrastructure/customer/notification/notification_service_impl.dart';
 import 'package:atlasmart/infrastructure/customer/orders/order_service_impl.dart';
 import 'package:atlasmart/infrastructure/login/login_service_impl.dart';
 import 'package:atlasmart/infrastructure/profile/profile_service_impl.dart';
@@ -129,7 +135,13 @@ void setupDI() {
   sl.registerLazySingleton<ManageOrderService>(
     () => ManageOrderServiceImpl(dio: sl<Dio>()),
   );
+  sl.registerLazySingleton<NotificationService>(
+    () => NotificationServiceImpl(dio: sl<Dio>()),
+  );
 
+  sl.registerLazySingleton<ManageNotificationService>(
+    () => ManageNotificationImpl(dio: sl<Dio>()),
+  );
   // -------------------------
   // 4. Blocs
   // -------------------------
@@ -174,4 +186,6 @@ void setupDI() {
   sl.registerFactory(() => OrdersBloc(sl<OrderService>()));
   sl.registerFactory(() => OrderDetailsBloc(sl<OrderService>()));
   sl.registerFactory(() => AdminOrderListBloc(sl<ManageOrderService>()));
+  sl.registerFactory(() => NotificationBloc(sl<NotificationService>()));
+  sl.registerFactory(() => ManageAdminNotificationBloc(sl<ManageNotificationService>()),);
 }

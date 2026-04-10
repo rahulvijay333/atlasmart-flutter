@@ -192,7 +192,10 @@ class _ScreenOrderDetailsState extends State<ScreenOrderDetails> {
               children: [
                 Text(
                   product.productName,
-                  style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 14),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                  ),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),

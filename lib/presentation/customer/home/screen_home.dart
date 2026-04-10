@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:atlasmart/application/customer/home/customer_home_bloc.dart';
 import 'package:atlasmart/domain/core/constants/image.dart';
 import 'package:atlasmart/application/admin/category_list/category_list_bloc.dart';
+import 'package:atlasmart/presentation/customer/notifications/screen_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -55,14 +56,11 @@ class ScreenHome extends StatelessWidget {
               actions: [
                 IconButton(
                   onPressed: () {
-                       AppNotificationBanner.show(
-          title: "Notification",
-          body:  "",
-          onTap: () {
-            // Handle navigation or specific action on tap
-            log("Banner tapped!");
-          },
-        );
+                 Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+
+                  return NotificationScreen();
+                   
+                 },));
                   },
                   icon: const Icon(Icons.notifications_none_outlined, size: 28),
                 ),

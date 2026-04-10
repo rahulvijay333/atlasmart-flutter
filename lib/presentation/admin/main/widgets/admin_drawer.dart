@@ -383,10 +383,7 @@ class AdminDrawerWidget extends StatelessWidget {
             ? SizedBox(
                 width: 24,
                 height: 24,
-                child: CircularProgressIndicator(
-                  strokeWidth: 2,
-                  color: color,
-                ),
+                child: CircularProgressIndicator(strokeWidth: 2, color: color),
               )
             : Icon(isSelected ? selectedIcon : icon, color: color, size: 24),
         title: Text(

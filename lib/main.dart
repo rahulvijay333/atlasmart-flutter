@@ -10,6 +10,7 @@ import 'package:atlasmart/application/customer/cart/cart_bloc.dart';
 import 'package:atlasmart/application/customer/checkout/checkout_bloc.dart';
 import 'package:atlasmart/application/customer/forgot_password/forgot_password_bloc.dart';
 import 'package:atlasmart/application/customer/home/customer_home_bloc.dart';
+import 'package:atlasmart/application/customer/notification/notification_bloc.dart';
 import 'package:atlasmart/application/customer/order_details/order_details_bloc.dart';
 import 'package:atlasmart/application/customer/orders/orders_bloc.dart';
 import 'package:atlasmart/application/customer/payment_status/payment_status_bloc.dart';
@@ -28,6 +29,7 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 
 import 'application/admin/admin_add_or_update_product/admin_addor_update_product_bloc.dart';
 import 'application/admin/admin_list/admin_list_bloc.dart';
+import 'application/admin/manage_admin_notification/manage_admin_notification_bloc.dart';
 import 'application/auth/auth_bloc.dart';
 import 'application/customer/registration/customer/custom_registr_bloc/customer_register_bloc.dart';
 import 'domain/core/config/app_config.dart';
@@ -67,13 +69,11 @@ void main() async {
   AppConfig.initialize(
     AppConfig(
       flavor: kReleaseMode ? Flavor.prod : Flavor.dev,
-      baseUrl: 
-      kReleaseMode
+      baseUrl: kReleaseMode
           ? ApiEndpoints.baseUrlProduction
           : kIsWeb
           ? "http://localhost:3000"
-          : 
-          ApiEndpoints.baseUrl,
+          : ApiEndpoints.baseUrl,
     ),
   );
   setupDI();
@@ -97,7 +97,7 @@ class _MainAppState extends State<MainApp> {
   void initState() {
     super.initState();
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-    
+
     // 🔔 Handle notifications after the app widget tree is ready
     if (!kIsWeb) {
       FirebaseNotificationService.instance.handleNotificationClick();
@@ -136,6 +136,8 @@ class _MainAppState extends State<MainApp> {
         BlocProvider(create: (context) => sl<OrdersBloc>()),
         BlocProvider(create: (context) => sl<OrderDetailsBloc>()),
         BlocProvider(create: (context) => sl<AdminOrderListBloc>()),
+        BlocProvider(create: (context) => sl<NotificationBloc>()),
+        BlocProvider(create: (context) => sl<ManageAdminNotificationBloc>()),
       ],
 
       child: MaterialApp(

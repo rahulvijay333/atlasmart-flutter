@@ -184,7 +184,7 @@ class _ScreenLoginState extends State<ScreenLogin> {
                                   );
                                   break;
                                 case AppConstants.customer:
-                                 BottomNavWidget.navBarNotifier.value = 0;
+                                  BottomNavWidget.navBarNotifier.value = 0;
                                   Navigator.of(context).pushReplacement(
                                     MaterialPageRoute(
                                       builder: (context) => ScreenMain(),

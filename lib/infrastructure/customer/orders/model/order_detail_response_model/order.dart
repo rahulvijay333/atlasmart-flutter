@@ -27,7 +27,6 @@ class Order {
   DateTime? updatedAt;
   int? v;
 
-
   Order({
     this.id,
     this.checkoutGroupId,
@@ -48,7 +47,6 @@ class Order {
     this.createdAt,
     this.updatedAt,
     this.v,
-    
   });
 
   factory Order.fromMap(Map<String, dynamic> data) => Order(
@@ -87,7 +85,6 @@ class Order {
         ? null
         : DateTime.parse(data['updatedAt'] as String),
     v: data['__v'] as int?,
-    
   );
 
   Map<String, dynamic> toMap() => {
@@ -110,7 +107,6 @@ class Order {
     'createdAt': createdAt?.toIso8601String(),
     'updatedAt': updatedAt?.toIso8601String(),
     '__v': v,
-  
   };
 
   /// `dart:convert`

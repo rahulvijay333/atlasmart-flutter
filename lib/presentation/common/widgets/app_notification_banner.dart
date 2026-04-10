@@ -111,7 +111,7 @@ class _AppNotificationBannerState extends State<AppNotificationBanner>
                     gradient: LinearGradient(
                       colors: [Colors.white, Colors.amber.shade50],
                     ),
-                    
+
                     borderRadius: BorderRadius.circular(16),
                     boxShadow: [
                       BoxShadow(
