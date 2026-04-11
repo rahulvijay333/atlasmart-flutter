@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../domain/core/constants/strings.dart';
+import '../../common/snack_bar.dart';
 
 class ScreenCart extends StatelessWidget {
   const ScreenCart({super.key});
@@ -18,9 +19,8 @@ class ScreenCart extends StatelessWidget {
     return BlocConsumer<CartBloc, CartState>(
       listener: (context, state) {
         if (state.error != null) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.error!), backgroundColor: Colors.red),
-          );
+          AppSnackBar.show(context, state.error!);
+          context.read<CartBloc>().add(ClearErrorMessage());
         }
       },
       builder: (context, state) {
@@ -145,7 +145,6 @@ class ScreenCart extends StatelessWidget {
                     '${totalAmount.toStringAsFixed(0)} Rs',
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.primary,
                     ),
                   ),
                 ],
@@ -306,7 +305,7 @@ class _CartItemTile extends StatelessWidget {
                       "${item.price} Rs",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.primary,
+
                         fontSize: 16,
                       ),
                     ),

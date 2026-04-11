@@ -23,7 +23,7 @@ class NotificationState {
     return NotificationState(
       isloading: isloading ?? this.isloading,
       notificationList: notificationList ?? this.notificationList,
-      error: error ?? this.error,
+      error: error ,
     );
   }
 }

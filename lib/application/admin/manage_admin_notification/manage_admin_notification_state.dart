@@ -19,7 +19,7 @@ class ManageAdminNotificationState {
     return ManageAdminNotificationState(
       isloading: isloading ?? this.isloading,
       status: status ?? this.status,
-      error: error ?? this.error,
+      error: error ,
     );
   }
 

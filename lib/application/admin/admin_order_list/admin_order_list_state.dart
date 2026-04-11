@@ -38,8 +38,8 @@ class AdminOrderListState {
       isUpdating: isUpdating ?? this.isUpdating,
       updateSuccess: updateSuccess,
       orderList: orderList ?? this.orderList,
-      error: error ?? this.error,
-      updateError: updateError ?? this.updateError,
+      error: error ,
+      updateError: updateError ,
     );
   }
 }

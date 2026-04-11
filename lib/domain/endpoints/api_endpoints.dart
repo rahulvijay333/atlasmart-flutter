@@ -20,7 +20,7 @@ class ApiEndpoints {
   static const adminProfile = '/api/admins/profile';
   static const adminProducts = '/api/products';
   static const adminOrders = '/api/admins/orders';
-  static const adminPushNotifcation='/api/admins/notifications/broadcast';
+  static const adminPushNotifcation = '/api/admins/notifications/broadcast';
 
   //category
   static const category = '/api/categories';
@@ -34,5 +34,5 @@ class ApiEndpoints {
   static const purchasedProducts = '/api/orders/purchased-products';
   static const invoiceDownload = '/api/orders/';
 
-  static const  notifications='/api/notifications';
+  static const notifications = '/api/notifications';
 }

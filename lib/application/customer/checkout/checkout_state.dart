@@ -24,7 +24,7 @@ class CheckoutState {
     return CheckoutState(
       isloading: isloading ?? this.isloading,
       checkoutData: checkoutData ?? this.checkoutData,
-      error: error ?? this.error,
+      error: error,
     );
   }
 }

@@ -5,6 +5,8 @@ import 'package:atlasmart/presentation/common/button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../common/snack_bar.dart';
+
 class ScreenAddUpdateAddress extends StatefulWidget {
   final AddressModel? address;
 
@@ -60,24 +62,15 @@ class _ScreenAddUpdateAddressState extends State<ScreenAddUpdateAddress> {
       body: BlocConsumer<AddressBloc, AddressState>(
         listener: (context, state) {
           if (state.actionSuccess) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  isEdit
-                      ? 'Address updated successfully'
-                      : 'Address added successfully',
-                ),
-                backgroundColor: Colors.green,
-              ),
+            AppSnackBar.show(
+              context,
+              isEdit
+                  ? 'Address updated successfully'
+                  : 'Address added successfully',
             );
             Navigator.pop(context);
           } else if (state.errorMessage != null) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.errorMessage!),
-                backgroundColor: Colors.red,
-              ),
-            );
+            AppSnackBar.show(context, state.errorMessage!);
           }
         },
         builder: (context, state) {

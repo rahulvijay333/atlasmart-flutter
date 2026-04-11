@@ -1,6 +1,7 @@
 import 'package:atlasmart/application/customer/address/address_bloc.dart';
 import 'package:atlasmart/domain/core/constants/colors.dart';
 import 'package:atlasmart/domain/core/constants/strings.dart';
+import 'package:atlasmart/presentation/common/snack_bar.dart';
 import 'package:atlasmart/presentation/customer/address/screen_add_update_address.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,12 +25,7 @@ class ScreenAddress extends StatelessWidget {
       body: BlocConsumer<AddressBloc, AddressState>(
         listener: (context, state) {
           if (state.errorMessage != null) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.errorMessage!),
-                backgroundColor: Colors.red,
-              ),
-            );
+            AppSnackBar.show(context, state.errorMessage!);
           }
         },
         builder: (context, state) {
@@ -91,16 +87,8 @@ class ScreenAddress extends StatelessWidget {
                           Row(
                             children: [
                               Icon(
-                                Icons.home_outlined,
+                                Icons.location_on_rounded,
                                 color: AppColors.amberColor,
-                              ),
-                              const SizedBox(width: 8),
-                              const Text(
-                                'Home', // Could be dynamic if address has a label
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                ),
                               ),
                             ],
                           ),

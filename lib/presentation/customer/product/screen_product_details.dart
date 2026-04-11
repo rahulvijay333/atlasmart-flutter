@@ -1,8 +1,11 @@
 import 'package:atlasmart/application/customer/cart/cart_bloc.dart';
+import 'package:atlasmart/domain/core/constants/font.dart';
 import 'package:atlasmart/domain/customer/home/model/shop_product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:atlasmart/presentation/customer/cart/screen_cart.dart';
+
+import '../../common/snack_bar.dart';
 
 class ScreenProductDetails extends StatelessWidget {
   final ShopProductModel product;
@@ -14,6 +17,12 @@ class ScreenProductDetails extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        title: Text(
+          product.name,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: AppFont.appBar18Style,
+        ),
         backgroundColor: Colors.white,
         elevation: 0,
         surfaceTintColor: Colors.transparent,
@@ -22,24 +31,32 @@ class ScreenProductDetails extends StatelessWidget {
           onPressed: () => Navigator.pop(context),
         ),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.favorite_border, color: Colors.black),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: const Icon(Icons.share, color: Colors.black),
-            onPressed: () {},
-          ),
+          // IconButton(
+          //   icon: const Icon(Icons.favorite_border, color: Colors.black),
+          //   onPressed: () {},
+          // ),
+          // IconButton(
+          //   icon: const Icon(Icons.share, color: Colors.black),
+          //   onPressed: () {},
+          // ),
         ],
       ),
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          if (constraints.maxWidth > 600) {
-            return _buildWebLayout(context);
-          } else {
-            return _buildMobileLayout(context);
+      body: BlocListener<CartBloc, CartState>(
+        listener: (context, state) async {
+          if (state.error != null && state.error!.isNotEmpty) {
+            AppSnackBar.show(context, state.error!);
+            context.read<CartBloc>().add(ClearErrorMessage());
           }
         },
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            if (constraints.maxWidth > 600) {
+              return _buildWebLayout(context);
+            } else {
+              return _buildMobileLayout(context);
+            }
+          },
+        ),
       ),
     );
   }
@@ -104,7 +121,7 @@ class ScreenProductDetails extends StatelessWidget {
       child: product.image.isNotEmpty
           ? Image.network(
               product.image,
-              fit: BoxFit.contain,
+              fit: BoxFit.cover,
               errorBuilder: (context, error, stackTrace) => const Center(
                 child: Icon(Icons.image, size: 100, color: Colors.grey),
               ),
@@ -158,7 +175,9 @@ class ScreenProductDetails extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 24),
-        Text(
+
+        if(product.description.isNotEmpty)...[
+           Text(
           "Product Description",
           style: Theme.of(
             context,
@@ -173,6 +192,8 @@ class ScreenProductDetails extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 32),
+        ],
+       
         Row(
           children: [
             const CircleAvatar(
@@ -195,7 +216,7 @@ class ScreenProductDetails extends StatelessWidget {
               ],
             ),
             const Spacer(),
-            TextButton(onPressed: () {}, child: const Text("View Store")),
+            // TextButton(onPressed: () {}, child: const Text("View Store")),
           ],
         ),
       ],

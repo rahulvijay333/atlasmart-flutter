@@ -56,11 +56,13 @@ class ScreenHome extends StatelessWidget {
               actions: [
                 IconButton(
                   onPressed: () {
-                 Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-
-                  return NotificationScreen();
-                   
-                 },));
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return NotificationScreen();
+                        },
+                      ),
+                    );
                   },
                   icon: const Icon(Icons.notifications_none_outlined, size: 28),
                 ),
@@ -163,7 +165,9 @@ class ScreenHome extends StatelessWidget {
                             final category = categoriesList[index];
                             return Padding(
                               padding: const EdgeInsets.only(right: 24.0),
-                              child: GestureDetector(
+                              child: CatgoryMiniTileWidget(
+                                title: category.categoryName,
+                                imageUrl: category.categoryImage,
                                 onTap: () {
                                   BlocProvider.of<CustomerHomeBloc>(
                                     context,
@@ -183,13 +187,6 @@ class ScreenHome extends StatelessWidget {
                                     ),
                                   );
                                 },
-                                child: CatgoryMiniTileWidget(
-                                  title: category.categoryName,
-                                  imageUrl: category.categoryImage,
-                                  onTap: () {
-                                    // Navigator will be added later
-                                  },
-                                ),
                               ),
                             );
                           },

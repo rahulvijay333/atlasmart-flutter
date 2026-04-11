@@ -1,6 +1,7 @@
 import 'package:atlasmart/application/customer/address/address_bloc.dart';
 import 'package:atlasmart/application/customer/checkout/checkout_bloc.dart';
 import 'package:atlasmart/domain/customer/address/model/address_model.dart';
+import 'package:atlasmart/presentation/common/snack_bar.dart';
 import 'package:atlasmart/presentation/customer/address/screen_add_update_address.dart';
 import 'package:atlasmart/presentation/customer/cart/screen_checkout.dart';
 import 'package:flutter/material.dart';
@@ -36,12 +37,7 @@ class _ScreenAddressSelectState extends State<ScreenAddressSelect> {
       body: BlocConsumer<AddressBloc, AddressState>(
         listener: (context, state) {
           if (state.errorMessage != null) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.errorMessage!),
-                backgroundColor: Colors.red,
-              ),
-            );
+            AppSnackBar.show(context, state.errorMessage!);
           }
         },
         builder: (context, state) {
@@ -270,14 +266,7 @@ class _AddressCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    address.city, // Placeholder for user name if available
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
+                
                   Text(
                     '${address.address1}, ${address.street}\n${address.city}, ${address.state} - ${address.pincode}',
                     style: TextStyle(color: Colors.grey.shade700, height: 1.5),

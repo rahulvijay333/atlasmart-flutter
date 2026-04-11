@@ -28,7 +28,7 @@ class CartState {
       isloading: isloading ?? this.isloading,
       ismodifyingCart: ismodifyingCart ?? this.ismodifyingCart,
       cartList: cartList ?? this.cartList,
-      error: error ?? this.error,
+      error: error,
     );
   }
 }

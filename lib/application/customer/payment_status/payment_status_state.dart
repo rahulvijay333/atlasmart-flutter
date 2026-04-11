@@ -19,7 +19,7 @@ class PaymentStatusState {
     return PaymentStatusState(
       isLoading: isLoading ?? this.isLoading,
       status: status ?? this.status,
-      error: error ?? this.error,
+      error: error,
     );
   }
 }

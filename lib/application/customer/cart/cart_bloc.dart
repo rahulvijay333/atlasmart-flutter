@@ -39,13 +39,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
         emit(state.copyWith(ismodifyingCart: false, cartList: cart));
       } catch (e) {
-        emit(
-          state.copyWith(
-            ismodifyingCart: false,
-            cartList: [],
-            error: e.toString(),
-          ),
-        );
+        emit(state.copyWith(ismodifyingCart: false, error: e.toString()));
       }
     });
 
@@ -57,13 +51,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
         emit(state.copyWith(ismodifyingCart: false, cartList: cart));
       } catch (e) {
-        emit(
-          state.copyWith(
-            ismodifyingCart: false,
-            cartList: [],
-            error: e.toString(),
-          ),
-        );
+        emit(state.copyWith(ismodifyingCart: false, error: e.toString()));
       }
     });
 
@@ -83,6 +71,10 @@ class CartBloc extends Bloc<CartEvent, CartState> {
           ),
         );
       }
+    });
+
+    on<ClearErrorMessage>((event, emit) {
+      emit(state.copyWith(error: null));
     });
   }
 }
