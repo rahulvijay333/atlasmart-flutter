@@ -40,7 +40,7 @@ class AppNotificationBanner extends StatefulWidget {
     overlay.insert(entry);
 
     // Auto remove after 4 seconds if not dismissed
-    Timer(const Duration(seconds: 4), () {
+    Timer(const Duration(seconds: 10), () {
       if (entry.mounted) {
         entry.remove();
       }
@@ -72,7 +72,7 @@ class _AppNotificationBannerState extends State<AppNotificationBanner>
     _controller.forward();
 
     // Start exit animation after 3.5 seconds
-    Timer(const Duration(milliseconds: 3500), () {
+    Timer(const Duration(seconds: 10), () {
       if (mounted) {
         _controller.reverse();
       }

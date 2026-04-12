@@ -1,6 +1,7 @@
 import 'package:atlasmart/application/customer/cart/cart_bloc.dart';
 import 'package:atlasmart/domain/core/constants/font.dart';
 import 'package:atlasmart/domain/customer/home/model/shop_product_model.dart';
+import 'package:atlasmart/presentation/common/button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:atlasmart/presentation/customer/cart/screen_cart.dart';
@@ -176,24 +177,24 @@ class ScreenProductDetails extends StatelessWidget {
         ),
         const SizedBox(height: 24),
 
-        if(product.description.isNotEmpty)...[
-           Text(
-          "Product Description",
-          style: Theme.of(
-            context,
-          ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 8),
-        Text(
-          product.description,
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-            color: Colors.grey.shade700,
-            height: 1.5,
+        if (product.description.isNotEmpty) ...[
+          Text(
+            "Product Description",
+            style: Theme.of(
+              context,
+            ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
           ),
-        ),
-        const SizedBox(height: 32),
+          const SizedBox(height: 8),
+          Text(
+            product.description,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              color: Colors.grey.shade700,
+              height: 1.5,
+            ),
+          ),
+          const SizedBox(height: 32),
         ],
-       
+
         Row(
           children: [
             const CircleAvatar(
@@ -230,13 +231,13 @@ class ScreenProductDetails extends StatelessWidget {
             .where((item) => item.productId == product.id)
             .firstOrNull;
 
-        if (state.ismodifyingCart) {
-          return Container(
-            padding: const EdgeInsets.symmetric(vertical: 8),
-            alignment: Alignment.center,
-            child: const CircularProgressIndicator(),
-          );
-        }
+        // if (state.ismodifyingCart) {
+        //   return Container(
+        //     padding: const EdgeInsets.symmetric(vertical: 8),
+        //     alignment: Alignment.center,
+        //     child: const CircularProgressIndicator(),
+        //   );
+        // }
 
         return Container(
           padding: const EdgeInsets.symmetric(vertical: 8),
@@ -256,18 +257,20 @@ class ScreenProductDetails extends StatelessWidget {
                     children: [
                       IconButton(
                         onPressed: () {
-                          if (cartItem.qty > 1) {
-                            context.read<CartBloc>().add(
-                              AddorUpdateCart(
-                                productID: product.id,
-                                cartID: cartItem.id,
-                                qty: (cartItem.qty - 1).toString(),
-                              ),
-                            );
-                          } else {
-                            context.read<CartBloc>().add(
-                              DeleteCart(productID: cartItem.id),
-                            );
+                          if (state.ismodifyingCart == false) {
+                            if (cartItem.qty > 1) {
+                              context.read<CartBloc>().add(
+                                AddorUpdateCart(
+                                  productID: product.id,
+                                  cartID: cartItem.id,
+                                  qty: (cartItem.qty - 1).toString(),
+                                ),
+                              );
+                            } else {
+                              context.read<CartBloc>().add(
+                                DeleteCart(productID: cartItem.id),
+                              );
+                            }
                           }
                         },
                         icon: const Icon(Icons.remove, size: 20),
@@ -286,14 +289,16 @@ class ScreenProductDetails extends StatelessWidget {
                       ),
                       IconButton(
                         onPressed: () {
-                          if (cartItem.qty < cartItem.stock) {
-                            context.read<CartBloc>().add(
-                              AddorUpdateCart(
-                                productID: product.id,
-                                cartID: cartItem.id,
-                                qty: (cartItem.qty + 1).toString(),
-                              ),
-                            );
+                          if (state.ismodifyingCart == false) {
+                            if (cartItem.qty < cartItem.stock) {
+                              context.read<CartBloc>().add(
+                                AddorUpdateCart(
+                                  productID: product.id,
+                                  cartID: cartItem.id,
+                                  qty: (cartItem.qty + 1).toString(),
+                                ),
+                              );
+                            }
                           }
                         },
                         icon: const Icon(Icons.add, size: 20),
@@ -305,42 +310,53 @@ class ScreenProductDetails extends StatelessWidget {
                 ),
                 const SizedBox(width: 16),
                 Expanded(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const ScreenCart(),
-                        ),
-                      );
+                  child: ButtonWidget(
+                    isloading: state.ismodifyingCart,
+                    title: "Go to Cart",
+                    height: 50,
+                    ontap: () {
+                      if (state.ismodifyingCart == false) {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) =>  ScreenCart(fromProductDetailScreen: true,),
+                          ),
+                        );
+                      }
                     },
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      backgroundColor: Theme.of(context).colorScheme.primary,
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    child: const Text("Go to Cart"),
                   ),
+
+                  // ElevatedButton(
+                  //   onPressed: () {
+                  //     Navigator.of(context).push(
+                  //       MaterialPageRoute(
+                  //         builder: (context) => const ScreenCart(),
+                  //       ),
+                  //     );
+                  //   },
+                  //   style: ElevatedButton.styleFrom(
+                  //     padding: const EdgeInsets.symmetric(vertical: 16),
+                  //     backgroundColor: Theme.of(context).colorScheme.primary,
+                  //     foregroundColor: Colors.white,
+                  //     shape: RoundedRectangleBorder(
+                  //       borderRadius: BorderRadius.circular(12),
+                  //     ),
+                  //   ),
+                  //   child: const Text("Go to Cart"),
+                  // ),
                 ),
               ] else ...[
                 Expanded(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      context.read<CartBloc>().add(
-                        AddorUpdateCart(productID: product.id, qty: "1"),
-                      );
+                  child: ButtonWidget(
+                    isloading: state.ismodifyingCart,
+                    title: 'Add to Cart',
+                    height: 50,
+                    ontap: () {
+                      if (state.ismodifyingCart == false) {
+                        context.read<CartBloc>().add(
+                          AddorUpdateCart(productID: product.id, qty: "1"),
+                        );
+                      }
                     },
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      backgroundColor: Theme.of(context).colorScheme.primary,
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    child: const Text("Add to Cart"),
                   ),
                 ),
               ],

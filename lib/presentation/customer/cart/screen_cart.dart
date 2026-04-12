@@ -6,16 +6,26 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../domain/core/constants/strings.dart';
 import '../../common/snack_bar.dart';
+import '../main/widgets/bottom_nav.dart';
 
-class ScreenCart extends StatelessWidget {
-  const ScreenCart({super.key});
+class ScreenCart extends StatefulWidget {
+  final bool fromProductDetailScreen;
+  ScreenCart({super.key, this.fromProductDetailScreen = false});
+
+  @override
+  State<ScreenCart> createState() => _ScreenCartState();
+}
+
+class _ScreenCartState extends State<ScreenCart> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    context.read<CartBloc>().add(GetCart());
+  }
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<CartBloc>().add(GetCart());
-    });
-
     return BlocConsumer<CartBloc, CartState>(
       listener: (context, state) {
         if (state.error != null) {
@@ -26,7 +36,7 @@ class ScreenCart extends StatelessWidget {
       builder: (context, state) {
         final totalAmount = state.cartList.fold<double>(
           0,
-          (sum, item) => sum + (double.tryParse(item.price) ?? 0) * item.qty,
+          (sum, item) => sum + (double.tryParse(item.price) ?? 0),
         );
 
         return Scaffold(
@@ -114,7 +124,7 @@ class ScreenCart extends StatelessWidget {
   Widget _buildBottomCheckoutBar(BuildContext context, double totalAmount) {
     final cart = BlocProvider.of<CartBloc>(context);
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
@@ -127,65 +137,76 @@ class ScreenCart extends StatelessWidget {
         ],
       ),
       child: SafeArea(
-        child: Row(
+        child: Column(
+          spacing: 5,
+          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Expanded(
-              child: Column(
-                spacing: 2,
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  if (cart.state.ismodifyingCart == true)
-                    const LinearProgressIndicator(),
-                  const Text(
-                    'Total',
-                    style: TextStyle(color: Colors.grey, fontSize: 13),
-                  ),
-                  Text(
-                    '${totalAmount.toStringAsFixed(0)} Rs',
-                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(width: 20),
-            Expanded(
-              flex: 2,
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  gradient: LinearGradient(
-                    colors: [
-                      Theme.of(context).colorScheme.primary,
-                      Theme.of(context).colorScheme.primary.withAlpha(200),
+            if (cart.state.ismodifyingCart == true) ...[
+              SizedBox(height: 5, child: const LinearProgressIndicator()),
+            ] else ...[
+              SizedBox(height: 5),
+            ],
+
+            Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    spacing: 2,
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text('Total', style: TextStyle(fontSize: 13)),
+                      Text(
+                        '${totalAmount.toStringAsFixed(0)} Rs',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ],
                   ),
                 ),
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const ScreenAddressSelect(),
-                      ),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.transparent,
-                    shadowColor: Colors.transparent,
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
+                const SizedBox(width: 20),
+                Expanded(
+                  flex: 2,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: cart.state.ismodifyingCart
+                          ? Colors.grey
+                          : Theme.of(context).colorScheme.primary,
                       borderRadius: BorderRadius.circular(12),
                     ),
-                  ),
-                  child: const Text(
-                    "Checkout",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        if (cart.state.ismodifyingCart == false) {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const ScreenAddressSelect(),
+                            ),
+                          );
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.transparent,
+                        shadowColor: Colors.transparent,
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      child: const Text(
+                        "Checkout",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-              ),
+              ],
             ),
           ],
         ),

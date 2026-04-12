@@ -169,8 +169,6 @@ class ScreenCheckout extends StatelessWidget {
 
               final razorpay = RazorpayUtil(
                 onSuccess: (paymentId, orderId, signature) {
-                  print("SUCCESS: $paymentId");
-
                   if (context.mounted) {
                     Navigator.of(context).push(
                       MaterialPageRoute(
@@ -189,7 +187,11 @@ class ScreenCheckout extends StatelessWidget {
                   AppSnackBar.show(context, error);
                 },
                 onCancel: () {
-                  AppSnackBar.show(context, 'Payment Cancelled');
+                  AppSnackBar.show(
+                    context,
+                    'Payment Cancelled',
+                    duration: Duration(seconds: 5),
+                  );
                 },
               );
 

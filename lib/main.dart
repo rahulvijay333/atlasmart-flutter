@@ -25,7 +25,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_stripe/flutter_stripe.dart';
 
 import 'application/admin/admin_add_or_update_product/admin_addor_update_product_bloc.dart';
 import 'application/admin/admin_list/admin_list_bloc.dart';

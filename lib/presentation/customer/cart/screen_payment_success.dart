@@ -1,6 +1,8 @@
 import 'package:atlasmart/presentation/customer/main/screen_main.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../application/customer/cart/cart_bloc.dart';
 import '../main/widgets/bottom_nav.dart';
 
 class ScreenPaymentSuccess extends StatelessWidget {
@@ -43,6 +45,7 @@ class ScreenPaymentSuccess extends StatelessWidget {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
+                    context.read<CartBloc>().add(GetCart());
                     BottomNavWidget.navBarNotifier.value = 0;
                     Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(builder: (context) => ScreenMain()),

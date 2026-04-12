@@ -20,237 +20,251 @@ class ScreenProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: [
-        SliverAppBar(
-          pinned: true,
-          centerTitle: true,
-          surfaceTintColor: Colors.transparent,
-          backgroundColor: Colors.white,
-          title: Text(
-            AppStrings.profile,
-            style: Theme.of(
-              context,
-            ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
-          ),
-        ),
-        SliverToBoxAdapter(
-          child: SizedBox(
-            height: 250,
-            child: BlocBuilder<CustomerProfileBloc, CustomerProfileState>(
-              builder: (context, state) {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ?state.whenOrNull(
-                      loading: () => Center(child: CircularProgressIndicator()),
-                      success: (profile) {
-                        return Padding(
-                          padding: const EdgeInsets.only(left: 16, right: 16),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.all(4),
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: Theme.of(
-                                      context,
-                                    ).colorScheme.primary,
-                                    width: 2,
-                                  ),
-                                ),
-                                child: CircleAvatar(
-                                  radius: 60,
-                                  backgroundColor: Colors.grey.shade200,
-                                  backgroundImage:
-                                      profile.profilePic!.isNotEmpty
-                                      ? NetworkImage(profile.profilePic!)
-                                      : null,
-                                  child: profile.profilePic!.isEmpty
-                                      ? Icon(
-                                          Icons.person,
-                                          size: 60,
-                                          color: Colors.grey,
-                                        )
-                                      : null,
-                                ),
-                              ),
-                              SizedBox(height: 15),
-                              Text(
-                                profile.userName,
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 2,
-                                style: Theme.of(context).textTheme.headlineSmall
-                                    ?.copyWith(fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                profile.userEmail,
-                                style: Theme.of(context).textTheme.bodyMedium
-                                    ?.copyWith(color: Colors.grey.shade600),
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-
-                      failed: (message) {
-                        return Center(
-                          child: Column(
-                            children: [
-                              Text(message, style: AppFont.title14Style),
-
-                              IconButton(
-                                onPressed: () {
-                                  BlocProvider.of<CustomerProfileBloc>(
-                                    context,
-                                  ).add(
-                                    CustomerProfileEvent.getProfileDetails(),
-                                  );
-                                },
-                                icon: Icon(Icons.refresh),
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                    ),
-                  ],
-                );
-              },
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if (BottomNavWidget.navBarNotifier.value == 0) {
+          Navigator.of(context).pop();
+        } else {
+          BottomNavWidget.navBarNotifier.value = 0;
+        }
+      },
+      child: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            pinned: true,
+            centerTitle: true,
+            surfaceTintColor: Colors.transparent,
+            backgroundColor: Colors.white,
+            title: Text(
+              AppStrings.profile,
+              style: Theme.of(
+                context,
+              ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
             ),
           ),
-        ),
-        SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          sliver: SliverList(
-            delegate: SliverChildListDelegate([
-              BlocBuilder<CustomerProfileBloc, CustomerProfileState>(
+          SliverToBoxAdapter(
+            child: SizedBox(
+              height: 250,
+              child: BlocBuilder<CustomerProfileBloc, CustomerProfileState>(
                 builder: (context, state) {
                   return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       ?state.whenOrNull(
-                        success: (profile) => _buildSectionCard(
-                          context,
-                          title: AppStrings.myAccount,
-                          children: [
-                            ListTileWidget(
-                              title: AppStrings.editProfile,
-                              ontap: () {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) {
-                                      return ScreenEditProfile(
-                                        profile: profile,
-                                      );
-                                    },
+                        loading: () =>
+                            Center(child: CircularProgressIndicator()),
+                        success: (profile) {
+                          return Padding(
+                            padding: const EdgeInsets.only(left: 16, right: 16),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.all(4),
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      color: Theme.of(
+                                        context,
+                                      ).colorScheme.primary,
+                                      width: 2,
+                                    ),
                                   ),
-                                );
-                              },
-                            ),
-                            ListTileWidget(
-                              title: AppStrings.shippingAddress,
-                              ontap: () {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) => const ScreenAddress(),
+                                  child: CircleAvatar(
+                                    radius: 60,
+                                    backgroundColor: Colors.grey.shade200,
+                                    backgroundImage:
+                                        profile.profilePic!.isNotEmpty
+                                        ? NetworkImage(profile.profilePic!)
+                                        : null,
+                                    child: profile.profilePic!.isEmpty
+                                        ? Icon(
+                                            Icons.person,
+                                            size: 60,
+                                            color: Colors.grey,
+                                          )
+                                        : null,
                                   ),
-                                );
-                              },
+                                ),
+                                SizedBox(height: 15),
+                                Text(
+                                  profile.userName,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 2,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineSmall
+                                      ?.copyWith(fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  profile.userEmail,
+                                  style: Theme.of(context).textTheme.bodyMedium
+                                      ?.copyWith(color: Colors.grey.shade600),
+                                ),
+                              ],
                             ),
-                            ListTileWidget(
-                              title: AppStrings.orderHistory,
-                              ontap: () {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) {
-                                      return ScreenOrders();
-                                    },
-                                  ),
-                                );
-                              },
+                          );
+                        },
+
+                        failed: (message) {
+                          return Center(
+                            child: Column(
+                              children: [
+                                Text(message, style: AppFont.title14Style),
+
+                                IconButton(
+                                  onPressed: () {
+                                    BlocProvider.of<CustomerProfileBloc>(
+                                      context,
+                                    ).add(
+                                      CustomerProfileEvent.getProfileDetails(),
+                                    );
+                                  },
+                                  icon: Icon(Icons.refresh),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
+                          );
+                        },
                       ),
                     ],
                   );
                 },
               ),
-
-              const SizedBox(height: 16),
-              // Center(
-              //   child: _buildSectionCard(
-              //     context,
-              //     title: AppStrings.settings,
-              //     children: [
-              //       ListTileWidget(title: AppStrings.appSettings, ontap: () {}),
-              //       ListTileWidget(
-              //         title: AppStrings.helpAndSupport,
-              //         ontap: () {},
-              //       ),
-              //     ],
-              //   ),
-              // ),
-            ]),
+            ),
           ),
-        ),
-        SliverPadding(
-          padding: EdgeInsets.only(left: 16, right: 16, top: 15),
-          sliver: SliverToBoxAdapter(
-            child: Center(
-              child: BlocConsumer<LoginBloc, LoginState>(
-                listener: (context, state) {
-                  state.whenOrNull(
-                    failure: (message) {
-                      AppSnackBar.show(context, message);
-                    },
-
-                    initial: () {
-                      Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return ScreenLogin();
-                          },
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            sliver: SliverList(
+              delegate: SliverChildListDelegate([
+                BlocBuilder<CustomerProfileBloc, CustomerProfileState>(
+                  builder: (context, state) {
+                    return Column(
+                      children: [
+                        ?state.whenOrNull(
+                          success: (profile) => _buildSectionCard(
+                            context,
+                            title: AppStrings.myAccount,
+                            children: [
+                              ListTileWidget(
+                                title: AppStrings.editProfile,
+                                ontap: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) {
+                                        return ScreenEditProfile(
+                                          profile: profile,
+                                        );
+                                      },
+                                    ),
+                                  );
+                                },
+                              ),
+                              ListTileWidget(
+                                title: AppStrings.shippingAddress,
+                                ontap: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const ScreenAddress(),
+                                    ),
+                                  );
+                                },
+                              ),
+                              ListTileWidget(
+                                title: AppStrings.orderHistory,
+                                ontap: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) {
+                                        return ScreenOrders();
+                                      },
+                                    ),
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
                         ),
-                        (route) => false,
-                      );
-                    },
-                  );
-                },
-                builder: (context, state) {
-                  return ButtonWidget(
-                    isloading: state == LoginState.loading(),
-                    title: AppStrings.logout,
-                    height: 50,
-                    ontap: state != LoginState.loading()
-                        ? () {
-                            BlocProvider.of<LoginBloc>(
-                              context,
-                            ).add(LoginEvent.logOutButtonClick());
-                          }
-                        : () {},
-                  );
-                },
+                      ],
+                    );
+                  },
+                ),
+
+                const SizedBox(height: 16),
+                // Center(
+                //   child: _buildSectionCard(
+                //     context,
+                //     title: AppStrings.settings,
+                //     children: [
+                //       ListTileWidget(title: AppStrings.appSettings, ontap: () {}),
+                //       ListTileWidget(
+                //         title: AppStrings.helpAndSupport,
+                //         ontap: () {},
+                //       ),
+                //     ],
+                //   ),
+                // ),
+              ]),
+            ),
+          ),
+          SliverPadding(
+            padding: EdgeInsets.only(left: 16, right: 16, top: 15),
+            sliver: SliverToBoxAdapter(
+              child: Center(
+                child: BlocConsumer<LoginBloc, LoginState>(
+                  listener: (context, state) {
+                    state.whenOrNull(
+                      failure: (message) {
+                        AppSnackBar.show(context, message);
+                      },
+
+                      initial: () {
+                        Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return ScreenLogin();
+                            },
+                          ),
+                          (route) => false,
+                        );
+                      },
+                    );
+                  },
+                  builder: (context, state) {
+                    return ButtonWidget(
+                      isloading: state == LoginState.loading(),
+                      title: AppStrings.logout,
+                      height: 50,
+                      ontap: state != LoginState.loading()
+                          ? () {
+                              BlocProvider.of<LoginBloc>(
+                                context,
+                              ).add(LoginEvent.logOutButtonClick());
+                            }
+                          : () {},
+                    );
+                  },
+                ),
               ),
             ),
           ),
-        ),
-        SliverToBoxAdapter(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 15),
-            child: Center(
-              child: Text(
-                '${AppStrings.appVersion} ${AppConstants.appVersion}',
-                style: Theme.of(
-                  context,
-                ).textTheme.bodySmall?.copyWith(color: Colors.grey),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 15),
+              child: Center(
+                child: Text(
+                  '${AppStrings.appVersion} ${AppConstants.appVersion}',
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodySmall?.copyWith(color: Colors.grey),
+                ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

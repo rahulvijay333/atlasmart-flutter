@@ -23,6 +23,7 @@ class ManageProductServiceImpl implements ManageProductsService {
         'price': num.parse(product.price),
         'stock': int.parse(product.stock ?? '0'),
         'category_id': product.categoryid,
+        'description': product.description,
         'for_sale': true,
       };
 
@@ -85,6 +86,7 @@ class ManageProductServiceImpl implements ManageProductsService {
         'price': num.parse(product.price),
         'stock': int.parse(product.stock ?? '0'),
         'category_id': product.categoryid,
+        'description': product.description,
         'for_sale': true,
       };
 
@@ -130,7 +132,7 @@ class ManageProductServiceImpl implements ManageProductsService {
             .map(
               (e) => AdminProductsModel(
                 name: e.name ?? '',
-                description: '',
+                description: e.description ??'',
                 price: e.price ?? '',
                 id: e.id,
                 stock: e.stock?.toString(),
