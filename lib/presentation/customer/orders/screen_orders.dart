@@ -151,11 +151,13 @@ class _OrderCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Order #${order.orderNumber}',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  overflow: TextOverflow.ellipsis,
+                  '#${order.orderNumber}',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
                 ),
                 Text(
                   CustomDateFormat.ddmmmyyyWithTime(order.purchaseDate),
+                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(color: Colors.grey.shade600, fontSize: 13),
                 ),
               ],
@@ -189,7 +191,7 @@ class _OrderCard extends StatelessWidget {
                         order.productName,
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 16,
+                          fontSize: 14,
                         ),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
@@ -200,6 +202,7 @@ class _OrderCard extends StatelessWidget {
                         style: TextStyle(
                           color: Colors.grey.shade600,
                           fontSize: 12,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
 
@@ -219,7 +222,7 @@ class _OrderCard extends StatelessWidget {
                             order.orderStatus.toUpperCase(),
                             style: TextStyle(
                               color: Colors.green,
-                              fontSize: 14,
+                              fontSize: 12,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
