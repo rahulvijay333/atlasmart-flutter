@@ -17,11 +17,20 @@ class LoginServiceImpl implements LoginService {
   LoginServiceImpl({required this.dio, required this.storage});
 
   @override
-  Future<(AuthTokens, UserDetails)> login(String email, String password) async {
+  Future<(AuthTokens, UserDetails)> login(
+    String email,
+    String password,
+    String? fcToken,
+  ) async {
     try {
       final res = await dio.post(
         ApiEndpoints.login,
-        data: {"email": email, "password": password},
+        data: {
+          "email": email,
+          "password": password,
+
+          if (fcToken != null && fcToken.isNotEmpty) "fcmToken": fcToken,
+        },
       );
 
       final data = UserDetails.fromJson(jsonEncode(res.data));
@@ -46,8 +55,29 @@ class LoginServiceImpl implements LoginService {
   }
 
   @override
-  Future<void> logout() async {
-    await storage.clear();
+  Future<bool> logout(String? fcToken) async {
+    try {
+      final refreshToken = await storage.getRefreshToken();
+
+      final res = await dio.post(
+        ApiEndpoints.logOut,
+        data: {
+          "refreshToken": refreshToken,
+
+          if (fcToken != null && fcToken.isNotEmpty) "fcmToken": fcToken,
+        },
+      );
+
+      if (res.statusCode == 200) {
+        await storage.clear();
+        return true;
+      } else {
+        return false;
+      }
+    } on DioException catch (e) {
+      log(e.toString());
+      throw DioErrorHandler.handle(e);
+    }
   }
 
   @override

@@ -12,29 +12,35 @@ class ButtonWidget extends StatelessWidget {
   final double height;
   final VoidCallback ontap;
   final bool isloading;
+  
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      height: height,
-      child: ElevatedButton(
-        style: isloading == true
-            ? ButtonStyle(backgroundColor: WidgetStatePropertyAll(Colors.grey))
-            : null,
-        onPressed: ontap,
-        child: isloading == true
-            ? SizedBox(
-                height: 30,
-                width: 20,
-                child: Center(
-                  child: CircularProgressIndicator(
-                    color: Colors.white,
-                    strokeWidth: 1.5,
+    return ConstrainedBox(
+      constraints: BoxConstraints(maxWidth: 600),
+      child: SizedBox(
+        width: double.infinity,
+        height: height,
+        child: ElevatedButton(
+          style: isloading == true
+              ? ButtonStyle(
+                  backgroundColor: WidgetStatePropertyAll(Colors.grey),
+                )
+              : null,
+          onPressed: ontap,
+          child: isloading == true
+              ? SizedBox(
+                  height: 20,
+                  width: 20,
+                  child: Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
+                      strokeWidth: 1.5,
+                    ),
                   ),
-                ),
-              )
-            : Text(title),
+                )
+              : Text(title),
+        ),
       ),
     );
   }

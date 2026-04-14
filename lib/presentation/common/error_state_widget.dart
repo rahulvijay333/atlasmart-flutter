@@ -17,13 +17,16 @@ class ErrorStateWidgetWithMessage extends StatelessWidget {
     return SizedBox(
       width: size.width,
       height: size.height * 0.7,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(message),
-          if (hasRefresh == true)
-            IconButton(onPressed: ontap, icon: Icon(Icons.refresh)),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(message),
+            if (hasRefresh == true)
+              IconButton(onPressed: ontap, icon: Icon(Icons.refresh)),
+          ],
+        ),
       ),
     );
   }

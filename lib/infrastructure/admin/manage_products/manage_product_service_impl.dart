@@ -22,6 +22,8 @@ class ManageProductServiceImpl implements ManageProductsService {
         'name': product.name,
         'price': num.parse(product.price),
         'stock': int.parse(product.stock ?? '0'),
+        'category_id': product.categoryid,
+        'description': product.description,
         'for_sale': true,
       };
 
@@ -32,8 +34,9 @@ class ManageProductServiceImpl implements ManageProductsService {
         final extension = parts[1] == 'jpeg' ? 'jpg' : parts[1];
 
         final fileName = '${product.name}.$extension';
-        formDataMap['image'] = await MultipartFile.fromFile(
-          product.newProfileImage!.path,
+        final bytes = await product.newProfileImage!.readAsBytes();
+        formDataMap['image'] = MultipartFile.fromBytes(
+          bytes,
           filename: fileName,
           contentType: MediaType(parts[0], parts[1]),
         );
@@ -82,18 +85,21 @@ class ManageProductServiceImpl implements ManageProductsService {
         'name': product.name,
         'price': num.parse(product.price),
         'stock': int.parse(product.stock ?? '0'),
+        'category_id': product.categoryid,
+        'description': product.description,
         'for_sale': true,
       };
 
-    if (product.newProfileImage != null) {
+      if (product.newProfileImage != null) {
         final mimeType =
             lookupMimeType(product.newProfileImage!.path) ?? 'image/jpeg';
         final parts = mimeType.split('/');
         final extension = parts[1] == 'jpeg' ? 'jpg' : parts[1];
 
         final fileName = '${product.name}.$extension';
-        formDataMap['image'] = await MultipartFile.fromFile(
-          product.newProfileImage!.path,
+        final bytes = await product.newProfileImage!.readAsBytes();
+        formDataMap['image'] = MultipartFile.fromBytes(
+          bytes,
           filename: fileName,
           contentType: MediaType(parts[0], parts[1]),
         );
@@ -118,20 +124,22 @@ class ManageProductServiceImpl implements ManageProductsService {
 
   @override
   Future<List<AdminProductsModel>> getAllProducts() async {
-    final res = await dio.get(ApiEndpoints.adminProducts);
-
     try {
+      final res = await dio.get(ApiEndpoints.adminProducts);
       if (res.statusCode == 200) {
         final data = AdminProductListResponseModel.fromMap(res.data).data;
         final users = data!
             .map(
               (e) => AdminProductsModel(
                 name: e.name ?? '',
-                description: '',
+                description: e.description ??'',
                 price: e.price ?? '',
                 id: e.id,
                 stock: e.stock?.toString(),
-                image: e.imageUrl
+                image: e.imageUrl,
+                categoryid: e.categoryId,
+                brandName: e.brandName,
+                companyName: e.companyName,
               ),
             )
             .toList();
@@ -141,7 +149,7 @@ class ManageProductServiceImpl implements ManageProductsService {
         return [];
       }
     } on DioException catch (e) {
-      log(e.toString());
+      // log(e.toString());
       throw DioErrorHandler.handle(e);
     }
   }

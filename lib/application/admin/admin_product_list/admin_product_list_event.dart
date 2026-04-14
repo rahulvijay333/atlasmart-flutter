@@ -6,6 +6,5 @@ class AdminProductListEvent with _$AdminProductListEvent {
   const factory AdminProductListEvent.loadAdminProductList() =
       _LoadAdminProductList;
 
-      const factory AdminProductListEvent.deleteProduct(String id) = _DeleteProduct;
-      
+  const factory AdminProductListEvent.deleteProduct(String id) = _DeleteProduct;
 }

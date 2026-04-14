@@ -66,31 +66,37 @@ class _ScreenOtpVerifyState extends State<ScreenOtpVerify> {
             );
           },
           builder: (context, state) {
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ?state.whenOrNull(
-                  notverified: (user) {
-                    return EmailNotVerifiedWidget(widget: widget, state: state);
-                  },
-                  verifyOtpSentLoading: () =>
-                      EmailNotVerifiedWidget(widget: widget, state: state),
-                  verifyOtpSendFailed: (message) =>
-                      EmailNotVerifiedWidget(widget: widget, state: state),
-                  verifyOtpSentSuccess: (_) => VerifyOtpWidget(
-                    widget: widget,
-                    otpController: _otpController,
+            return ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: 600),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ?state.whenOrNull(
+                    notverified: (user) {
+                      return EmailNotVerifiedWidget(
+                        widget: widget,
+                        state: state,
+                      );
+                    },
+                    verifyOtpSentLoading: () =>
+                        EmailNotVerifiedWidget(widget: widget, state: state),
+                    verifyOtpSendFailed: (message) =>
+                        EmailNotVerifiedWidget(widget: widget, state: state),
+                    verifyOtpSentSuccess: (_) => VerifyOtpWidget(
+                      widget: widget,
+                      otpController: _otpController,
+                    ),
+                    failure: (message) => VerifyOtpWidget(
+                      widget: widget,
+                      otpController: _otpController,
+                    ),
+                    verifyingAccount: () => VerifyOtpWidget(
+                      widget: widget,
+                      otpController: _otpController,
+                    ),
                   ),
-                  failure: (message) => VerifyOtpWidget(
-                    widget: widget,
-                    otpController: _otpController,
-                  ),
-                  verifyingAccount: () => VerifyOtpWidget(
-                    widget: widget,
-                    otpController: _otpController,
-                  ),
-                ),
-              ],
+                ],
+              ),
             );
           },
         ),

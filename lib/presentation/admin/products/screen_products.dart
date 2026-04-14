@@ -278,15 +278,58 @@ class ScreenAdminProducts extends StatelessWidget {
                                           //   ),
                                           // ),
                                           // const SizedBox(width: 8),
-                                          Text(
-                                            '${AppStrings.category}: Electronics',
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                              color: Colors.grey[600],
-                                            ),
-                                          ),
+                                          // Text(
+                                          //   '${product.categoryName}: Electronics',
+                                          //   style: TextStyle(
+                                          //     fontSize: 12,
+                                          //     color: Colors.grey[600],
+                                          //   ),
+                                          // ),
                                         ],
                                       ),
+                                      if (product.brandName?.isNotEmpty ==
+                                          true) ...[
+                                        Row(
+                                          spacing: 5,
+                                          children: [
+                                            Text(
+                                              'Soldby',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                color: Colors.grey[600],
+                                              ),
+                                            ),
+                                            Text(
+                                              '${product.brandName}',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ] else ...[
+                                        Row(
+                                          spacing: 5,
+                                          children: [
+                                            Text(
+                                              'Soldby',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                color: Colors.grey[600],
+                                              ),
+                                            ),
+                                            Text(
+                                              'NA',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+
                                       const SizedBox(height: 8),
                                       // Pricing
                                       Row(

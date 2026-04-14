@@ -14,7 +14,7 @@
 //   });
 // }
 
-import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 
 class AdminUserModel {
   final String userName;
@@ -24,8 +24,10 @@ class AdminUserModel {
   String? userImage;
   bool? userActiveStatus;
   String? password;
-  File? newProfileImage;
+  XFile? newProfileImage;
   String? id;
+  String? brandName;
+  String? companyName;
 
   AdminUserModel({
     required this.userName,
@@ -41,8 +43,10 @@ class AdminUserModel {
     String? userImage,
     bool? userActiveStatus,
     String? password,
-    File? newProfileImage,
-    String? id
+    XFile? newProfileImage,
+    String? id,
+    String? companyName,
+    String? brandName,
   }) {
     final model = AdminUserModel(
       userName: userName ?? this.userName,
@@ -55,7 +59,9 @@ class AdminUserModel {
     model.userActiveStatus = userActiveStatus ?? this.userActiveStatus;
     model.password = password ?? this.password;
     model.newProfileImage = newProfileImage;
-    model.id =id;
+    model.id = id;
+    model.brandName = brandName;
+    model.companyName = companyName;
 
     return model;
   }

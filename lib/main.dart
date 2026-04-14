@@ -1,9 +1,19 @@
-import 'dart:ui';
-
+import 'package:atlasmart/application/admin/add_category/add_category_bloc.dart';
+import 'package:atlasmart/application/admin/admin_order_list/admin_order_list_bloc.dart';
 import 'package:atlasmart/application/admin/admin_product_list/admin_product_list_bloc.dart';
 import 'package:atlasmart/application/admin/add_admin/add_admins_bloc.dart';
+import 'package:atlasmart/application/admin/category_list/category_list_bloc.dart';
+import 'package:atlasmart/application/admin/inventory/inventory_bloc.dart';
 import 'package:atlasmart/application/admin/users/all_users_bloc.dart';
-import 'package:atlasmart/application/forgot_password/forgot_password_bloc.dart';
+import 'package:atlasmart/application/customer/address/address_bloc.dart';
+import 'package:atlasmart/application/customer/cart/cart_bloc.dart';
+import 'package:atlasmart/application/customer/checkout/checkout_bloc.dart';
+import 'package:atlasmart/application/customer/forgot_password/forgot_password_bloc.dart';
+import 'package:atlasmart/application/customer/home/customer_home_bloc.dart';
+import 'package:atlasmart/application/customer/notification/notification_bloc.dart';
+import 'package:atlasmart/application/customer/order_details/order_details_bloc.dart';
+import 'package:atlasmart/application/customer/orders/orders_bloc.dart';
+import 'package:atlasmart/application/customer/payment_status/payment_status_bloc.dart';
 import 'package:atlasmart/application/login/login_bloc.dart';
 import 'package:atlasmart/application/profile_admin_customer/admin/bloc/admin_profile_bloc.dart';
 import 'package:atlasmart/application/profile_admin_customer/customer/customer_profile_bloc.dart';
@@ -18,36 +28,59 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'application/admin/admin_add_or_update_product/admin_addor_update_product_bloc.dart';
 import 'application/admin/admin_list/admin_list_bloc.dart';
+import 'application/admin/manage_admin_notification/manage_admin_notification_bloc.dart';
 import 'application/auth/auth_bloc.dart';
-import 'application/registration/customer/custom_registr_bloc/customer_register_bloc.dart';
+import 'application/customer/registration/customer/custom_registr_bloc/customer_register_bloc.dart';
 import 'domain/core/config/app_config.dart';
 import 'domain/core/di/di.dart';
+
+import 'domain/core/key/fbz.dart';
+import 'domain/core/util/firebase/firebase.dart';
+import 'domain/core/util/navigator_key.dart';
 import 'presentation/splash/screen_splash.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  if (kReleaseMode) {
+  if (kIsWeb) {
+    await Firebase.initializeApp(
+      options: FirebaseOptions(
+        apiKey: FIREBASE_API_KEY,
+        appId: FIREBASE_APP_ID,
+        messagingSenderId: FIREBASE_MESSAGING_SENDER_ID,
+        projectId: FIREBASE_PROJECT_ID,
+      ), // ✅ FIX
+    );
+  } else {
     await Firebase.initializeApp();
-    FlutterError.onError = (errorDetails) {
-      FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
-    };
-    // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
-    PlatformDispatcher.instance.onError = (error, stack) {
-      FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
-      return true;
-    };
   }
+
+  FlutterError.onError = (errorDetails) {
+    FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
+  };
+  // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
+  PlatformDispatcher.instance.onError = (error, stack) {
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    return true;
+  };
+  // }
 
   AppConfig.initialize(
     AppConfig(
       flavor: kReleaseMode ? Flavor.prod : Flavor.dev,
       baseUrl: kReleaseMode
           ? ApiEndpoints.baseUrlProduction
+          : kIsWeb
+          ? "http://localhost:3000"
           : ApiEndpoints.baseUrl,
     ),
   );
   setupDI();
+
+  if (!kIsWeb) {
+    await FirebaseNotificationService.instance.init();
+  }
+
   runApp(const MainApp());
 }
 
@@ -63,6 +96,11 @@ class _MainAppState extends State<MainApp> {
   void initState() {
     super.initState();
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
+    // 🔔 Handle notifications after the app widget tree is ready
+    if (!kIsWeb) {
+      FirebaseNotificationService.instance.handleNotificationClick();
+    }
   }
 
   @override
@@ -86,9 +124,23 @@ class _MainAppState extends State<MainApp> {
         BlocProvider(create: (context) => sl<AdminProductListBloc>()),
         BlocProvider(create: (context) => sl<AdminAddorUpdateProductBloc>()),
         BlocProvider(create: (context) => sl<AdminListBloc>()),
+        BlocProvider(create: (context) => sl<AddCategoryBloc>()),
+        BlocProvider(create: (context) => sl<CategoryListBloc>()),
+        BlocProvider(create: (context) => sl<InventoryBloc>()),
+        BlocProvider(create: (context) => sl<AddressBloc>()),
+        BlocProvider(create: (context) => sl<CustomerHomeBloc>()),
+        BlocProvider(create: (context) => sl<CartBloc>()),
+        BlocProvider(create: (context) => sl<CheckoutBloc>()),
+        BlocProvider(create: (context) => sl<PaymentStatusBloc>()),
+        BlocProvider(create: (context) => sl<OrdersBloc>()),
+        BlocProvider(create: (context) => sl<OrderDetailsBloc>()),
+        BlocProvider(create: (context) => sl<AdminOrderListBloc>()),
+        BlocProvider(create: (context) => sl<NotificationBloc>()),
+        BlocProvider(create: (context) => sl<ManageAdminNotificationBloc>()),
       ],
 
       child: MaterialApp(
+        navigatorKey: navigatorKey,
         debugShowCheckedModeBanner: false,
         title: 'AtlasMart',
         theme: ThemeData(

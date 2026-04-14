@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../application/login/login_bloc.dart';
+import '../../../common/snack_bar.dart';
 import '../../../login/screen_login.dart';
 import '../../../../domain/core/constants/strings.dart';
 
@@ -145,19 +146,37 @@ class AdminDrawerWidget extends StatelessWidget {
                                               style: AppFont.title16Style
                                                   .copyWith(
                                                     color: AppColors.whiteColor,
-                                                    fontWeight: FontWeight.bold,
                                                   ),
                                             ),
                                             SizedBox(height: 4),
                                             Text(
-                                              profile.userEmail,
+                                              profile.brandName ??
+                                                  profile.userEmail,
                                               overflow: TextOverflow.ellipsis,
                                               style: AppFont.title14Style
                                                   .copyWith(
+                                                    fontWeight: FontWeight.bold,
+                                                    letterSpacing: 1,
                                                     color: AppColors.whiteColor,
                                                   ),
                                               maxLines: 2,
                                             ),
+                                            if (profile
+                                                    .companyName
+                                                    ?.isNotEmpty ==
+                                                true)
+                                              Text(
+                                                profile.companyName!,
+
+                                                overflow: TextOverflow.ellipsis,
+                                                style: AppFont.title12Style
+                                                    .copyWith(
+                                                      letterSpacing: 1,
+                                                      color:
+                                                          AppColors.whiteColor,
+                                                    ),
+                                                maxLines: 1,
+                                              ),
                                           ],
                                         ),
                                       ),
@@ -217,46 +236,55 @@ class AdminDrawerWidget extends StatelessWidget {
                       1, // Products is Index 1 in main screen list
                   onTap: () => onDestinationSelected(1),
                 ),
+
                 _buildDrawerItem(
                   context: context,
                   icon: Icons.inventory_2_outlined,
                   selectedIcon: Icons.inventory_2,
                   title: AppStrings.inventory,
-                  isSelected: selectedIndex == 2,
-                  onTap: () => onDestinationSelected(2),
+                  isSelected: selectedIndex == 3,
+                  onTap: () => onDestinationSelected(3),
                 ),
                 _buildDrawerItem(
                   context: context,
                   icon: Icons.list_alt,
                   selectedIcon: Icons.list_alt,
                   title: AppStrings.orders,
-                  isSelected: selectedIndex == 3,
-                  onTap: () => onDestinationSelected(3),
+                  isSelected: selectedIndex == 4,
+                  onTap: () => onDestinationSelected(4),
                 ),
                 _buildDrawerItem(
                   context: context,
                   icon: Icons.payment_outlined,
                   selectedIcon: Icons.payment,
                   title: AppStrings.payments,
-                  isSelected: selectedIndex == 4,
-                  onTap: () => onDestinationSelected(4),
+                  isSelected: selectedIndex == 5,
+                  onTap: () => onDestinationSelected(5),
                 ),
                 if (role == AppConstants.superUser) ...[
+                  _buildDrawerItem(
+                    context: context,
+                    icon: Icons.category_outlined,
+                    selectedIcon: Icons.category,
+                    title: AppStrings.categories,
+                    isSelected: selectedIndex == 2,
+                    onTap: () => onDestinationSelected(2),
+                  ),
                   _buildDrawerItem(
                     context: context,
                     icon: Icons.people_outline,
                     selectedIcon: Icons.people,
                     title: AppStrings.users,
-                    isSelected: selectedIndex == 5,
-                    onTap: () => onDestinationSelected(5),
+                    isSelected: selectedIndex == 6,
+                    onTap: () => onDestinationSelected(6),
                   ),
                   _buildDrawerItem(
                     context: context,
                     icon: Icons.admin_panel_settings_outlined,
                     selectedIcon: Icons.admin_panel_settings,
                     title: AppStrings.manageAdmins,
-                    isSelected: selectedIndex == 7,
-                    onTap: () => onDestinationSelected(7),
+                    isSelected: selectedIndex == 8,
+                    onTap: () => onDestinationSelected(8),
                   ),
                 ],
 
@@ -269,8 +297,8 @@ class AdminDrawerWidget extends StatelessWidget {
                   icon: Icons.notifications_none_outlined,
                   selectedIcon: Icons.notifications,
                   title: AppStrings.pushNotifications,
-                  isSelected: selectedIndex == 6,
-                  onTap: () => onDestinationSelected(6),
+                  isSelected: selectedIndex == 7,
+                  onTap: () => onDestinationSelected(7),
                 ),
               ],
             ),
@@ -279,26 +307,43 @@ class AdminDrawerWidget extends StatelessWidget {
           // Footer
           Padding(
             padding: const EdgeInsets.all(16.0),
-            child: _buildDrawerItem(
-              context: context,
-              icon: Icons.logout_rounded,
-              selectedIcon: Icons.logout_rounded,
-              title: AppStrings.logout,
-              isSelected: false,
-              onTap: () {
-                BlocProvider.of<LoginBloc>(
-                  context,
-                ).add(LoginEvent.logOutButtonClick());
-                Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return ScreenLogin();
-                    },
-                  ),
-                  (route) => false,
+            child: BlocConsumer<LoginBloc, LoginState>(
+              listener: (context, state) {
+                state.whenOrNull(
+                  failure: (message) {
+                    AppSnackBar.show(context, message);
+                  },
+                  initial: () {
+                    Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return ScreenLogin();
+                        },
+                      ),
+                      (route) => false,
+                    );
+                  },
                 );
               },
-              isLogout: true,
+              builder: (context, state) {
+                final isLoading = state == LoginState.loading();
+                return _buildDrawerItem(
+                  context: context,
+                  icon: Icons.logout_rounded,
+                  selectedIcon: Icons.logout_rounded,
+                  title: AppStrings.logout,
+                  isSelected: false,
+                  onTap: isLoading
+                      ? () {}
+                      : () {
+                          BlocProvider.of<LoginBloc>(
+                            context,
+                          ).add(LoginEvent.logOutButtonClick());
+                        },
+                  isLogout: true,
+                  isLoading: isLoading,
+                );
+              },
             ),
           ),
         ],
@@ -314,6 +359,7 @@ class AdminDrawerWidget extends StatelessWidget {
     required bool isSelected,
     required VoidCallback onTap,
     bool isLogout = false,
+    bool isLoading = false,
   }) {
     final primaryColor = Theme.of(context).primaryColor;
     final color = isLogout
@@ -333,7 +379,13 @@ class AdminDrawerWidget extends StatelessWidget {
       ),
       child: ListTile(
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-        leading: Icon(isSelected ? selectedIcon : icon, color: color, size: 24),
+        leading: isLoading
+            ? SizedBox(
+                width: 24,
+                height: 24,
+                child: CircularProgressIndicator(strokeWidth: 2, color: color),
+              )
+            : Icon(isSelected ? selectedIcon : icon, color: color, size: 24),
         title: Text(
           title,
           style: TextStyle(

@@ -1,4 +1,9 @@
+import 'package:atlasmart/application/admin/inventory/inventory_bloc.dart';
+import 'package:atlasmart/presentation/common/error_state_widget.dart';
+import 'package:atlasmart/presentation/common/loading_widget.dart';
+import 'package:atlasmart/presentation/common/snack_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'widgets/stock_update_sheet.dart';
 import '../common/admin_search_bar.dart';
 import '../../../domain/core/constants/strings.dart';
@@ -8,133 +13,211 @@ class ScreenInventory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: const AdminSearchBar(hintText: AppStrings.searchInventoryHint),
-        ),
-        Expanded(
-          child: ListView.separated(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            itemCount: 15,
-            separatorBuilder: (context, index) => const SizedBox(height: 16),
-            itemBuilder: (context, index) {
-              final stock = (index % 5) * 5;
-              final isLowStock = stock < 10 && stock > 0;
-              final isOutOfStock = stock == 0;
+    return BlocListener<InventoryBloc, InventoryState>(
+      listenWhen: (previous, current) =>
+          previous.isUpdating != current.isUpdating ||
+          previous.updateSuccess != current.updateSuccess ||
+          previous.updateErrorMessage != current.updateErrorMessage,
+      listener: (context, state) {
+        if (state.updateSuccess) {
+          AppSnackBar.show(context, 'Stock updated successfully');
+        } else if (state.updateErrorMessage != null) {
+          AppSnackBar.show(
+            context,
+            state.updateErrorMessage ?? 'Stock updated failed',
+          );
+        }
+      },
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: const AdminSearchBar(
+              hintText: AppStrings.searchInventoryHint,
+            ),
+          ),
+          Expanded(
+            child: BlocBuilder<InventoryBloc, InventoryState>(
+              builder: (context, state) {
+                if (state.isLoading) {
+                  return const LoadingWidget();
+                }
 
-              return Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withValues(alpha: 0.1),
-                      blurRadius: 10,
-                      offset: const Offset(0, 4),
+                if (state.errorMessage != null && state.products.isEmpty) {
+                  return ErrorStateWidgetWithMessage(
+                    state.errorMessage!,
+                    hasRefresh: true,
+                    ontap: () {
+                      context.read<InventoryBloc>().add(
+                        const InventoryEvent.loadInventory(),
+                      );
+                    },
+                  );
+                }
+
+                if (state.products.isEmpty) {
+                  return ErrorStateWidgetWithMessage(
+                    'No products found',
+                    hasRefresh: true,
+                    ontap: () {
+                      context.read<InventoryBloc>().add(
+                        const InventoryEvent.loadInventory(),
+                      );
+                    },
+                  );
+                }
+
+                return RefreshIndicator(
+                  onRefresh: () async {
+                    context.read<InventoryBloc>().add(
+                      const InventoryEvent.loadInventory(),
+                    );
+                  },
+                  child: ListView.separated(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
                     ),
-                  ],
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Row(
-                    children: [
-                      // Product Image
-                      Container(
-                        width: 80,
-                        height: 80,
+                    itemCount: state.products.length,
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(height: 16),
+                    itemBuilder: (context, index) {
+                      final product = state.products[index];
+                      final stock = int.tryParse(product.stock ?? '0') ?? 0;
+                      final isLowStock = stock < 10 && stock > 0;
+                      final isOutOfStock = stock == 0;
+
+                      return Container(
                         decoration: BoxDecoration(
-                          color: Colors.grey[100],
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: const Icon(
-                          Icons.image_outlined,
-                          color: Colors.grey,
-                        ),
-                      ),
-                      const SizedBox(width: 16),
-                      // Details
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Premium Product Item #$index',
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black87,
-                              ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              'SKU: ATLS-2024-$index',
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Colors.grey[500],
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            const SizedBox(height: 12),
-                            Row(
-                              children: [
-                                _buildStockBadge(
-                                  stock,
-                                  isLowStock,
-                                  isOutOfStock,
-                                ),
-                                const Spacer(),
-                                InkWell(
-                                  onTap: () {
-                                    showModalBottomSheet(
-                                      context: context,
-                                      isScrollControlled: true,
-                                      backgroundColor: Colors.transparent,
-                                      builder: (_) => StockUpdateSheet(
-                                        productName:
-                                            'Premium Product Item #$index',
-                                        currentStock: stock,
-                                      ),
-                                    );
-                                  },
-                                  borderRadius: BorderRadius.circular(8),
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 12,
-                                      vertical: 6,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: Theme.of(
-                                        context,
-                                      ).primaryColor.withValues(alpha: 0.1),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    child: Text(
-                                      AppStrings.update,
-                                      style: TextStyle(
-                                        color: Theme.of(context).primaryColor,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(16),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withValues(alpha: 0.1),
+                              blurRadius: 10,
+                              offset: const Offset(0, 4),
                             ),
                           ],
                         ),
-                      ),
-                    ],
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Row(
+                            children: [
+                              // Product Image
+                              Container(
+                                width: 80,
+                                height: 80,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey[100],
+                                  borderRadius: BorderRadius.circular(12),
+                                  image:
+                                      product.image != null &&
+                                          product.image!.isNotEmpty
+                                      ? DecorationImage(
+                                          image: NetworkImage(product.image!),
+                                          fit: BoxFit.cover,
+                                        )
+                                      : null,
+                                ),
+                                child:
+                                    product.image == null ||
+                                        product.image!.isEmpty
+                                    ? const Icon(
+                                        Icons.image_outlined,
+                                        color: Colors.grey,
+                                      )
+                                    : null,
+                              ),
+                              const SizedBox(width: 16),
+                              // Details
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      product.name,
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black87,
+                                      ),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      'Price: ₹${product.price}',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.grey[500],
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 12),
+                                    Row(
+                                      children: [
+                                        _buildStockBadge(
+                                          stock,
+                                          isLowStock,
+                                          isOutOfStock,
+                                        ),
+                                        const Spacer(),
+                                        InkWell(
+                                          onTap: () {
+                                            showModalBottomSheet(
+                                              context: context,
+                                              isScrollControlled: true,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              builder: (_) => StockUpdateSheet(
+                                                product: product,
+                                              ),
+                                            );
+                                          },
+                                          borderRadius: BorderRadius.circular(
+                                            8,
+                                          ),
+                                          child: Container(
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 12,
+                                              vertical: 6,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              color: Theme.of(context)
+                                                  .primaryColor
+                                                  .withValues(alpha: 0.1),
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                            ),
+                                            child: Text(
+                                              AppStrings.update,
+                                              style: TextStyle(
+                                                color: Theme.of(
+                                                  context,
+                                                ).primaryColor,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
                   ),
-                ),
-              );
-            },
+                );
+              },
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -160,7 +243,7 @@ class ScreenInventory extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.1),
+        // color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(6),
         border: Border.all(color: color.withValues(alpha: 0.2)),
       ),

@@ -8,6 +8,8 @@ class Data {
   bool? isVerified;
   String? profileImage;
   DateTime? createdAt;
+  String? brandName;
+  String? companyName;
 
   Data({
     this.id,
@@ -17,6 +19,8 @@ class Data {
     this.isVerified,
     this.profileImage,
     this.createdAt,
+    this.brandName,
+    this.companyName,
   });
 
   factory Data.fromMap(Map<String, dynamic> data) => Data(
@@ -29,6 +33,8 @@ class Data {
     createdAt: data['created_at'] == null
         ? null
         : DateTime.parse(data['created_at'] as String),
+    brandName: data['brand_name'],
+    companyName: data['company_name'],
   );
 
   Map<String, dynamic> toMap() => {

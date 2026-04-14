@@ -1,7 +1,5 @@
 import 'dart:developer';
 
-import 'package:flutter/material.dart';
-
 enum Flavor { dev, prod }
 
 class AppConfig {

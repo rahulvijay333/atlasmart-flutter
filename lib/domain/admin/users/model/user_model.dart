@@ -12,6 +12,6 @@ class UserModel {
     required this.userEmail,
     required this.joinedDate,
     this.userImage,
-    this.id
+    this.id,
   });
 }

@@ -6,9 +6,4 @@ class AdminListEvent with _$AdminListEvent {
   const factory AdminListEvent.getAllAdminList() = _GetAllAdminList;
 
   const factory AdminListEvent.deleteAdmin(String id) = _DeleteAdmin;
-  
-  
-  
-  
-  
 }

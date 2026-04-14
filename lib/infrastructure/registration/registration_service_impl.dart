@@ -1,6 +1,6 @@
 import 'package:atlasmart/domain/endpoints/api_endpoints.dart';
-import 'package:atlasmart/domain/registration/model/customer_register_model.dart';
-import 'package:atlasmart/domain/registration/registration_service.dart';
+import 'package:atlasmart/domain/customer/registration/model/customer_register_model.dart';
+import 'package:atlasmart/domain/customer/registration/registration_service.dart';
 import 'package:dio/dio.dart';
 
 import '../../domain/core/network/dio_error_handle.dart';

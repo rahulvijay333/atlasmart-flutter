@@ -1,25 +1,31 @@
-import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 
 class AdminProductsModel {
   final String name;
   final String description;
   final String price;
   final String? image;
-  final String? category;
+  final String? categoryid;
   final String? stock;
-   String? id;
+  final String? categoryName;
+  String? id;
+  String? brandName;
+  String? companyName;
 
-  File? newProfileImage;
+  XFile? newProfileImage;
 
   AdminProductsModel({
     required this.name,
     required this.description,
     required this.price,
+    this.categoryName,
     this.image,
-    this.category,
+    this.categoryid,
     this.stock,
     this.newProfileImage,
-    this.id
+    this.id,
+    this.brandName,
+    this.companyName,
   });
 
   AdminProductsModel copyWith({
@@ -27,19 +33,20 @@ class AdminProductsModel {
     String? description,
     String? price,
     String? image,
-    String? category,
+    String? categoryId,
     String? stock,
-    File? newProfileImage,
+    XFile? newProfileImage,
   }) {
     return AdminProductsModel(
+      categoryName: categoryName,
       name: name ?? this.name,
       description: description ?? this.description,
       price: price ?? this.price,
       image: image ?? this.image,
-      category: category ?? this.category,
+      categoryid: categoryId ?? this.categoryid,
       stock: stock ?? this.stock,
-
       newProfileImage: newProfileImage,
+      id: id,
     );
   }
 }

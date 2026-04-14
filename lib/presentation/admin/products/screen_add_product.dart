@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 
 import 'package:atlasmart/domain/admin/manage_products/model/admin_products_model.dart';
 import 'package:atlasmart/presentation/common/button_widget.dart';
@@ -6,10 +7,13 @@ import 'package:atlasmart/presentation/common/snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:atlasmart/application/admin/category_list/category_list_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../../application/admin/admin_add_or_update_product/admin_addor_update_product_bloc.dart';
 import '../../../domain/core/constants/colors.dart';
 import '../../../domain/core/constants/font.dart';
 import '../../../domain/core/util/image_picker.dart';
+import '../../../domain/admin/manage_category/model/category_model.dart';
 
 class ScreenAddProduct extends StatefulWidget {
   final bool isEdit;
@@ -31,8 +35,8 @@ class _ScreenAddProductState extends State<ScreenAddProduct> {
   // late TextEditingController _gstController;
   late TextEditingController _stockController;
   // late TextEditingController _skuController;
-  String _category = 'Electronics';
-  File? selectedImage;
+  String? _selectedCategoryId;
+  XFile? selectedImage;
   @override
   void initState() {
     super.initState();
@@ -53,7 +57,13 @@ class _ScreenAddProductState extends State<ScreenAddProduct> {
     // _skuController = TextEditingController(
     //   text: widget.productData?['sku'] ?? '',
     // );
-    // _category = widget.productData?['category'] ?? 'Electronics';
+    _selectedCategoryId = widget.product?.categoryid;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<CategoryListBloc>().add(
+        const CategoryListEvent.getAllCategoryList(),
+      );
+    });
   }
 
   @override
@@ -134,7 +144,10 @@ class _ScreenAddProductState extends State<ScreenAddProduct> {
                           radius: 80,
                           backgroundColor: Colors.grey.shade200,
                           backgroundImage: selectedImage != null
-                              ? FileImage(selectedImage!)
+                              ? (kIsWeb
+                                    ? NetworkImage(selectedImage!.path)
+                                    : FileImage(File(selectedImage!.path))
+                                          as ImageProvider)
                               : (widget.product?.image != null &&
                                     widget.product!.image!.isNotEmpty)
                               ? NetworkImage(widget.product!.image!)
@@ -241,34 +254,106 @@ class _ScreenAddProductState extends State<ScreenAddProduct> {
                     // ),
                     // const SizedBox(width: 16),
                     Expanded(
-                      child: DropdownButtonFormField<String>(
-                        initialValue: _category,
-                        decoration: InputDecoration(
-                          labelText: 'Category',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 16,
-                            vertical: 14,
-                          ),
-                        ),
-                        items: const [
-                          DropdownMenuItem(
-                            value: 'Electronics',
-                            child: Text('Electronics'),
-                          ),
-                          DropdownMenuItem(
-                            value: 'Fashion',
-                            child: Text('Fashion'),
-                          ),
-                          DropdownMenuItem(
-                            value: 'Grocery',
-                            child: Text('Grocery'),
-                          ),
-                        ],
-                        onChanged: (val) {
-                          if (val != null) setState(() => _category = val);
+                      child: BlocBuilder<CategoryListBloc, CategoryListState>(
+                        builder: (context, state) {
+                          List<CategoryModel> categories = [];
+                          bool isLoading = false;
+                          bool isError = false;
+
+                          state.maybeWhen(
+                            success: (list) {
+                              categories = list;
+                              if (_selectedCategoryId != null &&
+                                  !categories.any(
+                                    (e) => e.id == _selectedCategoryId,
+                                  )) {
+                                _selectedCategoryId = null;
+                              }
+                            },
+                            loading: () => isLoading = true,
+                            failure: (_) => isError = true,
+                            orElse: () {},
+                          );
+
+                          return DropdownButtonFormField<String>(
+                            value: _selectedCategoryId,
+                            decoration: InputDecoration(
+                              labelText: 'Category',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 14,
+                              ),
+                              suffixIcon: isLoading
+                                  ? const Padding(
+                                      padding: EdgeInsets.all(12),
+                                      child: SizedBox(
+                                        width: 20,
+                                        height: 20,
+                                        child: CircularProgressIndicator(
+                                          strokeWidth: 2,
+                                        ),
+                                      ),
+                                    )
+                                  : Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        if (_selectedCategoryId != null)
+                                          IconButton(
+                                            iconSize: 20,
+                                            icon: const Icon(
+                                              Icons.clear,
+                                              color: Colors.grey,
+                                            ),
+                                            onPressed: () {
+                                              setState(
+                                                () =>
+                                                    _selectedCategoryId = null,
+                                              );
+                                            },
+                                          ),
+                                        if (isError ||
+                                            (categories.isEmpty && !isLoading))
+                                          IconButton(
+                                            iconSize: 20,
+                                            icon: const Icon(Icons.refresh),
+                                            onPressed: () {
+                                              context.read<CategoryListBloc>().add(
+                                                const CategoryListEvent.getAllCategoryList(),
+                                              );
+                                            },
+                                          ),
+                                      ],
+                                    ),
+                            ),
+                            hint: Text(
+                              isLoading
+                                  ? 'Loading...'
+                                  : isError
+                                  ? 'Error loading'
+                                  : categories.isEmpty
+                                  ? 'No categories'
+                                  : 'Select Category',
+                              style: TextStyle(
+                                color: _selectedCategoryId == null
+                                    ? Colors.grey
+                                    : null,
+                              ),
+                            ),
+                            items: categories.map((CategoryModel category) {
+                              return DropdownMenuItem<String>(
+                                value: category.id,
+                                child: Text(category.categoryName),
+                              );
+                            }).toList(),
+                            onChanged: categories.isEmpty
+                                ? null
+                                : (val) {
+                                    setState(() => _selectedCategoryId = val);
+                                  },
+                          );
                         },
                       ),
                     ),
@@ -288,7 +373,7 @@ class _ScreenAddProductState extends State<ScreenAddProduct> {
                       child: _buildTextField(
                         controller: _stockController,
                         label: 'Stock Quantity',
-                        hint: '100',
+                        hint: '0',
                         keyboardType: TextInputType.number,
                       ),
                     ),
@@ -349,12 +434,24 @@ class _ScreenAddProductState extends State<ScreenAddProduct> {
                       height: 50,
                       ontap: () {
                         if (state != AdminAddorUpdateProductState.loading()) {
+                          if (_selectedCategoryId == null) {
+                            AppSnackBar.show(context, 'Select a category');
+                            return;
+                          }
+
+                          if (_stockController.text.isEmpty ||
+                              _stockController.text == '0') {
+                            AppSnackBar.show(context, 'Invalid stock value');
+                            return;
+                          }
+
                           final product = AdminProductsModel(
                             name: _nameController.text.trim(),
                             description: _descController.text.trim(),
                             price: _mrpController.text.trim(),
                             newProfileImage: selectedImage,
                             stock: _stockController.text.trim(),
+                            categoryid: _selectedCategoryId,
                             id: widget.product?.id,
                           );
 

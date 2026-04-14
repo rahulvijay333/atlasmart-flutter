@@ -145,10 +145,6 @@ class ScreenAdminProfile extends StatelessWidget {
                                   );
                                 },
                               ),
-                              ListTileWidget(
-                                title: 'Company Address',
-                                ontap: () {},
-                              ),
                             ],
                           ),
                         ),
