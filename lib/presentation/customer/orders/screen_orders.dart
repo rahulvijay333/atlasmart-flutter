@@ -54,10 +54,13 @@ class _ScreenOrdersState extends State<ScreenOrders> {
                     }
                     return NotificationListener<ScrollNotification>(
                       onNotification: (scrollInfo) {
-                        if (scrollInfo.metrics.pixels >= scrollInfo.metrics.maxScrollExtent &&
+                        if (scrollInfo.metrics.pixels >=
+                                scrollInfo.metrics.maxScrollExtent &&
                             !isLoadingMore &&
                             !hasReachedMax) {
-                          context.read<OrdersBloc>().add(const OrdersEvent.loadMoreOrders());
+                          context.read<OrdersBloc>().add(
+                            const OrdersEvent.loadMoreOrders(),
+                          );
                         }
                         return false;
                       },
@@ -101,11 +104,6 @@ class _ScreenOrdersState extends State<ScreenOrders> {
           const Text(
             'No orders found!',
             style: TextStyle(fontSize: 18, color: Colors.grey),
-          ),
-          const SizedBox(height: 24),
-          ElevatedButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Start Shopping'),
           ),
         ],
       ),

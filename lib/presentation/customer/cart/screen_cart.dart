@@ -123,92 +123,99 @@ class _ScreenCartState extends State<ScreenCart> {
 
   Widget _buildBottomCheckoutBar(BuildContext context, double totalAmount) {
     final cart = BlocProvider.of<CartBloc>(context);
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withAlpha(20),
-            blurRadius: 15,
-            offset: const Offset(0, -5),
-          ),
-        ],
-      ),
-      child: SafeArea(
-        child: Column(
-          spacing: 5,
-          mainAxisAlignment: MainAxisAlignment.end,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (cart.state.ismodifyingCart == true) ...[
-              SizedBox(height: 5, child: const LinearProgressIndicator()),
-            ] else ...[
-              SizedBox(height: 5),
-            ],
-
-            Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    spacing: 2,
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text('Total', style: TextStyle(fontSize: 13)),
-                      Text(
-                        '${totalAmount.toStringAsFixed(0)} Rs',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: 20),
-                Expanded(
-                  flex: 2,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: cart.state.ismodifyingCart
-                          ? Colors.grey
-                          : Theme.of(context).colorScheme.primary,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        if (cart.state.ismodifyingCart == false) {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => const ScreenAddressSelect(),
-                            ),
-                          );
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.transparent,
-                        shadowColor: Colors.transparent,
-                        foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                      child: const Text(
-                        "Continue",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+    return ConstrainedBox(
+      constraints: BoxConstraints(maxWidth: 600),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withAlpha(20),
+              blurRadius: 15,
+              offset: const Offset(0, -5),
             ),
           ],
+        ),
+        child: SafeArea(
+          child: Column(
+            spacing: 5,
+            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (cart.state.ismodifyingCart == true) ...[
+                SizedBox(height: 5, child: const LinearProgressIndicator()),
+              ] else ...[
+                SizedBox(height: 5),
+              ],
+
+              ConstrainedBox(
+                constraints: BoxConstraints(maxWidth: 600),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        spacing: 2,
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text('Total', style: TextStyle(fontSize: 13)),
+                          Text(
+                            '${totalAmount.toStringAsFixed(0)} Rs',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: 20),
+                    Expanded(
+                      flex: 2,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: cart.state.ismodifyingCart
+                              ? Colors.grey
+                              : Theme.of(context).colorScheme.primary,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            if (cart.state.ismodifyingCart == false) {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const ScreenAddressSelect(),
+                                ),
+                              );
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.transparent,
+                            shadowColor: Colors.transparent,
+                            foregroundColor: Colors.white,
+                            padding: const EdgeInsets.symmetric(vertical: 16),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                          child: const Text(
+                            "Continue",
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
