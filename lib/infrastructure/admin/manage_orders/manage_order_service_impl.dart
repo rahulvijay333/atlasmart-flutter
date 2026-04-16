@@ -17,9 +17,12 @@ class ManageOrderServiceImpl implements ManageOrderService {
   ManageOrderServiceImpl({required this.dio});
 
   @override
-  Future<dynamic> getAllOrders() async {
+  Future<dynamic> getAllOrders(int page) async {
     try {
-      final res = await dio.get(ApiEndpoints.adminOrders);
+      final res = await dio.get(
+        ApiEndpoints.adminOrders,
+        queryParameters: {"page": page},
+      );
 
       if (res.statusCode == 200) {
         final data = ManageAdminOrdersResponse.fromMap(res.data).data;
@@ -61,6 +64,8 @@ class ManageOrderServiceImpl implements ManageOrderService {
               pincode: e.shippingAddressSnapshot?.pincode ?? '',
               country: e.shippingAddressSnapshot?.country ?? '',
             ),
+            currentPage: data?.page ?? 1,
+            totalPages: data?.totalPages ?? 1,
           );
         }).toList();
 

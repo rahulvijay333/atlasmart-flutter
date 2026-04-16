@@ -68,18 +68,40 @@ class ScreenAdminOrders extends StatelessWidget {
 
               return RefreshIndicator(
                 onRefresh: () async {
-                  context.read<AdminOrderListBloc>().add(LoadingAdminOrders());
+                  context.read<AdminOrderListBloc>().add(LoadingAdminOrders(isRefresh: true));
                 },
-                child: ListView.separated(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 8,
-                  ),
-                  itemCount: state.orderList.length,
-                  separatorBuilder: (context, index) =>
-                      const SizedBox(height: 16),
-                  itemBuilder: (context, index) {
-                    final order = state.orderList[index];
+                child: NotificationListener<ScrollNotification>(
+                  onNotification: (scrollInfo) {
+                    if (scrollInfo.metrics.pixels >=
+                            scrollInfo.metrics.maxScrollExtent &&
+                        !state.isLoadingMore &&
+                        !state.hasReachedMax) {
+                      context.read<AdminOrderListBloc>().add(
+                            LoadMoreAdminOrders(),
+                          );
+                    }
+                    return false;
+                  },
+                  child: ListView.separated(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
+                    ),
+                    itemCount: state.orderList.length +
+                        (state.isLoadingMore ? 1 : 0),
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(height: 16),
+                    itemBuilder: (context, index) {
+                      if (index >= state.orderList.length) {
+                        return const Center(
+                          child: Padding(
+                            padding: EdgeInsets.all(16.0),
+                            child: CircularProgressIndicator(),
+                          ),
+                        );
+                      }
+
+                      final order = state.orderList[index];
 
                     // Map domain model to UI
                     final orderId = '#${order.orderNumber}';
@@ -235,6 +257,7 @@ class ScreenAdminOrders extends StatelessWidget {
                     );
                   },
                 ),
+               ),
               );
             },
           ),

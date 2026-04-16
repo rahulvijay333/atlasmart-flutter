@@ -77,9 +77,12 @@ class OrderServiceImpl implements OrderService {
   }
 
   @override
-  Future<dynamic> getOrderedProductList() async {
+  Future<dynamic> getOrderedProductList(int page) async {
     try {
-      final response = await dio.get(ApiEndpoints.purchasedProducts);
+      final response = await dio.get(
+        ApiEndpoints.purchasedProducts,
+        queryParameters: {"page": page},
+      );
 
       if (response.statusCode == 201 || response.statusCode == 200) {
         final data = OrderedProductResponseModel.fromMap(response.data).data;

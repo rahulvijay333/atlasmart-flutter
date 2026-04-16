@@ -13,16 +13,60 @@ class AdminOrderListBloc
   AdminOrderListBloc(this.manageOrderService)
     : super(AdminOrderListState.initial()) {
     on<LoadingAdminOrders>((event, emit) async {
-      emit(state.copyWith(isloading: true, error: null));
+      emit(state.copyWith(
+        isloading: true, 
+        error: null,
+        hasReachedMax: false,
+        currentPage: event.page,
+        orderList: event.isRefresh ? [] : state.orderList,
+      ));
 
       try {
-        final orders = await manageOrderService.getAllOrders();
+        final ordersList = await manageOrderService.getAllOrders(event.page);
+        
+        final List<ManageAdminOrderModel> orders = List<ManageAdminOrderModel>.from(ordersList);
 
-        emit(state.copyWith(isloading: false, orderList: orders));
+        bool hasReachedMax = false;
+        if (orders.isEmpty || (orders.isNotEmpty && orders.first.currentPage >= orders.first.totalPages)) {
+            hasReachedMax = true;
+        }
+
+        emit(state.copyWith(
+          isloading: false, 
+          orderList: event.isRefresh ? orders : [...state.orderList, ...orders],
+          hasReachedMax: hasReachedMax,
+        ));
       } catch (e) {
         emit(state.copyWith(isloading: false, error: e.toString()));
       }
     });
+
+    on<LoadMoreAdminOrders>((event, emit) async {
+      if (state.hasReachedMax || state.isLoadingMore || state.isloading) return;
+
+      emit(state.copyWith(isLoadingMore: true, error: null));
+
+      try {
+        final nextPage = state.currentPage + 1;
+        final ordersList = await manageOrderService.getAllOrders(nextPage);
+        final List<ManageAdminOrderModel> orders = List<ManageAdminOrderModel>.from(ordersList);
+
+        bool hasReachedMax = false;
+        if (orders.isEmpty || (orders.isNotEmpty && orders.first.currentPage >= orders.first.totalPages)) {
+            hasReachedMax = true;
+        }
+
+        emit(state.copyWith(
+          isLoadingMore: false,
+          orderList: [...state.orderList, ...orders],
+          currentPage: nextPage,
+          hasReachedMax: hasReachedMax,
+        ));
+      } catch (e) {
+        emit(state.copyWith(isLoadingMore: false, error: e.toString()));
+      }
+    });
+
 
     on<UpdateOrderStatus>((event, emit) async {
       emit(
@@ -41,7 +85,7 @@ class AdminOrderListBloc
         );
 
         // Success: Reload orders and signal success
-        add(LoadingAdminOrders());
+        add(LoadingAdminOrders(isRefresh: true));
         emit(state.copyWith(isUpdating: false, updateSuccess: true));
       } catch (e) {
         emit(state.copyWith(isUpdating: false, updateError: e.toString()));
