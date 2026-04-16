@@ -197,7 +197,7 @@ class _ScreenCartState extends State<ScreenCart> {
                         ),
                       ),
                       child: const Text(
-                        "Checkout",
+                        "Continue",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
