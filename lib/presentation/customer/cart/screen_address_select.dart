@@ -47,7 +47,7 @@ class _ScreenAddressSelectState extends State<ScreenAddressSelect> {
               if (state.isLoading && state.addresses.isEmpty) {
                 return const Center(child: CircularProgressIndicator());
               }
-          
+
               return Column(
                 children: [
                   Expanded(
@@ -77,7 +77,9 @@ class _ScreenAddressSelectState extends State<ScreenAddressSelect> {
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                          ScreenAddUpdateAddress(address: address),
+                                          ScreenAddUpdateAddress(
+                                            address: address,
+                                          ),
                                     ),
                                   );
                                 },
@@ -146,9 +148,7 @@ class _ScreenAddressSelectState extends State<ScreenAddressSelect> {
 
     return Container(
       padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-   
-      ),
+      decoration: BoxDecoration(),
       child: SafeArea(
         child: SizedBox(
           width: double.infinity,
@@ -264,7 +264,6 @@ class _AddressCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                
                   Text(
                     '${address.address1}, ${address.street}\n${address.city}, ${address.state} - ${address.pincode}',
                     style: TextStyle(color: Colors.grey.shade700, height: 1.5),

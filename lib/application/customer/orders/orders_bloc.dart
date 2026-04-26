@@ -16,13 +16,16 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
       emit(const _Loading());
       try {
         final orders = await orderService.getOrderedProductList(event.page);
-        final List<OrderedProductModel> orderList = List<OrderedProductModel>.from(orders);
+        final List<OrderedProductModel> orderList =
+            List<OrderedProductModel>.from(orders);
 
-        emit(_Success(
-          orderList,
-          currentPage: event.page,
-          hasReachedMax: orderList.isEmpty,
-        ));
+        emit(
+          _Success(
+            orderList,
+            currentPage: event.page,
+            hasReachedMax: orderList.isEmpty,
+          ),
+        );
       } catch (e) {
         emit(const _Failure());
       }
@@ -34,18 +37,21 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
         if (currentState.hasReachedMax || currentState.isLoadingMore) return;
 
         emit(currentState.copyWith(isLoadingMore: true));
-        
+
         try {
           final nextPage = currentState.currentPage + 1;
           final ordersList = await orderService.getOrderedProductList(nextPage);
-          final List<OrderedProductModel> newOrders = List<OrderedProductModel>.from(ordersList);
-          
-          emit(currentState.copyWith(
-            orderedProducts: [...currentState.orderedProducts, ...newOrders],
-            isLoadingMore: false,
-            currentPage: nextPage,
-            hasReachedMax: newOrders.isEmpty,
-          ));
+          final List<OrderedProductModel> newOrders =
+              List<OrderedProductModel>.from(ordersList);
+
+          emit(
+            currentState.copyWith(
+              orderedProducts: [...currentState.orderedProducts, ...newOrders],
+              isLoadingMore: false,
+              currentPage: nextPage,
+              hasReachedMax: newOrders.isEmpty,
+            ),
+          );
         } catch (e) {
           emit(currentState.copyWith(isLoadingMore: false));
         }

@@ -22,7 +22,7 @@ class ScreenAddress extends StatelessWidget {
         title: const Text(AppStrings.shippingAddress),
         centerTitle: true,
       ),
-      body:Center(
+      body: Center(
         child: ConstrainedBox(
           constraints: BoxConstraints(maxWidth: 600),
           child: BlocConsumer<AddressBloc, AddressState>(
@@ -35,7 +35,7 @@ class ScreenAddress extends StatelessWidget {
               if (state.isLoading && state.addresses.isEmpty) {
                 return const Center(child: CircularProgressIndicator());
               }
-          
+
               if (state.addresses.isEmpty) {
                 return Center(
                   child: Column(
@@ -64,7 +64,7 @@ class ScreenAddress extends StatelessWidget {
                   ),
                 );
               }
-          
+
               return ListView.builder(
                 padding: const EdgeInsets.all(16),
                 itemCount: state.addresses.length,
@@ -98,7 +98,10 @@ class ScreenAddress extends StatelessWidget {
                               Row(
                                 children: [
                                   IconButton(
-                                    icon: const Icon(Icons.edit_outlined, size: 20),
+                                    icon: const Icon(
+                                      Icons.edit_outlined,
+                                      size: 20,
+                                    ),
                                     onPressed: () {
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
@@ -117,7 +120,10 @@ class ScreenAddress extends StatelessWidget {
                                       color: Colors.redAccent,
                                     ),
                                     onPressed: () {
-                                      _showDeleteConfirmation(context, address.id!);
+                                      _showDeleteConfirmation(
+                                        context,
+                                        address.id!,
+                                      );
                                     },
                                   ),
                                 ],

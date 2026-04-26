@@ -132,7 +132,7 @@ class ManageProductServiceImpl implements ManageProductsService {
             .map(
               (e) => AdminProductsModel(
                 name: e.name ?? '',
-                description: e.description ??'',
+                description: e.description ?? '',
                 price: e.price ?? '',
                 id: e.id,
                 stock: e.stock?.toString(),

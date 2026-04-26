@@ -39,7 +39,8 @@ class ScreenCheckout extends StatelessWidget {
             ),
           ),
 
-          bottomNavigationBar: state.checkoutData != null && state.isloading ==false
+          bottomNavigationBar:
+              state.checkoutData != null && state.isloading == false
               ? _buildBottomBar(context, state)
               : null,
         );

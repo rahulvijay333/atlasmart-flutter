@@ -64,7 +64,10 @@ class ScreenPaymentSuccess extends StatelessWidget {
                     ),
                     child: const Text(
                       'Continue Shopping',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),

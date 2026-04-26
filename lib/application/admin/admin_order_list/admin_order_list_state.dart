@@ -53,8 +53,8 @@ class AdminOrderListState {
       currentPage: currentPage ?? this.currentPage,
       updateSuccess: updateSuccess,
       orderList: orderList ?? this.orderList,
-      error: error ,
-      updateError: updateError ,
+      error: error,
+      updateError: updateError,
     );
   }
 }

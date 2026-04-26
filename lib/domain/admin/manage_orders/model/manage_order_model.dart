@@ -24,6 +24,8 @@ class ManageAdminOrderModel {
     required this.totalAmount,
     required this.statusHistory,
     required this.orderedItems,
-    required this.customerAddress, required this.currentPage, required this.totalPages,
+    required this.customerAddress,
+    required this.currentPage,
+    required this.totalPages,
   });
 }

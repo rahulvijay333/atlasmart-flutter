@@ -21,6 +21,7 @@ class ApiEndpoints {
   static const adminProducts = '/api/products';
   static const adminOrders = '/api/admins/orders';
   static const adminPushNotifcation = '/api/admins/notifications/broadcast';
+  static const adminPayments='/api/admins/payments';
 
   //category
   static const category = '/api/categories';

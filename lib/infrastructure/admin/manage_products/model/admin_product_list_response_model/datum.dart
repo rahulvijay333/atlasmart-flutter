@@ -29,7 +29,8 @@ class Datum {
     this.imageUrl,
     this.categoryId,
     this.brandName,
-    this.companyName,this.description
+    this.companyName,
+    this.description,
   });
 
   factory Datum.fromMap(Map<String, dynamic> data) => Datum(
@@ -52,7 +53,7 @@ class Datum {
     categoryId: data['category_id'],
     brandName: data['brand_name'],
     companyName: data['company_name'],
-    description: data['description'] ?? ''
+    description: data['description'] ?? '',
   );
 
   Map<String, dynamic> toMap() => {

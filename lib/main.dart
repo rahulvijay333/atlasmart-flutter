@@ -28,6 +28,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'application/admin/admin_add_or_update_product/admin_addor_update_product_bloc.dart';
 import 'application/admin/admin_list/admin_list_bloc.dart';
+import 'application/admin/admin_payments_list/admin_payment_list_bloc.dart';
 import 'application/admin/manage_admin_notification/manage_admin_notification_bloc.dart';
 import 'application/auth/auth_bloc.dart';
 import 'application/customer/registration/customer/custom_registr_bloc/customer_register_bloc.dart';
@@ -137,6 +138,7 @@ class _MainAppState extends State<MainApp> {
         BlocProvider(create: (context) => sl<AdminOrderListBloc>()),
         BlocProvider(create: (context) => sl<NotificationBloc>()),
         BlocProvider(create: (context) => sl<ManageAdminNotificationBloc>()),
+        BlocProvider(create: (context) => sl<AdminPaymentListBloc>()),
       ],
 
       child: MaterialApp(
