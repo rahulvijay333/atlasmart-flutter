@@ -29,74 +29,79 @@ class _NotificationScreenState extends State<NotificationScreen> {
         centerTitle: true,
         elevation: 0,
       ),
-      body: BlocBuilder<NotificationBloc, NotificationState>(
-        builder: (context, state) {
-          if (state.isloading) {
-            return const Center(child: CircularProgressIndicator());
-          }
-
-          if (state.error != null) {
-            return Center(
-              child: Column(
-                children: [
-                  Text(state.error!, style: const TextStyle(color: Colors.red)),
-                  IconButton(
-                    onPressed: () {
-                      context.read<NotificationBloc>().add(
-                        GetAllNotificationsEvent(),
-                      );
-                    },
-                    icon: Icon(Icons.refresh),
+      body: Center(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: 600),
+          child: BlocBuilder<NotificationBloc, NotificationState>(
+            builder: (context, state) {
+              if (state.isloading) {
+                return const Center(child: CircularProgressIndicator());
+              }
+          
+              if (state.error != null) {
+                return Center(
+                  child: Column(
+                    children: [
+                      Text(state.error!, style: const TextStyle(color: Colors.red)),
+                      IconButton(
+                        onPressed: () {
+                          context.read<NotificationBloc>().add(
+                            GetAllNotificationsEvent(),
+                          );
+                        },
+                        icon: Icon(Icons.refresh),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            );
-          }
-
-          if (state.notificationList.isEmpty) {
-            return Center(
-              child: Column(
-                children: [
-                  Text("No notifications yet"),
-                  IconButton(
-                    onPressed: () {
-                      context.read<NotificationBloc>().add(
-                        GetAllNotificationsEvent(),
-                      );
-                    },
-                    icon: Icon(Icons.refresh),
-                  ),
-                ],
-              ),
-            );
-          }
-
-          return RefreshIndicator(
-            onRefresh: () async {
-              context.read<NotificationBloc>().add(GetAllNotificationsEvent());
-            },
-            child: ListView.builder(
-              padding: const EdgeInsets.all(12),
-              itemCount: state.notificationList.length,
-              itemBuilder: (context, index) {
-                final notification = state.notificationList[index];
-
-                return GestureDetector(
-                  onTap: () {
-                    if (notification.navigateTo != null) {
-                      Navigator.pushNamed(
-                        context,
-                        notification.navigateTo!,
-                        arguments: notification.parameter,
-                      );
-                    }
-                  },
-                  child: _notificationCard(notification),
                 );
-              },
-            ),
-          );
-        },
+              }
+          
+              if (state.notificationList.isEmpty) {
+                return Center(
+                  child: Column(
+                    children: [
+                      Text("No notifications yet"),
+                      IconButton(
+                        onPressed: () {
+                          context.read<NotificationBloc>().add(
+                            GetAllNotificationsEvent(),
+                          );
+                        },
+                        icon: Icon(Icons.refresh),
+                      ),
+                    ],
+                  ),
+                );
+              }
+          
+              return RefreshIndicator(
+                onRefresh: () async {
+                  context.read<NotificationBloc>().add(GetAllNotificationsEvent());
+                },
+                child: ListView.builder(
+                  padding: const EdgeInsets.all(12),
+                  itemCount: state.notificationList.length,
+                  itemBuilder: (context, index) {
+                    final notification = state.notificationList[index];
+          
+                    return GestureDetector(
+                      onTap: () {
+                        if (notification.navigateTo != null) {
+                          Navigator.pushNamed(
+                            context,
+                            notification.navigateTo!,
+                            arguments: notification.parameter,
+                          );
+                        }
+                      },
+                      child: _notificationCard(notification),
+                    );
+                  },
+                ),
+              );
+            },
+          ),
+        ),
       ),
     );
   }
