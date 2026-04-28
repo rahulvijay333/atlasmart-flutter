@@ -107,6 +107,14 @@ class _ScreenLoginState extends State<ScreenLogin> {
                       TextFormField(
                         controller: _passwordController,
                         obscureText: !showpassword,
+                        maxLength: 300,
+                        buildCounter:
+                            (
+                              context, {
+                              required currentLength,
+                              required isFocused,
+                              required maxLength,
+                            }) => null,
                         decoration: InputDecoration(
                           suffixIcon: IconButton(
                             onPressed: () {
