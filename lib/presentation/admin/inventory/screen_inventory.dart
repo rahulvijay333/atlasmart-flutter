@@ -28,195 +28,198 @@ class ScreenInventory extends StatelessWidget {
           );
         }
       },
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: const AdminSearchBar(
-              hintText: AppStrings.searchInventoryHint,
-            ),
-          ),
-          Expanded(
-            child: BlocBuilder<InventoryBloc, InventoryState>(
-              builder: (context, state) {
-                if (state.isLoading) {
-                  return const LoadingWidget();
-                }
+      child: Center(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: 600),
+          child: Column(
+            children: [
+              Expanded(
+                child: BlocBuilder<InventoryBloc, InventoryState>(
+                  builder: (context, state) {
+                    if (state.isLoading) {
+                      return const LoadingWidget();
+                    }
 
-                if (state.errorMessage != null && state.products.isEmpty) {
-                  return ErrorStateWidgetWithMessage(
-                    state.errorMessage!,
-                    hasRefresh: true,
-                    ontap: () {
-                      context.read<InventoryBloc>().add(
-                        const InventoryEvent.loadInventory(),
+                    if (state.errorMessage != null && state.products.isEmpty) {
+                      return ErrorStateWidgetWithMessage(
+                        state.errorMessage!,
+                        hasRefresh: true,
+                        ontap: () {
+                          context.read<InventoryBloc>().add(
+                            const InventoryEvent.loadInventory(),
+                          );
+                        },
                       );
-                    },
-                  );
-                }
+                    }
 
-                if (state.products.isEmpty) {
-                  return ErrorStateWidgetWithMessage(
-                    'No products found',
-                    hasRefresh: true,
-                    ontap: () {
-                      context.read<InventoryBloc>().add(
-                        const InventoryEvent.loadInventory(),
+                    if (state.products.isEmpty) {
+                      return ErrorStateWidgetWithMessage(
+                        'No products found',
+                        hasRefresh: true,
+                        ontap: () {
+                          context.read<InventoryBloc>().add(
+                            const InventoryEvent.loadInventory(),
+                          );
+                        },
                       );
-                    },
-                  );
-                }
+                    }
 
-                return RefreshIndicator(
-                  onRefresh: () async {
-                    context.read<InventoryBloc>().add(
-                      const InventoryEvent.loadInventory(),
-                    );
-                  },
-                  child: ListView.separated(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 8,
-                    ),
-                    itemCount: state.products.length,
-                    separatorBuilder: (context, index) =>
-                        const SizedBox(height: 16),
-                    itemBuilder: (context, index) {
-                      final product = state.products[index];
-                      final stock = int.tryParse(product.stock ?? '0') ?? 0;
-                      final isLowStock = stock < 10 && stock > 0;
-                      final isOutOfStock = stock == 0;
-
-                      return Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(16),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withValues(alpha: 0.1),
-                              blurRadius: 10,
-                              offset: const Offset(0, 4),
-                            ),
-                          ],
+                    return RefreshIndicator(
+                      onRefresh: () async {
+                        context.read<InventoryBloc>().add(
+                          const InventoryEvent.loadInventory(),
+                        );
+                      },
+                      child: ListView.separated(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 8,
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Row(
-                            children: [
-                              // Product Image
-                              Container(
-                                width: 80,
-                                height: 80,
-                                decoration: BoxDecoration(
-                                  color: Colors.grey[100],
-                                  borderRadius: BorderRadius.circular(12),
-                                  image:
-                                      product.image != null &&
-                                          product.image!.isNotEmpty
-                                      ? DecorationImage(
-                                          image: NetworkImage(product.image!),
-                                          fit: BoxFit.cover,
-                                        )
-                                      : null,
+                        itemCount: state.products.length,
+                        separatorBuilder: (context, index) =>
+                            const SizedBox(height: 16),
+                        itemBuilder: (context, index) {
+                          final product = state.products[index];
+                          final stock = int.tryParse(product.stock ?? '0') ?? 0;
+                          final isLowStock = stock < 10 && stock > 0;
+                          final isOutOfStock = stock == 0;
+
+                          return Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(16),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withValues(alpha: 0.1),
+                                  blurRadius: 10,
+                                  offset: const Offset(0, 4),
                                 ),
-                                child:
-                                    product.image == null ||
-                                        product.image!.isEmpty
-                                    ? const Icon(
-                                        Icons.image_outlined,
-                                        color: Colors.grey,
-                                      )
-                                    : null,
-                              ),
-                              const SizedBox(width: 16),
-                              // Details
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      product.name,
-                                      style: const TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black87,
-                                      ),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    const SizedBox(height: 4),
-                                    Text(
-                                      'Price: ₹${product.price}',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.grey[500],
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 12),
-                                    Row(
-                                      children: [
-                                        _buildStockBadge(
-                                          stock,
-                                          isLowStock,
-                                          isOutOfStock,
-                                        ),
-                                        const Spacer(),
-                                        InkWell(
-                                          onTap: () {
-                                            showModalBottomSheet(
-                                              context: context,
-                                              isScrollControlled: true,
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                              builder: (_) => StockUpdateSheet(
-                                                product: product,
+                              ],
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Row(
+                                children: [
+                                  // Product Image
+                                  Container(
+                                    width: 80,
+                                    height: 80,
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey[100],
+                                      borderRadius: BorderRadius.circular(12),
+                                      image:
+                                          product.image != null &&
+                                              product.image!.isNotEmpty
+                                          ? DecorationImage(
+                                              image: NetworkImage(
+                                                product.image!,
                                               ),
-                                            );
-                                          },
-                                          borderRadius: BorderRadius.circular(
-                                            8,
+                                              fit: BoxFit.cover,
+                                            )
+                                          : null,
+                                    ),
+                                    child:
+                                        product.image == null ||
+                                            product.image!.isEmpty
+                                        ? const Icon(
+                                            Icons.image_outlined,
+                                            color: Colors.grey,
+                                          )
+                                        : null,
+                                  ),
+                                  const SizedBox(width: 16),
+                                  // Details
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          product.name,
+                                          style: const TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black87,
                                           ),
-                                          child: Container(
-                                            padding: const EdgeInsets.symmetric(
-                                              horizontal: 12,
-                                              vertical: 6,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                        const SizedBox(height: 4),
+                                        Text(
+                                          'Price: ₹${product.price}',
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            color: Colors.grey[500],
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 12),
+                                        Row(
+                                          children: [
+                                            _buildStockBadge(
+                                              stock,
+                                              isLowStock,
+                                              isOutOfStock,
                                             ),
-                                            decoration: BoxDecoration(
-                                              color: Theme.of(context)
-                                                  .primaryColor
-                                                  .withValues(alpha: 0.1),
+                                            const Spacer(),
+                                            InkWell(
+                                              onTap: () {
+                                                showModalBottomSheet(
+                                                  context: context,
+                                                  isScrollControlled: true,
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                  builder: (_) =>
+                                                      StockUpdateSheet(
+                                                        product: product,
+                                                      ),
+                                                );
+                                              },
                                               borderRadius:
                                                   BorderRadius.circular(8),
-                                            ),
-                                            child: Text(
-                                              AppStrings.update,
-                                              style: TextStyle(
-                                                color: Theme.of(
-                                                  context,
-                                                ).primaryColor,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 12,
+                                              child: Container(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                      horizontal: 12,
+                                                      vertical: 6,
+                                                    ),
+                                                decoration: BoxDecoration(
+                                                  color: Theme.of(context)
+                                                      .primaryColor
+                                                      .withValues(alpha: 0.1),
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                ),
+                                                child: Text(
+                                                  AppStrings.update,
+                                                  style: TextStyle(
+                                                    color: Theme.of(
+                                                      context,
+                                                    ).primaryColor,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 12,
+                                                  ),
+                                                ),
                                               ),
                                             ),
-                                          ),
+                                          ],
                                         ),
                                       ],
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                );
-              },
-            ),
+                            ),
+                          );
+                        },
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

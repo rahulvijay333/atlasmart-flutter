@@ -5,7 +5,7 @@ abstract class AdminOrderListEvent {}
 class LoadingAdminOrders extends AdminOrderListEvent {
   final int page;
   final bool isRefresh;
-  LoadingAdminOrders({this.page = 1, this.isRefresh = false});
+  LoadingAdminOrders({this.page = 1, this.isRefresh = true});
 }
 
 class LoadMoreAdminOrders extends AdminOrderListEvent {}

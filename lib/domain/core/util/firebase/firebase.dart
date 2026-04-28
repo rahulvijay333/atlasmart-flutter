@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -33,14 +32,14 @@ class FirebaseNotificationService {
   Future<void> _requestPermission() async {
     NotificationSettings settings = await _messaging.requestPermission();
 
-    log('User permission: ${settings.authorizationStatus}');
+    debugPrint('User permission: ${settings.authorizationStatus}');
   }
 
   /// 🔹 Get FCM token
   Future<void> _initToken() async {
     String? token = await _messaging.getToken();
     _fctoken = token;
-    log("FCM Token: $token");
+    debugPrint("FCM Token: $token");
   }
 
   String? get ftoken => _fctoken;
@@ -48,7 +47,7 @@ class FirebaseNotificationService {
   /// 🔹 Foreground messages
   void _setupForegroundHandler() {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      log("Full message: ${message.toMap()}");
+      debugPrint("Full message: ${message.toMap()}");
 
       if (message.notification != null) {
         AppNotificationBanner.show(
@@ -68,14 +67,14 @@ class FirebaseNotificationService {
     // 🕒 Safety: Wait for the navigator to be ready if the app is just starting
     // int retryCount = 0;
     // while (navigatorKey.currentContext == null && retryCount < 10) {
-    //   log("Navigator not ready yet, retrying in 500ms... ($retryCount)");
+    //   debugPrint("Navigator not ready yet, retrying in 500ms... ($retryCount)");
     //   await Future.delayed(const Duration(milliseconds: 500));
     //   retryCount++;
     // }
 
     final context = navigatorKey.currentContext;
     if (context == null) {
-      log("Navigation failed: Navigator context is still null after retries.");
+      debugPrint("Navigation failed: Navigator context is still null after retries.");
       return;
     }
 
@@ -122,21 +121,21 @@ class FirebaseNotificationService {
   void handleNotificationClick() async {
     // 1. When the app is in background but not terminated
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      log("Notification clicked (from background)!");
+      debugPrint("Notification clicked (from background)!");
       _handleNavigation(message);
     });
 
     // 2. When the app is opened from a terminated state
     _initialMessage = await _messaging.getInitialMessage();
     if (_initialMessage != null) {
-      log("Initial message stored for later processing.");
+      debugPrint("Initial message stored for later processing.");
     }
   }
 
   /// 🔹 Process the initial message (to be called when UI is ready)
   void processInitialMessage() {
     if (_initialMessage != null) {
-      log("Processing stored initial message...");
+      debugPrint("Processing stored initial message...");
       _handleNavigation(_initialMessage!);
       _initialMessage = null; // Clear it so it doesn't fire again
     }
@@ -147,5 +146,5 @@ class FirebaseNotificationService {
 @pragma('vm:entry-point')
 Future<void> firebaseBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
-  log("Background message: ${message.messageId}");
+  debugPrint("Background message: ${message.messageId}");
 }
