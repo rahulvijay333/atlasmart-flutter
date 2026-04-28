@@ -107,7 +107,7 @@ class _ScreenLoginState extends State<ScreenLogin> {
                       TextFormField(
                         controller: _passwordController,
                         obscureText: !showpassword,
-                        maxLength: 300,
+                        maxLength: 64,
                         buildCounter:
                             (
                               context, {
