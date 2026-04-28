@@ -32,22 +32,47 @@ class _ScreenRegisterState extends State<ScreenRegister> {
     super.dispose();
   }
 
-  handleRegister() {
-    if (_nameController.text.isNotEmpty &&
-        _emailController.text.isNotEmpty &&
-        _passwordController.text.isNotEmpty) {
-      final customer = CustomerRegisterModel(
-        fullName: _nameController.text.trim(),
-        email: _emailController.text.trim(),
-        password: _passwordController.text.trim(),
-      );
+  void handleRegister() {
+    final name = _nameController.text.trim();
+    final email = _emailController.text.trim();
+    final password = _passwordController.text.trim();
 
-      BlocProvider.of<CustomerRegisterBloc>(
-        context,
-      ).add(CustomerRegisterEvent.createAccount(customer: customer));
-    } else {
-      AppSnackBar.show(context, 'Fill all values');
+    final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+
+    if (name.isEmpty) {
+      AppSnackBar.show(context, 'Name is required');
+      return;
     }
+
+    if (email.isEmpty) {
+      AppSnackBar.show(context, 'Email is required');
+      return;
+    }
+
+    if (!emailRegex.hasMatch(email)) {
+      AppSnackBar.show(context, 'Enter a valid email');
+      return;
+    }
+
+    if (password.isEmpty) {
+      AppSnackBar.show(context, 'Password is required');
+      return;
+    }
+
+    if (password.length < 6) {
+      AppSnackBar.show(context, 'Password must be at least 6 characters');
+      return;
+    }
+
+    final customer = CustomerRegisterModel(
+      fullName: name,
+      email: email,
+      password: password,
+    );
+
+    BlocProvider.of<CustomerRegisterBloc>(
+      context,
+    ).add(CustomerRegisterEvent.createAccount(customer: customer));
   }
 
   @override
@@ -80,6 +105,14 @@ class _ScreenRegisterState extends State<ScreenRegister> {
 
                       TextFormField(
                         controller: _nameController,
+                        maxLength: 350,
+                        buildCounter:
+                            (
+                              context, {
+                              required currentLength,
+                              required isFocused,
+                              required maxLength,
+                            }) => null,
                         textCapitalization: TextCapitalization.sentences,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.all(5),
@@ -92,6 +125,14 @@ class _ScreenRegisterState extends State<ScreenRegister> {
 
                       TextFormField(
                         controller: _emailController,
+                        maxLength: 254,
+                        buildCounter:
+                            (
+                              context, {
+                              required currentLength,
+                              required isFocused,
+                              required maxLength,
+                            }) => null,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.all(5),
                           hintStyle: AppFont.hintText14StyleGreyColor,
@@ -104,8 +145,19 @@ class _ScreenRegisterState extends State<ScreenRegister> {
 
                       TextFormField(
                         controller: _passwordController,
+                        maxLength: 64,
+                        maxLines: 2,
+                        minLines: 1,
+                        buildCounter:
+                            (
+                              context, {
+                              required currentLength,
+                              required isFocused,
+                              required maxLength,
+                            }) => null,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.all(5),
+
                           hintStyle: AppFont.hintText14StyleGreyColor,
                           border: InputBorder.none,
                           hintText: AppStrings.passwordHint,

@@ -138,7 +138,7 @@ class AppStrings {
   static const String messageBodyHint = 'Type your message here...';
   static const String sendNotification = 'Send Notification';
   static const String notificationSentSuccess =
-      'Notification Sent Successfully! (Mock)';
+      'Notification Sent Successfully!';
   static const String mobilePreview = 'Mobile Preview';
   static const String audienceAll = 'All Users';
   static const String audienceBuyers = 'Active Buyers';
