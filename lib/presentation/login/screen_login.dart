@@ -38,13 +38,25 @@ class _ScreenLoginState extends State<ScreenLogin> {
   void handleLogin() {
     final email = _emailController.text.trim();
     final password = _passwordController.text.trim();
-    if (email.isNotEmpty && password.isNotEmpty) {
-      BlocProvider.of<LoginBloc>(
-        context,
-      ).add(LoginEvent.loginButtonClickEvent(email: email, password: password));
-    } else {
-      AppSnackBar.show(context, 'Invalid values');
+    final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+
+    if (email.isEmpty) {
+      AppSnackBar.show(context, 'Email is required');
+      return;
     }
+
+    if (!emailRegex.hasMatch(email)) {
+      AppSnackBar.show(context, 'Enter a valid email');
+      return;
+    }
+
+    if (password.isEmpty) {
+      AppSnackBar.show(context, 'Password is required');
+      return;
+    }
+    BlocProvider.of<LoginBloc>(
+      context,
+    ).add(LoginEvent.loginButtonClickEvent(email: email, password: password));
   }
 
   @override
