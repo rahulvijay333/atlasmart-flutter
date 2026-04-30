@@ -3,6 +3,8 @@ class AppStrings {
   static const String appTitle = 'AtlasMart';
   static const String products = 'Products';
   static const String category = 'Category';
+  static const String categories = 'Categories';
+  static const String addCategory = 'Add Category';
   static const String home = 'Home';
   static const String noItems = 'No Items';
   //login
@@ -54,7 +56,7 @@ class AppStrings {
   static const String pushNotifications = 'Push Notifications';
   static const String manageAdmins = 'Manage Admins';
 
-  static const String welcomeBackAdmin = 'Welcome back, Admin 👋';
+  static const String welcomeBackAdmin = 'Welcome,';
   static const String dashboardSubtitle =
       'Here is what\'s happening with your store today.';
   static const String totalSales = 'Total Sales';
@@ -102,6 +104,7 @@ class AppStrings {
   static const String lowStock = 'Low Stock'; // or usage in pattern
   static const String off = 'OFF';
   static const String searchProductsHint = 'Search Products...';
+  static const String searchCategoriesHint = 'Search Categories...';
   static const String searchInventoryHint = 'Search Inventory...';
 
   static const String searchUsersHint = 'Search Users...';
@@ -111,8 +114,14 @@ class AppStrings {
   static const String searchOrdersHint = 'Search Orders...';
   static const String totalAmount = 'Total Amount';
   static const String statusDelivered = 'Delivered';
+  static const String statusShipped = 'Shipped';
   static const String statusPending = 'Pending';
   static const String statusProcessing = 'Processing';
+  static const String statusCanceled = 'Canceled';
+  static const String updateStatus = 'Update Status';
+  static const String orderStatus = 'Order Status';
+  static const String note = 'Note';
+  static const String addNoteHint = 'Add a note for this status update...';
 
   static const String searchPaymentsHint = 'Search Payments...';
   static const String paymentIdPrefix = 'Payment ID: ';
@@ -129,7 +138,7 @@ class AppStrings {
   static const String messageBodyHint = 'Type your message here...';
   static const String sendNotification = 'Send Notification';
   static const String notificationSentSuccess =
-      'Notification Sent Successfully! (Mock)';
+      'Notification Sent Successfully!';
   static const String mobilePreview = 'Mobile Preview';
   static const String audienceAll = 'All Users';
   static const String audienceBuyers = 'Active Buyers';

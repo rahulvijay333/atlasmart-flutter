@@ -1,14 +1,13 @@
+import 'package:atlasmart/application/admin/inventory/inventory_bloc.dart';
+import 'package:atlasmart/domain/admin/manage_products/model/admin_products_model.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class StockUpdateSheet extends StatefulWidget {
-  final String productName;
-  final int currentStock;
+  final AdminProductsModel product;
 
-  const StockUpdateSheet({
-    super.key,
-    required this.productName,
-    required this.currentStock,
-  });
+  const StockUpdateSheet({super.key, required this.product});
 
   @override
   State<StockUpdateSheet> createState() => _StockUpdateSheetState();
@@ -22,13 +21,18 @@ class _StockUpdateSheetState extends State<StockUpdateSheet> {
   void initState() {
     super.initState();
     _stockChange = 0;
-    _newTotal = widget.currentStock;
+    _newTotal = int.tryParse(widget.product.stock ?? '0') ?? 0;
   }
 
   void _updateStock(int change) {
     setState(() {
       _stockChange += change;
-      _newTotal = widget.currentStock + _stockChange;
+      _newTotal =
+          (int.tryParse(widget.product.stock ?? '0') ?? 0) + _stockChange;
+      if (_newTotal < 0) {
+        _newTotal = 0;
+        _stockChange = -(int.tryParse(widget.product.stock ?? '0') ?? 0);
+      }
     });
   }
 
@@ -60,7 +64,7 @@ class _StockUpdateSheetState extends State<StockUpdateSheet> {
           ),
           const SizedBox(height: 8),
           Text(
-            widget.productName,
+            widget.product.name,
             style: Theme.of(
               context,
             ).textTheme.bodyLarge?.copyWith(color: Colors.grey[600]),
@@ -108,27 +112,97 @@ class _StockUpdateSheetState extends State<StockUpdateSheet> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              TextButton(onPressed: () {}, child: Text("Set Exact Amount")),
+              TextButton(
+                onPressed: () {
+                  final controller = TextEditingController(text: '$_newTotal');
+                  showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      title: const Text('Set Exact Stock'),
+                      content: TextField(
+                        controller: controller,
+                        keyboardType: TextInputType.number,
+                        autofocus: true,
+                        decoration: const InputDecoration(
+                          labelText: 'Stock Amount',
+                        ),
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: const Text('Cancel'),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            final val = int.tryParse(controller.text);
+                            if (val != null && val >= 0) {
+                              setState(() {
+                                _newTotal = val;
+                                _stockChange =
+                                    _newTotal -
+                                    (int.tryParse(
+                                          widget.product.stock ?? '0',
+                                        ) ??
+                                        0);
+                              });
+                              Navigator.pop(context);
+                            }
+                          },
+                          child: const Text('Confirm'),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+                child: const Text("Set Exact Amount"),
+              ),
             ],
           ),
           const SizedBox(height: 32),
-          SizedBox(
-            width: double.infinity,
-            height: 56,
-            child: ElevatedButton(
-              onPressed: () {
-                // Implement save logic locally or via callback
+          BlocConsumer<InventoryBloc, InventoryState>(
+            listener: (context, state) {
+              if (state.updateSuccess) {
                 Navigator.pop(context);
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Theme.of(context).primaryColor,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
+              }
+            },
+            builder: (context, state) {
+              return SizedBox(
+                width: double.infinity,
+                height: 56,
+                child: ElevatedButton(
+                  onPressed: state.isUpdating
+                      ? null
+                      : () {
+                          final updatedProduct = widget.product.copyWith(
+                            stock: '$_newTotal',
+                          );
+                          context.read<InventoryBloc>().add(
+                            InventoryEvent.updateStock(product: updatedProduct),
+                          );
+                        },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Theme.of(context).primaryColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    elevation: 0,
+                  ),
+                  child: state.isUpdating
+                      ? const SizedBox(
+                          height: 20,
+                          width: 20,
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                            strokeWidth: 2,
+                          ),
+                        )
+                      : const Text(
+                          'Save Changes',
+                          style: TextStyle(fontSize: 16),
+                        ),
                 ),
-                elevation: 0,
-              ),
-              child: const Text('Save Changes', style: TextStyle(fontSize: 16)),
-            ),
+              );
+            },
           ),
           const SizedBox(height: 16),
         ],

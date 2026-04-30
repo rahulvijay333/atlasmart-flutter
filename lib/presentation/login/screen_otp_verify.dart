@@ -1,5 +1,4 @@
 import 'package:atlasmart/domain/core/constants/colors.dart';
-import 'package:atlasmart/infrastructure/login/model/user_details/user.dart';
 import 'package:atlasmart/infrastructure/login/model/user_details/user_details.dart';
 import 'package:atlasmart/presentation/common/snack_bar.dart';
 import 'package:flutter/material.dart';
@@ -49,7 +48,7 @@ class _ScreenOtpVerifyState extends State<ScreenOtpVerify> {
                   case AppConstants.admin:
                     Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(
-                        builder: (context) => const ScreenAdminMain(),
+                        builder: (context) => ScreenAdminMain(role: state.role),
                       ),
                       (route) => false,
                     );
@@ -67,31 +66,37 @@ class _ScreenOtpVerifyState extends State<ScreenOtpVerify> {
             );
           },
           builder: (context, state) {
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ?state.whenOrNull(
-                  notverified: (user) {
-                    return EmailNotVerifiedWidget(widget: widget, state: state);
-                  },
-                  verifyOtpSentLoading: () =>
-                      EmailNotVerifiedWidget(widget: widget, state: state),
-                  verifyOtpSendFailed: (message) =>
-                      EmailNotVerifiedWidget(widget: widget, state: state),
-                  verifyOtpSentSuccess: (_) => VerifyOtpWidget(
-                    widget: widget,
-                    otpController: _otpController,
+            return ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: 600),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ?state.whenOrNull(
+                    notverified: (user) {
+                      return EmailNotVerifiedWidget(
+                        widget: widget,
+                        state: state,
+                      );
+                    },
+                    verifyOtpSentLoading: () =>
+                        EmailNotVerifiedWidget(widget: widget, state: state),
+                    verifyOtpSendFailed: (message) =>
+                        EmailNotVerifiedWidget(widget: widget, state: state),
+                    verifyOtpSentSuccess: (_) => VerifyOtpWidget(
+                      widget: widget,
+                      otpController: _otpController,
+                    ),
+                    failure: (message) => VerifyOtpWidget(
+                      widget: widget,
+                      otpController: _otpController,
+                    ),
+                    verifyingAccount: () => VerifyOtpWidget(
+                      widget: widget,
+                      otpController: _otpController,
+                    ),
                   ),
-                  failure: (message) => VerifyOtpWidget(
-                    widget: widget,
-                    otpController: _otpController,
-                  ),
-                  verifyingAccount: () => VerifyOtpWidget(
-                    widget: widget,
-                    otpController: _otpController,
-                  ),
-                ),
-              ],
+                ],
+              ),
             );
           },
         ),

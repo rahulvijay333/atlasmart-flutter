@@ -1,12 +1,13 @@
 import 'dart:convert';
 
 class Data {
-  int? id;
+  String? id;
   String? email;
   String? name;
   String? role;
   bool? isVerified;
   DateTime? createdAt;
+  String? profileImage;
 
   Data({
     this.id,
@@ -15,14 +16,16 @@ class Data {
     this.role,
     this.isVerified,
     this.createdAt,
+    this.profileImage,
   });
 
   factory Data.fromMap(Map<String, dynamic> data) => Data(
-    id: data['id'] as int?,
+    id: data['id'] as String?,
     email: data['email'] as String?,
     name: data['name'] as String?,
     role: data['role'] as String?,
     isVerified: data['is_verified'] as bool?,
+    profileImage: data['profile_image'] ?? '',
     createdAt: data['created_at'] == null
         ? null
         : DateTime.parse(data['created_at'] as String),

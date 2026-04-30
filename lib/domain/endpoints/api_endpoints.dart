@@ -1,8 +1,9 @@
 class ApiEndpoints {
   static const baseUrl = 'http://10.0.2.2:3000';
-  static const baseUrlProduction = 'https://atlasmart-backend.onrender.com';
+  static const baseUrlProduction = 'https://atlas-prod-live.onrender.com';
 
   static const login = "/api/auth/login";
+  static const logOut = '/api/auth/logout';
   static const sendOtpForPaswwordReset = "/api/auth/forgot-password";
   static const sendEmailVerificationOtp = '/api/auth/send-verification-otp';
   static const setPassword = "/api/auth/reset-password";
@@ -14,5 +15,26 @@ class ApiEndpoints {
   static const customerProfile = '/api/customers/profile';
 
   //admin
-  static const getAllUsers = '/api/admins/users';
+  static const adminUsers = '/api/admins/users';
+  static const addNewAdmin = '/api/admins/register';
+  static const adminProfile = '/api/admins/profile';
+  static const adminProducts = '/api/products';
+  static const adminOrders = '/api/admins/orders';
+  static const adminPushNotifcation = '/api/admins/notifications/broadcast';
+  static const adminPayments = '/api/admins/payments';
+  static const adminDashboard='/api/admins/dashboard';
+
+  //category
+  static const category = '/api/categories';
+
+  static const userAddress = '/api/customers/addresses';
+  static const home = '/api/products/shop';
+  static const cart = '/api/customers/cart';
+  static const checkout = '/api/orders/checkout';
+  static const verifyPayment = '/api/orders/verify-payment';
+  static const order = '/api/orders';
+  static const purchasedProducts = '/api/orders/purchased-products';
+  static const invoiceDownload = '/api/orders/';
+
+  static const notifications = '/api/notifications';
 }
