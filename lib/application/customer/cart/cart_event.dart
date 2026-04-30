@@ -22,6 +22,4 @@ class ClearCart extends CartEvent {
   ClearCart();
 }
 
-class ClearErrorMessage extends CartEvent {
-  
-}
+class ClearErrorMessage extends CartEvent {}

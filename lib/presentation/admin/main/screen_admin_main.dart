@@ -7,6 +7,7 @@ import 'package:atlasmart/presentation/admin/category/screen_add_category.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../application/admin/admin_order_list/admin_order_list_bloc.dart';
+import '../../../application/admin/admin_payments_list/admin_payment_list_bloc.dart';
 import '../../../application/admin/inventory/inventory_bloc.dart';
 import '../../../application/admin/users/all_users_bloc.dart';
 import '../../../domain/core/constants/strings.dart';
@@ -85,6 +86,10 @@ class _ScreenAdminMainState extends State<ScreenAdminMain> {
             BlocProvider.of<AllUsersBloc>(
               context,
             ).add(AllUsersEvent.getAllUsers());
+          }
+
+          if (index == 5) {
+            context.read<AdminPaymentListBloc>().add(LoadAllPayments());
           }
 
           if (index == 8) {

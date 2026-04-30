@@ -22,125 +22,136 @@ class ScreenAddress extends StatelessWidget {
         title: const Text(AppStrings.shippingAddress),
         centerTitle: true,
       ),
-      body: BlocConsumer<AddressBloc, AddressState>(
-        listener: (context, state) {
-          if (state.errorMessage != null) {
-            AppSnackBar.show(context, state.errorMessage!);
-          }
-        },
-        builder: (context, state) {
-          if (state.isLoading && state.addresses.isEmpty) {
-            return const Center(child: CircularProgressIndicator());
-          }
+      body: Center(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: 600),
+          child: BlocConsumer<AddressBloc, AddressState>(
+            listener: (context, state) {
+              if (state.errorMessage != null) {
+                AppSnackBar.show(context, state.errorMessage!);
+              }
+            },
+            builder: (context, state) {
+              if (state.isLoading && state.addresses.isEmpty) {
+                return const Center(child: CircularProgressIndicator());
+              }
 
-          if (state.addresses.isEmpty) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.location_on_outlined,
-                    size: 64,
-                    color: Colors.grey[400],
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    'No addresses saved yet',
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.grey[600],
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Add a new address to get started',
-                    style: TextStyle(color: Colors.grey[500]),
-                  ),
-                ],
-              ),
-            );
-          }
-
-          return ListView.builder(
-            padding: const EdgeInsets.all(16),
-            itemCount: state.addresses.length,
-            itemBuilder: (context, index) {
-              // Wait, I used Addresses.size, I should check the state definition again.
-              // Ah, state.addresses is List<AddressModel>, so it's .length.
-              final address = state.addresses[index];
-              return Card(
-                margin: const EdgeInsets.only(bottom: 16),
-                elevation: 0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  side: BorderSide(color: Colors.grey.shade200),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
+              if (state.addresses.isEmpty) {
+                return Center(
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.location_on_rounded,
-                                color: AppColors.amberColor,
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              IconButton(
-                                icon: const Icon(Icons.edit_outlined, size: 20),
-                                onPressed: () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          ScreenAddUpdateAddress(
-                                            address: address,
-                                          ),
-                                    ),
-                                  );
-                                },
-                              ),
-                              IconButton(
-                                icon: const Icon(
-                                  Icons.delete_outline,
-                                  size: 20,
-                                  color: Colors.redAccent,
-                                ),
-                                onPressed: () {
-                                  _showDeleteConfirmation(context, address.id!);
-                                },
-                              ),
-                            ],
-                          ),
-                        ],
+                      Icon(
+                        Icons.location_on_outlined,
+                        size: 64,
+                        color: Colors.grey[400],
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        'No addresses saved yet',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.grey[600],
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        '${address.address1}, ${address.street}',
-                        style: const TextStyle(fontSize: 15),
-                      ),
-                      Text(
-                        '${address.city}, ${address.state} - ${address.pincode}',
-                        style: const TextStyle(fontSize: 15),
-                      ),
-                      Text(
-                        address.country,
-                        style: const TextStyle(fontSize: 15),
+                        'Add a new address to get started',
+                        style: TextStyle(color: Colors.grey[500]),
                       ),
                     ],
                   ),
-                ),
+                );
+              }
+
+              return ListView.builder(
+                padding: const EdgeInsets.all(16),
+                itemCount: state.addresses.length,
+                itemBuilder: (context, index) {
+                  // Wait, I used Addresses.size, I should check the state definition again.
+                  // Ah, state.addresses is List<AddressModel>, so it's .length.
+                  final address = state.addresses[index];
+                  return Card(
+                    margin: const EdgeInsets.only(bottom: 16),
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      side: BorderSide(color: Colors.grey.shade200),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.location_on_rounded,
+                                    color: AppColors.amberColor,
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  IconButton(
+                                    icon: const Icon(
+                                      Icons.edit_outlined,
+                                      size: 20,
+                                    ),
+                                    onPressed: () {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              ScreenAddUpdateAddress(
+                                                address: address,
+                                              ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                  IconButton(
+                                    icon: const Icon(
+                                      Icons.delete_outline,
+                                      size: 20,
+                                      color: Colors.redAccent,
+                                    ),
+                                    onPressed: () {
+                                      _showDeleteConfirmation(
+                                        context,
+                                        address.id!,
+                                      );
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            '${address.address1}, ${address.street}',
+                            style: const TextStyle(fontSize: 15),
+                          ),
+                          Text(
+                            '${address.city}, ${address.state} - ${address.pincode}',
+                            style: const TextStyle(fontSize: 15),
+                          ),
+                          Text(
+                            address.country,
+                            style: const TextStyle(fontSize: 15),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
               );
             },
-          );
-        },
+          ),
+        ),
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {

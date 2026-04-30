@@ -12,6 +12,8 @@ class ManageAdminOrderModel {
   final List<StatusHistoryItem> statusHistory;
   final List<OrderProduct> orderedItems;
   final AddressModel customerAddress;
+  final int currentPage;
+  final int totalPages;
 
   ManageAdminOrderModel({
     required this.orderNumber,
@@ -23,5 +25,7 @@ class ManageAdminOrderModel {
     required this.statusHistory,
     required this.orderedItems,
     required this.customerAddress,
+    required this.currentPage,
+    required this.totalPages,
   });
 }

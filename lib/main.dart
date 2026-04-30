@@ -28,6 +28,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'application/admin/admin_add_or_update_product/admin_addor_update_product_bloc.dart';
 import 'application/admin/admin_list/admin_list_bloc.dart';
+import 'application/admin/admin_payments_list/admin_payment_list_bloc.dart';
+import 'application/admin/dashboard/admin_dashboard_bloc.dart';
 import 'application/admin/manage_admin_notification/manage_admin_notification_bloc.dart';
 import 'application/auth/auth_bloc.dart';
 import 'application/customer/registration/customer/custom_registr_bloc/customer_register_bloc.dart';
@@ -45,10 +47,10 @@ void main() async {
   if (kIsWeb) {
     await Firebase.initializeApp(
       options: FirebaseOptions(
-        apiKey: FIREBASE_API_KEY,
-        appId: FIREBASE_APP_ID,
-        messagingSenderId: FIREBASE_MESSAGING_SENDER_ID,
-        projectId: FIREBASE_PROJECT_ID,
+        apiKey: FB_KY,
+        appId: FBID,
+        messagingSenderId: FB_M_S_D,
+        projectId: FB_P_ID,
       ), // ✅ FIX
     );
   } else {
@@ -137,6 +139,8 @@ class _MainAppState extends State<MainApp> {
         BlocProvider(create: (context) => sl<AdminOrderListBloc>()),
         BlocProvider(create: (context) => sl<NotificationBloc>()),
         BlocProvider(create: (context) => sl<ManageAdminNotificationBloc>()),
+        BlocProvider(create: (context) => sl<AdminPaymentListBloc>()),
+        BlocProvider(create: (context) => sl<AdminDashboardBloc>()),
       ],
 
       child: MaterialApp(

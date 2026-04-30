@@ -55,12 +55,13 @@ extension OrdersEventPatterns on OrdersEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Started value)?  started,TResult Function( _GetOrderedProducts value)?  getOrderedProducts,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Started value)?  started,TResult Function( _GetOrderedProducts value)?  getOrderedProducts,TResult Function( _LoadMoreOrders value)?  loadMoreOrders,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started(_that);case _GetOrderedProducts() when getOrderedProducts != null:
-return getOrderedProducts(_that);case _:
+return getOrderedProducts(_that);case _LoadMoreOrders() when loadMoreOrders != null:
+return loadMoreOrders(_that);case _:
   return orElse();
 
 }
@@ -78,12 +79,13 @@ return getOrderedProducts(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Started value)  started,required TResult Function( _GetOrderedProducts value)  getOrderedProducts,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Started value)  started,required TResult Function( _GetOrderedProducts value)  getOrderedProducts,required TResult Function( _LoadMoreOrders value)  loadMoreOrders,}){
 final _that = this;
 switch (_that) {
 case _Started():
 return started(_that);case _GetOrderedProducts():
-return getOrderedProducts(_that);case _:
+return getOrderedProducts(_that);case _LoadMoreOrders():
+return loadMoreOrders(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -100,12 +102,13 @@ return getOrderedProducts(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Started value)?  started,TResult? Function( _GetOrderedProducts value)?  getOrderedProducts,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Started value)?  started,TResult? Function( _GetOrderedProducts value)?  getOrderedProducts,TResult? Function( _LoadMoreOrders value)?  loadMoreOrders,}){
 final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started(_that);case _GetOrderedProducts() when getOrderedProducts != null:
-return getOrderedProducts(_that);case _:
+return getOrderedProducts(_that);case _LoadMoreOrders() when loadMoreOrders != null:
+return loadMoreOrders(_that);case _:
   return null;
 
 }
@@ -122,11 +125,12 @@ return getOrderedProducts(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  started,TResult Function()?  getOrderedProducts,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  started,TResult Function( int page,  bool isRefresh)?  getOrderedProducts,TResult Function()?  loadMoreOrders,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started();case _GetOrderedProducts() when getOrderedProducts != null:
-return getOrderedProducts();case _:
+return getOrderedProducts(_that.page,_that.isRefresh);case _LoadMoreOrders() when loadMoreOrders != null:
+return loadMoreOrders();case _:
   return orElse();
 
 }
@@ -144,11 +148,12 @@ return getOrderedProducts();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  started,required TResult Function()  getOrderedProducts,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  started,required TResult Function( int page,  bool isRefresh)  getOrderedProducts,required TResult Function()  loadMoreOrders,}) {final _that = this;
 switch (_that) {
 case _Started():
 return started();case _GetOrderedProducts():
-return getOrderedProducts();case _:
+return getOrderedProducts(_that.page,_that.isRefresh);case _LoadMoreOrders():
+return loadMoreOrders();case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -165,11 +170,12 @@ return getOrderedProducts();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  started,TResult? Function()?  getOrderedProducts,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  started,TResult? Function( int page,  bool isRefresh)?  getOrderedProducts,TResult? Function()?  loadMoreOrders,}) {final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started();case _GetOrderedProducts() when getOrderedProducts != null:
-return getOrderedProducts();case _:
+return getOrderedProducts(_that.page,_that.isRefresh);case _LoadMoreOrders() when loadMoreOrders != null:
+return loadMoreOrders();case _:
   return null;
 
 }
@@ -213,7 +219,75 @@ String toString() {
 
 
 class _GetOrderedProducts implements OrdersEvent {
-  const _GetOrderedProducts();
+  const _GetOrderedProducts({this.page = 1, this.isRefresh = false});
+  
+
+@JsonKey() final  int page;
+@JsonKey() final  bool isRefresh;
+
+/// Create a copy of OrdersEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$GetOrderedProductsCopyWith<_GetOrderedProducts> get copyWith => __$GetOrderedProductsCopyWithImpl<_GetOrderedProducts>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _GetOrderedProducts&&(identical(other.page, page) || other.page == page)&&(identical(other.isRefresh, isRefresh) || other.isRefresh == isRefresh));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,page,isRefresh);
+
+@override
+String toString() {
+  return 'OrdersEvent.getOrderedProducts(page: $page, isRefresh: $isRefresh)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$GetOrderedProductsCopyWith<$Res> implements $OrdersEventCopyWith<$Res> {
+  factory _$GetOrderedProductsCopyWith(_GetOrderedProducts value, $Res Function(_GetOrderedProducts) _then) = __$GetOrderedProductsCopyWithImpl;
+@useResult
+$Res call({
+ int page, bool isRefresh
+});
+
+
+
+
+}
+/// @nodoc
+class __$GetOrderedProductsCopyWithImpl<$Res>
+    implements _$GetOrderedProductsCopyWith<$Res> {
+  __$GetOrderedProductsCopyWithImpl(this._self, this._then);
+
+  final _GetOrderedProducts _self;
+  final $Res Function(_GetOrderedProducts) _then;
+
+/// Create a copy of OrdersEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? page = null,Object? isRefresh = null,}) {
+  return _then(_GetOrderedProducts(
+page: null == page ? _self.page : page // ignore: cast_nullable_to_non_nullable
+as int,isRefresh: null == isRefresh ? _self.isRefresh : isRefresh // ignore: cast_nullable_to_non_nullable
+as bool,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class _LoadMoreOrders implements OrdersEvent {
+  const _LoadMoreOrders();
   
 
 
@@ -223,7 +297,7 @@ class _GetOrderedProducts implements OrdersEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _GetOrderedProducts);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LoadMoreOrders);
 }
 
 
@@ -232,7 +306,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'OrdersEvent.getOrderedProducts()';
+  return 'OrdersEvent.loadMoreOrders()';
 }
 
 
@@ -358,12 +432,12 @@ return failure(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( List<OrderedProductModel> orderedProducts)?  success,TResult Function()?  failure,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( List<OrderedProductModel> orderedProducts,  bool isLoadingMore,  bool hasReachedMax,  int currentPage)?  success,TResult Function()?  failure,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _Loading() when loading != null:
 return loading();case _Success() when success != null:
-return success(_that.orderedProducts);case _Failure() when failure != null:
+return success(_that.orderedProducts,_that.isLoadingMore,_that.hasReachedMax,_that.currentPage);case _Failure() when failure != null:
 return failure();case _:
   return orElse();
 
@@ -382,12 +456,12 @@ return failure();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( List<OrderedProductModel> orderedProducts)  success,required TResult Function()  failure,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( List<OrderedProductModel> orderedProducts,  bool isLoadingMore,  bool hasReachedMax,  int currentPage)  success,required TResult Function()  failure,}) {final _that = this;
 switch (_that) {
 case _Initial():
 return initial();case _Loading():
 return loading();case _Success():
-return success(_that.orderedProducts);case _Failure():
+return success(_that.orderedProducts,_that.isLoadingMore,_that.hasReachedMax,_that.currentPage);case _Failure():
 return failure();case _:
   throw StateError('Unexpected subclass');
 
@@ -405,12 +479,12 @@ return failure();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( List<OrderedProductModel> orderedProducts)?  success,TResult? Function()?  failure,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( List<OrderedProductModel> orderedProducts,  bool isLoadingMore,  bool hasReachedMax,  int currentPage)?  success,TResult? Function()?  failure,}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _Loading() when loading != null:
 return loading();case _Success() when success != null:
-return success(_that.orderedProducts);case _Failure() when failure != null:
+return success(_that.orderedProducts,_that.isLoadingMore,_that.hasReachedMax,_that.currentPage);case _Failure() when failure != null:
 return failure();case _:
   return null;
 
@@ -487,7 +561,7 @@ String toString() {
 
 
 class _Success implements OrdersState {
-  const _Success(final  List<OrderedProductModel> orderedProducts): _orderedProducts = orderedProducts;
+  const _Success(final  List<OrderedProductModel> orderedProducts, {this.isLoadingMore = false, this.hasReachedMax = false, this.currentPage = 1}): _orderedProducts = orderedProducts;
   
 
  final  List<OrderedProductModel> _orderedProducts;
@@ -497,6 +571,9 @@ class _Success implements OrdersState {
   return EqualUnmodifiableListView(_orderedProducts);
 }
 
+@JsonKey() final  bool isLoadingMore;
+@JsonKey() final  bool hasReachedMax;
+@JsonKey() final  int currentPage;
 
 /// Create a copy of OrdersState
 /// with the given fields replaced by the non-null parameter values.
@@ -508,16 +585,16 @@ _$SuccessCopyWith<_Success> get copyWith => __$SuccessCopyWithImpl<_Success>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Success&&const DeepCollectionEquality().equals(other._orderedProducts, _orderedProducts));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Success&&const DeepCollectionEquality().equals(other._orderedProducts, _orderedProducts)&&(identical(other.isLoadingMore, isLoadingMore) || other.isLoadingMore == isLoadingMore)&&(identical(other.hasReachedMax, hasReachedMax) || other.hasReachedMax == hasReachedMax)&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_orderedProducts));
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_orderedProducts),isLoadingMore,hasReachedMax,currentPage);
 
 @override
 String toString() {
-  return 'OrdersState.success(orderedProducts: $orderedProducts)';
+  return 'OrdersState.success(orderedProducts: $orderedProducts, isLoadingMore: $isLoadingMore, hasReachedMax: $hasReachedMax, currentPage: $currentPage)';
 }
 
 
@@ -528,7 +605,7 @@ abstract mixin class _$SuccessCopyWith<$Res> implements $OrdersStateCopyWith<$Re
   factory _$SuccessCopyWith(_Success value, $Res Function(_Success) _then) = __$SuccessCopyWithImpl;
 @useResult
 $Res call({
- List<OrderedProductModel> orderedProducts
+ List<OrderedProductModel> orderedProducts, bool isLoadingMore, bool hasReachedMax, int currentPage
 });
 
 
@@ -545,10 +622,13 @@ class __$SuccessCopyWithImpl<$Res>
 
 /// Create a copy of OrdersState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? orderedProducts = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? orderedProducts = null,Object? isLoadingMore = null,Object? hasReachedMax = null,Object? currentPage = null,}) {
   return _then(_Success(
 null == orderedProducts ? _self._orderedProducts : orderedProducts // ignore: cast_nullable_to_non_nullable
-as List<OrderedProductModel>,
+as List<OrderedProductModel>,isLoadingMore: null == isLoadingMore ? _self.isLoadingMore : isLoadingMore // ignore: cast_nullable_to_non_nullable
+as bool,hasReachedMax: null == hasReachedMax ? _self.hasReachedMax : hasReachedMax // ignore: cast_nullable_to_non_nullable
+as bool,currentPage: null == currentPage ? _self.currentPage : currentPage // ignore: cast_nullable_to_non_nullable
+as int,
   ));
 }
 

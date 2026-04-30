@@ -23,13 +23,14 @@ class ScreenCategory extends StatelessWidget {
     final crossAxisCount = isDesktop ? 6 : (isTablet ? 4 : 2);
 
     return PopScope(
-         canPop: false,
+      canPop: false,
       onPopInvokedWithResult: (didPop, result) {
-        if(BottomNavWidget.navBarNotifier.value == 0) {
+        if (BottomNavWidget.navBarNotifier.value == 0) {
           Navigator.of(context).pop();
-        }else {
-          BottomNavWidget.navBarNotifier.value=0;
-        }},
+        } else {
+          BottomNavWidget.navBarNotifier.value = 0;
+        }
+      },
       child: CustomScrollView(
         slivers: [
           SliverAppBar(
@@ -126,7 +127,9 @@ class ScreenCategory extends StatelessWidget {
                                   ),
                                   child: Text(
                                     category.categoryName,
-                                    style: Theme.of(context).textTheme.titleSmall
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall
                                         ?.copyWith(fontWeight: FontWeight.w600),
                                     textAlign: TextAlign.center,
                                     maxLines: 1,

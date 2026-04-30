@@ -1,4 +1,5 @@
 import 'package:atlasmart/application/admin/admin_order_list/admin_order_list_bloc.dart';
+import 'package:atlasmart/presentation/common/button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../domain/admin/manage_orders/model/manage_order_model.dart';
@@ -58,58 +59,83 @@ class ScreenAdminOrderDetails extends StatelessWidget {
             ),
             body: SingleChildScrollView(
               padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Status & Date Summary Card
-                  _buildSummaryCard(
-                    currentStatus,
-                    isDelivered,
-                    isPending,
-                    currentOrder.date,
+              child: Center(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(maxWidth: 600),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Status & Date Summary Card
+                      _buildSummaryCard(
+                        currentStatus,
+                        isDelivered,
+                        isPending,
+                        currentOrder.date,
+                      ),
+                      const SizedBox(height: 20),
+
+                      // Customer Details Section
+                      _buildSectionTitle('Customer Information'),
+                      _buildCustomerCard(currentOrder),
+                      const SizedBox(height: 20),
+
+                      // Order Items Section
+                      _buildSectionTitle('Order Items'),
+                      _buildItemsList(currentOrder),
+                      const SizedBox(height: 20),
+
+                      // Shipping Address Section
+                      _buildSectionTitle('Delivery Address'),
+                      _buildAddressCard(currentOrder),
+                      const SizedBox(height: 20),
+
+                      // Payment Summary Section
+                      _buildSectionTitle('Payment Summary'),
+                      _buildPaymentSummaryCard(currentOrder),
+                      const SizedBox(height: 40),
+                    ],
                   ),
-                  const SizedBox(height: 20),
-
-                  // Customer Details Section
-                  _buildSectionTitle('Customer Information'),
-                  _buildCustomerCard(currentOrder),
-                  const SizedBox(height: 20),
-
-                  // Order Items Section
-                  _buildSectionTitle('Order Items'),
-                  _buildItemsList(currentOrder),
-                  const SizedBox(height: 20),
-
-                  // Shipping Address Section
-                  _buildSectionTitle('Delivery Address'),
-                  _buildAddressCard(currentOrder),
-                  const SizedBox(height: 20),
-
-                  // Payment Summary Section
-                  _buildSectionTitle('Payment Summary'),
-                  _buildPaymentSummaryCard(currentOrder),
-                  const SizedBox(height: 40),
-                ],
+                ),
               ),
             ),
-            bottomNavigationBar: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: ElevatedButton(
-                onPressed: () => _showUpdateStatusDialog(context, currentOrder),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.amberColor,
-                  foregroundColor: Colors.white,
-                  minimumSize: const Size(double.infinity, 54),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+            bottomNavigationBar: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ConstrainedBox(
+                  constraints: BoxConstraints(maxWidth: 600),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: ButtonWidget(
+                      title: AppStrings.updateStatus,
+                      height: 50,
+                      ontap: () {
+                        _showUpdateStatusDialog(context, currentOrder);
+                      },
+                    ),
+                
+                    // ElevatedButton(
+                    //   onPressed: () =>
+                    //       _showUpdateStatusDialog(context, currentOrder),
+                    //   style: ElevatedButton.styleFrom(
+                    //     backgroundColor: AppColors.amberColor,
+                    //     foregroundColor: Colors.white,
+                    //     minimumSize: const Size(double.infinity, 54),
+                    //     shape: RoundedRectangleBorder(
+                    //       borderRadius: BorderRadius.circular(12),
+                    //     ),
+                    //     elevation: 0,
+                    //   ),
+                    //   child: const Text(
+                    //     AppStrings.updateStatus,
+                    //     style: TextStyle(
+                    //       fontWeight: FontWeight.bold,
+                    //       fontSize: 16,
+                    //     ),
+                    //   ),
+                    // ),
                   ),
-                  elevation: 0,
                 ),
-                child: const Text(
-                  AppStrings.updateStatus,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                ),
-              ),
+              ],
             ),
           );
         },

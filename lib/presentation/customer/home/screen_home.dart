@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:atlasmart/application/customer/home/customer_home_bloc.dart';
 import 'package:atlasmart/domain/core/constants/image.dart';
 import 'package:atlasmart/application/admin/category_list/category_list_bloc.dart';
@@ -9,7 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../domain/core/constants/strings.dart';
 import '../../common/product_tile_card.dart';
-import '../../common/widgets/app_notification_banner.dart';
 import '../category/screen_category_products.dart';
 import '../main/widgets/bottom_nav.dart';
 import '../product/screen_product_details.dart';

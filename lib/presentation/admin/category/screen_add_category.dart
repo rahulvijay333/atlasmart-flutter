@@ -50,171 +50,176 @@ class _ScreenAddCategoryState extends State<ScreenAddCategory> {
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Image',
-              style: AppFont.title16Style.copyWith(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 12),
-            SizedBox(
-              height: 150,
-              child: Center(
-                child: Stack(
-                  children: [
-                    CircleAvatar(
-                      radius: 80,
-                      backgroundColor: Colors.grey.shade200,
-                      backgroundImage: _selectedImage != null
-                          ? (kIsWeb
-                                ? NetworkImage(_selectedImage!.path)
-                                : FileImage(File(_selectedImage!.path))
-                                      as ImageProvider)
-                          : (widget.category?.categoryImage != null &&
-                                widget.category!.categoryImage.isNotEmpty)
-                          ? NetworkImage(widget.category!.categoryImage)
-                          : null,
-                      child:
-                          _selectedImage == null &&
-                              (widget.category?.categoryImage == null ||
-                                  widget.category!.categoryImage.isEmpty)
-                          ? const Icon(
-                              Icons.category_outlined,
-                              size: 60,
-                              color: Colors.grey,
-                            )
-                          : null,
-                    ),
-                    Positioned(
-                      bottom: 0,
-                      left: 0,
-                      right: 0,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: AppColors.whiteColor,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withValues(alpha: 0.1),
-                              blurRadius: 4,
-                            ),
-                          ],
-                        ),
-                        child: IconButton(
-                          icon: const Icon(
-                            Icons.add_photo_alternate,
-                            color: Colors.black,
-                          ),
-                          onPressed: () async {
-                            final image = await ImagePickerUtil.pickImage(
-                              context,
-                            );
-                            if (image != null) {
-                              setState(() => _selectedImage = image);
-                            }
-                          },
-                        ),
-                      ),
-                    ),
-                  ],
+        child:Center(
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(maxWidth: 600),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Image',
+                  style: AppFont.title16Style.copyWith(fontWeight: FontWeight.bold),
                 ),
-              ),
-            ),
-            const SizedBox(height: 24),
-
-            Text(
-              'Name',
-              style: AppFont.title16Style.copyWith(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 5),
-            _buildTextField(
-              controller: _nameController,
-              label: 'Category Name',
-              hint: 'Ex. Electronics, Fashion',
-            ),
-            const SizedBox(height: 40),
-            BlocConsumer<AddCategoryBloc, AddCategoryState>(
-              listener: (context, state) {
-                state.whenOrNull(
-                  failure: (message) {
-                    AppSnackBar.show(context, message);
-                  },
-                  success: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          title: Center(
-                            child: Text(
-                              'Success',
-                              style: AppFont.subHeading16BoldStyle,
+                const SizedBox(height: 12),
+                SizedBox(
+                  height: 150,
+                  child: Center(
+                    child: Stack(
+                      children: [
+                        CircleAvatar(
+                          radius: 80,
+                          backgroundColor: Colors.grey.shade200,
+                          backgroundImage: _selectedImage != null
+                              ? (kIsWeb
+                                    ? NetworkImage(_selectedImage!.path)
+                                    : FileImage(File(_selectedImage!.path))
+                                          as ImageProvider)
+                              : (widget.category?.categoryImage != null &&
+                                    widget.category!.categoryImage.isNotEmpty)
+                              ? NetworkImage(widget.category!.categoryImage)
+                              : null,
+                          child:
+                              _selectedImage == null &&
+                                  (widget.category?.categoryImage == null ||
+                                      widget.category!.categoryImage.isEmpty)
+                              ? const Icon(
+                                  Icons.category_outlined,
+                                  size: 60,
+                                  color: Colors.grey,
+                                )
+                              : null,
+                        ),
+                        Positioned(
+                          bottom: 0,
+                          left: 0,
+                          right: 0,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: AppColors.whiteColor,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withValues(alpha: 0.1),
+                                  blurRadius: 4,
+                                ),
+                              ],
                             ),
-                          ),
-                          content: Text(
-                            widget.isEdit
-                                ? 'Category updated successfully'
-                                : 'Category added successfully',
-                            style: AppFont.title14Style,
-                            textAlign: TextAlign.center,
-                          ),
-                          actions: [
-                            Center(
-                              child: TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                  Navigator.of(context).pop(true);
-                                },
-                                child: const Text('OK'),
+                            child: IconButton(
+                              icon: const Icon(
+                                Icons.add_photo_alternate,
+                                color: Colors.black,
                               ),
+                              onPressed: () async {
+                                final image = await ImagePickerUtil.pickImage(
+                                  context,
+                                );
+                                if (image != null) {
+                                  setState(() => _selectedImage = image);
+                                }
+                              },
                             ),
-                          ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 24),
+            
+                Text(
+                  'Name',
+                  style: AppFont.title16Style.copyWith(fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 5),
+                _buildTextField(
+                  controller: _nameController,
+                  label: 'Category Name',
+                  hint: 'Ex. Electronics, Fashion',
+                ),
+                const SizedBox(height: 40),
+                BlocConsumer<AddCategoryBloc, AddCategoryState>(
+                  listener: (context, state) {
+                    state.whenOrNull(
+                      failure: (message) {
+                        AppSnackBar.show(context, message);
+                      },
+                      success: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: Center(
+                                child: Text(
+                                  'Success',
+                                  style: AppFont.subHeading16BoldStyle,
+                                ),
+                              ),
+                              content: Text(
+                                widget.isEdit
+                                    ? 'Category updated successfully'
+                                    : 'Category added successfully',
+                                style: AppFont.title14Style,
+                                textAlign: TextAlign.center,
+                              ),
+                              actions: [
+                                Center(
+                                  child: TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                      Navigator.of(context).pop(true);
+                                    },
+                                    child: const Text('OK'),
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
                         );
                       },
                     );
                   },
-                );
-              },
-              builder: (context, state) {
-                return ButtonWidget(
-                  isloading: state == const AddCategoryState.loading(),
-                  title: widget.isEdit ? 'Update Category' : 'Save Category',
-                  height: 50,
-                  ontap: () {
-                    final name = _nameController.text.trim();
-                    if (name.isEmpty) {
-                      AppSnackBar.show(context, 'Please enter category name');
-                      return;
-                    }
-                    // if (_selectedImage == null) {
-                    //   AppSnackBar.show(
-                    //     context,
-                    //     'Please select a category image',
-                    //   );
-                    //   return;
-                    // }
-
-                    final category = CategoryModel(
-                      categoryName: name,
-                      categoryImage: widget.category?.categoryImage ?? '',
-                      selectedImage: _selectedImage,
-                      id: widget.category?.id,
+                  builder: (context, state) {
+                    return ButtonWidget(
+                      isloading: state == const AddCategoryState.loading(),
+                      title: widget.isEdit ? 'Update Category' : 'Save Category',
+                      height: 50,
+                      ontap: () {
+                        final name = _nameController.text.trim();
+                        if (name.isEmpty) {
+                          AppSnackBar.show(context, 'Please enter category name');
+                          return;
+                        }
+                        // if (_selectedImage == null) {
+                        //   AppSnackBar.show(
+                        //     context,
+                        //     'Please select a category image',
+                        //   );
+                        //   return;
+                        // }
+            
+                        final category = CategoryModel(
+                          categoryName: name,
+                          categoryImage: widget.category?.categoryImage ?? '',
+                          selectedImage: _selectedImage,
+                          id: widget.category?.id,
+                        );
+            
+                        if (widget.isEdit) {
+                          context.read<AddCategoryBloc>().add(
+                            AddCategoryEvent.editCategory(category),
+                          );
+                        } else {
+                          context.read<AddCategoryBloc>().add(
+                            AddCategoryEvent.addCategory(category),
+                          );
+                        }
+                      },
                     );
-
-                    if (widget.isEdit) {
-                      context.read<AddCategoryBloc>().add(
-                        AddCategoryEvent.editCategory(category),
-                      );
-                    } else {
-                      context.read<AddCategoryBloc>().add(
-                        AddCategoryEvent.addCategory(category),
-                      );
-                    }
                   },
-                );
-              },
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

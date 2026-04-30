@@ -4,6 +4,7 @@ import 'package:atlasmart/presentation/customer/orders/screen_order_details.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../application/customer/orders/orders_bloc.dart';
 import '../../../domain/core/constants/colors.dart';
 import '../../../domain/core/util/data_format.dart';
 
@@ -47,16 +48,37 @@ class _ScreenOrdersState extends State<ScreenOrders> {
                   loading: () =>
                       const Center(child: CircularProgressIndicator()),
                   failure: () => _buildErrorState(context),
-                  success: (orders) {
+                  success: (orders, isLoadingMore, hasReachedMax, currentPage) {
                     if (orders.isEmpty) {
                       return _buildEmptyState(context);
                     }
-                    return ListView.builder(
-                      padding: const EdgeInsets.all(16),
-                      itemCount: orders.length,
-                      itemBuilder: (context, index) {
-                        return _OrderCard(order: orders[index]);
+                    return NotificationListener<ScrollNotification>(
+                      onNotification: (scrollInfo) {
+                        if (scrollInfo.metrics.pixels >=
+                                scrollInfo.metrics.maxScrollExtent &&
+                            !isLoadingMore &&
+                            !hasReachedMax) {
+                          context.read<OrdersBloc>().add(
+                            const OrdersEvent.loadMoreOrders(),
+                          );
+                        }
+                        return false;
                       },
+                      child: ListView.builder(
+                        padding: const EdgeInsets.all(16),
+                        itemCount: orders.length + (isLoadingMore ? 1 : 0),
+                        itemBuilder: (context, index) {
+                          if (index >= orders.length) {
+                            return const Center(
+                              child: Padding(
+                                padding: EdgeInsets.all(16.0),
+                                child: CircularProgressIndicator(),
+                              ),
+                            );
+                          }
+                          return _OrderCard(order: orders[index]);
+                        },
+                      ),
                     );
                   },
                 );
@@ -82,11 +104,6 @@ class _ScreenOrdersState extends State<ScreenOrders> {
           const Text(
             'No orders found!',
             style: TextStyle(fontSize: 18, color: Colors.grey),
-          ),
-          const SizedBox(height: 24),
-          ElevatedButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Start Shopping'),
           ),
         ],
       ),

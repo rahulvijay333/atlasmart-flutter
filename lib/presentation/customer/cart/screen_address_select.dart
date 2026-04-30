@@ -34,63 +34,70 @@ class _ScreenAddressSelectState extends State<ScreenAddressSelect> {
         elevation: 0,
         surfaceTintColor: Colors.transparent,
       ),
-      body: BlocConsumer<AddressBloc, AddressState>(
-        listener: (context, state) {
-          if (state.errorMessage != null) {
-            AppSnackBar.show(context, state.errorMessage!);
-          }
-        },
-        builder: (context, state) {
-          if (state.isLoading && state.addresses.isEmpty) {
-            return const Center(child: CircularProgressIndicator());
-          }
+      body: Center(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: 600),
+          child: BlocConsumer<AddressBloc, AddressState>(
+            listener: (context, state) {
+              if (state.errorMessage != null) {
+                AppSnackBar.show(context, state.errorMessage!);
+              }
+            },
+            builder: (context, state) {
+              if (state.isLoading && state.addresses.isEmpty) {
+                return const Center(child: CircularProgressIndicator());
+              }
 
-          return Column(
-            children: [
-              Expanded(
-                child: ListView(
-                  padding: const EdgeInsets.all(16),
-                  children: [
-                    _buildAddNewButton(context),
-                    const SizedBox(height: 16),
-                    if (state.addresses.isEmpty && !state.isLoading)
-                      const _NoAddressFound()
-                    else
-                      ListView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: state.addresses.length,
-                        itemBuilder: (context, index) {
-                          final address = state.addresses[index];
-                          return _AddressCard(
-                            address: address,
-                            isSelected: _selectedAddressId == address.id,
-                            onSelect: () {
-                              setState(() {
-                                _selectedAddressId = address.id;
-                              });
-                            },
-                            onEdit: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      ScreenAddUpdateAddress(address: address),
-                                ),
+              return Column(
+                children: [
+                  Expanded(
+                    child: ListView(
+                      padding: const EdgeInsets.all(16),
+                      children: [
+                        _buildAddNewButton(context),
+                        const SizedBox(height: 16),
+                        if (state.addresses.isEmpty && !state.isLoading)
+                          const _NoAddressFound()
+                        else
+                          ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: state.addresses.length,
+                            itemBuilder: (context, index) {
+                              final address = state.addresses[index];
+                              return _AddressCard(
+                                address: address,
+                                isSelected: _selectedAddressId == address.id,
+                                onSelect: () {
+                                  setState(() {
+                                    _selectedAddressId = address.id;
+                                  });
+                                },
+                                onEdit: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          ScreenAddUpdateAddress(
+                                            address: address,
+                                          ),
+                                    ),
+                                  );
+                                },
+                                onDelete: () =>
+                                    _confirmDelete(context, address.id!),
                               );
                             },
-                            onDelete: () =>
-                                _confirmDelete(context, address.id!),
-                          );
-                        },
-                      ),
-                  ],
-                ),
-              ),
-              if (state.addresses.isNotEmpty)
-                _buildConfirmButton(context, state.addresses),
-            ],
-          );
-        },
+                          ),
+                      ],
+                    ),
+                  ),
+                  if (state.addresses.isNotEmpty)
+                    _buildConfirmButton(context, state.addresses),
+                ],
+              );
+            },
+          ),
+        ),
       ),
     );
   }
@@ -141,16 +148,7 @@ class _ScreenAddressSelectState extends State<ScreenAddressSelect> {
 
     return Container(
       padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withAlpha(20),
-            blurRadius: 10,
-            offset: const Offset(0, -5),
-          ),
-        ],
-      ),
+      decoration: BoxDecoration(),
       child: SafeArea(
         child: SizedBox(
           width: double.infinity,
@@ -266,7 +264,6 @@ class _AddressCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                
                   Text(
                     '${address.address1}, ${address.street}\n${address.city}, ${address.state} - ${address.pincode}',
                     style: TextStyle(color: Colors.grey.shade700, height: 1.5),

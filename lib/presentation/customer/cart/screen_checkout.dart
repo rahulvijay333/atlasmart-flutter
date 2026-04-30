@@ -23,17 +23,24 @@ class ScreenCheckout extends StatelessWidget {
             elevation: 0,
             surfaceTintColor: Colors.transparent,
           ),
-          body: state.isloading
-              ? const Center(child: CircularProgressIndicator())
-              : state.error != null
-              ? _buildErrorState(context, state.error!)
-              : state.checkoutData == null
-              ? _buildEmptyState(context)
-              : ListView(
-                  padding: const EdgeInsets.all(16),
-                  children: [_buildOrderSummary(context, state)],
-                ),
-          bottomNavigationBar: state.checkoutData != null
+          body: Center(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: 600),
+              child: state.isloading
+                  ? const Center(child: CircularProgressIndicator())
+                  : state.error != null
+                  ? _buildErrorState(context, state.error!)
+                  : state.checkoutData == null
+                  ? _buildEmptyState(context)
+                  : ListView(
+                      padding: const EdgeInsets.all(16),
+                      children: [_buildOrderSummary(context, state)],
+                    ),
+            ),
+          ),
+
+          bottomNavigationBar:
+              state.checkoutData != null && state.isloading == false
               ? _buildBottomBar(context, state)
               : null,
         );
@@ -150,73 +157,75 @@ class ScreenCheckout extends StatelessWidget {
   Widget _buildBottomBar(BuildContext context, CheckoutState state) {
     return Container(
       padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withAlpha(10),
-            blurRadius: 10,
-            offset: const Offset(0, -5),
-          ),
-        ],
-      ),
+      decoration: BoxDecoration(),
       child: SafeArea(
-        child: SizedBox(
-          width: double.infinity,
-          child: ElevatedButton(
-            onPressed: () {
-              final data = state.checkoutData;
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: 600),
+              child: SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    final data = state.checkoutData;
 
-              final razorpay = RazorpayUtil(
-                onSuccess: (paymentId, orderId, signature) {
-                  if (context.mounted) {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return ScreenPaymentProcess(
-                            orderId: orderId,
-                            paymentId: paymentId,
-                            signature: signature,
+                    final razorpay = RazorpayUtil(
+                      onSuccess: (paymentId, orderId, signature) {
+                        if (context.mounted) {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return ScreenPaymentProcess(
+                                  orderId: orderId,
+                                  paymentId: paymentId,
+                                  signature: signature,
+                                );
+                              },
+                            ),
                           );
-                        },
-                      ),
+                        }
+                      },
+                      onError: (error) {
+                        AppSnackBar.show(context, error);
+                      },
+                      onCancel: () {
+                        AppSnackBar.show(
+                          context,
+                          'Payment Cancelled',
+                          duration: Duration(seconds: 5),
+                        );
+                      },
                     );
-                  }
-                },
-                onError: (error) {
-                  AppSnackBar.show(context, error);
-                },
-                onCancel: () {
-                  AppSnackBar.show(
-                    context,
-                    'Payment Cancelled',
-                    duration: Duration(seconds: 5),
-                  );
-                },
-              );
 
-              razorpay.open(
-                key: data?.razorpayKey ?? '',
-                amount: (double.parse(data?.summary.grandTotal ?? '0.0') * 100)
-                    .round(), // in paise
-                name: "AtlasMart",
-                description: '',
-                orderId: data?.razorpayOrderId ?? '',
-              );
-            },
-            style: ElevatedButton.styleFrom(
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              backgroundColor: Theme.of(context).colorScheme.primary,
-              foregroundColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+                    razorpay.open(
+                      key: data?.razorpayKey ?? '',
+                      amount:
+                          (double.parse(data?.summary.grandTotal ?? '0.0') *
+                                  100)
+                              .round(), // in paise
+                      name: "AtlasMart",
+                      description: '',
+                      orderId: data?.razorpayOrderId ?? '',
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    backgroundColor: Theme.of(context).colorScheme.primary,
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  child: const Text(
+                    'Pay Now',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                ),
               ),
             ),
-            child: const Text(
-              'Pay Now',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-          ),
+          ],
         ),
       ),
     );

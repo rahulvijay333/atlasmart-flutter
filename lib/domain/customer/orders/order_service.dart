@@ -1,4 +1,4 @@
 abstract class OrderService {
-  Future getOrderedProductList();
+  Future getOrderedProductList(int page);
   Future getOrderDetails(String orderId);
 }

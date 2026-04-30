@@ -59,113 +59,118 @@ class _ScreenAddUpdateAddressState extends State<ScreenAddUpdateAddress> {
         title: Text(isEdit ? 'Update Address' : 'Add New Address'),
         centerTitle: true,
       ),
-      body: BlocConsumer<AddressBloc, AddressState>(
-        listener: (context, state) {
-          if (state.actionSuccess) {
-            AppSnackBar.show(
-              context,
-              isEdit
-                  ? 'Address updated successfully'
-                  : 'Address added successfully',
-            );
-            Navigator.pop(context);
-          } else if (state.errorMessage != null) {
-            AppSnackBar.show(context, state.errorMessage!);
-          }
-        },
-        builder: (context, state) {
-          return Form(
-            key: _formKey,
-            child: ListView(
-              padding: const EdgeInsets.all(16),
-              children: [
-                _buildTextField(
-                  controller: _address1Controller,
-                  label: 'Address Line 1',
-                  hint: 'House No, Building Name',
-                  icon: Icons.home_outlined,
-                  validator: (value) => value == null || value.isEmpty
-                      ? 'Please enter address'
-                      : null,
-                ),
-                _buildTextField(
-                  controller: _streetController,
-                  label: 'Street',
-                  hint: 'Street, Area, Colony',
-                  icon: Icons.streetview_outlined,
-                  validator: (value) => value == null || value.isEmpty
-                      ? 'Please enter street'
-                      : null,
-                ),
-                Row(
+      body: Center(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: 600),
+          child: BlocConsumer<AddressBloc, AddressState>(
+            listener: (context, state) {
+              if (state.actionSuccess) {
+                AppSnackBar.show(
+                  context,
+                  isEdit
+                      ? 'Address updated successfully'
+                      : 'Address added successfully',
+                );
+                Navigator.pop(context);
+              } else if (state.errorMessage != null) {
+                AppSnackBar.show(context, state.errorMessage!);
+              }
+            },
+            builder: (context, state) {
+              return Form(
+                key: _formKey,
+                child: ListView(
+                  padding: const EdgeInsets.all(16),
                   children: [
-                    Expanded(
-                      child: _buildTextField(
-                        controller: _cityController,
-                        label: 'City',
-                        hint: 'City',
-                        icon: Icons.location_city_outlined,
-                        validator: (value) => value == null || value.isEmpty
-                            ? 'Enter city'
-                            : null,
-                      ),
+                    _buildTextField(
+                      controller: _address1Controller,
+                      label: 'Address Line 1',
+                      hint: 'House No, Building Name',
+                      icon: Icons.home_outlined,
+                      validator: (value) => value == null || value.isEmpty
+                          ? 'Please enter address'
+                          : null,
                     ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: _buildTextField(
-                        controller: _stateController,
-                        label: 'State',
-                        hint: 'State',
-                        icon: Icons.map_outlined,
-                        validator: (value) => value == null || value.isEmpty
-                            ? 'Enter state'
-                            : null,
-                      ),
+                    _buildTextField(
+                      controller: _streetController,
+                      label: 'Street',
+                      hint: 'Street, Area, Colony',
+                      icon: Icons.streetview_outlined,
+                      validator: (value) => value == null || value.isEmpty
+                          ? 'Please enter street'
+                          : null,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: _buildTextField(
+                            controller: _cityController,
+                            label: 'City',
+                            hint: 'City',
+                            icon: Icons.location_city_outlined,
+                            validator: (value) => value == null || value.isEmpty
+                                ? 'Enter city'
+                                : null,
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: _buildTextField(
+                            controller: _stateController,
+                            label: 'State',
+                            hint: 'State',
+                            icon: Icons.map_outlined,
+                            validator: (value) => value == null || value.isEmpty
+                                ? 'Enter state'
+                                : null,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: _buildTextField(
+                            controller: _pincodeController,
+                            label: 'Pincode',
+                            hint: '6-digit pincode',
+                            icon: Icons.pin_drop_outlined,
+                            keyboardType: TextInputType.number,
+                            validator: (value) {
+                              if (value == null || value.isEmpty)
+                                return 'Enter pincode';
+                              if (value.length != 6) return 'Invalid pincode';
+                              return null;
+                            },
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: _buildTextField(
+                            controller: _countryController,
+                            label: 'Country',
+                            hint: 'Country',
+                            icon: Icons.public_outlined,
+                            validator: (value) => value == null || value.isEmpty
+                                ? 'Enter country'
+                                : null,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 32),
+                    ButtonWidget(
+                      title: isEdit ? 'Update Address' : 'Save Address',
+                      height: 50,
+                      isloading: state.isLoading,
+                      ontap: state.isLoading ? () {} : _onSave,
                     ),
                   ],
                 ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: _buildTextField(
-                        controller: _pincodeController,
-                        label: 'Pincode',
-                        hint: '6-digit pincode',
-                        icon: Icons.pin_drop_outlined,
-                        keyboardType: TextInputType.number,
-                        validator: (value) {
-                          if (value == null || value.isEmpty)
-                            return 'Enter pincode';
-                          if (value.length != 6) return 'Invalid pincode';
-                          return null;
-                        },
-                      ),
-                    ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: _buildTextField(
-                        controller: _countryController,
-                        label: 'Country',
-                        hint: 'Country',
-                        icon: Icons.public_outlined,
-                        validator: (value) => value == null || value.isEmpty
-                            ? 'Enter country'
-                            : null,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 32),
-                ButtonWidget(
-                  title: isEdit ? 'Update Address' : 'Save Address',
-                  height: 50,
-                  isloading: state.isLoading,
-                  ontap: state.isLoading ? () {} : _onSave,
-                ),
-              ],
-            ),
-          );
-        },
+              );
+            },
+          ),
+        ),
       ),
     );
   }

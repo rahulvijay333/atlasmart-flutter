@@ -318,7 +318,8 @@ class ScreenProductDetails extends StatelessWidget {
                       if (state.ismodifyingCart == false) {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) =>  ScreenCart(fromProductDetailScreen: true,),
+                            builder: (context) =>
+                                ScreenCart(fromProductDetailScreen: true),
                           ),
                         );
                       }

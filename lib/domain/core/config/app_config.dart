@@ -1,4 +1,4 @@
-import 'dart:developer';
+import 'package:flutter/material.dart';
 
 enum Flavor { dev, prod }
 
@@ -12,7 +12,7 @@ class AppConfig {
 
   static void initialize(AppConfig config) {
     // assert(() {
-    log('Connected to ${config.flavor} | URL: ${config.baseUrl}');
+    debugPrint('Connected to ${config.flavor} | URL: ${config.baseUrl}');
     //   return true;
     // }());
 
