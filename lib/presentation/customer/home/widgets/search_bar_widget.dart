@@ -27,8 +27,8 @@ class SearchBarWidget extends StatelessWidget {
               hintText: AppStrings.searchProductsHint,
               hintStyle: TextStyle(color: Colors.grey.shade500),
               border: InputBorder.none,
-              enabledBorder: InputBorder.none,
-              focusedBorder: InputBorder.none,
+         
+              
               contentPadding: const EdgeInsets.symmetric(vertical: 10),
             ),
           ),

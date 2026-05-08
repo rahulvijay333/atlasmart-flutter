@@ -122,8 +122,20 @@ class _ScreenForgotPasswordState extends State<ScreenForgotPassword> {
           height: 50,
           title: 'Next',
           ontap: () {
+            final email = _emailController.text.trim();
+
+            if (email.isEmpty) {
+              AppSnackBar.show(context, "Email cannot be empty");
+              return;
+            }
+
+            if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(email)) {
+              AppSnackBar.show(context, "Enter a valid email");
+              return;
+            }
+
             context.read<ForgotPasswordBloc>().add(
-              ForgotPasswordEvent.sentEmailOtp(email: _emailController.text),
+              ForgotPasswordEvent.sentEmailOtp(email: email),
             );
           },
         ),
@@ -168,10 +180,22 @@ class _ScreenForgotPasswordState extends State<ScreenForgotPassword> {
           height: 50,
           title: 'Verify',
           ontap: () {
+            final otp = _otpController.text.trim();
+
+            if (otp.isEmpty) {
+              AppSnackBar.show(context, "OTP cannot be empty");
+              return;
+            }
+
+            if (otp.length != 6) {
+              AppSnackBar.show(context, "Enter 6-digit OTP");
+              return;
+            }
+
             context.read<ForgotPasswordBloc>().add(
               ForgotPasswordEvent.verifyOtpButtonClick(
-                otp: _otpController.text,
-                email: _emailController.text,
+                otp: otp,
+                email: _emailController.text.trim(),
               ),
             );
           },
@@ -213,18 +237,35 @@ class _ScreenForgotPasswordState extends State<ScreenForgotPassword> {
           title: 'Set Password',
           ontap: state != ForgotPasswordState.setPasswordLoading()
               ? () {
-                  if (_confirmPasswordController.text ==
-                      _passwordController.text) {
-                    context.read<ForgotPasswordBloc>().add(
-                      ForgotPasswordEvent.setPasswordButtonClick(
-                        email: _emailController.text,
-                        otp: _otpController.text,
-                        password: _confirmPasswordController.text,
-                      ),
-                    );
-                  } else {
-                    AppSnackBar.show(context, 'Passwords doesnt match');
+                  final password = _passwordController.text.trim();
+                  final confirmPassword = _confirmPasswordController.text
+                      .trim();
+
+                  if (password.isEmpty || confirmPassword.isEmpty) {
+                    AppSnackBar.show(context, "Password cannot be empty");
+                    return;
                   }
+
+                  if (password.length < 6) {
+                    AppSnackBar.show(
+                      context,
+                      "Password must be at least 6 characters",
+                    );
+                    return;
+                  }
+
+                  if (password != confirmPassword) {
+                    AppSnackBar.show(context, "Passwords don't match");
+                    return;
+                  }
+
+                  context.read<ForgotPasswordBloc>().add(
+                    ForgotPasswordEvent.setPasswordButtonClick(
+                      email: _emailController.text.trim(),
+                      otp: _otpController.text.trim(),
+                      password: password,
+                    ),
+                  );
                 }
               : () {},
         ),
@@ -232,113 +273,3 @@ class _ScreenForgotPasswordState extends State<ScreenForgotPassword> {
     );
   }
 }
-// class ScreenForgotPassword extends StatefulWidget {
-//   const ScreenForgotPassword({super.key});
-
-//   @override
-//   State<ScreenForgotPassword> createState() => _ScreenForgotPasswordState();
-// }
-
-// class _ScreenForgotPasswordState extends State<ScreenForgotPassword> {
-//   final _passwordController = TextEditingController();
-
-//   final _confirmPasswordController = TextEditingController();
-
-//   @override
-//   void dispose() {
-//     _passwordController.dispose();
-//     _confirmPasswordController.dispose();
-//     super.dispose();
-//   }
-
-//   handleSetPassword() {}
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: Padding(
-//         padding: const EdgeInsets.all(16.0),
-//         child: SingleChildScrollView(
-//           child: Column(
-//             mainAxisAlignment: MainAxisAlignment.center,
-//             children: [
-//               Center(child: Image.asset(AppImage.appLogo, height: 250)),
-
-//               Text(
-//                 'Forgot Password',
-//                 style: AppFont.subHeading16BoldStyle,
-//                 textAlign: TextAlign.center,
-//               ),
-
-//               SizedBox(height: 30),
-//               Column(
-//                 spacing: 10,
-//                 crossAxisAlignment: CrossAxisAlignment.start,
-//                 children: [
-//                   Text(AppStrings.password),
-
-//                   TextFormField(
-//                     controller: _passwordController,
-//                     decoration: InputDecoration(
-//                       contentPadding: EdgeInsets.all(5),
-//                       hintStyle: AppFont.hintText14StyleGreyColor,
-//                       border: InputBorder.none,
-//                       hintText: AppStrings.passwordHint,
-//                     ),
-//                   ),
-
-//                   Text('Confirm Password'),
-
-//                   TextFormField(
-//                     controller: _passwordController,
-//                     decoration: InputDecoration(
-//                       contentPadding: EdgeInsets.all(5),
-//                       hintStyle: AppFont.hintText14StyleGreyColor,
-//                       border: InputBorder.none,
-//                       hintText: AppStrings.passwordHint,
-//                     ),
-//                   ),
-//                   SizedBox(height: 15),
-//                   BlocConsumer<ForgotPasswordBloc, ForgotPasswordState>(
-//                     listener: (context, state) {
-//                       state.whenOrNull(
-//                         initial: () {},
-//                         enterEmail: () {},
-//                         sentEmailOtpLoading: () {},
-//                         setPassword: () {},
-//                         setPasswordLoading: () {},
-//                         verifyOtpLoading: () {},
-//                         verifyOtp: () {},
-//                         success: () {
-//                           // Navigator.of(context).pushReplacement(
-//                           //   MaterialPageRoute(
-//                           //     builder: (context) => ScreenRegisterSuccess(),
-//                           //   ),
-//                           // );
-//                         },
-//                         failure: (message) {
-//                           ScaffoldMessenger.of(
-//                             context,
-//                           ).showSnackBar(SnackBar(content: Text(message)));
-//                         },
-//                       );
-//                     },
-//                     builder: (context, state) {
-//                       return ButtonWidget(
-//                         isloading: false,
-//                         height: 50,
-//                         title: AppStrings.createAccount,
-//                         ontap: () {},
-//                       );
-//                     },
-//                   ),
-//                 ],
-//               ),
-//               SizedBox(height: 25),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }

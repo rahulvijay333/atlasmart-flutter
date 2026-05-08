@@ -70,11 +70,15 @@ void main() async {
   AppConfig.initialize(
     AppConfig(
       flavor: kReleaseMode ? Flavor.prod : Flavor.dev,
-      baseUrl: kReleaseMode
-          ? ApiEndpoints.baseUrlProduction
-          : kIsWeb
-          ? "http://localhost:3000"
-          : ApiEndpoints.baseUrl,
+      baseUrl:
+      
+      //  kReleaseMode
+      //     ? 
+      ApiEndpoints.baseUrlProduction
+      //     : kIsWeb
+      //     ? "http://localhost:3000"
+          // :
+          //  ApiEndpoints.baseUrl,
     ),
   );
   setupDI();

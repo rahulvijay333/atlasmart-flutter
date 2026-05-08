@@ -1,6 +1,6 @@
 import 'package:atlasmart/domain/customer/checkout/checkout_service.dart';
 import 'package:atlasmart/domain/customer/checkout/model/checkout_model.dart';
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'checkout_event.dart';
 part 'checkout_state.dart';

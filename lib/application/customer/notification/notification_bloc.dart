@@ -1,6 +1,5 @@
 import 'package:atlasmart/domain/customer/notifications/model/notification_model.dart';
 import 'package:atlasmart/domain/customer/notifications/notification_service.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'notification_event.dart';

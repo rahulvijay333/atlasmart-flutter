@@ -36,7 +36,6 @@ class ManageAdminServiceImpl implements ManageAdminService {
 
   @override
   Future<AdminUserModel> editAdmin(AdminUserModel admin) {
-    // TODO: implement editAdmin
     throw UnimplementedError();
   }
 

@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../domain/core/constants/font.dart';
 import '../../common/error_state_widget.dart';
-import '../common/admin_search_bar.dart';
 import '../../../domain/core/constants/strings.dart';
 import 'screen_add_product.dart';
 

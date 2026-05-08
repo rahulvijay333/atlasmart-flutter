@@ -15,7 +15,6 @@ class NotificationServiceImpl implements NotificationService {
 
   @override
   Future<dynamic> clearAllNotifications() {
-    // TODO: implement clearAllNotifications
     throw UnimplementedError();
   }
 

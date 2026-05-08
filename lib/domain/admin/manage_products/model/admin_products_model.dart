@@ -43,7 +43,7 @@ class AdminProductsModel {
       description: description ?? this.description,
       price: price ?? this.price,
       image: image ?? this.image,
-      categoryid: categoryId ?? this.categoryid,
+      categoryid: categoryId ?? categoryid,
       stock: stock ?? this.stock,
       newProfileImage: newProfileImage,
       id: id,

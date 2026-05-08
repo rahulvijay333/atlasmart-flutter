@@ -93,7 +93,7 @@ class PromoBannerWidget extends StatelessWidget {
         Text(
           'Get exclusive discounts on high-end laptops, monitors, and ergonomic chairs.',
           style: TextStyle(
-            color: Colors.white.withOpacity(0.9),
+            color: Colors.white.withValues (alpha:  0.9),
             fontSize: isWeb ? 16 : 14,
           ),
         ),

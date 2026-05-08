@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import '../../../domain/core/constants/font.dart';
-import '../common/admin_search_bar.dart';
-import '../../../domain/core/constants/strings.dart';
 
 class ScreenAdminUsers extends StatelessWidget {
   const ScreenAdminUsers({super.key});
@@ -19,11 +17,10 @@ class ScreenAdminUsers extends StatelessWidget {
       },
       child: SafeArea(
         child: Center(
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(maxWidth: 600),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: 600),
             child: Column(
               children: [
-              
                 BlocBuilder<AllUsersBloc, AllUsersState>(
                   builder: (context, state) {
                     return state.when(
@@ -67,7 +64,7 @@ class ScreenAdminUsers extends StatelessWidget {
                             },
                           );
                         }
-            
+
                         return Expanded(
                           child: ListView.separated(
                             padding: const EdgeInsets.symmetric(
@@ -79,7 +76,7 @@ class ScreenAdminUsers extends StatelessWidget {
                                 const SizedBox(height: 12),
                             itemBuilder: (context, index) {
                               final user = users[index];
-                              final isActive = index % 3 != 0;
+                             
                               return GestureDetector(
                                 onTap: () {
                                   Navigator.of(context).push(
@@ -96,7 +93,9 @@ class ScreenAdminUsers extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(16),
                                     boxShadow: [
                                       BoxShadow(
-                                        color: Colors.grey.withValues(alpha: 0.1),
+                                        color: Colors.grey.withValues(
+                                          alpha: 0.1,
+                                        ),
                                         blurRadius: 10,
                                         offset: const Offset(0, 4),
                                       ),
@@ -115,7 +114,8 @@ class ScreenAdminUsers extends StatelessWidget {
                                           backgroundColor: Theme.of(
                                             context,
                                           ).primaryColor.withValues(alpha: 0.1),
-                                          child: user.userImage?.isNotEmpty == true
+                                          child:
+                                              user.userImage?.isNotEmpty == true
                                               ? null
                                               : Text(
                                                   user.userName.isNotEmpty
@@ -177,25 +177,31 @@ class ScreenAdminUsers extends StatelessWidget {
                                                   content: Text(
                                                     'Are you sure to delete this user? ',
                                                   ),
-            
+
                                                   actions: [
                                                     IconButton(
                                                       onPressed: () {
-                                                        Navigator.of(context).pop();
+                                                        Navigator.of(
+                                                          context,
+                                                        ).pop();
                                                       },
                                                       icon: Text('No'),
                                                     ),
-            
+
                                                     IconButton(
                                                       onPressed: () {
                                                         context
-                                                            .read<AllUsersBloc>()
+                                                            .read<
+                                                              AllUsersBloc
+                                                            >()
                                                             .add(
                                                               AllUsersEvent.deleteUser(
                                                                 user.id!,
                                                               ),
                                                             );
-                                                        Navigator.of(context).pop();
+                                                        Navigator.of(
+                                                          context,
+                                                        ).pop();
                                                       },
                                                       icon: Text('Yes'),
                                                     ),

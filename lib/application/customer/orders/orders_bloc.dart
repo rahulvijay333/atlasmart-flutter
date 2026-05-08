@@ -1,5 +1,5 @@
 import 'package:atlasmart/domain/customer/orders/order_service.dart';
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../domain/customer/orders/model/ordered_product_model.dart';

@@ -90,8 +90,8 @@ class _ScreenAddProductState extends State<ScreenAddProduct> {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Center(
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(maxWidth: 600),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: 600),
             child: Column(
               children: [
                 // Status Toggle (Only visible if needed, or always prominent)
@@ -129,13 +129,16 @@ class _ScreenAddProductState extends State<ScreenAddProduct> {
                 //   ),
                 // ),
                 const SizedBox(height: 24),
-            
+
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
                       'Product Images',
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
                     ),
                     const SizedBox(height: 12),
                     SizedBox(
@@ -158,7 +161,8 @@ class _ScreenAddProductState extends State<ScreenAddProduct> {
                               child:
                                   (selectedImage == null &&
                                       (widget.product?.image == null ||
-                                          widget.product?.image?.isEmpty == true))
+                                          widget.product?.image?.isEmpty ==
+                                              true))
                                   ? const Icon(Icons.person, size: 60)
                                   : null,
                             ),
@@ -177,9 +181,10 @@ class _ScreenAddProductState extends State<ScreenAddProduct> {
                                     color: Colors.black,
                                   ),
                                   onPressed: () async {
-                                    final image = await ImagePickerUtil.pickImage(
-                                      context,
-                                    );
+                                    final image =
+                                        await ImagePickerUtil.pickImage(
+                                          context,
+                                        );
                                     if (image != null) {
                                       setState(() => selectedImage = image);
                                     }
@@ -192,10 +197,13 @@ class _ScreenAddProductState extends State<ScreenAddProduct> {
                       ),
                     ),
                     const SizedBox(height: 24),
-            
+
                     const Text(
                       'Basic Details',
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
                     ),
                     const SizedBox(height: 16),
                     _buildTextField(
@@ -217,10 +225,13 @@ class _ScreenAddProductState extends State<ScreenAddProduct> {
                       maxLines: 4,
                     ),
                     const SizedBox(height: 24),
-            
+
                     const Text(
                       'Pricing & Category',
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
                     ),
                     const SizedBox(height: 16),
                     Row(
@@ -262,7 +273,7 @@ class _ScreenAddProductState extends State<ScreenAddProduct> {
                               List<CategoryModel> categories = [];
                               bool isLoading = false;
                               bool isError = false;
-            
+
                               state.maybeWhen(
                                 success: (list) {
                                   categories = list;
@@ -277,7 +288,7 @@ class _ScreenAddProductState extends State<ScreenAddProduct> {
                                 failure: (_) => isError = true,
                                 orElse: () {},
                               );
-            
+
                               return DropdownButtonFormField<String>(
                                 value: _selectedCategoryId,
                                 decoration: InputDecoration(
@@ -312,20 +323,23 @@ class _ScreenAddProductState extends State<ScreenAddProduct> {
                                                 ),
                                                 onPressed: () {
                                                   setState(
-                                                    () =>
-                                                        _selectedCategoryId = null,
+                                                    () => _selectedCategoryId =
+                                                        null,
                                                   );
                                                 },
                                               ),
                                             if (isError ||
-                                                (categories.isEmpty && !isLoading))
+                                                (categories.isEmpty &&
+                                                    !isLoading))
                                               IconButton(
                                                 iconSize: 20,
                                                 icon: const Icon(Icons.refresh),
                                                 onPressed: () {
-                                                  context.read<CategoryListBloc>().add(
-                                                    const CategoryListEvent.getAllCategoryList(),
-                                                  );
+                                                  context
+                                                      .read<CategoryListBloc>()
+                                                      .add(
+                                                        const CategoryListEvent.getAllCategoryList(),
+                                                      );
                                                 },
                                               ),
                                           ],
@@ -354,7 +368,9 @@ class _ScreenAddProductState extends State<ScreenAddProduct> {
                                 onChanged: categories.isEmpty
                                     ? null
                                     : (val) {
-                                        setState(() => _selectedCategoryId = val);
+                                        setState(
+                                          () => _selectedCategoryId = val,
+                                        );
                                       },
                               );
                             },
@@ -362,12 +378,15 @@ class _ScreenAddProductState extends State<ScreenAddProduct> {
                         ),
                       ],
                     ),
-            
+
                     const SizedBox(height: 24),
-            
+
                     const Text(
                       'Inventory',
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
                     ),
                     const SizedBox(height: 16),
                     Row(
@@ -383,7 +402,7 @@ class _ScreenAddProductState extends State<ScreenAddProduct> {
                       ],
                     ),
                     const SizedBox(height: 20),
-            
+
                     BlocConsumer<
                       AdminAddorUpdateProductBloc,
                       AdminAddorUpdateProductState
@@ -393,7 +412,7 @@ class _ScreenAddProductState extends State<ScreenAddProduct> {
                           failure: (message) {
                             AppSnackBar.show(context, message);
                           },
-            
+
                           success: () {
                             showDialog(
                               context: context,
@@ -430,24 +449,31 @@ class _ScreenAddProductState extends State<ScreenAddProduct> {
                       },
                       builder: (context, state) {
                         return ButtonWidget(
-                          isloading: state == AdminAddorUpdateProductState.loading()
+                          isloading:
+                              state == AdminAddorUpdateProductState.loading()
                               ? true
                               : false,
-                          title: widget.isEdit ? 'Update Product' : 'Save Product',
+                          title: widget.isEdit
+                              ? 'Update Product'
+                              : 'Save Product',
                           height: 50,
                           ontap: () {
-                            if (state != AdminAddorUpdateProductState.loading()) {
+                            if (state !=
+                                AdminAddorUpdateProductState.loading()) {
                               if (_selectedCategoryId == null) {
                                 AppSnackBar.show(context, 'Select a category');
                                 return;
                               }
-            
+
                               if (_stockController.text.isEmpty ||
                                   _stockController.text == '0') {
-                                AppSnackBar.show(context, 'Invalid stock value');
+                                AppSnackBar.show(
+                                  context,
+                                  'Invalid stock value',
+                                );
                                 return;
                               }
-            
+
                               final product = AdminProductsModel(
                                 name: _nameController.text.trim(),
                                 description: _descController.text.trim(),
@@ -457,14 +483,18 @@ class _ScreenAddProductState extends State<ScreenAddProduct> {
                                 categoryid: _selectedCategoryId,
                                 id: widget.product?.id,
                               );
-            
+
                               if (widget.isEdit == true) {
                                 context.read<AdminAddorUpdateProductBloc>().add(
-                                  AdminAddorUpdateProductEvent.editProduct(product),
+                                  AdminAddorUpdateProductEvent.editProduct(
+                                    product,
+                                  ),
                                 );
                               } else {
                                 context.read<AdminAddorUpdateProductBloc>().add(
-                                  AdminAddorUpdateProductEvent.addProduct(product),
+                                  AdminAddorUpdateProductEvent.addProduct(
+                                    product,
+                                  ),
                                 );
                               }
                             }
@@ -479,34 +509,6 @@ class _ScreenAddProductState extends State<ScreenAddProduct> {
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _buildImagePreview() {
-    return Container(
-      width: 100,
-      margin: const EdgeInsets.only(right: 12),
-      decoration: BoxDecoration(
-        color: Colors.grey[100],
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Stack(
-        children: [
-          const Center(child: Icon(Icons.image, color: Colors.grey)),
-          Positioned(
-            top: 4,
-            right: 4,
-            child: Container(
-              padding: const EdgeInsets.all(4),
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                shape: BoxShape.circle,
-              ),
-              child: const Icon(Icons.close, size: 14, color: Colors.red),
-            ),
-          ),
-        ],
       ),
     );
   }

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../application/admin/admin_payments_list/admin_payment_list_bloc.dart';
 import '../../common/error_state_widget.dart';
-import '../common/admin_search_bar.dart';
 import '../../../domain/core/constants/strings.dart';
 
 class ScreenAdminPayments extends StatelessWidget {
@@ -55,7 +54,7 @@ class ScreenAdminPayments extends StatelessWidget {
                     itemBuilder: (context, index) {
                       final payment = state.payments[index];
 
-                      final isSuccess = index % 5 != 0;
+                     
                       return Container(
                         decoration: BoxDecoration(
                           color: Colors.white,

@@ -2,7 +2,6 @@ import 'package:atlasmart/application/admin/admin_order_list/admin_order_list_bl
 import 'package:atlasmart/presentation/admin/orders/screen_order_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../common/admin_search_bar.dart';
 import '../../../domain/core/constants/strings.dart';
 
 class ScreenAdminOrders extends StatelessWidget {
@@ -56,7 +55,7 @@ class ScreenAdminOrders extends StatelessWidget {
                         size: 48,
                         color: Colors.grey,
                       ),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16),
                       Text('No orders found'),
                     ],
                   ),

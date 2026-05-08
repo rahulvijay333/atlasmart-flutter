@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -22,14 +24,18 @@ class ImagePickerUtil {
                 leading: const Icon(Icons.camera_alt),
                 title: const Text('Camera'),
                 onTap: () async {
-                  Navigator.pop(context, await _pickFromCamera());
+                  if (context.mounted) {
+                    Navigator.pop(context, await _pickFromCamera());
+                  }
                 },
               ),
               ListTile(
                 leading: const Icon(Icons.photo_library),
                 title: const Text('Gallery'),
                 onTap: () async {
-                  Navigator.pop(context, await _pickFromGallery());
+                  if (context.mounted) {
+                    Navigator.pop(context, await _pickFromGallery());
+                  }
                 },
               ),
             ],

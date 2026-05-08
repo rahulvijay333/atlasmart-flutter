@@ -5,7 +5,6 @@ import 'package:atlasmart/presentation/common/error_state_widget.dart';
 import 'package:atlasmart/presentation/common/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../common/admin_search_bar.dart';
 import 'screen_add_category.dart';
 
 class ScreenCategories extends StatelessWidget {

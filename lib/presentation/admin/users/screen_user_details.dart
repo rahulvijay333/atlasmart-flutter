@@ -34,18 +34,18 @@ class ScreenUserDetails extends StatelessWidget {
               spacing: 5,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                keyValueRowWidget(
+                KeyValueRowWidget(
                   size: size,
                   keyName: 'Name',
                   value: user.userName,
                 ),
-                keyValueRowWidget(
+                KeyValueRowWidget(
                   size: size,
                   keyName: 'Email',
                   value: user.userEmail,
                 ),
                 if (user.joinedDate != null)
-                  keyValueRowWidget(
+                  KeyValueRowWidget(
                     size: size,
                     keyName: 'Account Created',
                     value: DateFormat(
@@ -61,8 +61,8 @@ class ScreenUserDetails extends StatelessWidget {
   }
 }
 
-class keyValueRowWidget extends StatelessWidget {
-  const keyValueRowWidget({
+class KeyValueRowWidget extends StatelessWidget {
+  const KeyValueRowWidget({
     super.key,
     required this.size,
     required this.keyName,

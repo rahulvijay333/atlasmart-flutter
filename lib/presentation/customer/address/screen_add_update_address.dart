@@ -137,8 +137,9 @@ class _ScreenAddUpdateAddressState extends State<ScreenAddUpdateAddress> {
                             icon: Icons.pin_drop_outlined,
                             keyboardType: TextInputType.number,
                             validator: (value) {
-                              if (value == null || value.isEmpty)
+                              if (value == null || value.isEmpty) {
                                 return 'Enter pincode';
+                              }
                               if (value.length != 6) return 'Invalid pincode';
                               return null;
                             },
