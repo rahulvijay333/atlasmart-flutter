@@ -134,6 +134,14 @@ class _ScreenForgotPasswordState extends State<ScreenForgotPassword> {
               return;
             }
 
+            if (email == 'demo_customer@gmail.com') {
+              AppSnackBar.show(
+                context,
+                "The test email cannot be used to reset your password.",
+              );
+              return;
+            }
+
             context.read<ForgotPasswordBloc>().add(
               ForgotPasswordEvent.sentEmailOtp(email: email),
             );

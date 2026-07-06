@@ -11,10 +11,10 @@ class AppConfig {
   AppConfig({required this.flavor, required this.baseUrl});
 
   static void initialize(AppConfig config) {
-    // assert(() {
-    debugPrint('Connected to ${config.flavor} | URL: ${config.baseUrl}');
-    //   return true;
-    // }());
+    assert(() {
+      debugPrint('Connected to ${config.flavor} | URL: ${config.baseUrl}');
+      return true;
+    }());
 
     instance = config;
   }

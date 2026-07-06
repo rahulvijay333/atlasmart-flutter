@@ -171,6 +171,7 @@ class _ScreenLoginState extends State<ScreenLogin> {
                           ),
                         ],
                       ),
+
                       BlocConsumer<LoginBloc, LoginState>(
                         listener: (context, state) {
                           state.mapOrNull(
@@ -234,7 +235,60 @@ class _ScreenLoginState extends State<ScreenLogin> {
                     ],
                   ),
                 ),
-
+                Center(
+                  child: Column(
+                    children: [
+                      Center(
+                        child: Text(
+                          'Test Credentials',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text.rich(
+                            TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: 'Email: ',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: 'demo_customer@gmail.com',
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Text.rich(
+                            TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: 'Password: ',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: 'demo1234',
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
