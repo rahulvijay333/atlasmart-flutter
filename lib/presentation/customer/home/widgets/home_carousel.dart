@@ -15,11 +15,11 @@ class _HomeCarouselState extends State<HomeCarousel> {
   late Timer _timer;
 
   final List<AdBannerData> _banners = [
-  
     AdBannerData(
       badgeText: 'VIP SELECTION',
       title: 'Royal Oudh & Perfumes',
-      subtitle: 'Experience exquisite Arabian incense & luxury global perfumes.',
+      subtitle:
+          'Experience exquisite Arabian incense & luxury global perfumes.',
       buttonText: 'Shop Fragrances',
       backgroundImagePath: 'assets/royal_fragrance_banner.png',
       backgroundColor: const Color(0xFF2E020A), // Rich burgundy shadow base

@@ -30,11 +30,7 @@ class CustomAdBanner extends StatelessWidget {
   final AdBannerData data;
   final VoidCallback? onTap;
 
-  const CustomAdBanner({
-    super.key,
-    required this.data,
-    this.onTap,
-  });
+  const CustomAdBanner({super.key, required this.data, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -47,9 +43,15 @@ class CustomAdBanner extends StatelessWidget {
         final bool isVerySmall = width < 320 || height < 120;
 
         final double badgeFontSize = isVerySmall ? 8 : (isLargeScreen ? 11 : 9);
-        final double titleFontSize = isVerySmall ? 14 : (isLargeScreen ? 24 : 18);
-        final double subtitleFontSize = isVerySmall ? 9 : (isLargeScreen ? 13 : 11);
-        final double buttonFontSize = isVerySmall ? 10 : (isLargeScreen ? 13 : 11);
+        final double titleFontSize = isVerySmall
+            ? 14
+            : (isLargeScreen ? 24 : 18);
+        final double subtitleFontSize = isVerySmall
+            ? 9
+            : (isLargeScreen ? 13 : 11);
+        final double buttonFontSize = isVerySmall
+            ? 10
+            : (isLargeScreen ? 13 : 11);
 
         final EdgeInsets padding = EdgeInsets.symmetric(
           horizontal: isLargeScreen ? 28 : 16,
@@ -80,7 +82,11 @@ class CustomAdBanner extends StatelessWidget {
                   top: 0,
                   bottom: 0,
                   right: 0,
-                  width: width * (isLargeScreen ? 0.55 : 0.5), // Larger allocation on desktop
+                  width:
+                      width *
+                      (isLargeScreen
+                          ? 0.55
+                          : 0.5), // Larger allocation on desktop
                   child: Image.asset(
                     data.backgroundImagePath,
                     fit: BoxFit.cover,
@@ -102,7 +108,13 @@ class CustomAdBanner extends StatelessWidget {
                         ],
                         begin: Alignment.centerLeft,
                         end: Alignment.centerRight,
-                        stops: const [0.0, 0.35, 0.5, 0.7, 1.0], // Blends the left edge of the image
+                        stops: const [
+                          0.0,
+                          0.35,
+                          0.5,
+                          0.7,
+                          1.0,
+                        ], // Blends the left edge of the image
                       ),
                     ),
                   ),
@@ -196,7 +208,9 @@ class CustomAdBanner extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(8),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.black.withValues(alpha: 0.15),
+                                      color: Colors.black.withValues(
+                                        alpha: 0.15,
+                                      ),
                                       blurRadius: 4,
                                       offset: const Offset(0, 2),
                                     ),

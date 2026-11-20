@@ -54,7 +54,6 @@ class ScreenAdminPayments extends StatelessWidget {
                     itemBuilder: (context, index) {
                       final payment = state.payments[index];
 
-                     
                       return Container(
                         decoration: BoxDecoration(
                           color: Colors.white,

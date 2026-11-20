@@ -20,8 +20,8 @@ class _ScreenAddAdminsState extends State<ScreenManageAdmins> {
     return BlocBuilder<AdminListBloc, AdminListState>(
       builder: (context, state) {
         return Center(
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(maxWidth: 600),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: 600),
             child: Column(
               children: [
                 Padding(
@@ -38,11 +38,11 @@ class _ScreenAddAdminsState extends State<ScreenManageAdmins> {
                               builder: (context) => const ScreenAddAdmin(),
                             ),
                           ).then((value) {
-                                if (context.mounted) {
-                                  context.read<AdminListBloc>().add(
-                              AdminListEvent.getAllAdminList(),
-                            );
-                                }
+                            if (context.mounted) {
+                              context.read<AdminListBloc>().add(
+                                AdminListEvent.getAllAdminList(),
+                              );
+                            }
                           });
                         },
                         icon: const Icon(Icons.add, size: 18),
@@ -73,7 +73,7 @@ class _ScreenAddAdminsState extends State<ScreenManageAdmins> {
                       },
                     );
                   },
-            
+
                   loading: () => LoadingWidget(),
                   success: (adminList) {
                     if (adminList.isEmpty) {
@@ -87,7 +87,7 @@ class _ScreenAddAdminsState extends State<ScreenManageAdmins> {
                         },
                       );
                     }
-            
+
                     return Expanded(
                       child: RefreshIndicator(
                         onRefresh: () async {
@@ -105,7 +105,7 @@ class _ScreenAddAdminsState extends State<ScreenManageAdmins> {
                               const SizedBox(height: 12),
                           itemBuilder: (context, index) {
                             final admin = adminList[index];
-            
+
                             return Container(
                               decoration: BoxDecoration(
                                 color: Colors.white,
@@ -133,7 +133,8 @@ class _ScreenAddAdminsState extends State<ScreenManageAdmins> {
                                               : null,
                                           child:
                                               admin.userImage == null ||
-                                                  admin.userImage?.isEmpty == true
+                                                  admin.userImage?.isEmpty ==
+                                                      true
                                               ? Icon(Icons.person)
                                               : null,
                                         ),
@@ -171,7 +172,8 @@ class _ScreenAddAdminsState extends State<ScreenManageAdmins> {
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 16,
                                                   ),
-                                                  overflow: TextOverflow.ellipsis,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
                                                 ),
                                               ),
                                               const SizedBox(width: 8),
@@ -197,14 +199,14 @@ class _ScreenAddAdminsState extends State<ScreenManageAdmins> {
                                               title: Center(
                                                 child: Text(
                                                   'Confirm',
-                                                  style:
-                                                      AppFont.subHeading16BoldStyle,
+                                                  style: AppFont
+                                                      .subHeading16BoldStyle,
                                                 ),
                                               ),
                                               content: Text(
                                                 'Are you sure to delete this admin? ',
                                               ),
-            
+
                                               actions: [
                                                 IconButton(
                                                   onPressed: () {
@@ -212,7 +214,7 @@ class _ScreenAddAdminsState extends State<ScreenManageAdmins> {
                                                   },
                                                   icon: Text('No'),
                                                 ),
-            
+
                                                 IconButton(
                                                   onPressed: () {
                                                     context
@@ -233,7 +235,9 @@ class _ScreenAddAdminsState extends State<ScreenManageAdmins> {
                                       },
                                       child: Icon(
                                         Icons.delete_outline,
-                                        color: Colors.grey.withValues(alpha: 0.5),
+                                        color: Colors.grey.withValues(
+                                          alpha: 0.5,
+                                        ),
                                       ),
                                     ),
                                     // Switch(

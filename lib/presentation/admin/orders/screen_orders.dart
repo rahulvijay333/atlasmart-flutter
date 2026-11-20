@@ -11,7 +11,6 @@ class ScreenAdminOrders extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-    
         Expanded(
           child: BlocBuilder<AdminOrderListBloc, AdminOrderListState>(
             builder: (context, state) {
@@ -89,7 +88,8 @@ class ScreenAdminOrders extends StatelessWidget {
                           vertical: 8,
                         ),
                         itemCount:
-                            state.orderList.length + (state.isLoadingMore ? 1 : 0),
+                            state.orderList.length +
+                            (state.isLoadingMore ? 1 : 0),
                         separatorBuilder: (context, index) =>
                             const SizedBox(height: 16),
                         itemBuilder: (context, index) {
@@ -101,24 +101,25 @@ class ScreenAdminOrders extends StatelessWidget {
                               ),
                             );
                           }
-                      
+
                           final order = state.orderList[index];
-                      
+
                           // Map domain model to UI
                           final orderId = '#${order.orderNumber}';
                           // Simplify date string for display
                           final date = order.date.split(' ').first;
-                          final amount = double.tryParse(order.totalAmount) ?? 0.0;
+                          final amount =
+                              double.tryParse(order.totalAmount) ?? 0.0;
                           final itemsCount = order.orderedItems.length;
-                      
+
                           // Determine status
                           final currentStatus = order.statusHistory.isNotEmpty
                               ? order.statusHistory.last.status.toLowerCase()
                               : 'pending';
-                      
+
                           final isDelivered = currentStatus == 'delivered';
                           final isPending = currentStatus == 'pending';
-                      
+
                           return InkWell(
                             onTap: () {
                               Navigator.push(
@@ -172,7 +173,7 @@ class ScreenAdminOrders extends StatelessWidget {
                                     const SizedBox(height: 12),
                                     const Divider(height: 1, thickness: 0.5),
                                     const SizedBox(height: 12),
-                      
+
                                     // Body: Customer & Items
                                     Row(
                                       children: [
@@ -183,7 +184,9 @@ class ScreenAdminOrders extends StatelessWidget {
                                             color: Colors.blue.withValues(
                                               alpha: 0.1,
                                             ),
-                                            borderRadius: BorderRadius.circular(10),
+                                            borderRadius: BorderRadius.circular(
+                                              10,
+                                            ),
                                           ),
                                           child: Icon(
                                             Icons.shopping_bag_outlined,
@@ -217,7 +220,7 @@ class ScreenAdminOrders extends StatelessWidget {
                                       ],
                                     ),
                                     const SizedBox(height: 16),
-                      
+
                                     // Footer: Amount & Status
                                     Row(
                                       mainAxisAlignment:

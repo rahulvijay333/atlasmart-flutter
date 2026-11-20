@@ -15,11 +15,10 @@ class ScreenCategories extends StatelessWidget {
     return BlocBuilder<CategoryListBloc, CategoryListState>(
       builder: (context, state) {
         return Center(
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(maxWidth: 600),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: 600),
             child: Column(
               children: [
-              
                 state.when(
                   initial: () => const SizedBox(),
                   loading: () => const Expanded(child: LoadingWidget()),
@@ -48,7 +47,7 @@ class ScreenCategories extends StatelessWidget {
                         ),
                       );
                     }
-            
+
                     return Expanded(
                       child: RefreshIndicator(
                         onRefresh: () async {
@@ -66,7 +65,7 @@ class ScreenCategories extends StatelessWidget {
                               const SizedBox(height: 12),
                           itemBuilder: (context, index) {
                             final category = categories[index];
-            
+
                             return Container(
                               decoration: BoxDecoration(
                                 color: Colors.white,
@@ -121,10 +120,11 @@ class ScreenCategories extends StatelessWidget {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => ScreenAddCategory(
-                                            isEdit: true,
-                                            category: category,
-                                          ),
+                                          builder: (context) =>
+                                              ScreenAddCategory(
+                                                isEdit: true,
+                                                category: category,
+                                              ),
                                         ),
                                       ).then((value) {
                                         if (value == true && context.mounted) {

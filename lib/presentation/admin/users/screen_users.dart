@@ -76,7 +76,7 @@ class ScreenAdminUsers extends StatelessWidget {
                                 const SizedBox(height: 12),
                             itemBuilder: (context, index) {
                               final user = users[index];
-                             
+
                               return GestureDetector(
                                 onTap: () {
                                   Navigator.of(context).push(

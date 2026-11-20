@@ -67,7 +67,6 @@ class DashboardStatsCard extends StatelessWidget {
           Text(
             value,
             style: theme.textTheme.headlineSmall?.copyWith(
-            
               color: theme.colorScheme.onSurface,
             ),
           ),

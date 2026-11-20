@@ -1,7 +1,6 @@
 import 'package:atlasmart/domain/admin/dashboard/model/admin_dashboard_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-
 import '../../../domain/admin/dashboard/dashboard_service.dart';
 
 part 'admin_dashboard_event.dart';
