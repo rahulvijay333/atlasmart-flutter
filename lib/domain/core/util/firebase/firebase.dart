@@ -1,4 +1,3 @@
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -74,7 +73,9 @@ class FirebaseNotificationService {
 
     final context = navigatorKey.currentContext;
     if (context == null) {
-      debugPrint("Navigation failed: Navigator context is still null after retries.");
+      debugPrint(
+        "Navigation failed: Navigator context is still null after retries.",
+      );
       return;
     }
 

@@ -37,12 +37,15 @@ class _NotificationScreenState extends State<NotificationScreen> {
               if (state.isloading) {
                 return const Center(child: CircularProgressIndicator());
               }
-          
+
               if (state.error != null) {
                 return Center(
                   child: Column(
                     children: [
-                      Text(state.error!, style: const TextStyle(color: Colors.red)),
+                      Text(
+                        state.error!,
+                        style: const TextStyle(color: Colors.red),
+                      ),
                       IconButton(
                         onPressed: () {
                           context.read<NotificationBloc>().add(
@@ -55,7 +58,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   ),
                 );
               }
-          
+
               if (state.notificationList.isEmpty) {
                 return Center(
                   child: Column(
@@ -73,17 +76,19 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   ),
                 );
               }
-          
+
               return RefreshIndicator(
                 onRefresh: () async {
-                  context.read<NotificationBloc>().add(GetAllNotificationsEvent());
+                  context.read<NotificationBloc>().add(
+                    GetAllNotificationsEvent(),
+                  );
                 },
                 child: ListView.builder(
                   padding: const EdgeInsets.all(12),
                   itemCount: state.notificationList.length,
                   itemBuilder: (context, index) {
                     final notification = state.notificationList[index];
-          
+
                     return GestureDetector(
                       onTap: () {
                         if (notification.navigateTo != null) {

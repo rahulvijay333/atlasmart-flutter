@@ -14,20 +14,24 @@ class DioInterceptor extends QueuedInterceptor {
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
-    final access = await storage.getAccessToken();
+    try {
+      final access = await storage.getAccessToken();
 
-    if (access != null) {
-      if (storage.isExpired(access)) {
-        await _refreshToken();
-      }
+      if (access != null) {
+        if (storage.isExpired(access)) {
+          await _refreshToken();
+        }
 
-      final token = await storage.getAccessToken();
-      if (token != null) {
-        options.headers['Authorization'] = 'Bearer $token';
+        final token = await storage.getAccessToken();
+        if (token != null) {
+          options.headers['Authorization'] = 'Bearer $token';
+        }
       }
+    } catch (e) {
+      throw ('Interceptor Section Error $e');
+    } finally {
+      handler.next(options);
     }
-
-    handler.next(options);
   }
 
   Future<void> _refreshToken() async {

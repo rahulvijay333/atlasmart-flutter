@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../domain/core/constants/font.dart';
 import '../../common/error_state_widget.dart';
-import '../common/admin_search_bar.dart';
 import '../../../domain/core/constants/strings.dart';
 import 'screen_add_product.dart';
 
@@ -17,12 +16,10 @@ class ScreenAdminProducts extends StatelessWidget {
     return BlocBuilder<AdminProductListBloc, AdminProductListState>(
       builder: (context, state) {
         return Center(
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(maxWidth: 600),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: 600),
             child: Column(
               children: [
-              
-            
                 ?state.whenOrNull(
                   loading: () {
                     return LoadingWidget();
@@ -50,7 +47,7 @@ class ScreenAdminProducts extends StatelessWidget {
                         },
                       );
                     }
-            
+
                     return Expanded(
                       child: RefreshIndicator(
                         onRefresh: () async {
@@ -68,14 +65,14 @@ class ScreenAdminProducts extends StatelessWidget {
                               const SizedBox(height: 16),
                           itemBuilder: (context, index) {
                             final product = products[index];
-            
+
                             // final sellingPrice = (index + 1) * 1200;
                             // final mrp = sellingPrice * 1.2;
                             final stock = product.stock?.isNotEmpty == true
                                 ? int.parse(product.stock ?? '0')
                                 : 0;
                             // final isActive = index % 3 != 0; // Mock active status
-            
+
                             return Container(
                               decoration: BoxDecoration(
                                 color: Colors.white,
@@ -135,7 +132,8 @@ class ScreenAdminProducts extends StatelessWidget {
                                                     color: Colors.black87,
                                                   ),
                                                   maxLines: 1,
-                                                  overflow: TextOverflow.ellipsis,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
                                                 ),
                                               ),
                                               PopupMenuButton(
@@ -167,7 +165,7 @@ class ScreenAdminProducts extends StatelessWidget {
                                                       }
                                                     });
                                                   }
-            
+
                                                   if (value == 'delete') {
                                                     if (product.id != null) {
                                                       showDialog(
@@ -184,7 +182,7 @@ class ScreenAdminProducts extends StatelessWidget {
                                                             content: Text(
                                                               'Are you sure to delete this product? ',
                                                             ),
-            
+
                                                             actions: [
                                                               IconButton(
                                                                 onPressed: () {
@@ -192,9 +190,11 @@ class ScreenAdminProducts extends StatelessWidget {
                                                                     context,
                                                                   ).pop();
                                                                 },
-                                                                icon: Text('No'),
+                                                                icon: Text(
+                                                                  'No',
+                                                                ),
                                                               ),
-            
+
                                                               IconButton(
                                                                 onPressed: () {
                                                                   context
@@ -211,7 +211,9 @@ class ScreenAdminProducts extends StatelessWidget {
                                                                     context,
                                                                   ).pop();
                                                                 },
-                                                                icon: Text('Yes'),
+                                                                icon: Text(
+                                                                  'Yes',
+                                                                ),
                                                               ),
                                                             ],
                                                           );
@@ -228,7 +230,9 @@ class ScreenAdminProducts extends StatelessWidget {
                                                 itemBuilder: (context) => [
                                                   const PopupMenuItem(
                                                     value: 'edit',
-                                                    child: Text(AppStrings.edit),
+                                                    child: Text(
+                                                      AppStrings.edit,
+                                                    ),
                                                   ),
                                                   const PopupMenuItem(
                                                     value: 'delete',
@@ -327,7 +331,7 @@ class ScreenAdminProducts extends StatelessWidget {
                                               ],
                                             ),
                                           ],
-            
+
                                           const SizedBox(height: 8),
                                           // Pricing
                                           Row(

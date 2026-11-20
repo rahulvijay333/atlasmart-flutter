@@ -67,9 +67,9 @@ class _ScreenAddAdminState extends State<ScreenAddAdmin> {
         padding: const EdgeInsets.all(24.0),
         child: Form(
           key: _formKey,
-          child:Center(
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(maxWidth: 600),
+          child: Center(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: 600),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -85,7 +85,7 @@ class _ScreenAddAdminState extends State<ScreenAddAdmin> {
                     style: TextStyle(color: Colors.grey[600]),
                   ),
                   const SizedBox(height: 32),
-              
+
                   // Name Field
                   TextFormField(
                     controller: _nameController,
@@ -111,7 +111,7 @@ class _ScreenAddAdminState extends State<ScreenAddAdmin> {
                     },
                   ),
                   const SizedBox(height: 16),
-              
+
                   // Email Field
                   TextFormField(
                     controller: _emailController,
@@ -131,7 +131,7 @@ class _ScreenAddAdminState extends State<ScreenAddAdmin> {
                     },
                   ),
                   const SizedBox(height: 16),
-              
+
                   // Password Field
                   TextFormField(
                     controller: _passwordController,
@@ -152,7 +152,7 @@ class _ScreenAddAdminState extends State<ScreenAddAdmin> {
                     },
                   ),
                   // const SizedBox(height: 16),
-              
+
                   // // Role Dropdown
                   // DropdownButtonFormField<String>(
                   //   initialValue: _selectedRole,
@@ -171,7 +171,7 @@ class _ScreenAddAdminState extends State<ScreenAddAdmin> {
                   //   },
                   // ),
                   const SizedBox(height: 32),
-              
+
                   // Submit Button
                   BlocConsumer<AddAdminBloc, AddAdminsState>(
                     listener: (context, state) {
@@ -206,7 +206,7 @@ class _ScreenAddAdminState extends State<ScreenAddAdmin> {
                             },
                           );
                         },
-              
+
                         failure: (message) {
                           AppSnackBar.show(context, message);
                         },
@@ -214,7 +214,9 @@ class _ScreenAddAdminState extends State<ScreenAddAdmin> {
                     },
                     builder: (context, state) {
                       return ButtonWidget(
-                        isloading: state == AddAdminsState.loading() ? true : false,
+                        isloading: state == AddAdminsState.loading()
+                            ? true
+                            : false,
                         title: AppStrings.createAdminButton,
                         height: 50,
                         ontap: state != AddAdminsState.loading()
@@ -226,9 +228,10 @@ class _ScreenAddAdminState extends State<ScreenAddAdmin> {
                                         userEmail: _emailController.text.trim(),
                                         joinedDate: null,
                                       ).copyWith(
-                                        password: _passwordController.text.trim(),
+                                        password: _passwordController.text
+                                            .trim(),
                                       );
-              
+
                                   BlocProvider.of<AddAdminBloc>(
                                     context,
                                   ).add(AddAdminsEvent.addNewAdmin(data));

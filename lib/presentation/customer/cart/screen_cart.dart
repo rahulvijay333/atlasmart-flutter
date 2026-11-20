@@ -6,11 +6,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../domain/core/constants/strings.dart';
 import '../../common/snack_bar.dart';
-import '../main/widgets/bottom_nav.dart';
 
 class ScreenCart extends StatefulWidget {
   final bool fromProductDetailScreen;
-  ScreenCart({super.key, this.fromProductDetailScreen = false});
+  const ScreenCart({super.key, this.fromProductDetailScreen = false});
 
   @override
   State<ScreenCart> createState() => _ScreenCartState();
@@ -19,7 +18,6 @@ class ScreenCart extends StatefulWidget {
 class _ScreenCartState extends State<ScreenCart> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     context.read<CartBloc>().add(GetCart());
   }

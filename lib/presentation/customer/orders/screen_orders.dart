@@ -4,8 +4,6 @@ import 'package:atlasmart/presentation/customer/orders/screen_order_details.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../application/customer/orders/orders_bloc.dart';
-import '../../../domain/core/constants/colors.dart';
 import '../../../domain/core/util/data_format.dart';
 
 class ScreenOrders extends StatefulWidget {

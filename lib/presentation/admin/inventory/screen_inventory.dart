@@ -5,7 +5,6 @@ import 'package:atlasmart/presentation/common/snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'widgets/stock_update_sheet.dart';
-import '../common/admin_search_bar.dart';
 import '../../../domain/core/constants/strings.dart';
 
 class ScreenInventory extends StatelessWidget {

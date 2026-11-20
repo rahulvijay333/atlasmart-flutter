@@ -126,9 +126,11 @@ class _ScreenOrderDetailsState extends State<ScreenOrderDetails> {
                     fileName: "invoice_${order.orderNumber}",
                   );
                 } catch (e) {
-                  ScaffoldMessenger.of(
-                    context,
-                  ).showSnackBar(SnackBar(content: Text(e.toString())));
+                  if (context.mounted) {
+                    ScaffoldMessenger.of(
+                      context,
+                    ).showSnackBar(SnackBar(content: Text(e.toString())));
+                  }
                 } finally {
                   setState(() {
                     isDownloading = false;

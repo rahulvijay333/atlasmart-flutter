@@ -1,3 +1,4 @@
+import 'package:atlasmart/domain/core/config/app_config.dart';
 import 'package:atlasmart/domain/endpoints/api_endpoints.dart';
 import 'package:atlasmart/domain/token/token_service.dart';
 import 'package:dio/dio.dart';
@@ -11,7 +12,7 @@ class TokenServiceImpl implements TokenService {
   @override
   Future<void> refresh(String refreshToken) async {
     final res = await Dio().post(
-      "${ApiEndpoints.baseUrl}/api/auth/refresh",
+      "${AppConfig.instance.baseUrl}/api/auth/refresh",
       data: {"refreshToken": refreshToken},
     );
 

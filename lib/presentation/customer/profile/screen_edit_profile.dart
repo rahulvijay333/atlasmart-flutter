@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
@@ -177,16 +178,24 @@ class _ScreenEditProfileState extends State<ScreenEditProfile> {
                               title: 'Save',
                               height: 50,
                               ontap: () {
-                                if (_formkey.currentState!.validate()) {
-                                  BlocProvider.of<CustomerProfileBloc>(
-                                    context,
-                                  ).add(
-                                    CustomerProfileEvent.updateProfileDetailsButtonClick(
-                                      profile: widget.profile.copyWith(
-                                        userName: namecontroller.text.trim(),
-                                        newProfileImage: selectedImage,
+                                if (widget.profile.userEmail !=
+                                    'demo_customer@gmail.com') {
+                                  if (_formkey.currentState!.validate()) {
+                                    BlocProvider.of<CustomerProfileBloc>(
+                                      context,
+                                    ).add(
+                                      CustomerProfileEvent.updateProfileDetailsButtonClick(
+                                        profile: widget.profile.copyWith(
+                                          userName: namecontroller.text.trim(),
+                                          newProfileImage: selectedImage,
+                                        ),
                                       ),
-                                    ),
+                                    );
+                                  }
+                                } else {
+                                  AppSnackBar.show(
+                                    context,
+                                    "You are not allowed to update the test account profile.",
                                   );
                                 }
                               },

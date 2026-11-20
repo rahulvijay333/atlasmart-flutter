@@ -16,7 +16,7 @@ class AdminDrawerWidget extends StatelessWidget {
   final Function(int) onDestinationSelected;
   final String role;
 
-  AdminDrawerWidget({
+  const AdminDrawerWidget({
     super.key,
     required this.selectedIndex,
     required this.onDestinationSelected,
