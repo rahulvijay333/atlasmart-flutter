@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:atlasmart/domain/customer/cart/cart_service.dart';
 import 'package:atlasmart/domain/customer/cart/model/cart_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

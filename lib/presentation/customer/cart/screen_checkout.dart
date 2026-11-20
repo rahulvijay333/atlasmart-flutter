@@ -1,5 +1,4 @@
 import 'package:atlasmart/application/customer/checkout/checkout_bloc.dart';
-import 'package:atlasmart/application/customer/payment_status/payment_status_bloc.dart';
 import 'package:atlasmart/presentation/common/snack_bar.dart';
 import 'package:atlasmart/presentation/customer/cart/screen_payment_process.dart';
 import 'package:flutter/material.dart';

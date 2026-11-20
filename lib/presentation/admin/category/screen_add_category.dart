@@ -50,15 +50,17 @@ class _ScreenAddCategoryState extends State<ScreenAddCategory> {
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
-        child:Center(
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(maxWidth: 600),
+        child: Center(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: 600),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   'Image',
-                  style: AppFont.title16Style.copyWith(fontWeight: FontWeight.bold),
+                  style: AppFont.title16Style.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 const SizedBox(height: 12),
                 SizedBox(
@@ -125,10 +127,12 @@ class _ScreenAddCategoryState extends State<ScreenAddCategory> {
                   ),
                 ),
                 const SizedBox(height: 24),
-            
+
                 Text(
                   'Name',
-                  style: AppFont.title16Style.copyWith(fontWeight: FontWeight.bold),
+                  style: AppFont.title16Style.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 const SizedBox(height: 5),
                 _buildTextField(
@@ -181,12 +185,17 @@ class _ScreenAddCategoryState extends State<ScreenAddCategory> {
                   builder: (context, state) {
                     return ButtonWidget(
                       isloading: state == const AddCategoryState.loading(),
-                      title: widget.isEdit ? 'Update Category' : 'Save Category',
+                      title: widget.isEdit
+                          ? 'Update Category'
+                          : 'Save Category',
                       height: 50,
                       ontap: () {
                         final name = _nameController.text.trim();
                         if (name.isEmpty) {
-                          AppSnackBar.show(context, 'Please enter category name');
+                          AppSnackBar.show(
+                            context,
+                            'Please enter category name',
+                          );
                           return;
                         }
                         // if (_selectedImage == null) {
@@ -196,14 +205,14 @@ class _ScreenAddCategoryState extends State<ScreenAddCategory> {
                         //   );
                         //   return;
                         // }
-            
+
                         final category = CategoryModel(
                           categoryName: name,
                           categoryImage: widget.category?.categoryImage ?? '',
                           selectedImage: _selectedImage,
                           id: widget.category?.id,
                         );
-            
+
                         if (widget.isEdit) {
                           context.read<AddCategoryBloc>().add(
                             AddCategoryEvent.editCategory(category),
