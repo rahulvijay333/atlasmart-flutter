@@ -30,6 +30,7 @@ jobs:
         with:
           channel: stable
           flutter-version: '3.47.8'
+          cache: true
 
       # Step 3: Generate configuration files
       - name: Generate configuration files
@@ -51,3 +52,7 @@ jobs:
       # Step 5: Validate Dart formatting
       - name: Check formatting
         run: dart format --output=none --set-exit-if-changed .
+
+      # Step 6: Build apk
+      - name: Build release APK
+        run: flutter build apk --release
