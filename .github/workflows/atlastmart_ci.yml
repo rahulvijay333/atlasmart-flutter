@@ -36,13 +36,14 @@ jobs:
       - name: Generate configuration files
         env:
           GOOGLE_CONFIG: ${{ secrets.G_S_JSON }}
+          ABC_CONTENT: ${{ secrets.ABC_DART_CONTENT }}
           
         run: |
           mkdir -p android/app
-          
+          mkdir -p lib/domain/core/key
 
           printf '%s' "$GOOGLE_CONFIG" | base64 -d > android/app/google-services.json
-
+          printf '%s' "$ABC_CONTENT" | base64 -d > lib/domain/core/key/fbz.dart
           
 
       # Step 4: Install dependencies
