@@ -8,6 +8,7 @@ on:
   pull_request:
     branches:
       - main
+      - rahul
 
 permissions:
   contents: read
@@ -29,10 +30,23 @@ jobs:
           channel: stable
           flutter-version: '3.47.8'
 
-      # Step 3: Install dependencies
+      # Step 3: Generate configuration files
+      - name: Generate configuration files
+        env:
+          GOOGLE_CONFIG: ${{ secrets.G_S_JSON }}
+          
+        run: |
+          mkdir -p android/app
+          
+
+          printf '%s' "$GOOGLE_CONFIG" | base64 -d > android/app/google-services.json
+
+          
+
+      # Step 4: Install dependencies
       - name: Install dependencies
         run: flutter pub get
 
-      # Step 4: Validate Dart formatting
+      # Step 5: Validate Dart formatting
       - name: Check formatting
         run: dart format --output=none --set-exit-if-changed .
