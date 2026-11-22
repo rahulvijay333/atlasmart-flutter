@@ -4,12 +4,12 @@ on:
   push:
     branches:
       - main
-      - rahul
+      
 
   pull_request:
     branches:
       - main
-      - rahul
+      
 
 permissions:
   contents: read
