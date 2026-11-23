@@ -20,6 +20,7 @@ dependencies:
   http_parser: ^4.1.2
   image_picker: ^1.2.1
   intl: ^0.20.2
+  material_ui: ^1.11.1
   mime: ^2.0.0
   
   open_filex: ^5.0.0
@@ -28,6 +29,7 @@ dependencies:
   razorpay_flutter: ^1.4.7
  
 
+  path_provider: any
 dev_dependencies:
   flutter_test:
     sdk: flutter

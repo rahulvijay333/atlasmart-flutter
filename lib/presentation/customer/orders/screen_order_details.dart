@@ -2,7 +2,7 @@ import 'package:atlasmart/application/customer/order_details/order_details_bloc.
 import 'package:atlasmart/domain/core/constants/colors.dart';
 import 'package:atlasmart/domain/customer/orders/model/order_detail_model.dart';
 import 'package:atlasmart/domain/endpoints/api_endpoints.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../domain/core/di/di.dart';

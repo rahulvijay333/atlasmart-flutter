@@ -1,6 +1,6 @@
 import 'package:atlasmart/domain/core/constants/font.dart';
 import 'package:atlasmart/domain/core/util/data_format.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../application/customer/notification/notification_bloc.dart';

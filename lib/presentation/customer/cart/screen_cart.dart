@@ -1,7 +1,7 @@
 import 'package:atlasmart/application/customer/cart/cart_bloc.dart';
 import 'package:atlasmart/domain/customer/cart/model/cart_model.dart';
 import 'package:atlasmart/presentation/customer/cart/screen_address_select.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../domain/core/constants/strings.dart';

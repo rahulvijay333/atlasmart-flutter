@@ -1,6 +1,6 @@
 import 'package:atlasmart/application/admin/admin_order_list/admin_order_list_bloc.dart';
 import 'package:atlasmart/presentation/admin/orders/screen_order_details.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../domain/core/constants/strings.dart';
 

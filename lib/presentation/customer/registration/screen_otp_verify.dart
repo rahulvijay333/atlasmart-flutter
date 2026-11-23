@@ -4,7 +4,7 @@ import 'package:atlasmart/domain/core/constants/colors.dart';
 import 'package:atlasmart/domain/core/constants/font.dart';
 import 'package:atlasmart/presentation/common/snack_bar.dart';
 import 'package:atlasmart/presentation/customer/registration/screen_register_success.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 

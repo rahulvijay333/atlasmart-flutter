@@ -4,7 +4,7 @@ import 'package:atlasmart/domain/core/constants/image.dart';
 import 'package:atlasmart/presentation/customer/main/screen_main.dart';
 import 'package:atlasmart/presentation/customer/registration/screen_register.dart';
 import 'package:atlasmart/presentation/admin/main/screen_admin_main.dart'; // Admin Link
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../application/profile_admin_customer/admin/bloc/admin_profile_bloc.dart';

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import '../../../../domain/core/constants/strings.dart';
 import '../../search/screen_search_product.dart';
 

@@ -1,7 +1,7 @@
 import 'package:atlasmart/application/admin/inventory/inventory_bloc.dart';
 import 'package:atlasmart/domain/admin/manage_products/model/admin_products_model.dart';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class StockUpdateSheet extends StatefulWidget {

@@ -1,7 +1,7 @@
 import 'package:atlasmart/application/customer/payment_status/payment_status_bloc.dart';
 import 'package:atlasmart/presentation/customer/cart/screen_payment_failed.dart';
 import 'package:atlasmart/presentation/customer/cart/screen_payment_success.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ScreenPaymentProcess extends StatefulWidget {

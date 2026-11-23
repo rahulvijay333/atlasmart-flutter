@@ -1,7 +1,7 @@
 import 'package:atlasmart/application/customer/checkout/checkout_bloc.dart';
 import 'package:atlasmart/presentation/common/snack_bar.dart';
 import 'package:atlasmart/presentation/customer/cart/screen_payment_process.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../domain/core/util/razorpay/razorpay_util.dart';

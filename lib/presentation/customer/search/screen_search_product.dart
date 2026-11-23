@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:atlasmart/application/customer/home/customer_home_bloc.dart';
 import 'package:atlasmart/domain/core/di/di.dart';
 import 'package:atlasmart/presentation/customer/product/screen_product_details.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../common/product_tile_card.dart';

@@ -2,7 +2,7 @@ import 'package:atlasmart/application/customer/forgot_password/forgot_password_b
 import 'package:atlasmart/domain/core/constants/colors.dart';
 import 'package:atlasmart/presentation/common/snack_bar.dart';
 import 'package:atlasmart/presentation/login/screen_password_reset_success.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 

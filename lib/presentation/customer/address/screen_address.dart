@@ -3,7 +3,7 @@ import 'package:atlasmart/domain/core/constants/colors.dart';
 import 'package:atlasmart/domain/core/constants/strings.dart';
 import 'package:atlasmart/presentation/common/snack_bar.dart';
 import 'package:atlasmart/presentation/customer/address/screen_add_update_address.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ScreenAddress extends StatelessWidget {

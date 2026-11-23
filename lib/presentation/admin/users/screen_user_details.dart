@@ -1,5 +1,5 @@
 import 'package:atlasmart/domain/core/constants/font.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:intl/intl.dart';
 
 import '../../../domain/admin/users/model/user_model.dart';

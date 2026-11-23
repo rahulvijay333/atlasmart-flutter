@@ -3,7 +3,7 @@ import 'package:atlasmart/domain/admin/profile/model/admin_profile.dart';
 import 'package:atlasmart/domain/core/constants/font.dart';
 import 'package:atlasmart/presentation/common/button_widget.dart';
 import 'package:atlasmart/presentation/common/snack_bar.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../domain/core/constants/strings.dart';
 
