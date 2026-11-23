@@ -25,7 +25,7 @@ class ScreenOtpVerify extends StatefulWidget {
 }
 
 class _ScreenOtpVerifyState extends State<ScreenOtpVerify> {
-  final TextEditingController textEditingController = TextEditingController();
+  final PinInputController textEditingController = PinInputController();
 
   static const int _initialSeconds = 60;
   int _secondsRemaining = _initialSeconds;
@@ -202,7 +202,7 @@ class VerifyOtpWidget extends StatelessWidget {
   });
 
   final CustomerRegisterModel customer;
-  final TextEditingController textEditingController;
+  final PinInputController textEditingController;
   final int secondsRemaining;
   final VoidCallback onResendOtp;
 
@@ -244,33 +244,25 @@ class VerifyOtpWidget extends StatelessWidget {
         ),
         const SizedBox(height: 40),
 
-        /// OTP Field
-        PinCodeTextField(
-          appContext: context,
+        MaterialPinField(
           length: 6,
-          controller: textEditingController,
+          pinController: textEditingController,
           keyboardType: TextInputType.number,
-          animationType: AnimationType.fade,
-          enableActiveFill: true,
-          animationDuration: const Duration(milliseconds: 300),
-          backgroundColor: Colors.transparent,
-          pinTheme: PinTheme(
-            shape: PinCodeFieldShape.box,
+          theme: MaterialPinTheme(
+            shape: MaterialPinShape.outlined,
+            cellSize: const Size(46, 52),
             borderRadius: BorderRadius.circular(12),
-            fieldHeight: 52,
-            fieldWidth: 46,
-            inactiveColor: Colors.grey.shade300,
-            inactiveFillColor: Colors.grey.shade100,
-            activeColor: Theme.of(context).primaryColor,
-            activeFillColor: Colors.white,
-            selectedColor: Theme.of(context).primaryColor,
-            selectedFillColor: Colors.white,
+            spacing: 8,
+            borderColor: Colors.grey.shade300,
+            focusedBorderColor: Theme.of(context).primaryColor,
+            filledBorderColor: Theme.of(context).primaryColor,
+            fillColor: Colors.grey.shade100,
+            focusedFillColor: Colors.white,
+            filledFillColor: Colors.white,
           ),
-
           onCompleted: (value) {
             debugPrint("OTP Completed: $value");
           },
-          onChanged: (value) {},
         ),
 
         const SizedBox(height: 40),

@@ -20,7 +20,7 @@ class ScreenForgotPassword extends StatefulWidget {
 
 class _ScreenForgotPasswordState extends State<ScreenForgotPassword> {
   final _emailController = TextEditingController();
-  final _otpController = TextEditingController();
+  final _otpController = PinInputController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
 
@@ -136,6 +136,7 @@ class _ScreenForgotPasswordState extends State<ScreenForgotPassword> {
 
             if (email == 'demo_customer@gmail.com') {
               AppSnackBar.show(
+                backgroundColor: Colors.red.shade900,
                 context,
                 "The test email cannot be used to reset your password.",
               );
@@ -167,17 +168,12 @@ class _ScreenForgotPasswordState extends State<ScreenForgotPassword> {
         ),
 
         const SizedBox(height: 30),
-
-        PinCodeTextField(
-          appContext: context,
-          autoDisposeControllers: false,
+        MaterialPinField(
           length: 6,
-          pinTheme: AppPinTheme.otp(context),
-          controller: _otpController,
+          pinController: _otpController,
+          theme: AppPinTheme.otp(context),
           onCompleted: (otp) {
-            // context.read<ForgotPasswordBloc>().add(
-            //       ForgotPasswordEvent.verifyOtp(otp: otp),
-            //     );
+            // OTP completion logic
           },
         ),
 

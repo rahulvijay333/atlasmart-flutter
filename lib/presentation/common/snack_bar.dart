@@ -18,20 +18,22 @@ class AppSnackBar {
 
     _timer?.cancel();
     _timer = Timer(debounceDuration, () {
-      _isShowing = true;
-
-      ScaffoldMessenger.of(context)
-        ..hideCurrentSnackBar()
-        ..showSnackBar(
-          SnackBar(
-            content: Text(message),
-            backgroundColor: backgroundColor,
-            duration: duration,
-            action: action,
-          ),
-        ).closed.then((_) {
-          _isShowing = false;
-        });
+     
+      if (context.mounted) {
+         _isShowing = true;
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(
+            SnackBar(
+              content: Text(message),
+              backgroundColor: backgroundColor,
+              duration: duration,
+              action: action,
+            ),
+          ).closed.then((_) {
+            _isShowing = false;
+          });
+      }
     });
   }
 
