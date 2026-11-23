@@ -18,9 +18,8 @@ class AppSnackBar {
 
     _timer?.cancel();
     _timer = Timer(debounceDuration, () {
-     
       if (context.mounted) {
-         _isShowing = true;
+        _isShowing = true;
         ScaffoldMessenger.of(context)
           ..hideCurrentSnackBar()
           ..showSnackBar(
