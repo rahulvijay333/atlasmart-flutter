@@ -1,7 +1,7 @@
 import 'package:atlasmart/domain/core/constants/font.dart';
 import 'package:atlasmart/presentation/common/error_state_widget.dart';
 import 'package:atlasmart/presentation/common/loading_widget.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../application/admin/admin_list/admin_list_bloc.dart';
 import '../../../domain/core/constants/strings.dart';

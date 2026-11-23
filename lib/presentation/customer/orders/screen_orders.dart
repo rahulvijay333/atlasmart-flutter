@@ -1,7 +1,7 @@
 import 'package:atlasmart/application/customer/orders/orders_bloc.dart';
 import 'package:atlasmart/domain/customer/orders/model/ordered_product_model.dart';
 import 'package:atlasmart/presentation/customer/orders/screen_order_details.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../domain/core/util/data_format.dart';

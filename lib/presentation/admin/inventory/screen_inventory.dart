@@ -2,7 +2,7 @@ import 'package:atlasmart/application/admin/inventory/inventory_bloc.dart';
 import 'package:atlasmart/presentation/common/error_state_widget.dart';
 import 'package:atlasmart/presentation/common/loading_widget.dart';
 import 'package:atlasmart/presentation/common/snack_bar.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'widgets/stock_update_sheet.dart';
 import '../../../domain/core/constants/strings.dart';

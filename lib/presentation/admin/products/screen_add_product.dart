@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:atlasmart/domain/admin/manage_products/model/admin_products_model.dart';
 import 'package:atlasmart/presentation/common/button_widget.dart';
 import 'package:atlasmart/presentation/common/snack_bar.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:atlasmart/application/admin/category_list/category_list_bloc.dart';

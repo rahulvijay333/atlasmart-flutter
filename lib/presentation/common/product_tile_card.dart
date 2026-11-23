@@ -1,5 +1,5 @@
 import 'package:atlasmart/domain/customer/home/model/shop_product_model.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class ProductTileWidget extends StatelessWidget {
   final ShopProductModel product;

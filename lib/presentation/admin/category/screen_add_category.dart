@@ -8,7 +8,7 @@ import 'package:atlasmart/domain/core/constants/font.dart';
 import 'package:atlasmart/domain/core/util/image_picker.dart';
 import 'package:atlasmart/presentation/common/button_widget.dart';
 import 'package:atlasmart/presentation/common/snack_bar.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 

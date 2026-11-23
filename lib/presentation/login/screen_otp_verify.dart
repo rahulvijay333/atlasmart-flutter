@@ -1,7 +1,7 @@
 import 'package:atlasmart/domain/core/constants/colors.dart';
 import 'package:atlasmart/infrastructure/login/model/user_details/user_details.dart';
 import 'package:atlasmart/presentation/common/snack_bar.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
@@ -23,7 +23,7 @@ class ScreenOtpVerify extends StatefulWidget {
 }
 
 class _ScreenOtpVerifyState extends State<ScreenOtpVerify> {
-  final TextEditingController _otpController = TextEditingController();
+  final _otpController = PinInputController();
 
   @override
   Widget build(BuildContext context) {
@@ -171,11 +171,11 @@ class VerifyOtpWidget extends StatelessWidget {
   const VerifyOtpWidget({
     super.key,
     required this.widget,
-    required TextEditingController otpController,
+    required PinInputController otpController,
   }) : _otpController = otpController;
 
   final ScreenOtpVerify widget;
-  final TextEditingController _otpController;
+  final PinInputController _otpController;
 
   @override
   Widget build(BuildContext context) {
@@ -209,16 +209,12 @@ class VerifyOtpWidget extends StatelessWidget {
 
         const SizedBox(height: 30),
 
-        PinCodeTextField(
-          appContext: context,
-          autoDisposeControllers: false,
+        MaterialPinField(
           length: 6,
-          pinTheme: AppPinTheme.otp(context),
-          controller: _otpController,
+          pinController: _otpController,
+          theme: AppPinTheme.otp(context),
           onCompleted: (otp) {
-            // context.read<ForgotPasswordBloc>().add(
-            //       ForgotPasswordEvent.verifyOtp(otp: otp),
-            //     );
+            // OTP completion logic
           },
         ),
 

@@ -22,7 +22,9 @@ jobs:
     steps:
       # Step 1: Download source code
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
 
       # Step 2: Install Flutter SDK
       - name: Setup Flutter
@@ -48,7 +50,7 @@ jobs:
 
       # Step 4: Install dependencies
       - name: Install dependencies
-        run: flutter pub get
+        run: flutter pub get --enforce-lockfile
 
       # Step 5: Validate Dart formatting
       - name: Check formatting
