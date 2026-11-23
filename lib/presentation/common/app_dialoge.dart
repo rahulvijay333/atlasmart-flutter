@@ -1,5 +1,5 @@
 import 'package:atlasmart/domain/core/constants/font.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class AppDialog {
   static Future<bool?> showConfirmation(

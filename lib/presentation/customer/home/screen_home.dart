@@ -2,7 +2,7 @@ import 'package:atlasmart/application/customer/home/customer_home_bloc.dart';
 import 'package:atlasmart/domain/core/constants/image.dart';
 import 'package:atlasmart/application/admin/category_list/category_list_bloc.dart';
 import 'package:atlasmart/presentation/customer/notifications/screen_notifications.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../domain/core/constants/strings.dart';

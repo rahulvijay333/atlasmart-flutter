@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class AppFont {
   static const TextStyle appBar18Style = TextStyle(

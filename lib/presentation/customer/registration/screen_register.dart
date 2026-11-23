@@ -3,7 +3,7 @@ import 'package:atlasmart/domain/core/constants/strings.dart';
 import 'package:atlasmart/domain/customer/registration/model/customer_register_model.dart';
 import 'package:atlasmart/presentation/customer/registration/screen_otp_verify.dart';
 import 'package:atlasmart/presentation/customer/registration/screen_register_success.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../application/customer/registration/customer/custom_registr_bloc/customer_register_bloc.dart';

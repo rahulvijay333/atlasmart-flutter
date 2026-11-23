@@ -1,5 +1,5 @@
 import 'package:atlasmart/presentation/customer/main/screen_main.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class ScreenPaymentFailed extends StatelessWidget {
   const ScreenPaymentFailed({super.key});

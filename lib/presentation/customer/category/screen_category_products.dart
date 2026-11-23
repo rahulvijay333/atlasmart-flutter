@@ -1,5 +1,5 @@
 import 'package:atlasmart/domain/core/constants/font.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../application/customer/home/customer_home_bloc.dart';

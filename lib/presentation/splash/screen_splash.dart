@@ -2,7 +2,7 @@ import 'package:atlasmart/domain/core/constants/constants.dart';
 import 'package:atlasmart/domain/core/constants/image.dart';
 import 'package:atlasmart/presentation/customer/main/screen_main.dart';
 import 'package:atlasmart/presentation/login/screen_login.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../application/auth/auth_bloc.dart';
